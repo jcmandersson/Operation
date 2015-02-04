@@ -8,5 +8,7 @@
 4. Starta WebStorm och välj alternativet "Checkout from version control -> GitHub -> Logga in och välj repo Operation".
 5. Öppna CMD/Terminal och gå till mappen där du skapade projektet i föregående steg.
 6. Kör "git checkout -b DITTNAMN".
-6. Kör "npm install".
-7. Börja koda!
+7. Kör "npm install".
+8. För att köra servern kör "node keystone"
+9. Börja koda!
+
