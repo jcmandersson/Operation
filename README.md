@@ -11,7 +11,7 @@
 6. Kör "git checkout -b DITTNAMN".
 7. Kör "npm install".
 8. För att köra servern kör "node keystone"
-9. Du når servern på http://127.0.0.1.xip.io:3000/ ( Provar xip.io för att AJAX ska fungera lokalt också, men egentligen fungerar http://127.0.0.1:3000 lika bra )
+9. Du når servern på http://127.0.0.1:3000/ 
 10. Börja koda!
 
 För att installera ett packet från npm:
