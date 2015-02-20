@@ -9,7 +9,7 @@ var Process = new keystone.List('Processteg', {
 
 Process.add({
   title: { type: String, required: true },
-  slug: { type: String, index: true },
+  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'title', required: true, initial: true, index: true },
   content: { type: Types.Html, wysiwyg: true, height: 400 }
 });
 
@@ -18,5 +18,5 @@ Process.add({
  =============
  */
 
-Process.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';
+Process.defaultColumns = 'title, operation|20%';
 Process.register();

@@ -1,7 +1,8 @@
 var keystone = require('keystone'),
   Types = keystone.Field.Types;
 
-var Specialty = new keystone.List('Specialty', {
+var Specialty = new keystone.List('Specialitet', {
+  plural: 'Specialiteter',
   autokey: { from: 'name', path: 'key' }
 });
 
