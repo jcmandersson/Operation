@@ -3,15 +3,15 @@ var keystone = require('keystone'),
 
 var Operation = new keystone.List('Operation', {
   map: { name: 'title' },
-  autokey: { path: 'slug', from: 'title', unique: true }
+  autokey: { path: 'slug', from: 'title', unique: true },
+  track: true
 });
 
 Operation.add({
   title: { type: String, required: true },
   slug: { type: String, index: true },
-  state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
+  state: { type: Types.Select, options: 'Utkast, Publicerad, Arkiverad', default: 'Utkast', index: true },
   author: { type: Types.Relationship, ref: 'User', index: true },
-  editDate: { type: Types.Date, index: true, default: Date.now },
   content: {
     brief: { type: Types.Html, wysiwyg: true, height: 150 },
     extended: { type: Types.Html, wysiwyg: true, height: 400 }

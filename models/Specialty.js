@@ -6,7 +6,8 @@ var Specialty = new keystone.List('Specialty', {
 });
 
 Specialty.add({
-  name: { type: String, required: true }
+  name: { type: String, required: true },
+  abbrevation: { type: String, required: true, initial: true }
 });
 
 Specialty.relationship({ ref: 'Operation', path: 'specialty' });
