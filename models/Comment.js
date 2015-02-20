@@ -25,3 +25,6 @@ Comment.add({
 
 Comment.defaultColumns = 'author, post, publishedOn, commentState';
 Comment.register();
+
+var rest = require('keystone-rest');
+rest.addRoutes(Comment, 'get post put delete');

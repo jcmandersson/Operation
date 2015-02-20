@@ -14,3 +14,6 @@ Specialty.add({
 Specialty.relationship({ ref: 'Operation', path: 'specialty' });
 
 Specialty.register();
+
+var rest = require('keystone-rest');
+rest.addRoutes(Specialty, 'get post put delete');

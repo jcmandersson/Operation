@@ -20,3 +20,6 @@ CheckArticle.add({
 
 CheckArticle.defaultColumns = 'operation, name, createdBy|20%, createdAt|20%';
 CheckArticle.register();
+
+var rest = require('keystone-rest');
+rest.addRoutes(CheckArticle, 'get post put delete');

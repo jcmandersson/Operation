@@ -31,4 +31,3 @@ Operation.register();
 
 var rest = require('keystone-rest');
 rest.addRoutes(Operation, 'get post put delete');
-rest.registerRoutes(keystone.app);

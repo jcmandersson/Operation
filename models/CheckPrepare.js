@@ -21,3 +21,6 @@ CheckPrepare.add({
 
 CheckPrepare.defaultColumns = 'operation, name, createdBy|20%, createdAt|20%';
 CheckPrepare.register();
+
+var rest = require('keystone-rest');
+rest.addRoutes(CheckPrepare, 'get post put delete');

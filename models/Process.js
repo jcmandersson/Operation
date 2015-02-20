@@ -20,3 +20,6 @@ Process.add({
 
 Process.defaultColumns = 'title, operation|20%';
 Process.register();
+
+var rest = require('keystone-rest');
+rest.addRoutes(Process, 'get post put delete');
