@@ -27,3 +27,6 @@ User.schema.virtual('canAccessKeystone').get(function() {
  */
 User.defaultColumns = 'name, email, isAdmin';
 User.register();
+
+var rest = require('keystone-rest');
+rest.addRoutes(User, 'get post put delete');

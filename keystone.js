@@ -4,7 +4,8 @@ require('dotenv').load();
 
 // Require keystone
 var keystone = require('keystone'),
-	handlebars = require('express-handlebars');
+  	handlebars = require('express-handlebars'),
+    rest = require('keystone-rest');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -62,9 +63,20 @@ keystone.set('routes', require('./routes'));
 // Configure the navigation bar in Keystone's Admin UI
 
 keystone.set('nav', {
-	'users': 'users'
+	'Användare': 'users',
+  'Operationer': [
+    'Specialitet',
+    'Operation',
+    'Processteg',
+    'Förberedelse',
+    'Artikel',
+    'Kommentar'
+  ]
 });
 
 // Start Keystone to connect to your database and initialise the web server
 
 keystone.start();
+
+// Init Rest API
+rest.registerRoutes(keystone.app);
