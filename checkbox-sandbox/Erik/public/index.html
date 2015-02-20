@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<title>Test</title>
+	</head>
+	<body>
+		<input type = "text" id = "textBox">
+		<button onclick = "addBox()">Add</button><br>
+		<div id = "boxar"></div>
+		<script src="https://cdn.socket.io/socket.io-1.3.3.js"></script>
+		<script>
+	  		var socket = io();
+
+			function addBox(){
+				var textBox = document.getElementById("textBox");
+				socket.emit('add', textBox.value);
+			}
+
+			function deleteBox(id){
+				//console.log(id);
+				socket.emit('delete', id);
+			}
+
+			socket.on('delete', function(id){
+				var div = document.getElementById("d"+id);
+				div.parentNode.removeChild(div);
+			});
+
+			socket.on('add', function(info){
+	    		var div = document.getElementById("boxar");
+	    		var checkboxes = document.getElementsByClassName("checkboxes");
+	    		var checks = [];
+	    		for (var i = 0; i < checkboxes.length; i++) {
+	    			checks.push(checkboxes[i].checked);
+				}
+				div.innerHTML = div.innerHTML + "<div id = 'd"+info[1]+"'><input class='checkboxes' type = 'checkbox' id = '"+info[1]+"' onchange = 'change(this.id)' unchecked>"+info[0]+"<button onclick = 'deleteBox("+info[1]+")'>Delete</button></div>";
+				for (var i = 0; i < checkboxes.length; i++) {
+	    			checkboxes[i].checked = checks[i];
+				}
+			});
+
+			socket.on('start', function(boxes){
+				//console.log(boxes);
+				for(var i = 0; i < boxes.length; i++){
+					var div = document.getElementById("boxar");
+					if(boxes[i][1]){
+						div.innerHTML = div.innerHTML + "<div id = 'd"+i+"'><input class='checkboxes' type = 'checkbox' id = '"+i+"' onchange = 'change(this.id)' checked >"+boxes[i][0]+"<button onclick = 'deleteBox("+i+")'>Delete</button></div>";
+					} else {
+						div.innerHTML = div.innerHTML + "<div id = 'd"+i+"'><input class='checkboxes' type = 'checkbox' id = '"+i+"' onchange = 'change(this.id)' unchecked >"+boxes[i][0]+"<button onclick = 'deleteBox("+i+")'>Delete</button></div>";
+					}
+				}	
+			});
+
+			socket.on('change', function(args){
+					var box = document.getElementById(args[0]);
+					box.checked = args[1];
+			});
+
+			function change(id){
+				//console.log(id);
+				socket.emit('change', id);
+			}
+
+		</script>
+	</body>
+</html>
