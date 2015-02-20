@@ -1,12 +1,40 @@
 {{!< default}}
+
 <div class="container">
-  <div style="max-height: 300px;overflow: auto;">
-    <ul class="list-group checked-list-box">
-      {{# each checks }}
-        <li class="list-group-item checkbox">
-          <label><input type="checkbox">{{ articleName }}, hylla = {{ hylla }}</label>
-        </li>
-      {{/each}}
-    </ul>
-  </div>
+  <table class="table">
+    <tr class="table-headerstriped">
+      <td></td>
+      <td>Namn</td>
+      <td>Förråd</td>
+      <td>Sektion</td>
+      <td>Hylla</td>
+      <td>Fack</td>
+    </tr>
+    {{# each checks }}
+      <tr class="check-js">
+        <td><input type="checkbox" class="check-js"></td>
+        <td>{{ articleName }}</td>
+        <td>{{ storage }}</td>
+        <td>{{ section }}</td>
+        <td>{{ shelf }}</td>
+        <td>{{ tray }}</td>
+      </tr>
+    {{/each}}
+  </table>
+
+  <!--
+  <ul class="list-group checked-list-box">
+    {{# each checks }}
+      <li class="list-group-item checkbox">
+        <label>
+          <input type="checkbox">
+          <div class="row">
+            <div class="col-md-8">{{ articleName }}</div>
+            <div class="col-md-4">a</div>
+          </div>
+        </label>
+      </li>
+    {{/each}}
+  </ul>
+  -->
 </div>
