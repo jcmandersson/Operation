@@ -10,7 +10,7 @@ var Operation = new keystone.List('Operation', {
 
 Operation.add({
   title: {type: String, required: true},
-  slug: {type: String, index: true},
+  tags: { type: String },
   state: {type: Types.Select, options: 'Utkast, Publicerad, Arkiverad', default: 'Utkast', index: true},
   specialty: {type: Types.Relationship, ref: 'Specialitet', many: false},
   template: {type: Types.Boolean, default: true}
@@ -25,6 +25,24 @@ Operation.add({
 Operation.relationship({ref: 'Processteg', path: 'operation'});
 Operation.relationship({ref: 'Artikel', path: 'operation'});
 //Operation.relationship({ ref: 'Kommentar' , path: 'operation' });
+
+Operation.schema.statics.search = function(text, callback) {
+  var search = new RegExp(text, 'ig');
+  this.model('Operation').find({
+    $or: [{
+      title: search
+    }, {
+      tags: search
+    }]
+  }).populate('createdBy') //Lägger in all data om användaren som skapade operationen
+    .populate('updatedBy')
+    .populate('Processteg')
+    .populate('Förberedelse')
+    .populate('Artikel') //Hämtar alla artiklar i plocklistan
+    .populate('specialty') 
+    .sort('-updatedAt')//Sorterar efter updatedAt, - säger att den sorterar bakvänt, dvs. med högst först.
+    .exec(callback);
+};
 
 Operation.defaultColumns = 'title, state|20%, updatedBy|20%, updatedAt|20%';
 Operation.register();
