@@ -18,17 +18,17 @@ exports = module.exports = function (req, res) {
         return;
       }
       console.log(data);
-      if(data.length){
+      if (data.length) {
         operation.model
           .where('_id', data[0]._id)
-          .remove(function(err,data){
+          .remove(function (err, data) {
             console.log(data);
-            if(!err){
+            if (!err) {
               console.log('Operationen är borttagen.');
             }
           });
       }
-     
+
       //Skapa ny operation
       var newOperation = new operation.model({
         title: 'Blindtarmsinflammation',
