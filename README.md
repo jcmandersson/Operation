@@ -20,3 +20,83 @@ För att installera ett packet från npm:
 --save ska alltså bara användas när paktet är obligatoriskt för att kunna använda projektet.
 
 Alltid bra att köra "npm install" efter en pull då någon kan ha lagt till paket.
+
+# REST
+
+Lite exempel på hur man kan hämta/uppdatera/ta bort data med ajax.
+
+URLer: (biblioteket lägger automatiskt på ett s på modellerna.)
+* /api/operations
+* /api/Processtegs
+* /api/artikels
+* /api/Förberedelses
+* /api/Kommentars
+* /api/Specialitets
+* /api/users
+
+Types:
+GET för att hämta
+POST för att skapa
+PUT för att ändra
+DELETE för ta bort
+
+Hämta
+```javascript
+$.ajax({
+  type: 'GET',
+  url: '/api/operations',
+  data: { //Lämna tom för att få ut all data
+    title: 'ACI Armbåge'
+  }
+})
+  .done(function( msg ) {
+    console.log(JSON.parse(msg));
+  })
+  .fail(function(err, status){
+    console.log('Någonting gick fel!');
+    console.log(err);
+    console.log(status);
+  };
+```
+
+Sök operation
+```javascript
+$.ajax({
+  type: 'GET',
+  url: '/api/search',
+  data: {
+    text: 'ACI Armbåge'
+  }
+})
+  .done(function( msg ) {
+    console.log(JSON.parse(msg));
+  })
+  .fail(function(err, status){
+    console.log('Någonting gick fel!');
+    console.log(err);
+    console.log(status);
+  };
+```
+
+Skapa
+```javascript
+$.ajax({
+  type: 'POST',
+  url: '/api/operations',
+  data: {
+    title: 'Blindtarmsinflammation',
+    tags: 'Appendix borttagning'
+  }
+})
+  .done(function( msg ) {
+    console.log(JSON.parse(msg)); //Innehåller den skapade modellen
+  })
+  .fail(function(err, status){
+    console.log('Någonting gick fel!');
+    console.log(err);
+    console.log(status);
+  };
+```
+
+Ändra 
+Kommer snart!
