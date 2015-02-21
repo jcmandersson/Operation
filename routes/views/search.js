@@ -2,14 +2,7 @@ var keystone = require('keystone');
 var operation = keystone.list('Operation');
 
 exports = module.exports = function (req, res) {
-  var view = new keystone.View(req, res),
-    locals = res.locals;
-
-  // locals.section is used to set the currently selected
-  // item in the header navigation.
-  locals.section = 'search';
-
-  operation.model.search(req.search, function (err, data) {
+  operation.model.search(req.query.text, function (err, data) {
     if (err) {
       res.status(500).render('errors/500', {
         err: err,
@@ -18,7 +11,6 @@ exports = module.exports = function (req, res) {
       });
       return;
     }
-    locals.db = data.toString();
-    view.render('search');
+    res.send(data);
   });
 };
