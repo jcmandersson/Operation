@@ -11,6 +11,7 @@ CheckPrepare.add({
   operation: { type: Types.Relationship, ref: 'Operation', refPath: 'title', required: true, initial: true, index: true },
   name: { type: String, required: true, initial: true },
   process: { type: Types.Relationship, initial: true, ref: 'Artikel', refPath: 'name' },
+  checked: { type: Types.Boolean, default: false },
   template: {type: Types.Boolean, default: true}
 });
 
