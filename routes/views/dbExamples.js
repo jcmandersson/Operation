@@ -17,7 +17,9 @@ exports = module.exports = function (req, res) {
         console.log(err);
         return;
       }
+      
       console.log(data);
+      //Tar bort operationen ifall den finns för att inte få dubletter
       if (data.length) {
         operation.model
           .where('_id', data[0]._id)
@@ -29,7 +31,7 @@ exports = module.exports = function (req, res) {
           });
       }
 
-      //Skapa ny operation
+      //Skapar en ny operation
       var newOperation = new operation.model({
         title: 'Blindtarmsinflammation',
         tags: 'appendix',
@@ -44,7 +46,8 @@ exports = module.exports = function (req, res) {
 
     });
 
-  operation.model.search('ACI Ar', function (err, data) { //search är en funktion som jag skapat i modellen Operation
+  //Söker efter operation med hjälp av den statiska sökfunkitonen som jag skapat i modellen. Söker i både taggar och titeln
+  operation.model.search('ACI Ar', function (err, data) { 
     if (err) {
       console.log('DB error');
       return;
