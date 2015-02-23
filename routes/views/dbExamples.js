@@ -29,22 +29,26 @@ exports = module.exports = function (req, res) {
               console.log('Operationen är borttagen.');
             }
           });
-      }
-
-      //Skapar en ny operation
-      var newOperation = new operation.model({
-        title: 'Blindtarmsinflammation',
-        tags: 'appendix',
-        template: false
-      }).save(function (err) {
-          if (err) {
-            console.log('Operationen kunde inte skapas.!');
-            return;
-          }
-          console.log('Operation skapad!');
-        });
+      }     
 
     });
+
+  //Skapar en ny operation
+  var newOperation = new operation.model({
+    title: 'Blindtarmsinflammation',
+    tags: 'appendix',
+    template: false
+  }).save(function (err) {
+      if (err) {
+        console.log('Operationen kunde inte skapas.!');
+        return;
+      }
+      console.log('Operation skapad!');
+    });
+
+  /*operation.model.update({
+    title: 'Blindtarmsinflammation'
+  });*/
 
   //Söker efter operation med hjälp av den statiska sökfunkitonen som jag skapat i modellen. Söker i både taggar och titeln
   operation.model.search('ACI Ar', function (err, data) { 
@@ -56,4 +60,6 @@ exports = module.exports = function (req, res) {
     locals.db = data.toString();
     view.render('dbExamples');
   });
+  
+  
 };
