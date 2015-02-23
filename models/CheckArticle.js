@@ -10,7 +10,8 @@ var CheckArticle = new keystone.List('Artikel', {
 CheckArticle.add({
   operation: { type: Types.Relationship, ref: 'Operation', refPath: 'title', required: true, initial: true, index: true },
   name: { type: String, required: true, initial: true },
-  template: {type: Types.Boolean, default: true}
+  checked: { type: Types.Boolean, default: false },
+  template: { type: Types.Boolean, default: true }
 });
 
 /**
