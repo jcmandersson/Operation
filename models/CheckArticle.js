@@ -11,7 +11,8 @@ CheckArticle.add({
   operation: { type: Types.Relationship, ref: 'Operation', refPath: 'title', required: true, initial: true, index: true },
   name: { type: String, required: true, initial: true },
   checked: { type: Types.Boolean, default: false },
-  template: { type: Types.Boolean, default: true }
+  template: { type: Types.Boolean, default: true },
+  kartotek: { type: Types.Relationship, ref: 'Kartotek artikel', refPath: 'name', initial: true}
 });
 
 /**
