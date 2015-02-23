@@ -73,7 +73,7 @@ keystone.set('nav', {
     'Kommentar'
   ],
   'Kartotek': [
-    'Kartotek artikel'
+    'Kartotekartikel'
   ]
 });
 
