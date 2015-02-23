@@ -15,6 +15,7 @@ CheckArticle.add({
   kartotek: { type: Types.Relationship, ref: 'Kartotek artikel', refPath: 'name', initial: true}
 });
 
+
 /**
  Relationships
  =============

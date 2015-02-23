@@ -44,6 +44,7 @@ Operation.schema.statics.search = function(text, callback) {
     .exec(callback);
 };
 
+
 /*
 var objectIdDel = function(copiedObjectWithId) {
   if (copiedObjectWithId != null && typeof(copiedObjectWithId) != 'string' &&

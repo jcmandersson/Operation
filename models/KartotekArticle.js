@@ -21,6 +21,7 @@ KartotekArticle.add({
  =============
  */
 
+
 KartotekArticle.relationship({ref: 'Artikel', path: 'kartotek'});
 
 KartotekArticle.schema.statics.search = function(text, callback) {
