@@ -9,5 +9,5 @@ exports = module.exports = function(req, res) {
   locals.section = 'search';
 
   // Render the view
-  view.render('index');
+  view.render('search');
 };

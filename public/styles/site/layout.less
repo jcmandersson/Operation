@@ -1,15 +1,15 @@
-.container {
-  margin-top: 30px;
-  width: 960px;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
+nav {
+  background-color: #004a82;
+  padding-left: 20px !important;
+  padding-bottom: 5px !important;
+  padding-top: 5px !important;
 }
 
-#footer {
+.container {
   margin-top: 30px;
-  border-top: 1px solid @gray-lighter;
-  padding-top: 30px;
-  color: @gray-light;
+  width: @container-width;
+  /*border-left: 1px solid #000;*/
+  /*border-right: 1px solid #000;*/
 }
 
 .list-group-item {
@@ -39,6 +39,28 @@
   font-size: 28px;
 }
 
-.item-text {
-  
+/* All of the below should really be moved to search.css */
+input[type="search"] {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.has-results {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+.form-control {
+  padding-right: 30px;
+}
+
+.form-control + .glyphicon {
+  position: absolute;
+  right: 0;
+  padding: 8px 27px;
+}
+
+.tags {
+  font-size: 70%;
+  font-style: italic;
 }

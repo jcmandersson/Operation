@@ -1,5 +1,33 @@
 {{!< default}}
 
 <div class="container">
-  <input type="input" id="search" />
+  <div class="row">
+    <div class="col-md-offset-4 col-md-5 search-box">
+      <input type="search" id="search" class="form-control" placeholder="Sök..." />
+      <span class="glyphicon glyphicon-search"></>
+    </div>
+    <div class="col-md-offset-4 col-md-5">
+      <div id="results"></div>
+    </div>
+  </div>
 </div>
+
+<!-- Note that the reason we're doing \{{}} below is
+  that otherwise node (keystone) thinks it's a part of the external (search.hbs)
+  template. -->
+<script id="results-template" type="text/x-handlebars-template">
+  <table class="table table-striped table-bordered table-hover" id="result-table">
+    \{{a}}
+    \{{#each results}}
+      <tr>
+        <td>
+          <div>\{{ title }}</div>
+          <div class="tags">\{{ tags }}</div>
+        </td>
+      </tr>
+    \{{/each}}
+  </table>
+</script>
+
+
+<script src="/js/search.js"></script>
