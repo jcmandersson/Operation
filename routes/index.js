@@ -37,6 +37,7 @@ exports = module.exports = function(app) {
 	// Views
 	app.get('/', routes.views.index);
   app.get('/create', routes.views.create);
+  app.get('/search', routes.views.search);
   app.get('/db', routes.views.dbExamples);
   app.get('/api/search', routes.views.apiSearch);
 	
