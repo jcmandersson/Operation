@@ -44,6 +44,31 @@ Operation.schema.statics.search = function(text, callback) {
     .exec(callback);
 };
 
+
+/*
+var objectIdDel = function(copiedObjectWithId) {
+  if (copiedObjectWithId != null && typeof(copiedObjectWithId) != 'string' &&
+    typeof(copiedObjectWithId) != 'number' && typeof(copiedObjectWithId) != 'boolean' ) {
+    //for array length is defined however for objects length is undefined
+    if (typeof(copiedObjectWithId.length) == 'undefined') {
+      delete copiedObjectWithId._id;
+      for (var key in copiedObjectWithId) {
+        objectIdDel(copiedObjectWithId[key]); //recursive del calls on object elements
+      }
+    }
+    else {
+      for (var i = 0; i < copiedObjectWithId.length; i++) {
+        objectIdDel(copiedObjectWithId[i]);  //recursive del calls on array elements
+      }
+    }
+  }
+}
+
+Operation.schema.methods.copyTemplate = function() {
+  this.lastActiveOn = new Date();
+  return this;
+};*/
+
 Operation.defaultColumns = 'title, state|20%, updatedBy|20%, updatedAt|20%';
 Operation.register();
 

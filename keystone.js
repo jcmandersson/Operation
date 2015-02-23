@@ -71,6 +71,9 @@ keystone.set('nav', {
     'Förberedelse',
     'Artikel',
     'Kommentar'
+  ],
+  'Kartotek': [
+    'Kartotekartikel'
   ]
 });
 
