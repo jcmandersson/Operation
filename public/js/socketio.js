@@ -8,16 +8,16 @@ var socket = io();
   checkboxClick($(this).attr('id'));
 });*/
 
-function check(id){
+var check = function(id){
   checkboxClick(id.id);
 
 }
 
-function checkboxClick(id){
+var checkboxClick = function(id){
   socket.emit('checkboxClick', id);
 }
 
-function updateTableRow(tableRow, isChecked){
+var updateTableRow = function(tableRow, isChecked){
   var checkbox = tableRow.find('input');
   checkbox.prop('checked', isChecked);
   if (isChecked) {
