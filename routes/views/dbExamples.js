@@ -38,7 +38,7 @@ exports = module.exports = function (req, res) {
     title: 'Blindtarmsinflammation',
     tags: 'appendix',
     template: false
-  }).save(function (err) {
+  }).save(function (err,data) {
       if (err) {
         console.log('Operationen kunde inte skapas.!');
         return;
@@ -46,20 +46,30 @@ exports = module.exports = function (req, res) {
       console.log('Operation skapad!');
     });
 
-  /*operation.model.update({
-    title: 'Blindtarmsinflammation'
-  });*/
+  //En timeout för att operationen ska hinna skapas innan den byter namn, detta är inget ni kommer behöva.
+  setTimeout(function(){
+    
+    //Hittar operation med namn Blindtarmsinflammation och byter namn till Appendectomy
+    operation.model.findOne({ title: 'Blindtarmsinflammation' }, function (err, data){
+      if(err){
+        console.log('Operationen kunde inte ändras.');
+        return;
+      }
+      console.log('Ändrar namn till appendectomy');
+      data.title = 'Appendectomy';
+      data.tags += ' Appendectomy';
+      data.save(); //Sparar alla ändringar av data till databasen
+    });
 
-  //Söker efter operation med hjälp av den statiska sökfunkitonen som jag skapat i modellen. Söker i både taggar och titeln
-  operation.model.search('ACI Ar', function (err, data) { 
-    if (err) {
-      console.log('DB error');
-      return;
-    }
-    console.log(data);
-    locals.db = data.toString();
-    view.render('dbExamples');
-  });
-  
-  
+    //Söker efter operation med hjälp av den statiska sökfunkitonen som jag skapat i modellen. Söker i både taggar och titeln
+    operation.model.search('Appen', function (err, data) {
+      if (err) {
+        console.log('DB error');
+        return;
+      }
+      console.log(data);
+      locals.db = data.toString();
+      view.render('dbExamples');
+    });
+  }, 500);
 };
