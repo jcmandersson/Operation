@@ -3,15 +3,12 @@
  */
 var socket = io();
 
-/*$('.check-js').click(function() { FATTAR INTE VARFÖR DENNA INTE FUNKAR!!!
-  console.log("HEEZ");
-  checkboxClick($(this).attr('id'));
-});*/
-
-var check = function(id){
-  checkboxClick(id.id);
-
-}
+$(function(){
+  $('.check-js').click(function() {
+    console.log("HEEZ");
+    checkboxClick($(this).attr('id'));
+  });  
+})
 
 var checkboxClick = function(id){
   socket.emit('checkboxClick', id);
