@@ -1,4 +1,5 @@
 var keystone = require('keystone');
+var kartotek = keystone.list('Kartotekartikel');
 
 exports = module.exports = function(req, res) {
   var view = new keystone.View(req, res),
@@ -7,7 +8,24 @@ exports = module.exports = function(req, res) {
   // locals.section is used to set the currently selected
   // item in the header navigation.
   locals.section = 'home';
-  locals.checks = [
+  
+  kartotek.model.find()
+    .exec(function(err, data) {
+    if(err) {
+      console.log('DB error');
+      console.log(err);
+      return;
+    }
+    else {
+        console.log(data);
+        locals.checks = data;
+        view.render('index');      
+
+    }
+     
+  });
+  
+  /**locals.checks = [];
     { articleName: "Abs Cilikonförband 5X12,5Cm Självhäftande",     storage: "NS", section: "39", shelf: "F", tray: "1" },
     { articleName: "Abs sökongörband 5 x 12,5Cm självhäftande",     storage: "SS", section: "32", shelf: "D", tray: "2" },
     { articleName: "Abs. Material , Strässel (T. Kemikalier)",      storage: "NO", section: "B", shelf: "B4", tray: "2" },
@@ -21,9 +39,9 @@ exports = module.exports = function(req, res) {
     { articleName: "Abs-Förband Haft 10X35Cm (S)",                  storage: "NS", section: "38", shelf: "B", tray: "4" },
     { articleName: "Absorber Co3",                                  storage: "NO", section: "42", shelf: "F+G", tray: "" },
     { articleName: "Absorbtionshalk, Infinity ID CLICK absorbtion", storage: "SO", section: "45", shelf: "D", tray: "" },
-  ];
+  ];*/
 
   // Render the view
-  view.render('index');
+  //view.render('index');
 
-};
+};  
