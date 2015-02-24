@@ -1,29 +1,25 @@
-/**
- * Created by abbe on 2015-02-20.
- */
 var keystone = require('keystone'),
   Types = keystone.Field.Types;
 
 var Comment = new keystone.List('Kommentar', {
   plural: 'Kommentarer',
-  defaultSort: '-publishedOn'
+  autokey: { path: 'slug', from: 'operation', unique: true },
+  track: true
 });
 
 Comment.add({
-    author: { type: Types.Relationship, initial: true, ref: 'Användare', index: true },
-    operation: { type: Types.Relationship, ref: 'Operation', refPath: 'title', required: true, initial: true, index: true },
-    commentState: { type: Types.Select, options: ['Publicerad', 'Arkiverad'], default: 'Publicerad', index: true },
-    publishedOn: { type: Types.Date, default: Date.now, noedit: true, index: true },
-    text: { type: String, initial: true, required: true}
+  operation: {type: Types.Relationship, ref: 'Operation', refPath: 'title', required: true, initial: true, index: true},
+  author: {type: Types.Relationship, initial: true, ref: 'User', index: true},
+  commentState: {type: Types.Select, options: ['Publicerad', 'Arkiverad'], default: 'Publicerad', index: true},
+  text: {type: String, initial: true, required: true}
 });
-
 
 /**
  Relationships
  =============
  */
 
-Comment.defaultColumns = 'author, post, publishedOn, commentState';
+Comment.defaultColumns = 'operation|20%, author, publishedOn, commentState';
 Comment.register();
 
 var rest = require('keystone-rest');

@@ -9,6 +9,20 @@ exports = module.exports = function (req, res) {
   // item in the header navigation.
   locals.section = 'dbExamples';
 
+  operation.model.find({
+    title: 'Blindtarmsinflammation'
+  })
+    .exec(function (err, data) {
+      if (err) {
+        console.log('DB error');
+        console.log(err);
+        return;
+      }
+      operation.model.fromTemplate(data[0]._id);
+    });
+  
+  view.render('dbExamples');
+/*
   operation.model.find()
     .where('title', 'Blindtarmsinflammation')
     .exec(function (err, data) {
@@ -72,4 +86,6 @@ exports = module.exports = function (req, res) {
       view.render('dbExamples');
     });
   }, 500);
+  
+  */
 };

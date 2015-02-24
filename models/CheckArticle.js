@@ -15,30 +15,36 @@ CheckArticle.add({
   kartotek: { type: Types.Relationship, ref: 'Kartotekartikel', refPath: 'name', initial: true}
 });
 
-
 /**
  Relationships
  =============
  */
 
-CheckArticle.schema.methods.copyTemplate = function(operationId) {
-  if(!this.template){
-    console.log('Error: Article is not a template');
-    return;
-  }
-  var newOperation = objectIdDel(JSON.parse(JSON.stringify(this)));
-  newOperation.operation = operationId;
-  newOperation.template = false;
-  return new CheckArticle.model(newOperation).save(function(err, data){
-    if(err){
-      console.log('Unable to copy');
-      return;
+CheckArticle.schema.statics.fromTemplate = function fromTemplate(operationId, newOperationId, callback) {
+  var thisDoc = this;
+
+  this.model('Artikel').find({
+    operation: operationId
+  }).exec(function(err, docs) {
+    if(err) console.log(err);
+    console.log(docs);
+    for(var i = 0; i < docs.length; ++i) {
+      var doc = docs[i];
+      var newObject = JSON.parse(JSON.stringify(doc));
+      delete newObject._id;
+      newObject.operation = newOperationId;
+      newObject.template = false;
+
+      var newDoc = new CheckArticle.model(newObject);
+      newDoc.save(function(err, savedDoc){
+        if(err) console.log(err);
+
+      });
     }
-    console.log('Copied!');
   });
 };
 
-CheckArticle.defaultColumns = 'operation, name, createdBy|20%, createdAt|20%';
+CheckArticle.defaultColumns = 'operation|20%, name, createdBy|20%, createdAt|20%';
 CheckArticle.register();
 
 var rest = require('keystone-rest');
