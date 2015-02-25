@@ -3,13 +3,11 @@ $('.articles').on('click', '.remove', function(){
 });
 
 $( "#article" ).change(function() {
-  var bla = $('#article').val();
-  console.log(bla);
 
   $.ajax({
     type: 'GET',
-    url: '/api/Kartotekartikels/'+bla
-  })
+    url: '/api/Kartotekartikels/'+ $('#article').val()
+})
     .done(function( msg ) {
       
       console.log(msg);
