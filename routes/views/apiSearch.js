@@ -10,14 +10,17 @@ exports = module.exports = function (req, res) {
         errorMsg: 'Kunde inte söka i databasen'
       });
       return;
-    }    
-    if (req.query.text !== '') {      
-      if (typeof(req.query.limit) === 'undefined') {        
-        res.send(data.slice(0, 10));    
-      } 
+    }
+    if (req.query.text !== '') {
+      if (typeof(req.query.limit) === 'undefined') {
+        res.send(data.slice(0, 10));
+      }
       else {
         res.send(data.slice(0, req.query.limit));
-      }       
+      }
+    }
+    else {
+      res.send([]);
     }
   });
 };
