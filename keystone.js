@@ -79,7 +79,11 @@ keystone.set('nav', {
 
 // Start Keystone to connect to your database and initialise the web server
 
-keystone.start();
+keystone.start({
+  onHttpServerCreated: function() {
+    keystone.io = require('socket.io').listen(keystone.httpServer);
+  }
+});
 
 // Init Rest API
 rest.registerRoutes(keystone.app);
