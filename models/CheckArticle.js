@@ -8,11 +8,11 @@ var CheckArticle = new keystone.List('Artikel', {
 });
 
 CheckArticle.add({
-  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'title', required: true, initial: true, index: true },
+  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'articles', required: true, initial: true, index: true },
   name: { type: String, required: true, initial: true },
   checked: { type: Types.Boolean, default: false },
   template: { type: Types.Boolean, default: true },
-  kartotek: { type: Types.Relationship, ref: 'Kartotekartikel', refPath: 'name', initial: true}
+  kartotek: { type: Types.Relationship, ref: 'Kartotekartikel', refPath: 'kartotek', initial: true}
 });
 
 /**

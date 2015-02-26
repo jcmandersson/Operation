@@ -10,6 +10,7 @@ var Operation = new keystone.List('Operation', {
 
 Operation.add({
   title: {type: String, required: true},
+  //id: {type: String, default: '0', required: true},
   tags: { type: String },
   state: {type: Types.Select, options: 'Utkast, Publicerad, Arkiverad', default: 'Utkast', index: true},
   specialty: {type: Types.Relationship, ref: 'Specialitet', many: false},
@@ -21,7 +22,6 @@ Operation.add({
  =============
  */
 
-
 Operation.relationship({path: 'processes', ref: 'Processteg', refPath: 'operation'});
 Operation.relationship({path: 'articles', ref: 'Artikel', refPath: 'operation'});
 Operation.relationship({path: 'prepares', ref: 'Förberedelse', refPath: 'operation'});
@@ -29,20 +29,13 @@ Operation.relationship({path: 'comments', ref: 'Kommentar', refPath: 'operation'
 
 Operation.schema.statics.search = function(text, callback) {
   var search = new RegExp(text, 'ig');
-  this.model('Operation').find({
+  return this.model('Operation').find({
     $or: [{
       title: search
     }, {
       tags: search
     }]
-  }).populate('createdBy') //Lägger in all data om användaren som skapade operationen
-    .populate('updatedBy')
-    .populate('Processteg')
-    .populate('Förberedelse')
-    .populate('Artikel') //Hämtar alla artiklar i plocklistan
-    .populate('specialty') 
-    .sort('-updatedAt')//Sorterar efter updatedAt, - säger att den sorterar bakvänt, dvs. med högst först.
-    .exec(callback);
+  });
 };
 
 Operation.schema.statics.fromTemplate = function fromTemplate(id, callback) {

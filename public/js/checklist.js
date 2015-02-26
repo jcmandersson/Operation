@@ -5,14 +5,9 @@ var socket = io();
 
 $(function(){
   $('.check-js').click(function() {
-    console.log("HEEZ");
-    checkboxClick($(this).attr('id'));
+    socket.emit('checkboxClick', $(this).attr('id'));
   });  
-})
-
-var checkboxClick = function(id){
-  socket.emit('checkboxClick', id);
-}
+});
 
 var updateTableRow = function(tableRow, isChecked){
   var checkbox = tableRow.find('input');
@@ -24,18 +19,19 @@ var updateTableRow = function(tableRow, isChecked){
   else {
     tableRow.css('background-color', 'rgba(0,0,0,0)');
   }
-  
-}
+};
 
 socket.on('checkboxClick', function(checkObject){
   var tableRow = $('#' + checkObject.id);
   updateTableRow(tableRow, checkObject.isChecked);
 });
 
-socket.on('getCheckboxes', function(checkboxes){
-  for(var index = 0; index < checkboxes.length; index++){
-    var tableRow = $('#' + checkboxes[index].id);
-    var isChecked = checkboxes[index].isChecked;
+socket.on('getCheckboxes', function(checkboxes){ //TODO: Ändra så att alla klienter inte uppdaterar för att en ny ansluter.
+  for(var index in checkboxes){
+    var checkbox = checkboxes[index];
+    var tableRow = $('#' + checkbox._id);
+    var isChecked = checkbox.checked;
     updateTableRow(tableRow, isChecked);
   }
+  console.log("Stuff");
 });
