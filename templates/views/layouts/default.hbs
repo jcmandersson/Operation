@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,28 +8,57 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link href="/styles/site.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" />
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" />
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"/>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"/>
     <![endif]-->
-  </head>
-  
-  <body>
-  <!--Flyttat upp denna för att create skulle funka. Fråga mej/Falk-->
-  <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+</head>
 
-  <nav class="collapse navbar-collapse bs-navbar-collapse">
+<body>
+<!--Flyttat upp denna för att create skulle funka. Fråga mej/Falk-->
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+<nav class="collapse navbar-collapse bs-navbar-collapse">
+    <div class="header-container">
       <ul class="nav navbar-nav">
-        <li><img src="/images/logo_region.png"></li>
+          <li class="brand"><a href="/"><img src="/images/logo_region.png"/></a></li>
+        {{# each navLinks}}
+            <li {{#ifeq ../section key}}class="active"{{else}}{{/ifeq}}>
+                <a href="{{ href }}">{{ label }}</a>
+            </li>
+        {{/each}}
       </ul>
-    </nav>
-    <div id="body">
-      {{{body}}}
+      <form class="navbar-form navbar-right" role="search">
+          <div class="form-group has-feedback">
+              <input type="search" id="search" class="form-control" autocomplete="off" placeholder="Sök..." />
+              <i class="glyphicon glyphicon-search form-control-feedback"></i>
+              <div id="results"></div>
+              <script id="results-template" type="text/x-handlebars-template">
+                  <table class="table table-striped table-bordered table-hover" id="result-table">
+                    \{{a}}
+                    \{{#each results}}
+                      <tr>
+                          <td>
+                              <div>\{{ title }}</div>
+                              <div class="tags">\{{ tags }}</div>
+                          </td>
+                      </tr>
+                    \{{/each}}
+                  </table>
+              </script>
+          </div>
+      </form>
     </div>
-    <script src="/js/lib/bootstrap/bootstrap-3.2.0.min.js"></script>
-    <script src="/js/lib/handlebars/handlebars-v3.0.0.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
-  {{#each scripts}}
-      <script src="/js/{{this}}"></script>
-  {{/each}}
-  </body>
+</nav>
+
+<div id="body">
+  {{{body}}}
+</div>
+<script src="/js/lib/bootstrap/bootstrap-3.2.0.min.js"></script>
+<script src="/js/lib/handlebars/handlebars-v3.0.0.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+<script src="/js/search.js"></script>
+{{#each scripts}}
+    <script src="/js/{{this}}"></script>
+{{/each}}
+</body>
 </html>
