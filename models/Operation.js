@@ -29,20 +29,13 @@ Operation.relationship({path: 'comments', ref: 'Kommentar', refPath: 'operation'
 
 Operation.schema.statics.search = function(text, callback) {
   var search = new RegExp(text, 'ig');
-  this.model('Operation').find({
+  return this.model('Operation').find({
     $or: [{
       title: search
     }, {
       tags: search
     }]
-  }).populate('createdBy') //Lägger in all data om användaren som skapade operationen
-    .populate('updatedBy')
-    .populate('Processteg')
-    .populate('Förberedelse')
-    .populate('Artikel') //Hämtar alla artiklar i plocklistan
-    .populate('specialty') 
-    .sort('-updatedAt')//Sorterar efter updatedAt, - säger att den sorterar bakvänt, dvs. med högst först.
-    .exec(callback);
+  });
 };
 
 Operation.schema.statics.fromTemplate = function fromTemplate(id, callback) {
