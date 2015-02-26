@@ -39,6 +39,11 @@ exports = module.exports = function(app) {
   app.get('/create', routes.views.create);
   app.get('/search', routes.views.search);
   app.get('/db', routes.views.dbExamples);
+  app.get('/info', routes.views.info);
+
+
+
+  // NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
   app.get('/api/search/:model', routes.views.apiSearch);
   
 	
