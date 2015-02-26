@@ -33,4 +33,5 @@ socket.on('getCheckboxes', function(checkboxes){ //TODO: Ändra så att alla kli
     var isChecked = checkbox.checked;
     updateTableRow(tableRow, isChecked);
   }
+  console.log("Stuff");
 });

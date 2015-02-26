@@ -1,26 +1,22 @@
 var keystone = require('keystone');
 
 exports = module.exports = function (req, res) {
+  
+  if(typeof req.query.text === 'undefined' || !req.query.text.length){
+    res.send([]);
+    return;
+  }
+  
   var model = keystone.list(req.params.model);
-  model.model.search(req.query.text, function (err, data) {
-    if (err) {
-      res.status(500).render('errors/500', {
-        err: err,
-        errorTitle: 'Databasfel',
-        errorMsg: 'Kunde inte söka i databasen'
-      });
-      return;
-    }
-    if (req.query.text !== '') {
-      if (typeof(req.query.limit) === 'undefined') {
-        res.send(data.slice(0, 10));
+  model.model.search(req.query.text)
+    .populate('createdBy updatedBy specialty')
+    .sort('-updatedAt')
+    .limit((typeof req.query.limit === 'undefined') ? 10 : reg.query.limit)
+    .exec(function (err, data) {
+      if (err) {
+        res.status(500).send(err);
+        return;
       }
-      else {
-        res.send(data.slice(0, req.query.limit));
-      }
-    }
-    else {
-      res.send([]);
-    }
-  });
+      res.send(data);
+    });
 };
