@@ -1,29 +1,3 @@
-/*
-$('.articles').on('click', '.remove', function(){
-  $(this).parent().remove();
-});
-
-$( "#article" ).change(function() {
-  var bla = $('#article').val();
-  console.log(bla);
-
-  $.ajax({
-    type: 'GET',
-    url: '/api/Kartotekartikels/'+bla
-  })
-    .done(function( msg ) {
-      console.log(msg);
-      $( ".articles" ).append( "<div class='item' id="+msg._id+"> <span class='glyphicon glyphicon-remove-circle remove' aria-hidden='true'></span> <span class='item-text'>"+msg.name+"</span> </div>" );
-
-    })
-    .fail(function(err, status){
-      console.log('Någonting gick fel!');
-      console.log(err);
-      console.log(status);
-    });
-});
-*/
-
 $(function() {
   var compiledResults = $('#results-template').html();
   var resultsTemplate = Handlebars.compile(compiledResults);
@@ -39,6 +13,7 @@ $(function() {
   $('#article-search').keydown(function() {
     var self = this;
 
+    // Should be replaced by '/api/Kartotekartikels/'
     var url = '/api/artikels?text=' + $(this).val();
     $.get(url).done(function(results) {
       $('#results').html(resultsTemplate({ results: results }));
@@ -52,6 +27,13 @@ $(function() {
 
       $('.add-column').click(addArticle);
     });
+  });
+
+  var compiledSynonym = $('#synonym-template').html();
+  var synonymTemplate = Handlebars.compile(compiledSynonym);
+  $('#add-synonym-btn').click(function() {
+    var name = $('#synonym-input').val();
+    $('#synonyms').append(synonymTemplate({ name: name }));
   });
 });
 

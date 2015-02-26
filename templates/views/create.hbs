@@ -9,7 +9,13 @@
 
     <div class="col-md-offset-3 col-md-6 input-box">
       <label>Synonymer:</label>
-      <input type="search" id="search" class="form-control" placeholder="T.ex. 'Taskig armbåge'" />
+      <input type="search" id="synonym-input" class="synonym-input form-control" placeholder="T.ex. 'Taskig armbåge'" />
+      <div class="add-synonym">
+        <a id="add-synonym-btn" class="btn btn-default btn-success" href="#" role="button">
+          <span class="add-synonym-icon glyphicon glyphicon-plus"></span>
+        </a>
+      </div>
+      <div id="synonyms"></div>
     </div>
 
     <div class="col-md-offset-3 col-md-6 input-box">
@@ -59,12 +65,22 @@
         </span>
       </div>
     </div>
-    <div class="article" class="article">\{{name}}</div>
+    <div class="article">\{{name}}</div>
     <div class="remove-article">
       <span class="remove-icon glyphicon glyphicon-remove"></span>
     </div>
   </div>
 </script>
+
+<script id="synonym-template" type="text/x-handlebars-template">
+  <div class="synonym-container">
+    <div class="synonym">\{{name}}</div>
+    <div class="remove-synonym">
+      <span class="remove-synonym-icon glyphicon glyphicon-remove"></span>
+    </div>
+  </div>
+</script>
+
 
 
 <script src="/js/create.js"></script>
