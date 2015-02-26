@@ -31,5 +31,8 @@ exports.create = {
     { title: 'ACI Armbåge', tags: '', state: 'Publicerad', speciality: '', template: true},
     { title: 'ACI Armbåge', tags: '', state: 'Publicerad', speciality: '', template: true},
     { title: 'ACI Armbåge', tags: '', state: 'Publicerad', speciality: '', template: true}
-  ]*/
+  ]
+  ,CheckArticle: [
+    { operation: 'saf', name: 'Tandborste', checked: false, template: true, kartotek: 'sds'}]
+  */
 };
