@@ -13,8 +13,11 @@ $( "#article" ).change(function() {
   })
     .done(function( msg ) {
       console.log(msg);
-      $( ".articles" ).append( "<div class='item' id="+msg._id+"> <span class='glyphicon glyphicon-remove-circle remove' aria-hidden='true'></span> <span class='item-text'>"+msg.name+"</span> </div>" );
-
+      $( ".articles" ).append( 
+        "<div class='item' id="+msg._id+"> " +
+        "<span class='item-text'>"+msg.name+"</span>" +
+        "<span class='glyphicon glyphicon-remove-circle remove' aria-hidden='true'>" +
+        "</span></div>")
     })
     .fail(function(err, status){
       console.log('Någonting gick fel!');

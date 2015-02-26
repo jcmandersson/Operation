@@ -8,11 +8,11 @@ $(function(){
     console.log("HEEZ");
     checkboxClick($(this).attr('id'));
   });  
-})
+});
 
 var checkboxClick = function(id){
   socket.emit('checkboxClick', id);
-}
+};
 
 var updateTableRow = function(tableRow, isChecked){
   var checkbox = tableRow.find('input');
@@ -24,8 +24,7 @@ var updateTableRow = function(tableRow, isChecked){
   else {
     tableRow.css('background-color', 'rgba(0,0,0,0)');
   }
-  
-}
+};
 
 socket.on('checkboxClick', function(checkObject){
   var tableRow = $('#' + checkObject.id);
