@@ -9,6 +9,17 @@
       {{/each}}
     </ul>
     <div id="process-content"></div>
+  <script>
+      function showContent(content) {};
+      
+      $(document).ready(function() {
+          $(".nav-pills > .navbar-btn").click(function() {
+              $(this).addClass('active').siblings().removeClass('active');
+          });
+      });
+      
+  </script>
+
 </div>
 
 
