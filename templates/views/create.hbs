@@ -4,12 +4,23 @@
   <div class="row">
     <div class="col-md-offset-3 col-md-6 input-box">
       <label>Namn:</label>
-      <input type="search" id="search" class="form-control" placeholder="T.ex. 'ACI armbåge'" />
+      <input type="text" id="operation-name" class="form-control" placeholder="T.ex. 'ACI armbåge'" />
     </div>
 
     <div class="col-md-offset-3 col-md-6 input-box">
       <label>Synonymer:</label>
-      <input type="search" id="search" class="form-control" placeholder="T.ex. 'Taskig armbåge'" />
+
+      <input type="search" id="synonym-input" class="synonym-input form-control" placeholder="T.ex. 'Taskig armbåge'" />
+      <div class="add-synonym">
+        <a id="add-synonym-btn" class="btn btn-default btn-success" href="#" role="button">
+          <span class="add-synonym-icon glyphicon glyphicon-plus"></span>
+        </a>
+      </div>
+      <div id="synonyms"></div>
+        
+        <label>Synonymer:</label>
+        <input id="tags_1" type="text" class="tags"/>
+        
     </div>
 
     <div class="col-md-offset-3 col-md-6 input-box">
@@ -26,7 +37,13 @@
 
       <div id="results"></div>
     </div>
+
+      <div>
+          <button type="button" id="newOperationButton">Skapa Handbok</button>
+      </div>
+      
   </div>
+    
 </div>
 
 <script id="results-template" type="text/x-handlebars-template">
@@ -59,12 +76,22 @@
         </span>
       </div>
     </div>
-    <div class="article" class="article">\{{name}}</div>
+    <div class="article">\{{name}}</div>
     <div class="remove-article">
       <span class="remove-icon glyphicon glyphicon-remove"></span>
     </div>
   </div>
 </script>
 
+<script id="synonym-template" type="text/x-handlebars-template">
+  <div class="synonym-container">
+    <div class="synonym">\{{name}}</div>
+    <div class="remove-synonym">
+      <span class="remove-synonym-icon glyphicon glyphicon-remove"></span>
+    </div>
+  </div>
+</script>
 
+<link rel="stylesheet" type="text/css" href="/js/jquery.tagsinput.css" media="screen" />
+<script src="/js/jquery.tagsinput.js"></script>
 <script src="/js/create.js"></script>
