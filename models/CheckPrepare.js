@@ -8,7 +8,7 @@ var CheckPrepare = new keystone.List('Förberedelse', {
 });
 
 CheckPrepare.add({
-  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'title', required: true, initial: true, index: true },
+  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'prepares', required: true, initial: true, index: true },
   name: { type: String, required: true, initial: true },
   process: { type: Types.Relationship, initial: true, ref: 'Processteg', refPath: 'title' },
   checked: { type: Types.Boolean, default: false },

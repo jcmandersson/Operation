@@ -21,7 +21,6 @@ Operation.add({
  =============
  */
 
-
 Operation.relationship({path: 'processes', ref: 'Processteg', refPath: 'operation'});
 Operation.relationship({path: 'articles', ref: 'Artikel', refPath: 'operation'});
 Operation.relationship({path: 'prepares', ref: 'Förberedelse', refPath: 'operation'});
