@@ -35,21 +35,20 @@ URLer: (biblioteket lägger automatiskt på ett s på modellerna.)
 * /api/users
 
 Types:
-GET för att hämta
-POST för att skapa
-PUT för att ändra
-DELETE för ta bort
+* GET för att hämta (och söka)
+* POST för att skapa
+* PUT för att ändra
+* DELETE för ta bort
 
-Hämta
+Sök (Operation, Kartotekartikel, Specialitet)
 ```javascript
 $.ajax({
   type: 'GET',
-  url: '/api/operations',
-  data: { //Lämna tom för att få ut all data
-    title: 'ACI Armbåge'
+  url: '/api/search/Operation',
+  data: {
+    text: 'söksträng'
   }
-})
-  .done(function( msg ) {
+}).done(function( msg ) {
     console.log(JSON.parse(msg));
   })
   .fail(function(err, status){
@@ -59,13 +58,13 @@ $.ajax({
   };
 ```
 
-Sök operation
+Hämta
 ```javascript
 $.ajax({
   type: 'GET',
-  url: '/api/search',
-  data: {
-    text: 'ACI Armbåge'
+  url: '/api/operations',
+  data: { //Lämna tom för att få ut all data
+    title: 'ACI Armbåge'
   }
 })
   .done(function( msg ) {

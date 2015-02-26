@@ -13,6 +13,17 @@ Specialty.add({
 
 Specialty.relationship({ ref: 'Operation', path: 'specialty' });
 
+Specialty.schema.statics.search = function(text, callback) {
+  var search = new RegExp(text, 'ig');
+  return this.model('Operation').find({
+    $or: [{
+      name: search
+    }, {
+      abbrevation: search
+    }]
+  });
+};
+
 Specialty.register();
 
 var rest = require('keystone-rest');

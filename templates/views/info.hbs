@@ -1,0 +1,16 @@
+{{!< default}}
+<div class="container">
+    <div id="opName">{{data.title}}</div>
+    <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
+  
+    <ul class="nav nav-pills">
+      {{#each processes}}
+          <button type="button" class="btn btn-default navbar-btn" onclick="showContent({{content}})">{{title}}</button>
+      {{/each}}
+    </ul>
+    <div id="process-content"></div>
+</div>
+
+
+
+<!--<script src="/js/info.js"></script>>

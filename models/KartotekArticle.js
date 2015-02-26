@@ -26,15 +26,13 @@ KartotekArticle.relationship({ref: 'Artikel', path: 'kartotek'});
 
 KartotekArticle.schema.statics.search = function(text, callback) {
   var search = new RegExp(text, 'ig');
-  this.model('Kartotekartikel').find({
+  return this.model('Kartotekartikel').find({
     $or: [{
-      title: search
+      name: search
     }, {
       tags: search
     }]
-  })
-    .sort('name')
-    .exec(callback);
+  }).sort('name');
 };
 
 KartotekArticle.defaultColumns = 'operation, name, createdBy|20%, createdAt|20%';

@@ -9,7 +9,7 @@ var Process = new keystone.List('Processteg', {
 
 Process.add({
   title: { type: String, required: true },
-  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'title', required: true, initial: true, index: true },
+  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'processes', required: true, initial: true, index: true },
   content: { type: Types.Html, wysiwyg: true, height: 400 },
   template: { type: Boolean, default: true }
 });
@@ -18,6 +18,8 @@ Process.add({
  Relationships
  =============
  */
+
+Process.relationship({path: 'prepares', ref: 'Förberedelse', refPath: 'process'});
 
 Process.schema.statics.fromTemplate = function fromTemplate(operationId, newOperationId, callback) {
   var thisDoc = this;
