@@ -20,7 +20,31 @@ CheckPrepare.add({
  =============
  */
 
-CheckPrepare.defaultColumns = 'operation, name, createdBy|20%, createdAt|20%';
+CheckPrepare.schema.statics.fromTemplate = function fromTemplate(operationId, newOperationId, callback) {
+  var thisDoc = this;
+
+  this.model('Förberedelse').find({
+    operation: operationId
+  }).exec(function(err, docs) {
+    if(err) console.log(err);
+    console.log(docs);
+    for(var i = 0; i < docs.length; ++i) {
+      var doc = docs[i];
+      var newObject = JSON.parse(JSON.stringify(doc));
+      delete newObject._id;
+      newObject.operation = newOperationId;
+      newObject.template = false;
+
+      var newDoc = new CheckPrepare.model(newObject);
+      newDoc.save(function(err, savedDoc){
+        if(err) console.log(err);
+
+      });
+    }
+  });
+};
+
+CheckPrepare.defaultColumns = 'operation|20%, name, createdBy|20%, createdAt|20%';
 CheckPrepare.register();
 
 var rest = require('keystone-rest');

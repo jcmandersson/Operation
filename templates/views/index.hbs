@@ -11,9 +11,9 @@
       <td>Fack</td>
     </tr>
     {{# each checks }}
-      <tr class="check-js">
+      <tr class="check-js" id={{id}}>
         <td><input type="checkbox" class="check-js"></td>
-        <td>{{ articleName }}</td>
+        <td>{{ name }}</td>
         <td>{{ storage }}</td>
         <td>{{ section }}</td>
         <td>{{ shelf }}</td>
@@ -21,20 +21,4 @@
       </tr>
     {{/each}}
   </table>
-
-  <!--
-  <ul class="list-group checked-list-box">
-    {{# each checks }}
-      <li class="list-group-item checkbox">
-        <label>
-          <input type="checkbox">
-          <div class="row">
-            <div class="col-md-8">{{ articleName }}</div>
-            <div class="col-md-4">a</div>
-          </div>
-        </label>
-      </li>
-    {{/each}}
-  </ul>
-  -->
 </div>

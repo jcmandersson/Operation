@@ -22,9 +22,10 @@ Operation.add({
  */
 
 
-Operation.relationship({ref: 'Processteg', path: 'operation'});
-Operation.relationship({ref: 'Artikel', path: 'operation'});
-//Operation.relationship({ ref: 'Kommentar' , path: 'operation' });
+Operation.relationship({path: 'processes', ref: 'Processteg', refPath: 'operation'});
+Operation.relationship({path: 'articles', ref: 'Artikel', refPath: 'operation'});
+Operation.relationship({path: 'prepares', ref: 'Förberedelse', refPath: 'operation'});
+Operation.relationship({path: 'comments', ref: 'Kommentar', refPath: 'operation'});
 
 Operation.schema.statics.search = function(text, callback) {
   var search = new RegExp(text, 'ig');
@@ -44,30 +45,27 @@ Operation.schema.statics.search = function(text, callback) {
     .exec(callback);
 };
 
-
-/*
-var objectIdDel = function(copiedObjectWithId) {
-  if (copiedObjectWithId != null && typeof(copiedObjectWithId) != 'string' &&
-    typeof(copiedObjectWithId) != 'number' && typeof(copiedObjectWithId) != 'boolean' ) {
-    //for array length is defined however for objects length is undefined
-    if (typeof(copiedObjectWithId.length) == 'undefined') {
-      delete copiedObjectWithId._id;
-      for (var key in copiedObjectWithId) {
-        objectIdDel(copiedObjectWithId[key]); //recursive del calls on object elements
-      }
-    }
-    else {
-      for (var i = 0; i < copiedObjectWithId.length; i++) {
-        objectIdDel(copiedObjectWithId[i]);  //recursive del calls on array elements
-      }
-    }
-  }
-}
-
-Operation.schema.methods.copyTemplate = function() {
-  this.lastActiveOn = new Date();
-  return this;
-};*/
+Operation.schema.statics.fromTemplate = function fromTemplate(id, callback) {
+  var thisDoc = this;
+  
+  this.model('Operation').findOne({ 
+      _id: id 
+  }).exec(function(err, doc) {
+    if(err) console.log(err);
+    
+    var newObject = JSON.parse(JSON.stringify(doc));
+    delete newObject._id;
+    newObject.template = false;
+    
+    var newDoc = new Operation.model(newObject);
+    newDoc.save(function(err, savedDoc){
+      if(err) console.log(err);
+      thisDoc.model('Artikel').fromTemplate(doc._id, savedDoc._id);
+      thisDoc.model('Förberedelse').fromTemplate(doc._id, savedDoc._id);
+      thisDoc.model('Processteg').fromTemplate(doc._id, savedDoc._id);
+    });
+  });
+};
 
 Operation.defaultColumns = 'title, state|20%, updatedBy|20%, updatedAt|20%';
 Operation.register();

@@ -1,15 +1,15 @@
-.container {
-  margin-top: 30px;
-  width: 960px;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
+nav {
+  background-color: #004a82;
+  padding-left: 20px !important;
+  padding-bottom: 5px !important;
+  padding-top: 5px !important;
 }
 
-#footer {
+.container {
   margin-top: 30px;
-  border-top: 1px solid @gray-lighter;
-  padding-top: 30px;
-  color: @gray-light;
+  width: @container-width;
+  /*border-left: 1px solid #000;*/
+  /*border-right: 1px solid #000;*/
 }
 
 .list-group-item {
@@ -24,10 +24,11 @@
 .item {
   border-radius: 4px;
   border: solid 1px #C0C0c0;
-  padding: 5px;
-  padding-left: 10px;
-  padding-right: 10px;	
+  //padding: 5px;
+  //padding-left: 10px;
+  //padding-right: 10px;	
   margin-bottom: 10px;
+  padding: 25px 25px 25px 25px;
 }
 
 .edit-checkboxes {
@@ -37,8 +38,172 @@
 
 .remove {
   font-size: 28px;
+  float: right;
 }
 
-.item-text {
-  
+/* All of the below should really be moved to search.css */
+input[type="search"] {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.has-results {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+.form-control {
+  padding-right: 30px;
+}
+
+.form-control + .glyphicon {
+  position: absolute;
+  right: 0;
+  padding: 8px 27px;
+}
+
+.tags {
+  font-size: 70%;
+  font-style: italic;
+}
+
+/* All of the below should really be moved to create.css */
+@article-height: 50px;
+@counter-width: 50px;
+@remover-width: 50px;
+/*@article-width: @container-width - @counter-width - @remover-width px;*/
+@article-width: 350px;
+
+.article {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+
+  float: left;
+  width: @article-width !important;
+  height: @article-height;
+}
+
+.counter {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 0px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 0px;
+
+  float: left;
+  width: @counter-width;
+  border: 1px solid rgb(204, 204, 204);
+  border-right: 0px none;
+  display: block;
+  height: @article-height;
+
+  box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+  /*box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 1px 0px inset;*/
+  box-sizing: border-box;
+
+  text-align: center;
+  padding-top: 9px;
+  padding-bottom: 3px;
+  margin-bottom: 6px;
+}
+
+.counter-choice {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  border-top: 1px solid rgb(204, 204, 204);
+}
+
+.counter-choice-left {
+  /*border-right: 1px solid rgb(204, 204, 204);*/
+  /*width: 8px;*/
+  padding: 0px;
+  margin: 0px;
+}
+
+.remove-article {
+  float: left;
+  width: @remover-width;
+
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 3px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 3px;
+
+  border: 1px solid rgb(204, 204, 204);
+  border-left: 0px none;
+  display: block;
+  height: @article-height;
+
+  /*box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;*/
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 1px 0px;
+  box-sizing: border-box;
+
+  text-align: center;
+  padding-top: 5px;
+  margin-bottom: 6px;
+
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.remove-article:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px inset;
+  cursor: pointer;
+}
+
+.remove-article:active {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 1px 0px inset;
+  cursor: pointer;
+}
+
+@remove-icon-scale: 2;
+.remove-icon {
+  padding-top: 7px;
+
+  transform: scale(@remove-icon-scale, @remove-icon-scale);
+  -ms-transform: scale(@remove-icon-scale, @remove-icon-scale); /* IE 9 */
+  -moz-transform:scale(@remove-icon-scale, @remove-icon-scale); /* Firefox */
+  -webkit-transform:scale(@remove-icon-scale, @remove-icon-scale); /* Safari and Chrome */
+  -o-transform:scale(@remove-icon-scale, @remove-icon-scale); /* Opera */
+}
+
+.add-column {
+  width: 50px;
+  text-align: center;
+
+  background-color: rgba(0, 255, 0, 0.2) !important;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 1px 0px inset;
+}
+
+.add-column:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px inset;
+  cursor: pointer;
+}
+
+.add-column:active {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 1px 0px inset;
+  cursor: pointer;
+}
+
+@add-icon-scale: 1.5;
+.add-icon {
+  padding-top: 0px;
+  margin-left: 0px;
+
+  transform: scale(@add-icon-scale, @add-icon-scale);
+  -ms-transform: scale(@add-icon-scale, @add-icon-scale); /* IE 9 */
+  -moz-transform:scale(@add-icon-scale, @add-icon-scale); /* Firefox */
+  -webkit-transform:scale(@add-icon-scale, @add-icon-scale); /* Safari and Chrome */
+  -o-transform:scale(@add-icon-scale, @add-icon-scale); /* Opera */
+}
+
+.input-box {
+  padding-bottom: 15px;
+}
+
+.article {
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  border: 1px solid #ccc;
+  padding-top: 13px;
+  padding-left: 10px;
 }

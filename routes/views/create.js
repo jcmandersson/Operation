@@ -1,4 +1,5 @@
 var keystone = require('keystone');
+var operation = keystone.list('Operation');
 
 exports = module.exports = function(req, res) {
   var view = new keystone.View(req, res),
@@ -7,8 +8,7 @@ exports = module.exports = function(req, res) {
   // locals.section is used to set the currently selected
   // item in the header navigation.
   locals.section = 'create';
-  
+
   // Render the view
   view.render('create');
-
 };

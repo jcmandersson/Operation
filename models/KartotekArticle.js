@@ -26,7 +26,7 @@ KartotekArticle.relationship({ref: 'Artikel', path: 'kartotek'});
 
 KartotekArticle.schema.statics.search = function(text, callback) {
   var search = new RegExp(text, 'ig');
-  this.model('Kartotek artikel').find({
+  this.model('Kartotekartikel').find({
     $or: [{
       title: search
     }, {
