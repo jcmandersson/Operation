@@ -3,7 +3,7 @@ $(function() {
   var resultsTemplate = Handlebars.compile(compiledResults);
 
   $('#search').keydown(function() {
-    var url = '/api/search?text=' + $(this).val();
+    var url = '/api/search/Operation?text=' + $(this).val();
     $.get(url).done(function(results) {
       $('#results').html(resultsTemplate({ results: results }));
 

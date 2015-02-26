@@ -8,6 +8,10 @@ exports = module.exports = function(req, res) {
   // item in the header navigation.
   locals.section = 'home';
   
+  locals.scripts = [
+    'checklist.js'
+  ];
+  
   kartotek.model.find()
     .exec(function(err, data) {
     if(err) {

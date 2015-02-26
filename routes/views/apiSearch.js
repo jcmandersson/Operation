@@ -2,8 +2,8 @@ var keystone = require('keystone');
 
 exports = module.exports = function (req, res) {
   
-  if(typeof req.query.text === 'undefined' || req.query.text == ''){
-    res.status(500).send('Text is empty');
+  if(typeof req.query.text === 'undefined' || !req.query.text.length){
+    res.send([]);
     return;
   }
   
