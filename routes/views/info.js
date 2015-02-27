@@ -13,34 +13,38 @@ exports = module.exports = function(req, res) {
   // locals.section is used to set the currently selected
   // item in the header navigation.
   locals.section = 'info';
-
+  
   operation.model.find({
-    title: 'Blindtarm'
+    slug: req.query.text
   }).populate('specialty processes')
     .exec(function (err, data) {
       if (err) {
         console.log('DB error');
         console.log(err);
         return;
+      } else if (data.length === 0) {
+        locals.data = {title: "Sidan finns ej"}
+        view.render('info');
+      } else {
+        locals.data = data[0];
+        console.log(data);
+
+        process.model.find({
+          operation: data[0]._id
+        })
+          .exec(function (err, processData) {
+            if (err) {
+              console.log('DB error');
+              console.log(err);
+              return;
+            }
+            console.log(processData);
+            locals.processes = processData;
+
+            view.render('info');
+          });
       }
-      locals.data = data[0];
-      //console.log(data);
-      
-      process.model.find({
-        operation: data[0]._id
-      })
-        .exec(function (err, processData) {
-          if (err) {
-            console.log('DB error');
-            console.log(err);
-            return;
-          }
-          console.log(processData);
-          locals.processes = processData;
-      
-          view.render('info');
-        });
-      
+
     });
 
 };
