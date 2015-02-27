@@ -5,20 +5,36 @@
   
     <ul class="nav nav-pills">
       {{#each processes}}
-          <button type="button" class="btn btn-default navbar-btn" onclick="showContent({{content}})">{{title}}</button>
+          <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
       {{/each}}
     </ul>
-    <div id="process-content"></div>
-  <script>
-      function showContent(content) {};
+
+  {{#each processes}}
+      <div class="process-content" id="content{{@index}}">{{{content}}}</div>
+  {{/each}}
+    
+    
+    
+    <script>
+      var showContent = function(content) {
+          console.log("hej");
+      };
       
       $(document).ready(function() {
+
+          $(".process-content").hide();
+          $("#content0").show();
+          $("#0").addClass('active');
+          
           $(".nav-pills > .navbar-btn").click(function() {
               $(this).addClass('active').siblings().removeClass('active');
+              $(".process-content").hide();
+              $("#content"+this.id).show();
+              
           });
       });
       
-  </script>
+    </script>
 
 </div>
 
