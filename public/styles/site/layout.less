@@ -114,11 +114,13 @@
 }
 
 .remove-article:hover {
+  background-color: rgba(255, 0, 0, 0.35);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px inset;
   cursor: pointer;
 }
 
 .remove-article:active {
+  background-color: rgba(255, 0, 0, 0.4);
   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 1px 0px inset;
   cursor: pointer;
 }
@@ -143,18 +145,20 @@
 }
 
 .add-column:hover {
+  background-color: rgba(0, 255, 0, 0.3) !important;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px inset;
   cursor: pointer;
 }
 
 .add-column:active {
+  background-color: rgba(20, 255, 20, 0.4) !important;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 1px 0px inset;
   cursor: pointer;
 }
 
 @add-icon-scale: 1.5;
 .add-icon {
-  padding-top: 0px;
+  padding-top: 5px;
   margin-left: 0px;
 
   transform: scale(@add-icon-scale, @add-icon-scale);
@@ -197,6 +201,7 @@
   border-bottom-right-radius: 3px;
   border-top-left-radius: 0px;
   border-top-right-radius: 3px;
+  padding-top: 10px;
 }
 
 .synonym {
@@ -248,7 +253,8 @@
 }
 
 
-/* This should be in a separate file */
+
+/* This should be in a separate file. But where? */
 #opName {
   font-size: 30px;
 };
