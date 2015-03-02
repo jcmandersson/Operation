@@ -1,7 +1,7 @@
 var keystone = require('keystone');
-var kartotek = keystone.list('Artikel');
+var operation = keystone.list('Operation');
 
-exports = module.exports = function(req, res) {
+exports = module.exports = function (req, res) {
   var view = new keystone.View(req, res),
     locals = res.locals;
   // locals.section is used to set the currently selected
@@ -11,6 +11,16 @@ exports = module.exports = function(req, res) {
   locals.scripts = [
     'oversikt.js'
   ];
-  
+
+  operation.model.find({
+    template: false
+  }).populate('specialty')
+    .exec(function (err, docs) {
+      docs.forEach(function(e, i){
+        
+      });
+    });
+
+
   view.render('oversikt');
 };

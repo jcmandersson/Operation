@@ -22,7 +22,7 @@ var createNewOperation = function() {
 
 var removeArticle = function(element) {
   var parent = $(element).parent();
-  $(parent).remove();
+  $(parent).remove(); 
 };
 
 var addArticle = function(articleTemplate, results) {
@@ -51,7 +51,7 @@ var findArticles = function(resultsTemplate, articleTemplate) {
     $('.add-column').click(function() {
       addArticle.call(this, articleTemplate, results)
       $('#article-search').val('').removeClass('has-results');
-      $('#kartotekResults').html('');
+      $('.kartotekResults')
     });
   });
 };
