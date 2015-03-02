@@ -1,43 +1,54 @@
 {{!< default}}
 <div class="container">
     <div id="opName">{{data.title}}</div>
+  {{#if data.specialty.name}}
     <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
+  {{/if}}  
   
     <ul class="nav nav-pills">
       {{#each processes}}
           <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
       {{/each}}
+        <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
     </ul>
 
-  {{#each processes}}
-      <div class="process-content" id="content{{@index}}">{{{content}}}</div>
-  {{/each}}
-    
-    
-    
-    <script>
-      var showContent = function(content) {
-          console.log("hej");
-      };
-      
-      $(document).ready(function() {
+    {{#each processes}}
+      <div class="process-content" id="content{{@index}}">
+      {{#each contents}}
+        <div class="process-content-item">
+            <span class="contentTitle">{{title}}</span>
+            <span class="contentText">{{{text}}}</span>
+        </div>
+      {{/each}}
+      </div>
+    {{/each}}
 
-          $(".process-content").hide();
-          $("#content0").show();
-          $("#0").addClass('active');
-          
-          $(".nav-pills > .navbar-btn").click(function() {
-              $(this).addClass('active').siblings().removeClass('active');
-              $(".process-content").hide();
-              $("#content"+this.id).show();
-              
-          });
-      });
-      
-    </script>
-
+    <div class="process-content" id="contentchecklist">
+        <table class="table">
+            <tr class="table-headerstriped">
+                <td></td>
+                <td>Namn</td>
+                <td>Förråd</td>
+                <td>Sektion</td>
+                <td>Hylla</td>
+                <td>Fack</td>
+            </tr>
+          {{# each articles }}
+              <tr data-operationId="{{operation}}" class="check-js" id={{_id}}>
+                  <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
+                  <td>{{ kartotek.name }}</td>
+                  <td>{{ kartotek.storage }}</td>
+                  <td>{{ kartotek.section }}</td>
+                  <td>{{ kartotek.shelf }}</td>
+                  <td>{{ kartotek.tray }}</td>
+              </tr>
+          {{/each}}
+        </table>
+    </div>
+    
 </div>
 
 
+<!--<script src="/js/info.js"></script>-->
 
-<!--<script src="/js/info.js"></script>>
+
