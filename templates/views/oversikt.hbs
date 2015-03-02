@@ -1,10 +1,15 @@
 {{!< default}}
 
 <div class="container">
-    
+    <h2></h2>
     <div class="row">
-        <div class="col-md-4">
-            <div class="title"></div>
+{{#each operations }}
+        <div class="col-md-4 operation">
+            <div class="operation-card">
+                <div class="title">{{ title }}</div>
+                <div class="specialty">{{ specialty.abbrevation }}</div>
+            </div>
         </div>
+{{/each}}
     </div>
 </div>

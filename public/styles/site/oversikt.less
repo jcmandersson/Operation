@@ -1,0 +1,17 @@
+.operation {
+  position: relative;
+  min-height: 150px;
+}
+
+@operationMargin: 5px;
+.operation-card {
+  position: absolute;
+  top: @operationMargin;
+  bottom: @operationMargin;
+  left: @operationMargin;
+  right: @operationMargin;
+  
+  border-radius: 3px;
+  .box-shadow(0px 0px 5px 0px rgba(50, 50, 50, 0.3));
+  padding: 5px;
+}
