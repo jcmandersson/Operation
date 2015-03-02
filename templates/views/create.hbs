@@ -1,121 +1,97 @@
 {{!< default}}
 
 <div class="container">
-  <div class="row">
-    <div class="col-md-offset-3 col-md-6 input-box">
-      <label>Namn:</label>
-      <input type="text" id="operation-name" class="form-control" placeholder="T.ex. 'ACI armbåge'" />
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6 input-box">
+            <label>Namn:</label>
+            <input type="text" id="operation-name" class="form-control" placeholder="T.ex. 'ACI armbåge'" />
+        </div>
+
+        <div class="col-md-offset-3 col-md-6 input-box">
+            <div id="synonyms"></div>
+            <label>Synonymer:</label>
+            <input id="tags_1" type="text" class="form-control tags"/>
+        </div>
+
+        <div class="col-md-offset-3 col-md-6 input-box">
+            <label>Specialitet:</label>
+            <input type="search" id="specialitet-search" class="form-control" placeholder="T.ex. 'ABCD'" />
+            <div id="specialitetResults"></div>
+        </div>
+
+
+        <div class="col-md-offset-3 col-md-6 input-box">
+            <label>Plocklista:</label>
+            <div class="search-box">
+                <input type="search" id="article-search" class="form-control" placeholder="T.ex. 'Tandborste'" />
+            </div>
+            <div id="kartotekResults"></div>
+            <div id="articles"></div>
+        </div>
+
+        <div class="col-md-offset-3 col-md-6 input-box">
+            <button type="button" id="newOperationButton" class="btn btn-primary">Skapa Handbok</button>
+        </div>
     </div>
-
-    <div class="col-md-offset-3 col-md-6 input-box">
-      <label>Synonymer:</label>
-
-      <input type="search" id="synonym-input" class="synonym-input form-control" placeholder="T.ex. 'Taskig armbåge'" />
-      <div class="add-synonym">
-        <a id="add-synonym-btn" class="btn btn-default btn-success" href="#" role="button">
-          <span class="add-synonym-icon glyphicon glyphicon-plus"></span>
-        </a>
-      </div>
-      <div id="synonyms"></div>
-        
-        <label>Synonymer:</label>
-        <input id="tags_1" type="text" class="tags"/>
-        
-    </div>
-
-    <div class="col-md-offset-3 col-md-6 input-box">
-      <label>Specialitet:</label>
-      <input type="search" id="specialitet-search" class="form-control" placeholder="T.ex. 'ABCD'" />
-        <div id="specialitetResults"></div>
-    </div>
-
-      <div class="col-md-offset-3 col-md-6 input-box">
-      <select id="soflow">
-          <!-- This method is nice because it doesn't require extra div tags, but it also doesn't retain the style across all browsers. -->
-          <option>Select an Option</option>
-          <option>Option 1</option>
-          <option>Option 2</option>
-      </select>
-      </div>
-
-      <div class="col-md-offset-3 col-md-6 input-box">
-
-      <select class="js-data-example-ajax">
-          <option value="select2/select2" selected="selected">select2/select2</option>
-      </select>
-      </div>
-
-    <div class="col-md-offset-3 col-md-6 input-box">
-      <label>Plocklista:</label>
-      <div id="articles"></div>
-      <div class="search-box">
-        <input type="search" id="article-search" class="form-control" placeholder="T.ex. 'Tandborste'" />
-      </div>
-      <div id="kartotekResults"></div>
-    </div>
-
-      <div>
-          <button type="button" id="newOperationButton">Skapa Handbok</button>
-      </div>
-      
-  </div>
-    
 </div>
 
 <script id="specialitetResults-template" type="text/x-handlebars-template">
     <table class="table table-striped table-bordered table-hover" id="result-table">
       \{{#each results}}
-          <tr>
-              <td>
-                  <div>\{{ name }}</div>
-              </td>
-          </tr>
-        \{{/each}}
+        <tr>
+            <td>
+                <div>\{{ name }}</div>
+            </td>
+        </tr>
+      \{{/each}}
     </table>
 </script>
 
+
 <script id="kartotekResults-template" type="text/x-handlebars-template">
-  <table class="table table-striped table-bordered table-hover" id="result-table">
-    \{{a}}
-    \{{#each results}}
-      <tr>
-        <td>
-          <div>\{{ name }}</div>
-          <div class="tags">\{{ tags }}</div>
-        </td>
-        <td class="add-column" data-name="\{{ name }}" data-kartotekID="\{{ _id }}">
-          <span class="add-icon glyphicon glyphicon-plus"></span>
-        </td>
-      </tr>
-    \{{/each}}
-  </table>
+    <table class="table table-striped table-bordered table-hover" id="result-table">
+      \{{a}}
+      \{{#each results}}
+        <tr>
+            <td>
+                <div>\{{ name }}</div>
+                <div class="tags">\{{ tags }}</div>
+            </td>
+            <td class="add-column" data-name="\{{ name }}" data-kartotekID="\{{ _id }}">
+                <span class="add-icon glyphicon glyphicon-plus"></span>
+            </td>
+        </tr>
+      \{{/each}}
+    </table>
 </script>
 
 <script id="article-template" type="text/x-handlebars-template">
-    <div class="counter">
-      1
-      <div class="counter-choice">
+    <div>
+        <div class="counter">
+            1
+            <div class="counter-choice">
         <span class="counter-choice-left">
           <span class="glyphicon glyphicon-chevron-up"></span>
         </span>
         <span class="counter-choice-right">
           <span class="glyphicon glyphicon-chevron-down"></span>
         </span>
-      </div>
-    </div>
-    <div class="article" data-kartotekID="\{{id}}">\{{name}}</div>
-    <div class="remove-article">
-      <span class="remove-icon glyphicon glyphicon-remove"></span>
+            </div>
+        </div>
+        <div class="article" data-kartotekID="\{{id}}">\{{name}}</div>
+        <div class="remove-article">
+            <span class="remove-icon glyphicon glyphicon-remove"></span>
+        </div>
     </div>
 </script>
 
 <script id="synonym-template" type="text/x-handlebars-template">
-  <div class="synonym-container">
-    <div class="synonym">\{{name}}</div>
-    <div class="remove-synonym">
-      <span class="remove-synonym-icon glyphicon glyphicon-remove"></span>
+    <div class="synonym-container">
+        <div class="synonym">\{{name}}</div>
+        <div class="remove-synonym">
+            <span class="remove-synonym-icon glyphicon glyphicon-remove"></span>
+        </div>
     </div>
-  </div>
 </script>
 
 <link rel="stylesheet" type="text/css" href="/js/jquery.tagsinput.css" media="screen" />
