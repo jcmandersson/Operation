@@ -4,6 +4,7 @@ var artikel = keystone.list('Artikel');
 
 exports = module.exports = function(done) {
   artikel.model.collection.drop();
+  done();
 };
 
-exports.__defer__ = true;
+//exports.__defer__ = true;
