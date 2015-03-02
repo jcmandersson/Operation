@@ -14,7 +14,7 @@ ProcessContent.add({
   order: { type: Number, required: true, default: 0},
   title: { type: String, required: true },
   text: { type: Types.Html, wysiwyg: true, height: 400},
-  process: { type: Types.Relationship, ref: 'Processteg'}
+  process: { type: Types.Relationship, ref: 'Processteg', many: true, initial: true, required: true}
 });
 
 ProcessContent.schema.statics.fromTemplate = function fromTemplate(processId, newProcessId, callback) {
