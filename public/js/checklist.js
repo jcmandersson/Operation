@@ -3,13 +3,13 @@
  */
 var socket = io();
 
-$(function(){
+$(function() {
   $('.check-js').click(function() {
     socket.emit('checkboxClick', $(this).attr('id'));
-  });  
+  });
 });
 
-var updateTableRow = function(tableRow, isChecked){
+var updateTableRow = function(tableRow, isChecked) {
   var checkbox = tableRow.find('input');
   checkbox.prop('checked', isChecked);
   if (isChecked) {
@@ -21,13 +21,13 @@ var updateTableRow = function(tableRow, isChecked){
   }
 };
 
-socket.on('checkboxClick', function(checkObject){
+socket.on('checkboxClick', function(checkObject) {
   var tableRow = $('#' + checkObject.id);
   updateTableRow(tableRow, checkObject.isChecked);
 });
 
-socket.on('getCheckboxes', function(checkboxes){ //TODO: Ändra så att alla klienter inte uppdaterar för att en ny ansluter.
-  for(var index in checkboxes){
+socket.on('getCheckboxes', function(checkboxes) { //TODO: Ändra så att alla klienter inte uppdaterar för att en ny ansluter.
+  for (var index in checkboxes) {
     var checkbox = checkboxes[index];
     var tableRow = $('#' + checkbox._id);
     var isChecked = checkbox.checked;

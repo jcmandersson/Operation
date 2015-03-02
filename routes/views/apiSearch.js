@@ -1,12 +1,11 @@
 var keystone = require('keystone');
 
 exports = module.exports = function (req, res) {
-  
-  if(typeof req.query.text === 'undefined' || !req.query.text.length){
+  if (typeof req.query.text === 'undefined' || !req.query.text.length) {
     res.send([]);
     return;
   }
-  
+
   var model = keystone.list(req.params.model);
   model.model.search(req.query.text)
     .populate('createdBy updatedBy specialty')
