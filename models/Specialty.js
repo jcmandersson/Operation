@@ -15,7 +15,7 @@ Specialty.relationship({ ref: 'Operation', path: 'specialty' });
 
 Specialty.schema.statics.search = function(text, callback) {
   var search = new RegExp(text, 'ig');
-  return this.model('Operation').find({
+  return this.model('Specialitet').find({
     $or: [{
       name: search
     }, {
