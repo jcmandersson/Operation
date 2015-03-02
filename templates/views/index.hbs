@@ -11,8 +11,8 @@
       <td>Fack</td>
     </tr>
     {{# each checks }}
-      <tr class="check-js" id={{_id}}>
-        <td><input type="checkbox" class="check-js"></td>
+      <tr data-operationId="{{operation}}"  class="check-js" id={{_id}}>
+        <td><input type="checkbox"></td>
         <td>{{ name }}</td>
         <td>{{ storage }}</td>
         <td>{{ section }}</td>
