@@ -42,10 +42,10 @@ var findArticles = function(resultsTemplate, articleTemplate) {
     $('#kartotekResults').html(resultsTemplate({ results: results }));
 
     if (results.length != 0) {
-      $('#search').addClass('has-results');
+      $('#article-search').addClass('has-results');
     }
     else {
-      $('#search').removeClass('has-results');
+      $('#article-search').removeClass('has-results');
     }
 
     $('.add-column').click(function() {

@@ -30,13 +30,13 @@
             </li>
         {{/each}}
       </ul>
-      <form class="navbar-form navbar-right" role="search">
+      <form class="navbar-form navbar-right operationSearch" role="search">
           <div class="form-group has-feedback">
               <input type="search" id="search" class="form-control" autocomplete="off" placeholder="Sök..." />
               <i class="glyphicon glyphicon-search form-control-feedback"></i>
               <div id="results"></div>
               <script id="results-template" type="text/x-handlebars-template">
-                  <table class="table table-striped table-bordered table-hover" id="result-table">
+                  <table class="table table-striped table-bordered table-hover result-table operationResults">
                     \{{a}}
                     \{{#each results}}
                       <tr>
