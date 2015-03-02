@@ -15,7 +15,7 @@ exports = module.exports = function(req, res) {
   locals.section = 'info';
   
   operation.model.find({
-    slug: req.query.text
+    slug: req.params.slug
   }).populate('specialty processes')
     .exec(function (err, data) {
       if (err) {
