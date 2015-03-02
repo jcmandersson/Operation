@@ -45,11 +45,13 @@ var findArticles = function(resultsTemplate, articleTemplate) {
       $('#article-search').addClass('has-results');
     }
     else {
-      $('#article-search').removeClass('has-results');
+      $('#article-search')
     }
 
     $('.add-column').click(function() {
       addArticle.call(this, articleTemplate, results)
+      $('#article-search').val('').removeClass('has-results');
+      $('#kartotekResults').html('');
     });
   });
 };
