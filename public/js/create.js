@@ -1,89 +1,83 @@
+var createNewOperation = function() {
+  var tags = $('#tags_1').val();
 
+  $.ajax({
+    type: 'POST',
+    url: '/api/operations',
+    data: {
+      title: $('#operation-name').val(),
+      tags: tags
+    }
+  })
+    .done(function (msg) {
+      // Contains the created model
+      console.log(msg);
+    })
+    .fail(function (err, status) {
+      console.log('Någonting gick fel!');
+      console.log(err);
+      console.log(status);
+    });
+};
+
+var removeArticle = function(element) {
+  var parent = $(element).parent();
+  $(parent).remove();
+};
+
+var addArticle = function(articleTemplate, results) {
+  var name = $(this).data('name');
+  var newArticle = $(articleTemplate({ name: name })).appendTo('#articles');
+  //console.log(newArticle.find('.remove-article'))
+  newArticle.find('.remove-article').click(function() {
+    //removeArticle.apply(this);
+    removeArticle(this);
+  });
+};
+
+var findArticles = function(resultsTemplate, articleTemplate) {
+  var articleName = $('#article-search').val();
+  var url = '/api/Kartotekartikels?text=' + articleName;
+  $.get(url).done(function(results) {
+    $('#kartotekResults').html(resultsTemplate({ results: results }));
+
+    if (results.length != 0) {
+      $('#search').addClass('has-results');
+    }
+    else {
+      $('#search').removeClass('has-results');
+    }
+
+    $('.add-column').click(function() {
+      addArticle.call(this, articleTemplate, results)
+    });
+  });
+};
+
+var addSynonym = function() {
+  var name = $('#synonym-input').val();
+  $('#synonyms').append(synonymTemplate({ name: name }));
+};
+
+// TODO keyCode == 13
 $(function() {
-  
   var compiledSynonym = $('#synonym-template').html();
   var synonymTemplate = Handlebars.compile(compiledSynonym);
 
-  var compiledResults = $('#results-template').html();
+  var compiledResults = $('#kartotekResults-template').html();
   var resultsTemplate = Handlebars.compile(compiledResults);
 
   var compiledArticle = $('#article-template').html();
   var articleTemplate = Handlebars.compile(compiledArticle);
 
-  $("#newOperationButton").click(function () {
-    /*
-    //Get tags and build string separated with ', '
-    var tags = '';
-    $('.synonym').each(function(index) {
-      if(index == 0){
-        tags = $( this ).text();
-      }
-      else {
-        tags += ', ' + ($(this).text());
-      }
-    });*/
-    
-    var tags = $('#tags_1').val();
-    
-    $.ajax({
-      type: 'POST',
-      url: '/api/operations',
-      data: {
-        title: $('#operation-name').val(),
-        tags: tags
-      }
-    })
-      .done(function (msg) {
-        console.log(msg); //Innehåller den skapade modellen
-      })
-      .fail(function (err, status) {
-        console.log('Någonting gick fel!');
-        console.log(err);
-        console.log(status);
-      });
-  });
-  
-  var addArticle = function(results) {
-    var name = $(this).data('name');
-    $('#articles').append(articleTemplate({ name: name }));
-  };
-
-  $('#article-search').keydown(function() {
-    var self = this;
-
-    var url = '/api/Kartotekartikels/' + $(this).val();
-    $.get(url).done(function(results) {
-      $('#results').html(resultsTemplate({ results: results }));
-
-      if (results.length != 0) {
-        $('#search').addClass('has-results');
-      }
-      else {
-        $('#search').removeClass('has-results');
-      }
-
-      $('.add-column').click(addArticle);
-    });
-  });
-
- /* $('#add-synonym-btn').on("keypress", function(e) {
-    if (e.keyCode == 13) {
-      var name = $('#synonym-input').val();
-      $('#synonyms').append(synonymTemplate({ name: name }));
-      return false; // prevent the button click from happening
-    }
-  });*/
-  
-  $('#add-synonym-btn').click(function() {
-    var name = $('#synonym-input').val();
-    $('#synonyms').append(synonymTemplate({ name: name }));
-  });
-  
+  $('#newOperationButton').click(createNewOperation);
+  $('#article-search').keydown(findArticles.bind(undefined, resultsTemplate, articleTemplate));
+  $('#add-synonym-btn').click(addSynonym.bind(undefined, synonymTemplate));
   $('#tags_1').tagsInput({
-          width:'auto', 
-          defaultText:'Lägg till synonym',
-          removeWithBackspace : false,
-          height : '40px'});
-  
+    width: 'auto',
+    defaultText: 'Lägg till synonym',
+    removeWithBackspace: false,
+    height: '40px'
+  });
 });
 
