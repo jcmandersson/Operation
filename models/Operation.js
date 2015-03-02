@@ -12,7 +12,7 @@ Operation.add({
   title: {type: String, required: true},
   //id: {type: String, default: '0', required: true},
   tags: { type: String },
-  state: {type: Types.Select, options: 'Utkast, Publicerad, Arkiverad', default: 'Utkast', index: true},
+  state: {type: Types.Select, options: 'Utkast, Publicerad, Arkiverad', default: 'Utkast'},
   specialty: {type: Types.Relationship, ref: 'Specialitet', many: false},
   template: {type: Types.Boolean, default: true}
 });

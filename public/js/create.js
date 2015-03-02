@@ -44,7 +44,7 @@ var createNewOperation = function() {
 
 var removeArticle = function(element) {
   var parent = $(element).parent();
-  $(parent).remove();
+  $(parent).remove(); 
 };
 
 var searchSpecialitet = function(specialitetResultsTemplate) {
@@ -77,14 +77,16 @@ var findArticles = function(resultsTemplate, articleTemplate) {
     $('#kartotekResults').html(resultsTemplate({ results: results }));
 
     if (results.length != 0) {
-      $('#search').addClass('has-results');
+      $('#article-search').addClass('has-results');
     }
     else {
-      $('#search').removeClass('has-results');
+      $('#article-search')
     }
 
     $('.add-column').click(function() {
       addArticle.call(this, articleTemplate, results)
+      $('#article-search').val('').removeClass('has-results');
+      $('.kartotekResults')
     });
   });
 };

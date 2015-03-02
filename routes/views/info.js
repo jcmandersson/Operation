@@ -13,7 +13,7 @@ exports = module.exports = function(req, res) {
   // locals.section is used to set the currently selected
   // item in the header navigation.
   locals.section = 'info';
-  
+
   operation.model.find({
     slug: req.params.slug
   }).populate('specialty processes')
@@ -44,7 +44,5 @@ exports = module.exports = function(req, res) {
             view.render('info');
           });
       }
-
     });
-
 };
