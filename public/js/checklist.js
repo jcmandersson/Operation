@@ -2,14 +2,20 @@
  * Created by Spinpoo on 2015-02-20.
  */
 var socket = io();
+var operationId;
 
-$(function() {
+$(function(){
   $('.check-js').click(function() {
-    socket.emit('checkboxClick', $(this).attr('id'));
+    socket.emit('checkboxClick', {operationId:operationId, id:$(this).attr('id')});
   });
 });
 
-var updateTableRow = function(tableRow, isChecked) {
+socket.on('connect', function(){ //Runs after socket has been started.
+  operationId = $('.check-js').attr('data-operationId');
+  socket.emit('operationOpen', operationId);
+});
+
+var updateTableRow = function(tableRow, isChecked){
   var checkbox = tableRow.find('input');
   checkbox.prop('checked', isChecked);
   if (isChecked) {
@@ -21,17 +27,16 @@ var updateTableRow = function(tableRow, isChecked) {
   }
 };
 
-socket.on('checkboxClick', function(checkObject) {
+socket.on('checkboxClick', function(checkObject){
   var tableRow = $('#' + checkObject.id);
   updateTableRow(tableRow, checkObject.isChecked);
 });
 
-socket.on('getCheckboxes', function(checkboxes) { //TODO: Ändra så att alla klienter inte uppdaterar för att en ny ansluter.
-  for (var index in checkboxes) {
+socket.on('getCheckboxes', function(checkboxes){
+  for(var index in checkboxes){
     var checkbox = checkboxes[index];
     var tableRow = $('#' + checkbox._id);
     var isChecked = checkbox.checked;
     updateTableRow(tableRow, isChecked);
   }
-  console.log("Stuff");
 });

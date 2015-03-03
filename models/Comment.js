@@ -8,9 +8,9 @@ var Comment = new keystone.List('Kommentar', {
 });
 
 Comment.add({
-  operation: {type: Types.Relationship, ref: 'Operation', refPath: 'title', required: true, initial: true, index: true},
-  author: {type: Types.Relationship, initial: true, ref: 'User', index: true},
-  commentState: {type: Types.Select, options: ['Publicerad', 'Arkiverad'], default: 'Publicerad', index: true},
+  operation: {type: Types.Relationship, ref: 'Operation', refPath: 'title', required: true, initial: true},
+  author: {type: Types.Relationship, initial: true, ref: 'User'},
+  commentState: {type: Types.Select, options: ['Publicerad', 'Arkiverad'], default: 'Publicerad'},
   text: {type: String, initial: true, required: true}
 });
 
