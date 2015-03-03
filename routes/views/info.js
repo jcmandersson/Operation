@@ -45,7 +45,6 @@ exports = module.exports = function(req, res) {
             console.log(articleData);
             locals.articles = articleData;
             view.render('info');
-
           });
         
         process.model.find({
@@ -72,6 +71,7 @@ exports = module.exports = function(req, res) {
                 });
               });
             locals.processes = processData;
+            //view.render('info');
           });
         }
     });
