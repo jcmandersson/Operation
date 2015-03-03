@@ -12,15 +12,19 @@ exports = module.exports = function (req, res) {
     'oversikt.js'
   ];
 
-  operation.model.find({
-    //template: false
-  }).populate('specialty')
-    .exec(function (err, docs) {
-      console.log(docs);
-      docs.forEach(function(e, i){
-        
+  view.on('init', function (next) {
+    operation.model.find({
+      //template: false
+    }).populate('specialty')
+      .exec(function (err, docs) {
+        console.log(docs);
+        docs.forEach(function (e, i) {
+
+        });
+        locals.operations = docs;
+        next();
       });
-      locals.operations = docs;
-      view.render('oversikt');
-    });
+  });
+
+  view.render('oversikt');
 };
