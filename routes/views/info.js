@@ -7,6 +7,11 @@ var process = keystone.list('Processteg');
 var content = keystone.list('Processinnehåll');
 var article = keystone.list('Artikel');
 
+/**
+ * We have a problem with were to put the view.render()
+ * */
+
+
 exports = module.exports = function(req, res) {
   var view = new keystone.View(req, res),
     locals = res.locals;
@@ -32,6 +37,7 @@ exports = module.exports = function(req, res) {
         view.render('info');
       } else {
         locals.data = data[0];
+        console.log(data);
 
         article.model.find({
           operation: data[0]._id
@@ -42,10 +48,9 @@ exports = module.exports = function(req, res) {
               console.log(err);
               return;
             }
-            console.log(articleData);
+            //console.log(articleData);
             locals.articles = articleData;
             view.render('info');
-
           });
         
         process.model.find({
@@ -57,7 +62,7 @@ exports = module.exports = function(req, res) {
               console.log(err);
               return;
             }
-            
+            //console.log(processData);
             processData.forEach(function(e, i){
               content.model.find({
                 process: e._id
@@ -68,10 +73,12 @@ exports = module.exports = function(req, res) {
                     console.log(err);
                     return;
                   }
+                  //console.log(contentData);
                   e.contents = contentData;
                 });
               });
             locals.processes = processData;
+            //view.render('info');
           });
         }
     });
