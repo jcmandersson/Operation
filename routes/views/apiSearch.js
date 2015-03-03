@@ -5,7 +5,6 @@ exports = module.exports = function (req, res) {
     res.send([]);
     return;
   }
-
   var model = keystone.list(req.params.model);
   model.model.search(req.query.text)
     .populate('createdBy updatedBy specialty')

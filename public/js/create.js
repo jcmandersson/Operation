@@ -1,6 +1,6 @@
 var createNewOperation = function() {
   var tags = $('#tags_1').val();
-
+  
   $.ajax({
     type: 'POST',
     url: '/api/operations',
@@ -10,8 +10,30 @@ var createNewOperation = function() {
     }
   })
     .done(function (msg) {
-      // Contains the created model
-      console.log(msg);
+      console.log(msg); //Contains the created Operation-model
+
+      //adding articles here
+      $('.article').each(function(index){
+
+        $.ajax({
+          type: 'POST',
+          url: '/api/artikels',
+          data: {
+            name: $(this).text(),
+            kartotek : $(this).attr("data-kartotekID"),
+            operation: msg._id
+          }
+        })
+          .done(function( msg ) {
+            console.log(msg); //Contains the created Article-model
+          })
+          .fail(function(err, status){
+            console.log('Någonting gick fel!');
+            console.log(err);
+            console.log(status);
+          });
+      });
+
     })
     .fail(function (err, status) {
       console.log('Någonting gick fel!');
@@ -22,15 +44,28 @@ var createNewOperation = function() {
 
 var removeArticle = function(element) {
   var parent = $(element).parent();
-  $(parent).remove();
+  $(parent).remove(); 
+};
+
+var searchSpecialitet = function(specialitetResultsTemplate) {
+  var specialitetName = $('#article-search').val();
+  var url = '/api/Specialitets?text=' + specialitetName;
+  $.get(url).done(function (results) {
+    $('#specialitetResults').html(specialitetResultsTemplate({results: results}));
+    if (results.length) { //FIX THIS!
+      $('#search').addClass('has-results');
+    } else {
+      $('#search').removeClass('has-results');
+    }
+  });
 };
 
 var addArticle = function(articleTemplate, results) {
   var name = $(this).data('name');
-  var newArticle = $(articleTemplate({ name: name })).appendTo('#articles');
-  //console.log(newArticle.find('.remove-article'))
+  var kartotekID = $(this).data('kartotekID');
+
+  var newArticle = $(articleTemplate({ name: name, id: kartotekID })).appendTo('#articles');
   newArticle.find('.remove-article').click(function() {
-    //removeArticle.apply(this);
     removeArticle(this);
   });
 };
@@ -42,14 +77,16 @@ var findArticles = function(resultsTemplate, articleTemplate) {
     $('#kartotekResults').html(resultsTemplate({ results: results }));
 
     if (results.length != 0) {
-      $('#search').addClass('has-results');
+      $('#article-search').addClass('has-results');
     }
     else {
-      $('#search').removeClass('has-results');
+      $('#article-search')
     }
 
     $('.add-column').click(function() {
       addArticle.call(this, articleTemplate, results)
+      $('#article-search').val('').removeClass('has-results');
+      $('.kartotekResults')
     });
   });
 };
@@ -65,13 +102,17 @@ $(function() {
   var synonymTemplate = Handlebars.compile(compiledSynonym);
 
   var compiledResults = $('#kartotekResults-template').html();
-  var resultsTemplate = Handlebars.compile(compiledResults);
+  var kartotekResultsTemplate = Handlebars.compile(compiledResults);
 
   var compiledArticle = $('#article-template').html();
   var articleTemplate = Handlebars.compile(compiledArticle);
 
+  var compiledSpecialitetResults = $('#specialitetResults-template').html();
+  var specialitetResultsTemplate = Handlebars.compile(compiledSpecialitetResults);
+  
+  $('#specialitet-search').keyup(searchSpecialitet.bind(undefined, specialitetResultsTemplate));
   $('#newOperationButton').click(createNewOperation);
-  $('#article-search').keydown(findArticles.bind(undefined, resultsTemplate, articleTemplate));
+  $('#article-search').keydown(findArticles.bind(undefined, kartotekResultsTemplate, articleTemplate));
   $('#add-synonym-btn').click(addSynonym.bind(undefined, synonymTemplate));
   $('#tags_1').tagsInput({
     width: 'auto',
