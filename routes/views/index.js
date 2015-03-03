@@ -14,14 +14,14 @@ exports = module.exports = function(req, res) {
 
   kartotek.model.find()
     .exec(function(err, data) {
-    if (err) {
-      console.log('DB error');
-      console.log(err);
-    }
-    else {
-      locals.checks = data;
-      // Render the view
-      view.render('index');
-    }
+      if (err) {
+        console.log('DB error');
+        console.log(err);
+      }
+      else {
+        locals.checks = data;
+        // Render the view
+        view.render('index');
+      }
   });
 };
