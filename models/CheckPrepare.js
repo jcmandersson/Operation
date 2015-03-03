@@ -44,6 +44,32 @@ CheckPrepare.schema.statics.fromTemplate = function fromTemplate(operationId, ne
   });
 };
 
+CheckPrepare.schema.statics.calculateProgress = function calculateProgress(operationId, callback) {
+  var model = this.model('Förberedelse');
+  model.find({
+    operation: operationId
+  }).exec(function(err, data){
+    if(err) console.log(err);
+
+    var totalCheckboxes = data.length;
+
+    model.find({
+      operation: operationId,
+      checked: true
+    }).exec(function(err, checkedData){
+      if(err) console.log(err);
+
+      var checkedBoxes = checkedData.length;
+      callback({
+        total: totalCheckboxes,
+        checked: checkedBoxes
+      });
+
+    });
+  });
+
+};
+
 CheckPrepare.defaultColumns = 'operation|20%, name, createdBy|20%, createdAt|20%';
 CheckPrepare.register();
 

@@ -60,6 +60,25 @@ Operation.schema.statics.fromTemplate = function fromTemplate(id, callback) {
   });
 };
 
+Operation.schema.methods.calculateProgress = function calculateProgress(cb){
+  var thisOp = this;
+  
+  thisOp.model('Artikel').calculateProgress(thisOp, function(articleProgress){
+    thisOp.model('Förberedelse').calculateProgress(thisOp, function(prepareProgress){
+      var data = {
+        article: articleProgress,
+        prepare: prepareProgress,
+        all: {
+          total: articleProgress.total + prepareProgress.total,
+          checked: articleProgress.checked + prepareProgress.checked
+        }
+      };
+      
+      cb(data);
+    });
+  });
+};
+
 Operation.defaultColumns = 'title, state|20%, updatedBy|20%, updatedAt|20%';
 Operation.register();
 
