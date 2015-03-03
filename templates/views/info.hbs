@@ -3,13 +3,20 @@
     <div id="opName">{{data.title}}</div>
   {{#if data.specialty.name}}
     <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
-  {{/if}}  
-  
+  {{/if}}
+
+  {{#if data.tags}}
+      <div id ="synonyms">Synonymer: {{data.tags}}</div>
+  {{/if}}
+
+
     <ul class="nav nav-pills">
       {{#each processes}}
           <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
       {{/each}}
+    {{#if articles}}
         <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
+    {{/if}}
     </ul>
 
     {{#each processes}}
@@ -23,11 +30,14 @@
       </div>
     {{/each}}
 
+
+{{#if articles}}
     <div class="process-content" id="contentchecklist">
         <table class="table">
             <tr class="table-headerstriped">
                 <td></td>
                 <td>Namn</td>
+                <td>Antal</td>
                 <td>Förråd</td>
                 <td>Sektion</td>
                 <td>Hylla</td>
@@ -37,6 +47,7 @@
               <tr data-operationId="{{operation}}" class="check-js" id={{_id}}>
                   <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
                   <td>{{ kartotek.name }}</td>
+                  <td>{{ amount }}</td>
                   <td>{{ kartotek.storage }}</td>
                   <td>{{ kartotek.section }}</td>
                   <td>{{ kartotek.shelf }}</td>
@@ -45,6 +56,7 @@
           {{/each}}
         </table>
     </div>
+{{/if}}
     
 </div>
 
