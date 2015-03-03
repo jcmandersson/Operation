@@ -14,7 +14,8 @@ exports = module.exports = function(req, res) {
   locals.section = 'info';
   locals.scripts = [
     'info.js',
-    'checklist.js'
+    'checklist.js',
+    'checkEffect.js'
   ];
 
   view.on('init', function(next) {
