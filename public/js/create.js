@@ -50,12 +50,13 @@ var removeArticle = function(element) {
 var searchSpecialitet = function(specialitetResultsTemplate) {
   var specialitetName = $('#article-search').val();
   var url = '/api/Specialitets?text=' + specialitetName;
+  
   $.get(url).done(function (results) {
     $('#specialitetResults').html(specialitetResultsTemplate({results: results}));
     if (results.length) { //FIX THIS!
-      $('#search').addClass('has-results');
+      $('#specialitet-search').addClass('has-results');
     } else {
-      $('#search').removeClass('has-results');
+      $('#specialitet-search').removeClass('has-results');
     }
   });
 };
@@ -120,5 +121,38 @@ $(function() {
     removeWithBackspace: false,
     height: '40px'
   });
+  
+  $(".js-data-example-ajax").select2({
+    
+    ajax: {
+      type: 'GET',
+      url: '/api/search/Specialitet/',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        console.log(params);
+        console.log(params.term);
+        return {
+          
+          text: params.term // search term
+        };
+      },
+      processResults: function (data) {
+        console.log(data);
+        
+        return {
+          results: $.map(data, function (item) {
+            return {
+              text: item.name, id: item._id, abbrevation: item.abbrevation
+            }
+          })
+        };
+      },
+      cache: true
+    },
+    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+    minimumInputLength: 0
+  });
+  
 });
 
