@@ -14,7 +14,9 @@
       {{#each processes}}
           <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
       {{/each}}
+    {{#if articles}}
         <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
+    {{/if}}
     </ul>
 
     {{#each processes}}
@@ -28,6 +30,8 @@
       </div>
     {{/each}}
 
+
+{{#if articles}}
     <div class="process-content" id="contentchecklist">
         <table class="table">
             <tr class="table-headerstriped">
@@ -50,6 +54,7 @@
           {{/each}}
         </table>
     </div>
+{{/if}}
     
 </div>
 
