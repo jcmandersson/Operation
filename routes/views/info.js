@@ -48,7 +48,7 @@ exports = module.exports = function(req, res) {
               console.log(err);
               return;
             }
-            //console.log(articleData);
+            console.log(articleData);
             locals.articles = articleData;
             view.render('info');
           });
