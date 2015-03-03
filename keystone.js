@@ -70,7 +70,8 @@ keystone.set('nav', {
     'Processteg',
     'Förberedelse',
     'Artikel',
-    'Kommentar'
+    'Kommentar',
+    'Processinnehåll'
   ],
   'Kartotek': [
     'Kartotekartikel'

@@ -10,7 +10,7 @@ var Operation = new keystone.List('Operation', {
 
 Operation.add({
   title: {type: String, required: true},
-  //id: {type: String, default: '0', required: true},
+  linda_id: {type: String, default: '0', required: true},
   tags: { type: String },
   state: {type: Types.Select, options: 'Utkast, Publicerad, Arkiverad', default: 'Utkast', index: true},
   specialty: {type: Types.Relationship, ref: 'Specialitet', many: false},
