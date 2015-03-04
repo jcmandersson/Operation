@@ -8,7 +8,7 @@ var CheckPrepare = new keystone.List('Förberedelse', {
 });
 
 CheckPrepare.add({
-  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'prepares', required: true, initial: true, index: true },
+  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'prepares', required: true, initial: true },
   name: { type: String, required: true, initial: true },
   process: { type: Types.Relationship, initial: true, ref: 'Processteg', refPath: 'title' },
   checked: { type: Types.Boolean, default: false },
@@ -42,6 +42,32 @@ CheckPrepare.schema.statics.fromTemplate = function fromTemplate(operationId, ne
       });
     }
   });
+};
+
+CheckPrepare.schema.statics.calculateProgress = function calculateProgress(operationId, callback) {
+  var model = this.model('Förberedelse');
+  model.find({
+    operation: operationId
+  }).exec(function(err, data){
+    if(err) console.log(err);
+
+    var totalCheckboxes = data.length;
+
+    model.find({
+      operation: operationId,
+      checked: true
+    }).exec(function(err, checkedData){
+      if(err) console.log(err);
+
+      var checkedBoxes = checkedData.length;
+      callback({
+        total: totalCheckboxes,
+        checked: checkedBoxes
+      });
+
+    });
+  });
+
 };
 
 CheckPrepare.defaultColumns = 'operation|20%, name, createdBy|20%, createdAt|20%';

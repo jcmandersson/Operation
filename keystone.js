@@ -70,7 +70,8 @@ keystone.set('nav', {
     'Processteg',
     'Förberedelse',
     'Artikel',
-    'Kommentar'
+    'Kommentar',
+    'Processinnehåll'
   ],
   'Kartotek': [
     'Kartotekartikel'
@@ -81,39 +82,8 @@ keystone.set('nav', {
 
 keystone.start({
   onHttpServerCreated: function() {
-    var checklist = keystone.list('Artikel');
-    
-    //Starta socket.io
-    keystone.io = require('socket.io').listen(keystone.httpServer);
-
-    var sendCheckboxes = function(){ //Send checkboxes to clients
-      checklist.model.find()
-        .exec(function(err, checkboxes) {
-          if(err) {
-            console.log('DB error');
-            console.log(err);
-          }
-          else {
-            keystone.io.emit('getCheckboxes', checkboxes);
-          }
-        });
-    };
-
-    keystone.io.on('connection', function(socket){
-      sendCheckboxes();
-      socket.on('checkboxClick', function(id){ //Update checked status in database and send to clients.
-        checklist.model.findOne({ _id: id }, function (err, checkbox){
-          if(err){
-            console.log('ID: '+id +  ' kunde inte hittas');
-            console.log(err);
-            return;
-          }
-          checkbox.checked = !checkbox.checked;
-          checkbox.save();
-          keystone.io.emit('checkboxClick', {id:id, isChecked: checkbox.checked});
-        });
-      });
-    });
+    var checklist = require('./lib/checklist.js');//Load socket.io for checklists.
+    checklist(keystone);
   }
 });
 

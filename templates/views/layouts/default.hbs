@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Operation</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+
+    <link href="/js/lib/select2/css/select2.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/js/jquery.tagsinput.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/js/lib/jquery-ui-1.11.3.custom/jquery-ui.min.css" media="screen" />
     <link href="/styles/site.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"/>
@@ -14,8 +19,6 @@
 </head>
 
 <body>
-<!--Flyttat upp denna för att create skulle funka. Fråga mej/Falk-->
-<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 
 <nav class="collapse navbar-collapse bs-navbar-collapse">
     <div class="header-container">
@@ -27,19 +30,21 @@
             </li>
         {{/each}}
       </ul>
-      <form class="navbar-form navbar-right" role="search">
+      <form class="navbar-form navbar-right operationSearch" role="search">
           <div class="form-group has-feedback">
               <input type="search" id="search" class="form-control" autocomplete="off" placeholder="Sök..." />
               <i class="glyphicon glyphicon-search form-control-feedback"></i>
               <div id="results"></div>
               <script id="results-template" type="text/x-handlebars-template">
-                  <table class="table table-striped table-bordered table-hover" id="result-table">
+                  <table class="table table-striped table-bordered table-hover result-table operationResults">
                     \{{a}}
                     \{{#each results}}
                       <tr>
                           <td>
-                              <div>\{{ title }}</div>
-                              <div class="tags">\{{ tags }}</div>
+                              <a href="/info/\{{ slug }}">
+                                <div>\{{ title }}</div>
+                                  <div class="tags">\{{ tags }}</div>
+                              </a>
                           </td>
                       </tr>
                     \{{/each}}
@@ -53,9 +58,13 @@
 <div id="body">
   {{{body}}}
 </div>
+
+<script src="/js/lib/jquery/jquery-2.1.1.min.js"></script>
+<script src="/js/lib/jquery-ui-1.11.3.custom/jquery-ui.min.js"></script>
 <script src="/js/lib/bootstrap/bootstrap-3.2.0.min.js"></script>
 <script src="/js/lib/handlebars/handlebars-v3.0.0.js"></script>
-<script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+<script src="/js/lib/select2/js/select2.min.js"></script>
+<script src="/js/lib/socket.io.js"></script>
 <script src="/js/search.js"></script>
 {{#each scripts}}
     <script src="/js/{{this}}"></script>

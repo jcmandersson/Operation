@@ -1,16 +1,66 @@
 {{!< default}}
 <div class="container">
     <div id="opName">{{data.title}}</div>
+  {{#if data.specialty.name}}
     <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
-  
+  {{/if}}
+
+  {{#if data.tags}}
+      <div id ="synonyms">Synonymer: {{data.tags}}</div>
+  {{/if}}
+
+
     <ul class="nav nav-pills">
       {{#each processes}}
-          <button type="button" class="btn btn-default navbar-btn" onclick="showContent({{content}})">{{title}}</button>
+          <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
       {{/each}}
+    {{#if articles}}
+        <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
+    {{/if}}
     </ul>
-    <div id="process-content"></div>
+
+    {{#each processes}}
+      <div class="process-content" id="content{{@index}}">
+      {{#each contents}}
+        <div class="process-content-item">
+            <span class="contentTitle">{{title}}</span>
+            <span class="contentText">{{{text}}}</span>
+        </div>
+      {{/each}}
+      </div>
+    {{/each}}
+
+
+{{#if articles}}
+    <div class="process-content" id="contentchecklist">
+        <table class="table">
+            <tr class="table-headerstriped">
+                <td></td>
+                <td>Namn</td>
+                <td>Antal</td>
+                <td>Förråd</td>
+                <td>Sektion</td>
+                <td>Hylla</td>
+                <td>Fack</td>
+            </tr>
+          {{# each articles }}
+              <tr data-operationId="{{operation}}" class="check-js" id={{_id}}>
+                  <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
+                  <td>{{ kartotek.name }}</td>
+                  <td>{{ amount }}</td>
+                  <td>{{ kartotek.storage }}</td>
+                  <td>{{ kartotek.section }}</td>
+                  <td>{{ kartotek.shelf }}</td>
+                  <td>{{ kartotek.tray }}</td>
+              </tr>
+          {{/each}}
+        </table>
+    </div>
+{{/if}}
+    
 </div>
 
 
+<!--<script src="/js/info.js"></script>-->
 
-<!--<script src="/js/info.js"></script>>
+

@@ -7,21 +7,21 @@ exports = module.exports = function(req, res) {
   // locals.section is used to set the currently selected
   // item in the header navigation.
   locals.section = 'home';
-  
+
   locals.scripts = [
     'checklist.js'
   ];
-  
+
   kartotek.model.find()
     .exec(function(err, data) {
-    if(err) {
-      console.log('DB error');
-      console.log(err);
-    }
-    else {
+      if (err) {
+        console.log('DB error');
+        console.log(err);
+      }
+      else {
         locals.checks = data;
         // Render the view
         view.render('index');
-    }
+      }
   });
 };

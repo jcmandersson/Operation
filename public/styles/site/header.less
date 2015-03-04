@@ -9,7 +9,7 @@ nav {
 }
 
 .header-container {
-  max-width: 1170px;
+  max-width: @container-width;
   margin: auto;
 }
 
@@ -45,7 +45,7 @@ input[type="search"] {
   background: #fff;
 }
 
-.has-results {
+.operationSearch .has-results {
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
@@ -58,4 +58,12 @@ input[type="search"] {
 #results {
   position: absolute;
   width: @searchWidth;
+}
+
+#results a div {
+  color: #333;
+}
+
+#results {
+  z-index: 10000;
 }

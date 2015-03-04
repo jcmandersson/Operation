@@ -8,11 +8,12 @@ var CheckArticle = new keystone.List('Artikel', {
 });
 
 CheckArticle.add({
-  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'articles', required: true, initial: true, index: true },
+  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'articles', required: true, initial: true },
   name: { type: String, required: true, initial: true },
   checked: { type: Types.Boolean, default: false },
   template: { type: Types.Boolean, default: true },
-  kartotek: { type: Types.Relationship, ref: 'Kartotekartikel', refPath: 'kartotek', initial: true}
+  kartotek: { type: Types.Relationship, ref: 'Kartotekartikel', refPath: 'kartotek', initial: true},
+  amount: { type: Types.Number, default: 1 }
 });
 
 /**
@@ -42,6 +43,32 @@ CheckArticle.schema.statics.fromTemplate = function fromTemplate(operationId, ne
       });
     }
   });
+};
+
+CheckArticle.schema.statics.calculateProgress = function calculateProgress(operationId, callback) {
+  var model = this.model('Artikel');
+  model.find({
+    operation: operationId
+  }).exec(function(err, data){
+    if(err) console.log(err);
+    
+    var totalCheckboxes = data.length;
+
+    model.find({
+      operation: operationId,
+      checked: true
+    }).exec(function(err, checkedData){
+      if(err) console.log(err); 
+      
+      var checkedBoxes = checkedData.length;
+      callback({
+        total: totalCheckboxes,
+        checked: checkedBoxes
+      });
+      
+    });
+  });
+  
 };
 
 CheckArticle.defaultColumns = 'operation|20%, name, createdBy|20%, createdAt|20%';

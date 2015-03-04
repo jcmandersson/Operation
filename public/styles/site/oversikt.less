@@ -1,0 +1,54 @@
+.operation {
+  position: relative;
+  min-height: 50px;
+  margin: 14px 0px;
+}
+
+.operation-card {
+  padding: 5px;
+  color: black;
+
+  border-radius: 3px;
+  .box-shadow(0px 0px 5px 0px rgba(50, 50, 50, 0.3));
+}
+
+.operation-card:hover {
+  text-decoration: none;
+  opacity: 0.9;
+  color: black;
+}
+
+.operation-card a {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: block;
+}
+.operation-card .title {
+  width: 80%;
+}
+.operation-card .specialty {
+  position: absolute;
+  right: 16px;
+  top: 5px; 
+}
+
+.ui-widget-header {
+  border: 1px solid @lightblue;
+  background: @lightblue;
+}
+
+.ui-progressbar-value {
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 31px;
+  white-space: nowrap;
+}
+
+.progressbar {
+  background: rgba(1, 95, 167, 0.2);
+}

@@ -85,6 +85,7 @@ $.ajax({
   data: {
     title: 'Blindtarmsinflammation',
     tags: 'Appendix borttagning'
+    
   }
 })
   .done(function( msg ) {
