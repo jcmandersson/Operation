@@ -1,12 +1,16 @@
 var createNewOperation = function() {
   var tags = $('#tags_1').val();
+  var specialty = $(".js-data-example-ajax").val();
+  var operationName = $('#operation-name').val();
+  console.log(specialty);
   
   $.ajax({
     type: 'POST',
     url: '/api/operations',
     data: {
-      title: $('#operation-name').val(),
-      tags: tags
+      title: operationName,
+      tags: tags,
+      specialty: specialty
     }
   })
     .done(function (msg) {
@@ -40,6 +44,7 @@ var createNewOperation = function() {
       console.log(err);
       console.log(status);
     });
+    
 };
 
 var removeArticle = function(element) {
@@ -47,19 +52,6 @@ var removeArticle = function(element) {
   $(parent).remove(); 
 };
 
-var searchSpecialitet = function(specialitetResultsTemplate) {
-  var specialitetName = $('#article-search').val();
-  var url = '/api/Specialitets?text=' + specialitetName;
-  
-  $.get(url).done(function (results) {
-    $('#specialitetResults').html(specialitetResultsTemplate({results: results}));
-    if (results.length) { //FIX THIS!
-      $('#specialitet-search').addClass('has-results');
-    } else {
-      $('#specialitet-search').removeClass('has-results');
-    }
-  });
-};
 
 var addArticle = function(articleTemplate, results) {
   var name = $(this).data('name');
@@ -97,6 +89,42 @@ var addSynonym = function() {
   $('#synonyms').append(synonymTemplate({ name: name }));
 };
 
+var initializeSpecialitetSelect = function() {
+  $(".specialitet-select").select2({
+
+    ajax: {
+      type: 'GET',
+      url: '/api/search/Specialitet/',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        console.log(params);
+        console.log(params.term);
+        return {
+
+          text: params.term, // search term
+          all: 1
+        };
+      },
+      processResults: function (data) {
+        console.log(data);
+
+        return {
+          results: $.map(data, function (item) {
+            return {
+              text: item.name, id: item._id
+            }
+          })
+        };
+      },
+      cache: true
+    },
+    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+    minimumInputLength: 0
+
+  });
+};
+
 // TODO keyCode == 13
 $(function() {
   var compiledSynonym = $('#synonym-template').html();
@@ -111,7 +139,6 @@ $(function() {
   var compiledSpecialitetResults = $('#specialitetResults-template').html();
   var specialitetResultsTemplate = Handlebars.compile(compiledSpecialitetResults);
   
-  $('#specialitet-search').keyup(searchSpecialitet.bind(undefined, specialitetResultsTemplate));
   $('#newOperationButton').click(createNewOperation);
   $('#article-search').keydown(findArticles.bind(undefined, kartotekResultsTemplate, articleTemplate));
   $('#add-synonym-btn').click(addSynonym.bind(undefined, synonymTemplate));
@@ -122,37 +149,7 @@ $(function() {
     height: '40px'
   });
   
-  $(".js-data-example-ajax").select2({
-    
-    ajax: {
-      type: 'GET',
-      url: '/api/search/Specialitet/',
-      dataType: 'json',
-      delay: 250,
-      data: function (params) {
-        console.log(params);
-        console.log(params.term);
-        return {
-          
-          text: params.term // search term
-        };
-      },
-      processResults: function (data) {
-        console.log(data);
-        
-        return {
-          results: $.map(data, function (item) {
-            return {
-              text: item.name, id: item._id, abbrevation: item.abbrevation
-            }
-          })
-        };
-      },
-      cache: true
-    },
-    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-    minimumInputLength: 0
-  });
+  initializeSpecialitetSelect();
   
 });
 
