@@ -1,6 +1,6 @@
 var createNewOperation = function() {
   var tags = $('#tags_1').val();
-  
+
   $.ajax({
     type: 'POST',
     url: '/api/operations',
@@ -109,7 +109,7 @@ $(function() {
 
   var compiledSpecialitetResults = $('#specialitetResults-template').html();
   var specialitetResultsTemplate = Handlebars.compile(compiledSpecialitetResults);
-  
+
   $('#specialitet-search').keyup(searchSpecialitet.bind(undefined, specialitetResultsTemplate));
   $('#newOperationButton').click(createNewOperation);
   $('#article-search').keydown(findArticles.bind(undefined, kartotekResultsTemplate, articleTemplate));

@@ -1,38 +1,60 @@
 {{!< default}}
 
+<script id="modify-template" type="text/x-handlebars-template">
+  <!-- Don't follow my example. Don't use onclick -->
+  <input type="text" class="form-control" value="\{{value}}" id="currently-modifying" />
+</script>
+
+<script id="article-template" type="text/x-handlebars-template">
+  <tr class="check-js" id=\{{_id}}>
+    <!-- The reason for the additional <span> is so that we can attach an event listener
+      to it, should then dissapear/not activate anymore when we replace it with an input. -->
+    <td class="modifyable-article-column"><span>\{{ name }}</span></td>
+    <td class="modifyable-article-column"><span>\{{ storage }}</span></td>
+    <td class="modifyable-article-column"><span>\{{ section }}</span></td>
+    <td class="modifyable-article-column"><span>\{{ shelf }}</span></td>
+    <td class="modifyable-article-column"><span>\{{ tray }}</span></td>
+    <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
+  </tr>
+</script>
+
 <div class="container">
   <div class="row">
     <div class="input-box">
       <table class="table">
-        <tr class="table-headerstriped">
-          <td>Namn</td>
-          <td>Förråd</td>
-          <td>Sektion</td>
-          <td>Hylla</td>
-          <td>Fack</td>
-          <td></td>
-        </tr>
-        <tr class="check-js" id={{_id}}>
-          <td><input type="text" class="form-control" placeholder="Namn..."/></td>
-          <td><input type="text" class="form-control" placeholder="Förråd..."/></td>
-          <td><input type="text" class="form-control" placeholder="Sektion..."/></td>
-          <td><input type="text" class="form-control" placeholder="Hylla..."/></td>
-          <td><input type="text" class="form-control" placeholder="Fack..."/></td>
-          <td><a class="btn btn-success" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
-        </tr>
-
-        {{# each articles }}
-          <tr class="check-js" id={{_id}}>
-            <td>{{ name }}</td>
-            <td>{{ storage }}</td>
-            <td>{{ section }}</td>
-            <td>{{ shelf }}</td>
-            <td>{{ tray }}</td>
-            <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
-              with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
-            <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
+        <tbody id="articles">
+          <tr class="table-headerstriped">
+            <td>Namn</td>
+            <td>Förråd</td>
+            <td>Sektion</td>
+            <td>Hylla</td>
+            <td>Fack</td>
+            <td></td>
           </tr>
-        {{/each}}
+          <tr class="check-js" id={{_id}}>
+            <td><input data-type="name" type="text" class="form-control" placeholder="Namn..."/></td>
+            <td><input data-type="storage" type="text" class="form-control" placeholder="Förråd..."/></td>
+            <td><input data-type="section" type="text" class="form-control" placeholder="Sektion..."/></td>
+            <td><input data-type="shelf" type="text" class="form-control" placeholder="Hylla..."/></td>
+            <td><input data-type="tray" type="text" class="form-control" placeholder="Fack..."/></td>
+            <td><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
+          </tr>
+
+          {{# each articles }}
+            <tr class="check-js" id={{_id}}>
+              <!-- The reason for the additional <span> is so that we can attach an event listener
+                to it, should then dissapear/not activate anymore when we replace it with an input. -->
+              <td class="modifyable-article-column"><span>{{ name }}</span></td>
+              <td class="modifyable-article-column"><span>{{ storage }}</span></td>
+              <td class="modifyable-article-column"><span>{{ section }}</span></td>
+              <td class="modifyable-article-column"><span>{{ shelf }}</span></td>
+              <td class="modifyable-article-column"><span>{{ tray }}</span></td>
+              <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
+                with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
+              <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
+            </tr>
+          {{/each}}
+        </tbody>
       </table>
     </div>
   </div>
