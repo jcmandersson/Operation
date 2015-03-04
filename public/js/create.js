@@ -1,12 +1,15 @@
 var createNewOperation = function() {
   var tags = $('#tags_1').val();
+  var specialty = $(".specialitet-select").val();
+  var operationName = $('#operation-name').val();
 
   $.ajax({
     type: 'POST',
     url: '/api/operations',
     data: {
-      title: $('#operation-name').val(),
-      tags: tags
+      title: operationName,
+      tags: tags,
+      specialty: specialty
     }
   })
     .done(function (msg) {
@@ -40,6 +43,7 @@ var createNewOperation = function() {
       console.log(err);
       console.log(status);
     });
+
 };
 
 var removeArticle = function(element) {
@@ -47,22 +51,10 @@ var removeArticle = function(element) {
   $(parent).remove(); 
 };
 
-var searchSpecialitet = function(specialitetResultsTemplate) {
-  var specialitetName = $('#article-search').val();
-  var url = '/api/Specialitets?text=' + specialitetName;
-  $.get(url).done(function (results) {
-    $('#specialitetResults').html(specialitetResultsTemplate({results: results}));
-    if (results.length) { //FIX THIS!
-      $('#search').addClass('has-results');
-    } else {
-      $('#search').removeClass('has-results');
-    }
-  });
-};
 
 var addArticle = function(articleTemplate, results) {
   var name = $(this).data('name');
-  var kartotekID = $(this).data('kartotekID');
+  var kartotekID = $(this).data('kartotekid');
 
   var newArticle = $(articleTemplate({ name: name, id: kartotekID })).appendTo('#articles');
   newArticle.find('.remove-article').click(function() {
@@ -96,6 +88,49 @@ var addSynonym = function() {
   $('#synonyms').append(synonymTemplate({ name: name }));
 };
 
+var initializeSpecialitetSelect = function() {
+  $(".specialitet-select").select2({
+
+    ajax: {
+      type: 'GET',
+      url: '/api/search/Specialitet/',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+
+          text: params.term, // search term
+          all: 1
+        };
+      },
+      processResults: function (data) {
+        console.log(data);
+
+        return {
+          results: $.map(data, function (item) {
+            return {
+              text: item.name, id: item._id
+            }
+          })
+        };
+      },
+      cache: true
+    },
+    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+    minimumInputLength: 0
+
+  });
+};
+
+var addUnderrubrik = function(underrubrikTemplate){
+  var name = $('#underrubrik-name').val();
+  var text = $('#underrubrik-text').val();
+  console.log(name);
+  console.log(text);
+
+  $(underrubrikTemplate({ name: name, text: text })).appendTo('#underrubriker');
+};
+
 // TODO keyCode == 13
 $(function() {
   var compiledSynonym = $('#synonym-template').html();
@@ -110,7 +145,6 @@ $(function() {
   var compiledSpecialitetResults = $('#specialitetResults-template').html();
   var specialitetResultsTemplate = Handlebars.compile(compiledSpecialitetResults);
 
-  $('#specialitet-search').keyup(searchSpecialitet.bind(undefined, specialitetResultsTemplate));
   $('#newOperationButton').click(createNewOperation);
   $('#article-search').keydown(findArticles.bind(undefined, kartotekResultsTemplate, articleTemplate));
   $('#add-synonym-btn').click(addSynonym.bind(undefined, synonymTemplate));
@@ -120,5 +154,12 @@ $(function() {
     removeWithBackspace: false,
     height: '40px'
   });
-});
 
+
+  var compiledUnderrubrik = $('#underrubrik-template').html();
+  var underrubrikTemplate = Handlebars.compile(compiledUnderrubrik);
+
+  $('#newUnderrubrikButton').click(addUnderrubrik.bind(undefined, underrubrikTemplate));
+
+  initializeSpecialitetSelect();
+});
