@@ -122,6 +122,15 @@ var initializeSpecialitetSelect = function() {
   });
 };
 
+var addUnderrubrik = function(underrubrikTemplate){
+  var name = $('#underrubrik-name').val();
+  var text = $('#underrubrik-text').val();
+  console.log(name);
+  console.log(text);
+    
+  $(underrubrikTemplate({ name: name, text: text })).appendTo('#underrubriker');
+};
+
 // TODO keyCode == 13
 $(function() {
   var compiledSynonym = $('#synonym-template').html();
@@ -145,6 +154,12 @@ $(function() {
     removeWithBackspace: false,
     height: '40px'
   });
+
+
+  var compiledUnderrubrik = $('#underrubrik-template').html();
+  var underrubrikTemplate = Handlebars.compile(compiledUnderrubrik);
+  
+  $('#newUnderrubrikButton').click(addUnderrubrik.bind(undefined, underrubrikTemplate));
   
   initializeSpecialitetSelect();
   

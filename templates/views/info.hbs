@@ -1,6 +1,11 @@
 {{!< default}}
 <div class="container">
-    <div id="opName">{{data.title}}</div>
+    <div id="opName">
+      {{data.title}}
+        <button type="button" id="newUnderrubrikButton" class="btn btn-primary">Starta</button>
+        <button type="button" id="newUnderrubrikButton" class="btn btn-primary">Redigera</button>
+    </div>
+  
   {{#if data.specialty.name}}
     <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
   {{/if}}

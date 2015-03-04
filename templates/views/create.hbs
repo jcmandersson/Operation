@@ -31,8 +31,29 @@
         </div>
 
         <div class="col-md-offset-3 col-md-6 input-box">
+            <label>Underrubriker:</label>
+            <input type="text" id="underrubrik-name" class="form-control" placeholder="Underrubriksnamn" />
+
+            <label>Checkbar:</label>
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default">av</button>
+                <button type="button" class="btn btn-default">på</button>
+            </div>
+          
+            <textarea id="underrubrik-text" class="form-control" rows="5"></textarea>
+          
+            <button type="button" id="newUnderrubrikButton" class="btn btn-primary">Skapa Underrubrik</button>
+            
+            <div id="underrubriker"></div>
+            
+        </div>
+      
+        <div class="col-md-offset-3 col-md-6 input-box">
             <button type="button" id="newOperationButton" class="btn btn-primary">Skapa Handbok</button>
         </div>
+
+
+
     </div>
 </div>
 
@@ -94,3 +115,12 @@
     </div>
 </script>
 
+
+<script id="underrubrik-template" type="text/x-handlebars-template">
+    <div class="underrubrik-container">
+        <input type="text" id="underrubrik-name" class="form-control" value=\{{ name }}>
+        <textarea id="underrubrik-text" class="form-control" rows="5">\{{ text }}</textarea>
+
+    </div>
+    
+</script>
