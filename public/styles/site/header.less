@@ -1,4 +1,5 @@
 @searchWidth: 350px;
+@navHeight: 60px;
 
 nav {
   background-color: @blue;
@@ -15,12 +16,12 @@ nav {
 ul.nav li a {
   padding-top: 0;
   padding-bottom: 0;
-  line-height: 61px;
+  line-height: @navHeight;
   color: #FFF;
 }
 ul.nav li:not(.brand) a {
-  padding-top: 31px;
-  line-height: 30px;
+  padding-top: @navHeight/2;
+  line-height: @navHeight/2;
 }
 
 ul.nav a:hover, ul.nav li.active a {
