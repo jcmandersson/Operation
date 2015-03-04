@@ -35,14 +35,14 @@ var routes = {
 exports = module.exports = function(app) {
 	
 	// Views
-  app.get('/', routes.views.index);
+  app.get('/', routes.views.start);
   app.get('/create', routes.views.create);
   app.get('/kartotek', routes.views.kartotek);
   app.get('/db', routes.views.dbExamples);
   app.get('/info', routes.views.info);
   app.get('/info/:slug', routes.views.info);
   
-  app.get('/start', routes.views.start);
+  app.get('/index', routes.views.index);
 
 
   app.get('/api/search/:model', routes.views.apiSearch);

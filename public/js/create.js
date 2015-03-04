@@ -1,8 +1,7 @@
 var createNewOperation = function() {
   var tags = $('#tags_1').val();
-  var specialty = $(".js-data-example-ajax").val();
+  var specialty = $(".specialitet-select").val();
   var operationName = $('#operation-name').val();
-  console.log(specialty);
   
   $.ajax({
     type: 'POST',
@@ -55,8 +54,8 @@ var removeArticle = function(element) {
 
 var addArticle = function(articleTemplate, results) {
   var name = $(this).data('name');
-  var kartotekID = $(this).data('kartotekID');
-
+  var kartotekID = $(this).data('kartotekid');
+  
   var newArticle = $(articleTemplate({ name: name, id: kartotekID })).appendTo('#articles');
   newArticle.find('.remove-article').click(function() {
     removeArticle(this);
@@ -98,8 +97,6 @@ var initializeSpecialitetSelect = function() {
       dataType: 'json',
       delay: 250,
       data: function (params) {
-        console.log(params);
-        console.log(params.term);
         return {
 
           text: params.term, // search term

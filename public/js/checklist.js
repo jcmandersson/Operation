@@ -18,13 +18,7 @@ socket.on('connect', function(){ //Runs after socket has been started.
 var updateTableRow = function(tableRow, isChecked){
   var checkbox = tableRow.find('input');
   checkbox.prop('checked', isChecked);
-  if (isChecked) {
-    //$(this).css('cssText', 'background-color: rgba(76, 169, 34, 0.2) !important');
-    tableRow.css('background-color', 'rgba(76, 169, 34, 0.2)');
-  }
-  else {
-    tableRow.css('background-color', 'rgba(0,0,0,0)');
-  }
+  changeTableGraphics(tableRow, isChecked); //Function in checkEffect.js
 };
 
 socket.on('checkboxClick', function(checkObject){
@@ -37,6 +31,7 @@ socket.on('getCheckboxes', function(checkboxes){
     var checkbox = checkboxes[index];
     var tableRow = $('#' + checkbox._id);
     var isChecked = checkbox.checked;
+    //var isDisabled = checkbox.attr("disabled");
     updateTableRow(tableRow, isChecked);
   }
 });

@@ -10,7 +10,7 @@ var Operation = new keystone.List('Operation', {
 
 Operation.add({
   title: {type: String, required: true},
-  //id: {type: String, default: '0', required: true},
+  linda_id: {type: String, default: '0', required: true},
   tags: { type: String },
   state: {type: Types.Select, options: 'Utkast, Publicerad, Arkiverad', default: 'Utkast'},
   specialty: {type: Types.Relationship, ref: 'Specialitet', many: false},
@@ -56,6 +56,25 @@ Operation.schema.statics.fromTemplate = function fromTemplate(id, callback) {
       thisDoc.model('Artikel').fromTemplate(doc._id, savedDoc._id);
       thisDoc.model('Förberedelse').fromTemplate(doc._id, savedDoc._id);
       thisDoc.model('Processteg').fromTemplate(doc._id, savedDoc._id);
+    });
+  });
+};
+
+Operation.schema.methods.calculateProgress = function calculateProgress(cb){
+  var thisOp = this;
+  
+  thisOp.model('Artikel').calculateProgress(thisOp, function(articleProgress){
+    thisOp.model('Förberedelse').calculateProgress(thisOp, function(prepareProgress){
+      var data = {
+        article: articleProgress,
+        prepare: prepareProgress,
+        all: {
+          total: articleProgress.total + prepareProgress.total,
+          checked: articleProgress.checked + prepareProgress.checked
+        }
+      };
+      
+      cb(data);
     });
   });
 };
