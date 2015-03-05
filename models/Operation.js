@@ -53,10 +53,13 @@ Operation.schema.statics.fromTemplate = function fromTemplate(slug, callback) {
     var newDoc = new Operation.model(newObject);
     newDoc.save(function(err, savedDoc){
       if(err) console.log(err);
-      thisDoc.model('Artikel').fromTemplate(doc._id, savedDoc._id);
-      thisDoc.model('Förberedelse').fromTemplate(doc._id, savedDoc._id);
-      thisDoc.model('Processteg').fromTemplate(doc._id, savedDoc._id);
-      callback(savedDoc);
+      thisDoc.model('Processteg').fromTemplate(doc._id, savedDoc._id, function(){
+        thisDoc.model('Artikel').fromTemplate(doc._id, savedDoc._id, function(){
+          thisDoc.model('Förberedelse').fromTemplate(doc._id, savedDoc._id, function(){
+            callback(savedDoc);
+          });
+        });
+      });
     });
   });
 };
