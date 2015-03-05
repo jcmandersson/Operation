@@ -76,7 +76,7 @@
         <tr>
             <td>
                 <div>\{{ name }}</div>
-                <div class="tags">\{{ tags }}</div>
+                <div class="tags">\{{ tags }}</div>så
             </td>
             <td class="add-column" data-name="\{{ name }}" data-kartotekid="\{{ _id }}">
                 <span class="add-icon glyphicon glyphicon-plus"></span>
@@ -89,21 +89,21 @@
 <script id="article-template" type="text/x-handlebars-template">
 
     <div class="row row-article">
-        <div class=".col-md-1 col1">
+        <div class=".col-md-1 col-left">
             <div class="col1-top">1</div>
             <div class="col1-plus">
-                <div class="glyphicon glyphicon-plus"></div>
+                <div class="glyphicon glyphicon-plus plus"></div>
             </div>
             <div class="col1-minus">
-                <div class="glyphicon glyphicon-minus"></div>
+                <div class="glyphicon glyphicon-minus minus"></div>
             </div>
         </div>
         
-        <div class=".col-md-10 col2">
+        <div class=".col-md-10 col-middle">
             <div class="myarticle" data-kartotekid="\{{id}}">\{{name}}</div>
         </div>
         
-        <div class=".col-md-1 col3">
+        <div class=".col-md-1 col-right">
             <div class="remove-icon glyphicon glyphicon-remove"></div>
         </div>
 

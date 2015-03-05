@@ -58,9 +58,24 @@ var addArticle = function(articleTemplate, results) {
   var kartotekID = $(this).data('kartotekid');
 
   var newArticle = $(articleTemplate({ name: name, id: kartotekID })).appendTo('#articles');
-  newArticle.find('.remove-article').click(function() {
+  newArticle.find('.col-right').click(function() {
     removeArticle(this);
   });
+
+  
+  $('.col1-plus').click(function() {
+    var cnt= parseInt($(this).context.previousElementSibling.innerHTML) + 1;
+    $(this).context.previousElementSibling.innerHTML = cnt;
+  });
+
+
+  $('.col1-minus').click(function() {
+    if($(this).context.previousElementSibling.previousElementSibling.innerHTML != 1) {
+      var cnt = $(this).context.previousElementSibling.previousElementSibling.innerHTML - 1;
+      $(this).context.previousElementSibling.previousElementSibling.innerHTML = cnt;
+    }
+  });
+
 };
 
 var findArticles = function(resultsTemplate, articleTemplate) {
