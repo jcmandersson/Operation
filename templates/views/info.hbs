@@ -62,14 +62,13 @@
 {{/if}}
   
   {{#if data.template}}
-      <form method="get">
+      <form method="get" id="createOperationInstanceButton">
           <input type="hidden" name="operation" value="create">
           <input type="hidden" name="operationId" value="{{data._id}}">
-          <input type="submit" class="btn btn-primary" value="Skapa operation">
+          <input type="submit" value="Skapa operation" class="btn btn-primary">
       </form>
   {{/if}}
     <button type="button" id="editButton" class="btn btn-primary">Redigera</button>
-    
 </div>
 
 
