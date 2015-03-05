@@ -17,6 +17,13 @@ exports = module.exports = function(req, res) {
     'checklist.js',
     'checkEffect.js'
   ];
+  
+  view.on('get', {operation: 'create'}, function(){
+    console.log("AAAA: " + req.params.slug);
+    operation.model.fromTemplate(req.params.slug, function(newOperation){
+      res.redirect("/info/" + newOperation.slug);
+    });
+  });
 
   view.on('init', function(next) {
     operation.model.find({

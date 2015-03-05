@@ -38,11 +38,11 @@ Operation.schema.statics.search = function(text, callback) {
   });
 };
 
-Operation.schema.statics.fromTemplate = function fromTemplate(id, callback) {
+Operation.schema.statics.fromTemplate = function fromTemplate(slug, callback) {
   var thisDoc = this;
   
   this.model('Operation').findOne({ 
-      _id: id 
+      slug: slug 
   }).exec(function(err, doc) {
     if(err) console.log(err);
     
@@ -56,6 +56,7 @@ Operation.schema.statics.fromTemplate = function fromTemplate(id, callback) {
       thisDoc.model('Artikel').fromTemplate(doc._id, savedDoc._id);
       thisDoc.model('Förberedelse').fromTemplate(doc._id, savedDoc._id);
       thisDoc.model('Processteg').fromTemplate(doc._id, savedDoc._id);
+      callback(savedDoc);
     });
   });
 };
