@@ -33,14 +33,20 @@ ul.nav li a {
   line-height: @navHeight/2;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   ul.nav li a{
     padding-top: 0;
     line-height: @navHeight;
   }
 
-  .navbar-collapse.in form {
+  .navbar-collapse form {
     display: none;
+  }
+  
+  .navbar-collapse {
+    position: relative;
+    top: 10px;
+    overflow: hidden;
   }
 }
 
