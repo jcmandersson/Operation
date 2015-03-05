@@ -31,9 +31,11 @@ Operation.schema.statics.search = function(text, callback) {
   var search = new RegExp(text, 'ig');
   return this.model('Operation').find({
     $or: [{
-      title: search
+      title: search,
+      template: true
     }, {
-      tags: search
+      tags: search,
+      template: true
     }]
   });
 };
