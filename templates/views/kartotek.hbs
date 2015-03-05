@@ -1,8 +1,12 @@
 {{!< default}}
 
 <script id="modify-template" type="text/x-handlebars-template">
-  <!-- Don't follow my example. Don't use onclick -->
   <input type="text" class="form-control" value="\{{value}}" id="currently-modifying" />
+</script>
+
+<!-- This template and the above are replaced with eachother when you edit an entry in the table -->
+<script id="modified-template" type="text/x-handlebars-template">
+  <td class="modifyable-article-column"><span>\{{ name }}</span></td>
 </script>
 
 <script id="article-template" type="text/x-handlebars-template">
@@ -32,11 +36,11 @@
             <td></td>
           </tr>
           <tr class="check-js" id={{_id}}>
-            <td><input data-type="name" type="text" class="form-control" placeholder="Namn..."/></td>
-            <td><input data-type="storage" type="text" class="form-control" placeholder="Förråd..."/></td>
-            <td><input data-type="section" type="text" class="form-control" placeholder="Sektion..."/></td>
-            <td><input data-type="shelf" type="text" class="form-control" placeholder="Hylla..."/></td>
-            <td><input data-type="tray" type="text" class="form-control" placeholder="Fack..."/></td>
+            <td><input data-type="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
+            <td><input data-type="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
+            <td><input data-type="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
+            <td><input data-type="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
+            <td><input data-type="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
             <td><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
           </tr>
 

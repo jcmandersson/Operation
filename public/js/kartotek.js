@@ -1,3 +1,17 @@
+// This happends when we've replaced the uneditable table-element with
+// an input-box. Now we want to listen to changes.
+var saveArticle = function(elem) {
+  var compiledModified = $('#modified-template').html();
+  var modifiedTemplate = Handlebars.compile(compiledModified);
+
+  var newValue = $(elem).val()
+  $(elem).parent().html(modifiedTemplate({ name: newValue })).click(function() {
+    modifyArticle.call($(this).find('span'));
+  });
+};
+
+// Here we listen for clicks in an element of the table.
+// When someone clicks we replace the html with an input box.
 var modifyArticle = function() {
   var compiledModify = $('#modify-template').html();
   var modifyTemplate = Handlebars.compile(compiledModify);
@@ -5,7 +19,12 @@ var modifyArticle = function() {
   // This will essentially remove itself
   var currentValue = $(this).text();
   $(this).parent().html(modifyTemplate({ value: currentValue }));
-  $('#currently-modifying').select();
+  $('#currently-modifying').select().keydown(function(e) {
+    // 13 = the enter key
+    if (e.keyCode == 13) {
+      saveArticle(this);
+    }
+  });
 };
 
 var addArticle = function() {
@@ -30,7 +49,7 @@ var addArticle = function() {
   var newArticleElement = $(articleTemplate(newArticle)).insertAfter(createRow);
   $('.article-remove').click(removeArticle);
 
-  //TODO Edit
+  // TODO Edit
   $(newArticleElement).find('.modifyable-article-column > span').click(modifyArticle);
 };
 

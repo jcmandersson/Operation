@@ -41,7 +41,7 @@ exports = module.exports = function(app) {
   app.get('/db', routes.views.dbExamples);
   app.get('/info', routes.views.info);
   app.get('/info/:slug', routes.views.info);
-  
+
   app.get('/index', routes.views.index);
 
 
