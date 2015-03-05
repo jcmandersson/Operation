@@ -87,6 +87,31 @@
 </script>
 
 <script id="article-template" type="text/x-handlebars-template">
+
+    <div class="row row-article">
+        <div class=".col-md-1 col1">
+            <div class="col1-top">1</div>
+            <div class="col1-plus">
+                <div class="glyphicon glyphicon-plus"></div>
+            </div>
+            <div class="col1-minus">
+                <div class="glyphicon glyphicon-minus"></div>
+            </div>
+        </div>
+        
+        <div class=".col-md-10 col2">
+            <div class="myarticle" data-kartotekid="\{{id}}">\{{name}}</div>
+        </div>
+        
+        <div class=".col-md-1 col3">
+            <div class="remove-icon glyphicon glyphicon-remove"></div>
+        </div>
+
+
+    </div>
+    
+    
+    <!--
     <div>
         <div class="counter">
             1
@@ -104,6 +129,7 @@
             <span class="remove-icon glyphicon glyphicon-remove"></span>
         </div>
     </div>
+    -->
 </script>
 
 <script id="synonym-template" type="text/x-handlebars-template">
