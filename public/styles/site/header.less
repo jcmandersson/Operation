@@ -1,10 +1,24 @@
 @searchWidth: 350px;
+@navHeight: 60px;
 
 nav {
-  background-color: @blue;
-  padding-left: 20px !important;
-  height: 60px;
+  background-color: @blue !important;
+  height: @navHeight;
   overflow: visible;
+}
+.navbar-static-top {
+  border: none;
+}
+
+.navbar-brand {
+  margin: 0 20px;
+  padding: 0;
+  line-height: @navHeight;
+}
+
+.navbar-collapse {
+  background: @blue;
+  border: none;
 }
 
 .header-container {
@@ -13,24 +27,34 @@ nav {
 }
 
 ul.nav li a {
-  padding-top: 0;
   padding-bottom: 0;
-  line-height: 61px;
-  color: #FFF;
+  color: #FFF !important;
+  padding-top: @navHeight/2;
+  line-height: @navHeight/2;
 }
-ul.nav li:not(.brand) a {
-  padding-top: 31px;
-  line-height: 30px;
+
+@media screen {
+  
+}
+ul.nav li a{
+  padding-top: 0;
+  line-height: @navHeight;
+}
+
+.navbar-collapse.in form {
+  display: none;
 }
 
 ul.nav a:hover, ul.nav li.active a {
-  background-color: @lightblue;
+  background-color: @lightblue !important;
 }
 li.brand a:hover {
-  background-color: @blue;
+  background-color: @blue !important;
 }
 .navbar-right {
-  margin: 13px 0;
+  padding: 0;
+  margin: 0;
+  position: relative;
 }
 #search {
   width: @searchWidth;
@@ -42,6 +66,11 @@ input[type="search"] {
 
 #results .table-striped tr {
   background: #fff;
+}
+
+.operationSearch {
+  height: @navHeight;
+  line-height: @navHeight;
 }
 
 .operationSearch .has-results {
@@ -56,6 +85,7 @@ input[type="search"] {
 
 #results {
   position: absolute;
+  top: @navHeight/2 + 18px;
   width: @searchWidth;
 }
 
@@ -65,4 +95,8 @@ input[type="search"] {
 
 #results {
   z-index: 10000;
+}
+
+.navbar-form .has-feedback .form-control-feedback {
+  top: 17px;
 }
