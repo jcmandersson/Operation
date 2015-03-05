@@ -64,15 +64,15 @@ var addArticle = function(articleTemplate, results) {
 
   
   $('.col1-plus').click(function() {
-    var cnt= parseInt($(this).context.previousElementSibling.innerHTML) + 1;
-    $(this).context.previousElementSibling.innerHTML = cnt;
+    $(this).context.previousElementSibling.innerHTML = 
+      parseInt($(this).context.previousElementSibling.innerHTML) + 1;
   });
 
 
   $('.col1-minus').click(function() {
-    if($(this).context.previousElementSibling.previousElementSibling.innerHTML != 1) {
-      var cnt = $(this).context.previousElementSibling.previousElementSibling.innerHTML - 1;
-      $(this).context.previousElementSibling.previousElementSibling.innerHTML = cnt;
+    var value = parseInt($(this).context.previousElementSibling.previousElementSibling.innerHTML);
+    if(value != 1) {
+      $(this).context.previousElementSibling.previousElementSibling.innerHTML = value - 1;
     }
   });
 
