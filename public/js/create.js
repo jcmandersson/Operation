@@ -9,7 +9,8 @@ var createNewOperation = function() {
     data: {
       title: operationName,
       tags: tags,
-      specialty: specialty
+      specialty: specialty,
+      template: true
     }
   })
     .done(function (msg) {

@@ -1,9 +1,7 @@
 {{!< default}}
-<div class="container">
+<div class="container" xmlns="http://www.w3.org/1999/html">
     <div id="opName">
       {{data.title}}
-        <button type="button" id="startaButton" class="btn btn-primary">Starta</button>
-        <button type="button" id="redigeraButton" class="btn btn-primary">Redigera</button>
     </div>
   
   {{#if data.specialty.name}}
@@ -49,7 +47,7 @@
                 <td>Fack</td>
             </tr>
           {{# each articles }}
-              <tr data-operationId="{{operation}}" class="check-js" id={{_id}}>
+              <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js" id={{_id}}>
                   <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
                   <td>{{ kartotek.name }}</td>
                   <td>{{ amount }}</td>
@@ -62,6 +60,15 @@
         </table>
     </div>
 {{/if}}
+  
+  {{#if data.template}}
+      <form method="get">
+          <input type="hidden" name="operation" value="create">
+          <input type="hidden" name="operationId" value="{{data._id}}">
+          <input type="submit" class="btn btn-primary" value="Skapa operation">
+      </form>
+  {{/if}}
+    <button type="button" id="editButton" class="btn btn-primary">Redigera</button>
     
 </div>
 
