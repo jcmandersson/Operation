@@ -73,7 +73,6 @@ var addArticle = function(articleTemplate, results) {
 
 
     $("#plus"+kartotekID).click(function() {
-      console.log($("#top"+kartotekID).html());
       $("#top"+kartotekID).html(parseInt($("#top"+kartotekID).html()) + 1);
     });
 
