@@ -6,6 +6,7 @@ var operation = keystone.list('Operation');
 var process = keystone.list('Processteg');
 var content = keystone.list('Processinnehåll');
 var article = keystone.list('Artikel');
+var prepare = keystone.list('Förberedelse');
 
 
 exports = module.exports = function(req, res) {
@@ -17,6 +18,13 @@ exports = module.exports = function(req, res) {
     'checklist.js',
     'checkEffect.js'
   ];
+  
+  view.on('get', {operation: 'create'}, function(){
+    console.log("AAAA: " + req.params.slug);
+    operation.model.fromTemplate(req.params.slug, function(newOperation){
+      res.redirect("/info/" + newOperation.slug);
+    });
+  });
 
   view.on('init', function(next) {
     operation.model.find({
@@ -64,9 +72,9 @@ exports = module.exports = function(req, res) {
           console.log(err);
           return;
         }
-        console.log(processData);
+        //console.log(processData);
         locals.processes = processData;
-        console.log(locals.processes);
+        //console.log(locals.processes);
         next(err);
       });
   });
@@ -83,7 +91,7 @@ exports = module.exports = function(req, res) {
               console.log(err);
               return;
             }
-            console.log(contentData);
+            //console.log(contentData);
             e.contents = contentData;
             next(err);
           });
@@ -92,6 +100,28 @@ exports = module.exports = function(req, res) {
     next(null);
   });
 
+
+  view.on('init', function(next) {
+    locals.processes.forEach(function (e, i) {
+      view.on('init', function(next) {
+        prepare.model.find({
+          process: e._id
+        })
+          .exec(function (err, prepareData) {
+            if (err) {
+              console.log('DB error');
+              console.log(err);
+              return;
+            }
+            console.log(prepareData);
+            e.prepares = prepareData;
+            next(err);
+          });
+      });
+    });
+    next(null);
+  });
+  
   view.render('info');
 
 };
