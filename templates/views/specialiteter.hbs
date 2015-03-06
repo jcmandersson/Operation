@@ -1,0 +1,18 @@
+{{!< default}}
+<div class="container">
+  
+    <div> 
+      {{# each specialities}}
+        <div>
+          <div id="speciality">{{name}} ({{abbrevation}})</div>
+          <div id="operations" class="hidden">            
+            {{# each op}}
+              <a href="info/{{slug}}">{{title}}</a><br>
+            {{/each}}            
+          </div>
+        </div>
+      {{/each}}       
+    </div>  
+</div>
+
+

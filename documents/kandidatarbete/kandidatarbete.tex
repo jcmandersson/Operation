@@ -15,14 +15,12 @@
 \makeatletter
 \@addtoreset{section}{part}
 \makeatother
-\newlength\mylen
-\renewcommand\thepart{\Roman{part}}
+
 \renewcommand\cftpartpresnum{Del~}
-\settowidth\mylen{\bfseries\cftpartpresnum\cftpartaftersnum}
-\addtolength\cftpartnumwidth{\mylen}
-\renewcommand{\partname}{Del}
+
 \begin{document}
 \tableofcontents
+\newpage
 \part{Gemensamma erfarenheter och diskussion}
 
 \section{Inledning}
@@ -69,26 +67,24 @@ Hela systemet ska ligga under en open-source licens så det kan användas fritt 
 \section{Slutsatser}
 
 \section{Fortsatt arbete}
-\newpage
-\input{enskild-rapp.tex}
-\newpage
-\input{enskild-jonas.tex}
-\newpage
-\input{enskild-pål.tex}
-\newpage
-\input{enskild-falk.tex}
-\newpage
-\input{enskild-erik.tex}
-\newpage
-\input{enskild-robin.tex}
-\newpage
-\input{enskild-albert.tex}
 
+\newpage
 \part{Enskilda utredningar}
 \renewcommand{\thesection}{\Alph{section}}	
+\input{enskilda/rapp.tex}
+\newpage
+\input{enskilda/jonas.tex}
+\newpage
+\input{enskilda/pal.tex}
+\newpage
+\input{enskilda/falk.tex}
+\newpage
+\input{enskilda/erik.tex}
+\newpage
+\input{enskilda/robin.tex}
+\newpage
+\input{enskilda/albert.tex}
 
-\section{nansdna}
-\subsection{asfsaf}
-\subsubsection{safsfas}
+
 
 \end{document}

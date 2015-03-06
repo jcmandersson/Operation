@@ -31,18 +31,20 @@ Operation.schema.statics.search = function(text, callback) {
   var search = new RegExp(text, 'ig');
   return this.model('Operation').find({
     $or: [{
-      title: search
+      title: search,
+      template: true
     }, {
-      tags: search
+      tags: search,
+      template: true
     }]
   });
 };
 
-Operation.schema.statics.fromTemplate = function fromTemplate(id, callback) {
+Operation.schema.statics.fromTemplate = function fromTemplate(slug, callback) {
   var thisDoc = this;
   
   this.model('Operation').findOne({ 
-      _id: id 
+      slug: slug 
   }).exec(function(err, doc) {
     if(err) console.log(err);
     
@@ -53,9 +55,13 @@ Operation.schema.statics.fromTemplate = function fromTemplate(id, callback) {
     var newDoc = new Operation.model(newObject);
     newDoc.save(function(err, savedDoc){
       if(err) console.log(err);
-      thisDoc.model('Artikel').fromTemplate(doc._id, savedDoc._id);
-      thisDoc.model('Förberedelse').fromTemplate(doc._id, savedDoc._id);
-      thisDoc.model('Processteg').fromTemplate(doc._id, savedDoc._id);
+      thisDoc.model('Processteg').fromTemplate(doc._id, savedDoc._id, function(){
+        thisDoc.model('Artikel').fromTemplate(doc._id, savedDoc._id, function(){
+          thisDoc.model('Förberedelse').fromTemplate(doc._id, savedDoc._id, function(){
+            callback(savedDoc);
+          });
+        });
+      });
     });
   });
 };

@@ -39,7 +39,7 @@ CheckArticle.schema.statics.fromTemplate = function fromTemplate(operationId, ne
       var newDoc = new CheckArticle.model(newObject);
       newDoc.save(function(err, savedDoc){
         if(err) console.log(err);
-
+        callback(err, savedDoc);
       });
     }
   });

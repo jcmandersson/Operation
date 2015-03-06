@@ -12,13 +12,14 @@
             <label>Synonymer:</label>
             <input id="tags_1" type="text" class="form-control tags"/>
         </div>
-
+      
         <div class="col-md-offset-3 col-md-6 input-box">
             <label>Specialitet:</label>
-            <input type="search" id="specialitet-search" class="form-control" placeholder="T.ex. 'ABCD'" />
-            <div id="specialitetResults"></div>
+            <select class="specialitet-select">
+            <option value="Specialitet" selected="selected">Lägg till specialitet</option>
+        </select>
         </div>
-
+      
         <div class="col-md-offset-3 col-md-6 input-box">
             <label>Plocklista:</label>
             <div class="search-box articleSearch">
@@ -30,8 +31,29 @@
         </div>
 
         <div class="col-md-offset-3 col-md-6 input-box">
+            <label>Underrubriker:</label>
+            <input type="text" id="underrubrik-name" class="form-control" placeholder="Underrubriksnamn" />
+
+            <label>Checkbar:</label>
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default">av</button>
+                <button type="button" class="btn btn-default">på</button>
+            </div>
+          
+            <textarea id="underrubrik-text" class="form-control" rows="5"></textarea>
+          
+            <button type="button" id="newUnderrubrikButton" class="btn btn-primary">Skapa Underrubrik</button>
+            
+            <div id="underrubriker"></div>
+            
+        </div>
+      
+        <div class="col-md-offset-3 col-md-6 input-box">
             <button type="button" id="newOperationButton" class="btn btn-primary">Skapa Handbok</button>
         </div>
+
+
+
     </div>
 </div>
 
@@ -56,7 +78,7 @@
                 <div>\{{ name }}</div>
                 <div class="tags">\{{ tags }}</div>
             </td>
-            <td class="add-column" data-name="\{{ name }}" data-kartotekID="\{{ _id }}">
+            <td class="add-column" data-name="\{{ name }}" data-kartotekid="\{{ _id }}">
                 <span class="add-icon glyphicon glyphicon-plus"></span>
             </td>
         </tr>
@@ -65,21 +87,26 @@
 </script>
 
 <script id="article-template" type="text/x-handlebars-template">
-    <div>
-        <div class="counter">
-            1
-            <div class="counter-choice">
-        <span class="counter-choice-left">
-          <span class="glyphicon glyphicon-chevron-up"></span>
-        </span>
-        <span class="counter-choice-right">
-          <span class="glyphicon glyphicon-chevron-down"></span>
-        </span>
+
+    <div class="row row-article">
+        <div class=".col-md-1 col-left">
+            <div class="col1-top" id="top\{{id}}">1</div>
+            
+            <div class="col1-plus" id="plus\{{id}}">
+                <div class="glyphicon glyphicon-plus plus"></div>
+            </div>
+            
+            <div class="col1-minus" id="minus\{{id}}">
+                <div class="glyphicon glyphicon-minus minus"></div>
             </div>
         </div>
-        <div class="article" data-kartotekID="\{{id}}">\{{name}}</div>
-        <div class="remove-article">
-            <span class="remove-icon glyphicon glyphicon-remove"></span>
+        
+        <div class=".col-md-10 col-middle">
+            <div class="article" data-kartotekid="\{{id}}">\{{name}}</div>
+        </div>
+        
+        <div class=".col-md-1 col-right">
+            <div class="remove-icon glyphicon glyphicon-remove"></div>
         </div>
     </div>
 </script>
@@ -93,3 +120,12 @@
     </div>
 </script>
 
+
+<script id="underrubrik-template" type="text/x-handlebars-template">
+    <div class="underrubrik-container">
+        <input type="text" id="underrubrik-name" class="form-control" value=\{{ name }}>
+        <textarea id="underrubrik-text" class="form-control" rows="5">\{{ text }}</textarea>
+
+    </div>
+    
+</script>

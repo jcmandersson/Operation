@@ -11,7 +11,8 @@ exports = module.exports = function (req, res) {
 
   locals.scripts = [
     'jquery.tagsinput.js',
-    'create.js'
+    'create.js',
+    'updown-counter.js'
   ];
 
   // Render the view

@@ -11,3 +11,7 @@ $(document).ready(function() {
 
   });
 });
+
+$("#startButtonkak").click(function(){
+  createNewOperation();
+});
