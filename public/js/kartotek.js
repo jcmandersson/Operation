@@ -49,7 +49,6 @@ var addArticle = function() {
   var newArticleElement = $(articleTemplate(newArticle)).insertAfter(createRow);
   $('.article-remove').click(removeArticle);
 
-  // TODO Edit
   $(newArticleElement).find('.modifyable-article-column > span').click(modifyArticle);
 };
 
