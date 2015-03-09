@@ -96,9 +96,7 @@ $.ajax({
   };
 ```
 
-Ändra 
-
-Hämta, tänk på att "slug" kan ändras om du ändrar namn eller titel på vissa modeller
+Ändra, tänk på att "slug" kan ändras om du ändrar namn eller titel på vissa modeller
 ```javascript
 $.ajax({
   type: 'GET',
@@ -107,6 +105,22 @@ $.ajax({
     title: 'Ny titel',
     tags: 'Nya tags'
   }
+})
+  .done(function( msg ) {
+    console.log(JSON.parse(msg));
+  })
+  .fail(function(err, status){
+    console.log('Någonting gick fel!');
+    console.log(err);
+    console.log(status);
+  };
+```
+
+Ta bort
+```javascript
+$.ajax({
+  type: 'DELETE',
+  url: '/api/operations/' + slug,
 })
   .done(function( msg ) {
     console.log(JSON.parse(msg));
