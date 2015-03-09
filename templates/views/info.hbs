@@ -31,6 +31,12 @@
             <span class="contentText">{{{text}}}</span>
         </div>
       {{/each}}
+        {{#each prepares}}
+            <div class="process-content-item">
+                <span class="prepareTitle">{{title}}</span>
+                <span class="prepareText">{{{text}}}</span>
+            </div>
+        {{/each}}
       </div>
     {{/each}}
 
@@ -71,8 +77,3 @@
   {{/if}}
     <button type="button" id="editButton" class="btn btn-primary">Redigera</button>
 </div>
-
-
-<!--<script src="/js/info.js"></script>-->
-
-

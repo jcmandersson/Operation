@@ -8,7 +8,7 @@
 .col-left {
   border: none;
   height: 50px;
-  width: 10%;
+  width: 8%;
   margin: 0px;
   padding: 0px;
   display: inline-block;
@@ -27,24 +27,20 @@
   display: inline-block;
   float: top;
   font-weight: bold;
-  //color: white;
 };
 
 .col1-plus {
-  //background-color: #7BFC5B;
   background-color: rgb(82, 150, 65);
   border-left: 1px solid rgb(204, 204, 204);
   border-bottom: 1px solid rgb(204, 204, 204);
-  border-bottom-left-radius: 5px;
   height: 25px;
   width: 50%;
   margin: 0px;
-  //margin-bottom: 5px;
   padding: 0px;
-  padding-left: 7px;
+  padding-left: 8px;
   padding-top: 2px;
   display: inline-block;
-  float: left;
+  float: right;
 };
 
 .col1-plus:hover {
@@ -52,11 +48,11 @@
 };
 
 .col1-minus {
-  //background-color: #FC5B5B;
   background-color: rgb(158, 58, 80);
   border-left: 1px solid rgb(204, 204, 204);
   border-right: none;//1px solid rgb(204, 204, 204);
   border-bottom: 1px solid rgb(204, 204, 204);
+  border-bottom-left-radius: 5px;
   height: 25px;
   width: 50%;
   margin: 0px;
@@ -64,7 +60,7 @@
   padding-left: 6px;
   padding-top:2px;
   display: inline-block;
-  float: right;
+  float: left;
 };
 
 .col1-minus:hover {
@@ -74,7 +70,7 @@
 .col-middle {
   border: 1px solid rgb(204, 204, 204);
   height: 50px;
-  width: 80%;
+  width: 84%;
   margin: 0px;
   padding: 0px;
   padding-left: 15px;
@@ -88,10 +84,10 @@
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
   height: 50px;
-  width: 10%;
+  width: 8%;
   margin: 0px;
   padding: 0px;
-  padding-left: 19px;
+  padding-left: 21px;
   padding-top: 5px;
   display: inline-block;
   float: right;
@@ -101,24 +97,20 @@
   background-color: rgb(57,89,89);
 };
 
-.plus {
-  color: white;
-};
-
+.glyphicon-remove,
+.plus,
 .minus {
   color: white;
 };
 
-.glyphicon-remove {
-  color: white;
-};
 
 .container {
   margin-top: 30px;
   max-width: @container-width;
-  /*border-left: 1px solid #000;*/
-  /*border-right: 1px solid #000;*/
+  //border-left: 1px solid #000;
+  //border-right: 1px solid #000;
 }
+
 
 .list-group-item {
   margin-top: 0px !important;
@@ -149,59 +141,13 @@
   float: right;
 }
 
-/* All of the below should really be moved to create.css */
+
+// All of the below should really be moved to create.css
 @article-height: 50px;
 @counter-width: 50px;
 @remover-width: 50px;
-/*@article-width: @container-width - @counter-width - @remover-width px;*/
+//@article-width: @container-width - @counter-width - @remover-width px;
 @article-width: 350px;
-
-.article {
-  border-bottom-left-radius: 0px !important;
-  border-bottom-right-radius: 0px !important;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-
-  float: left;
-  width: @article-width !important;
-  height: @article-height;
-}
-
-.counter {
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 0px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 0px;
-
-  float: left;
-  width: @counter-width;
-  border: 1px solid rgb(204, 204, 204);
-  border-right: 0px none;
-  display: block;
-  height: @article-height;
-
-  box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
-  /*box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 1px 0px inset;*/
-  box-sizing: border-box;
-
-  text-align: center;
-  padding-top: 9px;
-  padding-bottom: 3px;
-  margin-bottom: 6px;
-}
-
-.counter-choice {
-  padding-bottom: 0px;
-  margin-bottom: 0px;
-  border-top: 1px solid rgb(204, 204, 204);
-}
-
-.counter-choice-left {
-  /*border-right: 1px solid rgb(204, 204, 204);*/
-  /*width: 8px;*/
-  padding: 0px;
-  margin: 0px;
-}
 
 .remove-article {
   float: left;
@@ -217,7 +163,7 @@
   display: block;
   height: @article-height;
 
-  /*box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;*/
+  //box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 1px 0px;
   box-sizing: border-box;
 
@@ -228,11 +174,15 @@
   background-color: rgba(255, 0, 0, 0.3);
 }
 
+
+
 .remove-article:hover {
   background-color: rgba(255, 0, 0, 0.35);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px inset;
   cursor: pointer;
 }
+
+
 
 .remove-article:active {
   background-color: rgba(255, 0, 0, 0.4);
@@ -240,15 +190,16 @@
   cursor: pointer;
 }
 
+
 @remove-icon-scale: 2;
 .remove-icon {
   padding-top: 7px;
 
   transform: scale(@remove-icon-scale, @remove-icon-scale);
-  -ms-transform: scale(@remove-icon-scale, @remove-icon-scale); /* IE 9 */
-  -moz-transform:scale(@remove-icon-scale, @remove-icon-scale); /* Firefox */
-  -webkit-transform:scale(@remove-icon-scale, @remove-icon-scale); /* Safari and Chrome */
-  -o-transform:scale(@remove-icon-scale, @remove-icon-scale); /* Opera */
+  -ms-transform: scale(@remove-icon-scale, @remove-icon-scale); //IE 9
+  -moz-transform:scale(@remove-icon-scale, @remove-icon-scale); //Firefox
+  -webkit-transform:scale(@remove-icon-scale, @remove-icon-scale); //Safari and Chrome
+  -o-transform:scale(@remove-icon-scale, @remove-icon-scale); //Opera
 }
 
 .add-column {
@@ -277,22 +228,20 @@
   margin-left: 0px;
 
   transform: scale(@add-icon-scale, @add-icon-scale);
-  -ms-transform: scale(@add-icon-scale, @add-icon-scale); /* IE 9 */
-  -moz-transform:scale(@add-icon-scale, @add-icon-scale); /* Firefox */
-  -webkit-transform:scale(@add-icon-scale, @add-icon-scale); /* Safari and Chrome */
-  -o-transform:scale(@add-icon-scale, @add-icon-scale); /* Opera */
+  -ms-transform: scale(@add-icon-scale, @add-icon-scale); //IE 9
+  -moz-transform:scale(@add-icon-scale, @add-icon-scale); //Firefox
+  -webkit-transform:scale(@add-icon-scale, @add-icon-scale); //Safari and Chrome
+  -o-transform:scale(@add-icon-scale, @add-icon-scale); //Opera
 }
 
 .input-box {
   padding-bottom: 15px;
+  //.box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
 }
 
-.article {
-  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-  border: 1px solid #ccc;
-  padding-top: 13px;
-  padding-left: 10px;
-}
+.select2-container--default {
+  //.box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+};
 
 .synonym-input {
   border-bottom-left-radius: 3px;
@@ -307,8 +256,6 @@
 .add-synonym {
   float: left;
   width: 10%;
-  /*padding-top: 5px;
-  text-align: center;*/
 }
 
 #add-synonym-btn {
@@ -318,6 +265,69 @@
   border-top-right-radius: 3px;
   padding-top: 10px;
 }
+
+.tagsinput {
+  border-radius: 4px;
+  .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+  .transition(~"border-color ease-in-out .15s, box-shadow ease-in-out .15s");
+  min-height: 20px !important;
+  padding: 0 !important;
+  margin: 0;
+  height: auto;
+};
+
+//works but needs to something else than active (different blue color though)
+.tagsinput:active {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+};
+
+
+#tags_1_tag {
+  padding-top: 5px !important;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 24px;
+  width: auto !important;
+  color: #555;
+  font-size: 14px !important;
+};
+
+.select2-selection--single {
+  height: 34px !important;
+  .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+  border: 1px solid #ccc !important;
+};
+
+//those ones should be placed somewhere else
+.select2-selection__rendered {
+  color: #555 !important;
+  font-size: 14px !important;
+};
+
+.select2-selection__arrow {
+  margin-top: 5px;
+};
+
+/*
+.select2-selection__rendered {
+  //padding: 10px !important;
+  height: 34px !important;
+  border: 1px solid black !important;
+};
+*/
+
+.tag {
+  padding: 0px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  padding-top: 3px !important;
+  height: 24px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  margin-right: 0px !important;
+};
 
 .synonym {
   width: 90%;
@@ -346,7 +356,7 @@
   display: block;
   height: @article-height;
 
-  /*box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;*/
+  //box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 1px 0px;
   box-sizing: border-box;
 
@@ -373,13 +383,13 @@
   border-bottom-right-radius: 0 !important;
 }
 
-/*Specialitet Search/Select2 here*/
+//Specialitet Search/Select2 here
 
 .specialitet-select{
   width: 100%;
 }
 
-/* This should be in a separate file. But where? */
+//This should be in a separate file. But where?
 #opName {
   font-size: 30px;
 };
@@ -388,4 +398,5 @@
   font-size: 18px;
   display: inline;
 };
+
 

@@ -18,7 +18,7 @@ exports = module.exports = function(req, res) {
       console.log(err);
     }
     else {
-      locals.articles = data;
+      locals.articles = data.reverse();
       // Render the view
       view.render('kartotek');
     }

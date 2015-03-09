@@ -17,7 +17,7 @@ var createNewOperation = function() {
       console.log(msg); //Contains the created Operation-model
 
       //adding articles here
-      $('.article').each(function(index){
+      $('.article').each(function(index) {
 
         $.ajax({
           type: 'POST',
@@ -56,26 +56,36 @@ var removeArticle = function(element) {
 var addArticle = function(articleTemplate, results) {
   var name = $(this).data('name');
   var kartotekID = $(this).data('kartotekid');
+  var found = false;
 
-  var newArticle = $(articleTemplate({ name: name, id: kartotekID })).appendTo('#articles');
-  newArticle.find('.col-right').click(function() {
-    removeArticle(this);
-  });
-
-  
-  $('.col1-plus').click(function() {
-    $(this).context.previousElementSibling.innerHTML = 
-      parseInt($(this).context.previousElementSibling.innerHTML) + 1;
+  $('.article').each(function(index) {
+    if($(this).attr("data-kartotekID") == kartotekID) {
+      found = true;
+      }
   });
 
 
-  $('.col1-minus').click(function() {
-    var value = parseInt($(this).context.previousElementSibling.previousElementSibling.innerHTML);
-    if(value != 1) {
-      $(this).context.previousElementSibling.previousElementSibling.innerHTML = value - 1;
-    }
-  });
+  if (!found) {
+    var newArticle = $(articleTemplate({ name: name, id: kartotekID })).appendTo('#articles');
+    newArticle.find('.col-right').click(function() {
+      removeArticle(this);
+    });
 
+
+    $("#plus"+kartotekID).click(function() {
+      $("#top"+kartotekID).html(parseInt($("#top"+kartotekID).html()) + 1);
+    });
+
+
+    $("#minus"+kartotekID).click(function() {
+      if (parseInt($("#top"+kartotekID).html()) != 1) {
+        $("#top"+kartotekID).html(parseInt($("#top"+kartotekID).html() - 1));
+      }
+    });
+  }
+  else {
+    $("#top"+kartotekID).html(parseInt($("#top"+kartotekID).html()) + 1);
+  }
 };
 
 var findArticles = function(resultsTemplate, articleTemplate) {
