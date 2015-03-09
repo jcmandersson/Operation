@@ -15,7 +15,7 @@ exports = module.exports = function (req, res) {
 
   view.on('init', function (next) {
     operation.model.find({
-      //template: false
+      template: false
     }).populate('specialty')
       .exec(function (err, docs) {
         locals.operations = docs; 
@@ -27,7 +27,6 @@ exports = module.exports = function (req, res) {
                 progress.all.percent = 100;
               }
               locals.operations[i].progress = progress;
-              console.log(progress);
               next();
             });
           });

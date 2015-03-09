@@ -1,9 +1,7 @@
 {{!< default}}
-<div class="container">
+<div class="container" xmlns="http://www.w3.org/1999/html">
     <div id="opName">
       {{data.title}}
-        <button type="button" id="startaButton" class="btn btn-primary">Starta</button>
-        <button type="button" id="redigeraButton" class="btn btn-primary">Redigera</button>
     </div>
   
   {{#if data.specialty.name}}
@@ -14,7 +12,8 @@
       <div id ="synonyms">Synonymer: {{data.tags}}</div>
   {{/if}}
 
-
+    <!--nav nav-pills-->
+    <!--btn btn-default navbar-btn-->
     <ul class="nav nav-pills">
       {{#each processes}}
           <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
@@ -32,6 +31,12 @@
             <span class="contentText">{{{text}}}</span>
         </div>
       {{/each}}
+        {{#each prepares}}
+            <div class="process-content-item">
+                <span class="prepareTitle">{{title}}</span>
+                <span class="prepareText">{{{text}}}</span>
+            </div>
+        {{/each}}
       </div>
     {{/each}}
 
@@ -49,7 +54,7 @@
                 <td>Fack</td>
             </tr>
           {{# each articles }}
-              <tr data-operationId="{{operation}}" class="check-js" id={{_id}}>
+              <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js" id={{_id}}>
                   <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
                   <td>{{ kartotek.name }}</td>
                   <td>{{ amount }}</td>
@@ -62,7 +67,15 @@
         </table>
     </div>
 {{/if}}
-    
+  
+  {{#if data.template}}
+      <form method="get" id="createOperationInstanceButton">
+          <input type="hidden" name="operation" value="create">
+          <input type="hidden" name="operationId" value="{{data._id}}">
+          <input type="submit" value="Skapa operation" class="btn btn-primary">
+      </form>
+  {{/if}}
+    <button type="button" id="editButton" class="btn btn-primary">Redigera</button>
 </div>
 
 

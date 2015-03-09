@@ -35,7 +35,7 @@ ProcessContent.schema.statics.fromTemplate = function fromTemplate(processId, ne
       var newDoc = new ProcessContent.model(newObject);
       newDoc.save(function(err, savedDoc){
         if(err) console.log(err);
-
+        callback(err, savedDoc);
       });
     }
   });

@@ -40,7 +40,6 @@
                 <option>Operation</option>
                 <option>Patientpositionering</option>
                 <option>Förberedelselista</option>
-                <option>Plocklista</option>
             </select>
             <textarea id="underrubrik-text" class="form-control" rows="5"></textarea>
             <button type="button" id="newUnderrubrikButton" class="btn btn-primary">Skapa Underrubrik</button>
@@ -71,21 +70,26 @@
 </script>
 
 <script id="article-template" type="text/x-handlebars-template">
-    <div>
-        <div class="counter">
-            1
-            <div class="counter-choice">
-        <span class="counter-choice-left">
-          <span class="glyphicon glyphicon-chevron-up"></span>
-        </span>
-        <span class="counter-choice-right">
-          <span class="glyphicon glyphicon-chevron-down"></span>
-        </span>
+
+    <div class="row row-article">
+        <div class=".col-md-1 col-left">
+            <div class="col1-top" id="top\{{id}}">1</div>
+            
+            <div class="col1-plus" id="plus\{{id}}">
+                <div class="glyphicon glyphicon-plus plus"></div>
+            </div>
+            
+            <div class="col1-minus" id="minus\{{id}}">
+                <div class="glyphicon glyphicon-minus minus"></div>
             </div>
         </div>
-        <div class="article" data-kartotekid="\{{id}}">\{{name}}</div>
-        <div class="remove-article">
-            <span class="remove-icon glyphicon glyphicon-remove"></span>
+        
+        <div class=".col-md-10 col-middle">
+            <div class="article" data-kartotekid="\{{id}}">\{{name}}</div>
+        </div>
+        
+        <div class=".col-md-1 col-right">
+            <div class="remove-icon glyphicon glyphicon-remove"></div>
         </div>
     </div>
 </script>

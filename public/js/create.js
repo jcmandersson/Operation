@@ -1,17 +1,14 @@
 function add(data, index, operation, addedProccesstegs) {
-
+  
   var addedProccesstegs = addedProccesstegs;
   
   if ( !(data === undefined) ) {
-    console.log(data);
-    console.log();
+    
     var underrubrikName = $(data).find('#underrubrik-name').val();
     var underrubrikText = $(data).find('#underrubrik-text').val();
-
     var processteg = $(data).find('.select-processteg').val();
-
+    
     if (!(processteg in addedProccesstegs)) {
-
       $.ajax({
         type: 'POST',
         url: '/api/processtegs',
@@ -23,13 +20,7 @@ function add(data, index, operation, addedProccesstegs) {
       })
         .done(function (msg) {
           console.log(msg);
-
-
-          console.log(underrubrikName);
-          console.log(underrubrikText);
-          console.log(msg._id);
           addedProccesstegs[processteg] = [true, msg._id];
-
           $.ajax({
             type: 'POST',
             url: '/api/processinnehalls',
@@ -42,20 +33,15 @@ function add(data, index, operation, addedProccesstegs) {
           })
             .done(function (msg) {
               console.log(msg);
-              
-
               $(function () {
                 add($('#underrubriker').children()[index + 1], index + 1, operation, addedProccesstegs);
               });
-
-
             })
             .fail(function (err, status) {
               console.log('Någonting gick fel!');
               console.log(err);
               console.log(status);
             });
-
         })
         .fail(function (err, status) {
           console.log('Någonting gick fel!');
@@ -64,7 +50,6 @@ function add(data, index, operation, addedProccesstegs) {
         });
     }
     else{
-
       $.ajax({
         type: 'POST',
         url: '/api/processinnehalls',
@@ -77,12 +62,9 @@ function add(data, index, operation, addedProccesstegs) {
       })
         .done(function (msg) {
           console.log(msg);
-          
-          
           $(function () {
             add($('#underrubriker').children()[index + 1], index + 1, operation, addedProccesstegs);
           });
-          
         })
         .fail(function (err, status) {
           console.log('Någonting gick fel!');
@@ -93,7 +75,6 @@ function add(data, index, operation, addedProccesstegs) {
   }
 }
 
-
 var createNewOperation = function() {
   var tags = $('#tags_1').val();
   var specialty = $(".specialitet-select").val();
@@ -101,7 +82,8 @@ var createNewOperation = function() {
   
   console.log(specialty);
   if (specialty == 'Specialitet') {
-    console.log('Fix Error here');   
+    console.log('Fix Error here');
+    alert("välj specialitet!")
   }
   else
   {
@@ -116,18 +98,21 @@ var createNewOperation = function() {
       }
     })
       .done(function (msg) {
-        console.log(msg); //Contains the created Operation-model
-
+        console.log(msg);
         //adding articles here
         $('.article').each(function (index) {
-
+          var name = $(this).text();
+          var kartotek = $(this).attr("data-kartotekID");
+          var operation = msg._id;
+          var amount = $('#articles').find('#top'+kartotek).text();
           $.ajax({
             type: 'POST',
             url: '/api/artikels',
             data: {
-              name: $(this).text(),
-              kartotek: $(this).attr("data-kartotekID"),
-              operation: msg._id
+              name: name,
+              kartotek: kartotek,
+              operation: operation,
+              amount : amount
             }
           })
             .done(function (msg) {
@@ -139,73 +124,11 @@ var createNewOperation = function() {
               console.log(status);
             });
         });
-        
-        //adding underrubrik/processteg
-        
+        //adding underrubrik/processteg(recursive)
         $(function() {
           var index = 0;
           add($('#underrubriker').children()[index], index, msg._id, {});
         });
-        
-        /*
-        //adding underrubriker with processteg here
-        var addedProccesstegs = {};
-        $('.underrubrik-container').each(function (index, addedProcesstegs) {
-          console.log($(this).find('#underrubrik-name').val());
-          console.log($(this).find('#underrubrik-text').val());
-          console.log($(this).find('.select-processteg').val());
-          
-          var underrubrikName = $(this).find('#underrubrik-name').val();
-          var underrubrikText = $(this).find('#underrubrik-text').val();
-          
-          var processteg = $(this).find('.select-processteg').val();
-          
-          //add processteg if not added before
-          if (!(processteg in addedProccesstegs)) {
-            console.log("not in addedProcesstegs");
-            addedProccesstegs[processteg] = true;
-            $.ajax({
-              type: 'POST',
-              url: '/api/processtegs',
-              data: {
-                title: processteg,
-                operation: msg._id
-              }
-            })
-              .done(function (msg) {
-                console.log(msg);
-                
-              })
-              .fail(function (err, status) {
-                console.log('Någonting gick fel!');
-                console.log(err);
-                console.log(status);
-              });
-          }
-          else {
-            //add underrubrik
-            $.ajax({
-              type: 'POST',
-              url: '/api/processinnehalls',
-              data: {
-                order: 0,
-                title: underrubrikName,
-                text: underrubrikText,
-                process: "processtegid"
-              }
-            })
-              .done(function (msg) {
-                console.log(msg);
-              })
-              .fail(function (err, status) {
-                console.log('Någonting gick fel!');
-                console.log(err);
-                console.log(status);
-              });
-          }
-          
-      });*/
-        
       })
       .fail(function (err, status) {
         console.log('Någonting gick fel!');
@@ -215,23 +138,39 @@ var createNewOperation = function() {
   };
 };
 
-
-
-
 var removeArticle = function(element) {
   var parent = $(element).parent();
   $(parent).remove(); 
 };
 
-
 var addArticle = function(articleTemplate, results) {
   var name = $(this).data('name');
   var kartotekID = $(this).data('kartotekid');
-  
-  var newArticle = $(articleTemplate({ name: name, id: kartotekID })).appendTo('#articles');
-  newArticle.find('.remove-article').click(function() {
-    removeArticle(this);
+  var found = false;
+
+  $('.article').each(function(index) {
+    if($(this).attr("data-kartotekID") == kartotekID) {
+      found = true;
+      }
   });
+  
+  if (!found) {
+    var newArticle = $(articleTemplate({ name: name, id: kartotekID })).appendTo('#articles');
+    newArticle.find('.col-right').click(function() {
+      removeArticle(this);
+    });
+    $("#plus"+kartotekID).click(function() {
+      $("#top"+kartotekID).html(parseInt($("#top"+kartotekID).html()) + 1);
+    });
+    $("#minus"+kartotekID).click(function() {
+      if (parseInt($("#top"+kartotekID).html()) != 1) {
+        $("#top"+kartotekID).html(parseInt($("#top"+kartotekID).html() - 1));
+      }
+    });
+  }
+  else {
+    $("#top"+kartotekID).html(parseInt($("#top"+kartotekID).html()) + 1);
+  }
 };
 
 var findArticles = function(resultsTemplate, articleTemplate) {
@@ -299,12 +238,9 @@ var addUnderrubrik = function(underrubrikTemplate){
   var text = $('#underrubrik-text').val();
   
   //hardcoded for now (iteration1)
-  var processteg = ["All information", 
-                    "Anestesi", 
+  var processteg = ["Anestesi", 
                     "Operation", 
-                    "Patientpositionering",
-                    "Förberedelselista",
-                    "Plocklista"];
+                    "Patientpositionering"];
     
   $(underrubrikTemplate({ name: name, text: text, processteg: processteg })).appendTo('#underrubriker');
 
@@ -327,7 +263,7 @@ $(function() {
 
   var compiledArticle = $('#article-template').html();
   var articleTemplate = Handlebars.compile(compiledArticle);
-  
+
   var compiledUnderrubrik = $('#underrubrik-template').html();
   var underrubrikTemplate = Handlebars.compile(compiledUnderrubrik);
   
@@ -359,12 +295,3 @@ $(function() {
   });
 });
 
-var addedProccesstegs = {};
-addedProccesstegs["hej"] = [true, ''];
-addedProccesstegs["hej"][1] = 'hejsan';
-console.log(addedProccesstegs['hej']);
-console.log(addedProccesstegs['hej'][0]);
-console.log(addedProccesstegs['hej'][1]);
-if (!('heja' in addedProccesstegs)){
-  console.log("nej");
-}

@@ -9,7 +9,7 @@ exports = module.exports = function(req, res) {
   locals.section = 'home';
 
   locals.scripts = [
-    'checklist.js'
+    
   ];
 
   kartotek.model.find()
