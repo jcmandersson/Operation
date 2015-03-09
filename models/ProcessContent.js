@@ -4,7 +4,7 @@
 var keystone = require('keystone'),
   Types = keystone.Field.Types;
 
-var ProcessContent = new keystone.List('Processinnehåll', {
+var ProcessContent = new keystone.List('Processinnehall', {
   map: { name: 'title' },
   autokey: { path: 'slug', from: 'title', unique: true },
   track: true  
@@ -20,7 +20,7 @@ ProcessContent.add({
 ProcessContent.schema.statics.fromTemplate = function fromTemplate(processId, newProcessId, callback) {
   var thisDoc = this;
 
-  this.model('Processinnehåll').find({
+  this.model('Processinnehall').find({
     process: processId
   }).exec(function(err, docs) {
     if(err) console.log(err);
