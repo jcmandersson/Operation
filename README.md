@@ -34,10 +34,11 @@ URLer: (biblioteket lägger automatiskt på ett s på modellerna.)
 * /api/Specialitets
 * /api/users
 
+* /api/update/:model/:slug
+
 Types:
-* GET för att hämta (och söka)
+* GET för att hämta, söka och uppdatera
 * POST för att skapa
-* PUT för att ändra
 * DELETE för ta bort
 
 Sök (Operation, Kartotekartikel, Specialitet)
@@ -96,4 +97,23 @@ $.ajax({
 ```
 
 Ändra 
-Kommer snart!
+
+Hämta, tänk på att "slug" kan ändras om du ändrar namn eller titel på vissa modeller
+```javascript
+$.ajax({
+  type: 'GET',
+  url: '/api/update/operations/' + slug,
+  data: {
+    title: 'Ny titel',
+    tags: 'Nya tags'
+  }
+})
+  .done(function( msg ) {
+    console.log(JSON.parse(msg));
+  })
+  .fail(function(err, status){
+    console.log('Någonting gick fel!');
+    console.log(err);
+    console.log(status);
+  };
+```
