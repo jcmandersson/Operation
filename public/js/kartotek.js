@@ -87,7 +87,19 @@ var addArticle = function() {
     }
   })
     .done(function (newArticle) {
-      location.reload(true);  //Reload the page from the server to get the actual elements from the database.
+      console.log(newArticle._id);
+      // The first row (index 0) contains the header, the second row (index 1)
+      // contains the "create" row, we want to append the new article after the create row.
+      var createRow = $('#articles > tr')[1];
+      var newArticleElement = $(articleTemplate(newArticle)).insertAfter(createRow);
+      
+      $('#' + newArticle._id + 'remove').click(function() {
+        removeArticle.call(this, newArticle.slug);
+      });
+
+      $('.modifyable-article-column > span').click(function(){
+        modifyArticle.call(this, $(this).parent().parent());
+      });
     })
     .fail(function (err, status) {
       console.log('Kartoteksartikel kunde inte läggas till!');

@@ -38,7 +38,7 @@ Process.schema.statics.fromTemplate = function fromTemplate(operationId, newOper
       var newDoc = new Process.model(newObject);
       newDoc.save(function(err, savedDoc){
         if(err) console.log(err);
-        thisDoc.model('Processinnehåll').fromTemplate(doc._id, savedDoc._id, function(){
+        thisDoc.model('Processinnehall').fromTemplate(doc._id, savedDoc._id, function(){
           
         });
         callback(err, savedDoc);
