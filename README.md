@@ -62,10 +62,7 @@ Hämta
 ```javascript
 $.ajax({
   type: 'GET',
-  url: '/api/operations',
-  data: { //Lämna tom för att få ut all data
-    title: 'ACI Armbåge'
-  }
+  url: '/api/operations/' + slug,
 })
   .done(function( msg ) {
     console.log(JSON.parse(msg));
