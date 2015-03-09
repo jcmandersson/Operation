@@ -14,7 +14,7 @@ exports = module.exports = function (req, res) {
     .limit((typeof req.query.limit === 'undefined') ? 10 : req.query.limit)
     .exec(function (err, data) {
       if (err) {
-        res.status(500).send(err);
+        res.status(500).send(err);  
         return;
       }
       res.send(data);

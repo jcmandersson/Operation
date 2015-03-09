@@ -18,7 +18,7 @@
     <td class="modifyable-article-column"><span>\{{ section }}</span></td>
     <td class="modifyable-article-column"><span>\{{ shelf }}</span></td>
     <td class="modifyable-article-column"><span>\{{ tray }}</span></td>
-    <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
+    <td><a class="btn btn-danger article-remove" href="#" role="button" id="\{{_id}}remove"><span class="glyphicon glyphicon-remove"></span></a></td>
   </tr>
 </script>
 
@@ -35,7 +35,7 @@
             <td>Fack</td>
             <td></td>
           </tr>
-          <tr class="check-js" id={{_id}}>
+          <tr class="check-js" id="{{_id}}">
             <td><input data-type="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
             <td><input data-type="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
             <td><input data-type="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
@@ -45,7 +45,7 @@
           </tr>
 
           {{# each articles }}
-            <tr class="check-js" id={{_id}}>
+            <tr class="check-js" id="{{_id}}" data-slug="{{slug}}">
               <!-- The reason for the additional <span> is so that we can attach an event listener
                 to it, should then dissapear/not activate anymore when we replace it with an input. -->
               <td class="modifyable-article-column"><span>{{ name }}</span></td>

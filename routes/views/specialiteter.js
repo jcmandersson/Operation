@@ -18,7 +18,6 @@ exports = module.exports = function (req, res) {
   
 
   view.on('init', function (next) {
-    console.log("Specialiteter");
     speciality.model.find({      
     }).exec( function(err, data) {
       if (err) {
@@ -27,32 +26,34 @@ exports = module.exports = function (req, res) {
         return;
       } else {
         locals.specialities = data;
-        console.log(data);
-      }      
-      console.log(locals.specialities);
+      }
       _.each(locals.specialities, function(process, i) {
-        operation.model.find({ speciality: data._id }).exec( function(err, data) {
-          if (err) {
-            console.log('DB error');
-            console.log(err);
-            return;
-          } else {
-            //locals.operations = [];
-            //locals.operations[process._id] = data;
-            process.op = data;
-            console.log(data[0].slug);
-          }
-          next();
-        });
+        view.on('init', function(next){
+          console.log('['+process._id+']');
+          operation.model.find({ 
+            speciality: process._id,
+            template: true
+          })
+            .exec( function(err, operationData) {
+            if (err) {
+              console.log('DB error');
+              console.log(err);
+              return;
+            } else {
+              //locals.operations = [];
+              //locals.operations[process._id] = data;
+              console.log(operationData);
+              process.op = operationData;
+              console.log(process);              
+              console.log('\n\n')
+              
+            }
+            next();
+          });
+        });        
       });
-      
-
-      
-
-     
-      
+      next();
     });
-       
   });
   view.render('specialiteter');
   

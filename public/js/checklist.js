@@ -20,7 +20,6 @@ socket.on('connect', function(){ //Runs after socket has been started.
 var updateTableRow = function(tableRow, isChecked, isTemplate){
   var checkbox = tableRow.find('input');
   checkbox.prop('checked', isChecked);
-  console.log("i update: " + isTemplate);
   if(isTemplate){
     checkbox.prop('disabled', true);
     tableRow.prop('disabled', true);
@@ -37,7 +36,6 @@ socket.on('checkboxClick', function(checkObject){
 socket.on('getCheckboxes', function(checkboxesAndTemplate){
   var checkboxes = checkboxesAndTemplate.checkboxes;
   var isTemplate = checkboxesAndTemplate.template;
-  console.log("i get: " + isTemplate);
   for(var index in checkboxes){
     var checkbox = checkboxes[index];
     var tableRow = $('#' + checkbox._id);
