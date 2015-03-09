@@ -1,18 +1,24 @@
 {{!< default}}
 <div class="container">
   
-    <div> 
+    <ul class="list-group"> 
       {{# each specialities}}
-        <div>
-          <div id="speciality">{{name}} ({{abbrevation}})</div>
-          <div id="operations" class="hidden">            
+        <li class="list-group-item">
+            <div class="speciality">
+              {{name}} ({{abbrevation}}) <span class="badge">{{op.length}}</span>
+            </div>                    
+          <div class="hidden operations">            
             {{# each op}}
-              <a href="info/{{slug}}">{{title}}</a><br>
+              <div class="operation">
+                <a href="info/{{slug}}" class="div-full">{{title}}</a>
+              </div>
+              
             {{/each}}            
           </div>
-        </div>
+        </li>
       {{/each}}       
-    </div>  
+    </ul>  
 </div>
+
 
 

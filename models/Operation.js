@@ -13,8 +13,9 @@ Operation.add({
   linda_id: {type: String, default: '0', required: true},
   tags: { type: String },
   state: {type: Types.Select, options: 'Utkast, Publicerad, Arkiverad', default: 'Utkast'},
-  specialty: {type: Types.Relationship, ref: 'Specialitet', many: false},
-  template: {type: Types.Boolean, default: true}
+  specialty: {type: Types.Relationship, ref: 'Specialitet', many: false, index: true},
+  template: {type: Types.Boolean, default: true},
+  isDone: {type: Types.Boolean, default: false}
 });
 
 /**

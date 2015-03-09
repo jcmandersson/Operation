@@ -9,8 +9,7 @@ var Process = new keystone.List('Processteg', {
 
 Process.add({
   title: { type: String, required: true },
-  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'processes', required: true, initial: true, index: true },
-  template: { type: Boolean, default: true }
+  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'processes', required: true, initial: true, index: true }
 });
 
 /**
