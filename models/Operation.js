@@ -57,13 +57,9 @@ Operation.schema.statics.fromTemplate = function fromTemplate(slug, callback) {
     var newDoc = new Operation.model(newObject);
     newDoc.save(function(err, savedDoc){
       if(err) console.log(err);
-      console.log('0/3 done');
       thisDoc.model('Processteg').fromTemplate(doc._id, savedDoc._id, function(){
-        console.log('1/3 done');
         thisDoc.model('Artikel').fromTemplate(doc._id, savedDoc._id, function(){
-          console.log('2/3 done');
           thisDoc.model('Förberedelse').fromTemplate(doc._id, savedDoc._id, function(){
-            console.log('3/3 done');
             callback(savedDoc);
           });
         });
