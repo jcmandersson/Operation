@@ -1,7 +1,7 @@
 function calculateProgress(d){
   if(!d.total || !d.checked) return 1;
   console.log(d.checked/ d.total);
-  return 100*d.checked/ d.total;
+  return Math.round(100*d.checked/ d.total);
 }
 
 $(document).ready(function(){
