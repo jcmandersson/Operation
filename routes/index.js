@@ -43,7 +43,6 @@ exports = module.exports = function(app) {
   app.get('/info/:slug', routes.views.info);  
   app.get('/specialiteter', routes.views.specialiteter);
   
-  
   app.get('/index', routes.views.index);
 
 
