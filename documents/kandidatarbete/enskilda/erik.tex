@@ -1,11 +1,30 @@
 \section{Titel}
 \subsection{Inledning}
+Den här enskilda utredningen är en del av kandidatrapporten i kursen TDDD77 vid Linköpings universitet. Utredningen behandlar en del av utvecklingen av ett webb-baserat system för att underlätta förberedelser inför en operation. Systemet utvecklades på uppdrag av Region Östergötland.
+
 \subsubsection{Syfte}
+Syftet med den här enskilda delen av kandidatarbetet är att ge insikt i hur kontinuerlig integration och automatiserade tester kan användas för att effektivisera testandet i ett projekt som använder en agil utvecklingsmetod. Speciellt ska det undersökas hur väl det går att använda Travis CI tillsammans med MongoDB.
+
 \subsubsection{Frågeställning}
+Hur lång tid tar det för Travis CI att sätta upp en testversion av en MongoDB-databas?\\
+Hur många tester hinner Travis CI köra på en minut?\\\\
+
+I svaren på frågeställningarna ska testversionen av MongoDB-databasen och testerna specifieras noggrant så att svaren inte blir tvetydiga.
+
 \subsubsection{Avgränsningar}
+Inga undersökningar kommer att utföras om hur andra lösningar än Travis CI kan användas för kontinuerlig integration. De databaser som kommer användas kommer uteslutande vara av typen MongoDB.
+
 \subsection{Bakgrund}
 \subsection{Teori}
+I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. Om ett problem då identifieras under integrationen så är det krångligt att gå tillbaka och åtgärda problemet. Det kan leda till förseningar av projektet.\\
+
+Kontinuerlig integration och automatiserade tester kan leda till att problemen identifieras tidigare i utvecklingsprocessen. Problemen blir då lättare att åtgärda.\\
+
+Det finns många lösningar för att köra automatiserade tester.\\
+
 \subsection{Metod}
+Travis CI kommer att kopplas till en repository på GitHub.
+
 \subsection{Resultat}
 \subsection{Diskussion}
 \subsubsection{Resultat}
