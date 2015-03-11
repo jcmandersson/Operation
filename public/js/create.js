@@ -73,10 +73,6 @@ function add(data, index, operation, addedProccesstegs) {
         });
     }
   }
-  else{
-    console.log("handbok skapad");
-    alert("handbok skapad");
-  }
 }
 
 var createNewOperation = function() {
@@ -133,6 +129,9 @@ var createNewOperation = function() {
           var index = 0;
           add($('#underrubriker').children()[index], index, msg._id, {});
         });
+        
+        //Show the created handbook
+        document.location.href = '/info/'+msg.slug;
       })
       .fail(function (err, status) {
         console.log('Någonting gick fel!');
