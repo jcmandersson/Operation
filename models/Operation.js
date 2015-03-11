@@ -51,6 +51,7 @@ Operation.schema.statics.fromTemplate = function fromTemplate(slug, callback) {
     
     var newObject = JSON.parse(JSON.stringify(doc));
     delete newObject._id;
+    delete newObject.slug;
     newObject.template = false;
     
     var newDoc = new Operation.model(newObject);
@@ -62,7 +63,7 @@ Operation.schema.statics.fromTemplate = function fromTemplate(slug, callback) {
             callback(savedDoc);
           });
         });
-      });
+      });      
     });
   });
 };

@@ -24,20 +24,25 @@ ProcessContent.schema.statics.fromTemplate = function fromTemplate(processId, ne
     process: processId
   }).exec(function(err, docs) {
     if(err) console.log(err);
-    console.log(docs);
     for(var i = 0; i < docs.length; ++i) {
       var doc = docs[i];
       var newObject = JSON.parse(JSON.stringify(doc));
       delete newObject._id;
+      delete newObject.slug;
       newObject.process = newProcessId;
       newObject.template = false;
 
       var newDoc = new ProcessContent.model(newObject);
+      var saving = true;
       newDoc.save(function(err, savedDoc){
         if(err) console.log(err);
-        callback(err, savedDoc);
+        saving = false;
       });
+      while(saving) {
+        require('deasync').runLoopOnce();
+      }
     }
+    callback();
   });
 };
 
