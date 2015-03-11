@@ -139,7 +139,7 @@ var createNewOperation = function() {
         console.log(err);
         console.log(status);
       });
-  };
+  }
 };
 
 var removeArticle = function(element) {
