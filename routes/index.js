@@ -37,6 +37,8 @@ exports = module.exports = function(app) {
 	// Views
   app.get('/', routes.views.start);
   app.get('/create', routes.views.create);
+  app.get('/edit', routes.views.edit);
+  app.get('/edit/:slug', routes.views.edit);
   app.get('/kartotek', routes.views.kartotek);
   app.get('/db', routes.views.dbExamples);
   app.get('/info', routes.views.info);
