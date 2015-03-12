@@ -9,8 +9,7 @@ var Process = new keystone.List('Processteg', {
 
 Process.add({
   title: { type: String, required: true },
-  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'processes', required: true, initial: true, index: true },
-  template: { type: Boolean, default: true }
+  operation: { type: Types.Relationship, ref: 'Operation', refPath: 'processes', required: true, initial: true, index: true }
 });
 
 /**
@@ -33,18 +32,23 @@ Process.schema.statics.fromTemplate = function fromTemplate(operationId, newOper
       var doc = docs[i];
       var newObject = JSON.parse(JSON.stringify(doc));
       delete newObject._id;
+      delete newObject.slug;
       newObject.operation = newOperationId;
       newObject.template = false;
 
       var newDoc = new Process.model(newObject);
+      var saving = true;
       newDoc.save(function(err, savedDoc){
         if(err) console.log(err);
-        thisDoc.model('Processinnehåll').fromTemplate(doc._id, savedDoc._id, function(){
-          
+        thisDoc.model('Processinnehall').fromTemplate(doc._id, savedDoc._id, function(){
+          saving = false;
         });
-        callback(err, savedDoc);
       });
+      while(saving) {
+        require('deasync').runLoopOnce();
+      }
     }
+    callback();
   });
 };
 

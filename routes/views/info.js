@@ -4,7 +4,7 @@
 var keystone = require('keystone');
 var operation = keystone.list('Operation');
 var process = keystone.list('Processteg');
-var content = keystone.list('Processinnehåll');
+var content = keystone.list('Processinnehall');
 var article = keystone.list('Artikel');
 var prepare = keystone.list('Förberedelse');
 

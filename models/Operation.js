@@ -14,7 +14,8 @@ Operation.add({
   tags: { type: String },
   state: {type: Types.Select, options: 'Utkast, Publicerad, Arkiverad', default: 'Utkast'},
   specialty: {type: Types.Relationship, ref: 'Specialitet', many: false},
-  template: {type: Types.Boolean, default: true}
+  template: {type: Types.Boolean, default: true},
+  isDone: {type: Types.Boolean, default: false}
 });
 
 /**
@@ -50,6 +51,7 @@ Operation.schema.statics.fromTemplate = function fromTemplate(slug, callback) {
     
     var newObject = JSON.parse(JSON.stringify(doc));
     delete newObject._id;
+    delete newObject.slug;
     newObject.template = false;
     
     var newDoc = new Operation.model(newObject);
@@ -61,7 +63,7 @@ Operation.schema.statics.fromTemplate = function fromTemplate(slug, callback) {
             callback(savedDoc);
           });
         });
-      });
+      });      
     });
   });
 };

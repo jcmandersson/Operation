@@ -45,24 +45,6 @@ ul.nav li a {
   line-height: @navHeight/2;
 }
 
-@media (max-width: 767px) {
-  ul.nav li a{
-    padding-top: 0;
-    line-height: @navHeight;
-  }
-
-  .navbar-collapse form {
-    display: none;
-  }
-  
-  .navbar-collapse {
-    position: relative;
-    top: 10px;
-    overflow: hidden;
-  }
-}
-
-
 ul.nav a:hover, ul.nav li.active a {
   background-color: @lightblue !important;
 }
@@ -89,6 +71,10 @@ input[type="search"] {
 .operationSearch {
   height: @navHeight;
   line-height: @navHeight;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0;
 }
 
 .operationSearch .has-results {
@@ -103,7 +89,7 @@ input[type="search"] {
 
 #results {
   position: absolute;
-  top: @navHeight/2 + 18px;
+  top: @navHeight/2 + 17px;
   width: @searchWidth;
 }
 
@@ -116,7 +102,62 @@ input[type="search"] {
 }
 
 .navbar-form .has-feedback .form-control-feedback {
-  top: 17px;
+  top: 14px;
 }
 
+@media screen and (max-width: 900px) {
+  .navbar {
+    margin-bottom: @navHeight;
+  }
+
+  .operationSearch {
+    position: absolute;
+    top: @navHeight;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: -1;
+  }
+
+  .operationSearch .form-group {
+    width: 100%;
+  }
+
+  .operationSearch #search {
+    width: 100%;
+  }
+
+  .operationSearch #results {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  ul.nav li a{
+    padding-top: 0;
+    line-height: @navHeight;
+  }
+
+  /*.navbar-collapse form {
+    display: none;
+  }*/
+
+  .navbar-collapse {
+    position: relative;
+    top: 10px;
+    overflow: hidden;
+  }
+  .glyphicon-search {
+    top: 0 !important;
+  }
+
+  .operationSearch .form-group {
+    width: 100%;
+  }
+  
+  #results {
+    top: 33px;
+  }
+}
 

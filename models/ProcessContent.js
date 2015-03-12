@@ -4,7 +4,7 @@
 var keystone = require('keystone'),
   Types = keystone.Field.Types;
 
-var ProcessContent = new keystone.List('Processinnehåll', {
+var ProcessContent = new keystone.List('Processinnehall', {
   map: { name: 'title' },
   autokey: { path: 'slug', from: 'title', unique: true },
   track: true  
@@ -20,24 +20,29 @@ ProcessContent.add({
 ProcessContent.schema.statics.fromTemplate = function fromTemplate(processId, newProcessId, callback) {
   var thisDoc = this;
 
-  this.model('Processinnehåll').find({
+  this.model('Processinnehall').find({
     process: processId
   }).exec(function(err, docs) {
     if(err) console.log(err);
-    console.log(docs);
     for(var i = 0; i < docs.length; ++i) {
       var doc = docs[i];
       var newObject = JSON.parse(JSON.stringify(doc));
       delete newObject._id;
+      delete newObject.slug;
       newObject.process = newProcessId;
       newObject.template = false;
 
       var newDoc = new ProcessContent.model(newObject);
+      var saving = true;
       newDoc.save(function(err, savedDoc){
         if(err) console.log(err);
-        callback(err, savedDoc);
+        saving = false;
       });
+      while(saving) {
+        require('deasync').runLoopOnce();
+      }
     }
+    callback();
   });
 };
 

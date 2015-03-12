@@ -11,7 +11,7 @@ Specialty.add({
   abbrevation: { type: String, required: true, initial: true }
 });
 
-Specialty.relationship({ ref: 'Operation', path: 'specialty' });
+Specialty.relationship({ ref: 'Operation', path: 'operations', refPath: 'speciality'});
 
 Specialty.schema.statics.search = function(text, callback) {
   var search = new RegExp(text, 'ig');

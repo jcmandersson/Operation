@@ -37,30 +37,30 @@
               </li>
             {{/each}}
           </ul>
-          <form class="navbar-form navbar-right operationSearch" role="search">
-            <div class="form-group has-feedback">
-              <input type="search" id="search" class="form-control" autocomplete="off" placeholder="Sök..." />
-              <i class="glyphicon glyphicon-search form-control-feedback"></i>
-              <div id="results"></div>
-              <script id="results-template" type="text/x-handlebars-template">
-                <table class="table table-striped table-bordered table-hover result-table operationResults">
-                  \{{a}}
-                  \{{#each results}}
-                    <tr>
-                      <td>
-                        <a href="/info/\{{ slug }}">
-                          <div>\{{ title }}</div>
-                          <div class="tags">\{{ tags }}</div>
-                        </a>
-                      </td>
-                    </tr>
-                  \{{/each}}
-                </table>
-              </script>
-            </div>
-          </form>
         </div><!--/.nav-collapse -->
       </div>
+        <form class="navbar-form operationSearch" role="search">
+            <div class="form-group has-feedback">
+                <input type="search" id="search" class="form-control" autocomplete="off" placeholder="Sök..." />
+                <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                <div id="results"></div>
+                <script id="results-template" type="text/x-handlebars-template">
+                    <table class="table table-striped table-bordered table-hover result-table operationResults">
+                      \{{a}}
+                      \{{#each results}}
+                        <tr>
+                            <td>
+                                <a href="/info/\{{ slug }}">
+                                    <div>\{{ title }}</div>
+                                    <div class="tags">\{{ tags }}</div>
+                                </a>
+                            </td>
+                        </tr>
+                      \{{/each}}
+                    </table>
+                </script>
+            </div>
+        </form>
     </nav>
 
     <div id="body">

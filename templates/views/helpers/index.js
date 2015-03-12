@@ -209,27 +209,6 @@ module.exports = function() {
 		}		
 	};
 	
-	// ### Content Url Helpers
-	// KeystoneJS url handling so that the routes are in one place for easier
-	// editing.  Should look at Django/Ghost which has an object layer to access
-	// the routes by keynames to reduce the maintenance of changing urls
-	
-	// Direct url link to a specific post
-	_helpers.postUrl = function(postSlug, options) {
-		return ('/blog/post/' + postSlug);
-	};
-	
-	// might be a ghost helper
-	// used for pagination urls on blog
-	_helpers.pageUrl = function(pageNumber, options) {
-		return '/blog?page=' + pageNumber;
-	};
-	
-	// create the category url for a blog-category page
-	_helpers.categoryUrl = function(categorySlug, options) {
-		return ('/blog/' + categorySlug);
-	};
-	
 	// ### Pagination Helpers
 	// These are helpers used in rendering a pagination system for content
 	// Mostly generalized and with a small adjust to `_helper.pageUrl` could be universal for content types
