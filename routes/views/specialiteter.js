@@ -31,7 +31,7 @@ exports = module.exports = function (req, res) {
         view.on('init', function(next){
           console.log('['+process._id+']');
           operation.model.find({ 
-            speciality: process._id,
+            specialty: process._id,
             template: true
           })
             .exec( function(err, operationData) {
