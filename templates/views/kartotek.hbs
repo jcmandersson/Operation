@@ -48,11 +48,11 @@
             <tr class="check-js" id="{{_id}}" data-slug="{{slug}}">
               <!-- The reason for the additional <span> is so that we can attach an event listener
                 to it, should then dissapear/not activate anymore when we replace it with an input. -->
-              <td class="modifyable-article-column"><span>{{ name }}</span></td>
-              <td class="modifyable-article-column"><span>{{ storage }}</span></td>
-              <td class="modifyable-article-column"><span>{{ section }}</span></td>
-              <td class="modifyable-article-column"><span>{{ shelf }}</span></td>
-              <td class="modifyable-article-column"><span>{{ tray }}</span></td>
+              <td class="modifyable-article-column" data-name="name"><span>{{ name }}</span></td>
+              <td class="modifyable-article-column" data-name="storage"><span>{{ storage }}</span></td>
+              <td class="modifyable-article-column" data-name="section"><span>{{ section }}</span></td>
+              <td class="modifyable-article-column" data-name="shelf"><span>{{ shelf }}</span></td>
+              <td class="modifyable-article-column" data-name="tray"><span>{{ tray }}</span></td>
               <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
                 with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
               <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
