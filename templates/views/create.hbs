@@ -102,7 +102,7 @@
     <div class="underrubrik-container">
         <input type="text" id="underrubrik-name" class="form-control" value='\{{ name }}'>
         <label>Processsteg:</label>
-        <select class="select-processteg">
+        <select class="select-processteg" id="underrubrik-processteg">
           \{{#each processteg }}
           \{{#if_selected this}}
             <option selected>\{{this}}</option>

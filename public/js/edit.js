@@ -1,3 +1,37 @@
+var initializeSpecialitetSelect = function() {
+  $(".specialitet-select").select2({
+
+    ajax: {
+      type: 'GET',
+      url: '/api/search/Specialitet/',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+
+          text: params.term, // search term
+          all: 1
+        };
+      },
+      processResults: function (data) {
+        console.log(data);
+
+        return {
+          results: $.map(data, function (item) {
+            return {
+              text: item.name, id: item._id
+            }
+          })
+        };
+      },
+      cache: true
+    },
+    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+    minimumInputLength: 0
+
+  });
+};
+
 $(document).ready(function() {
 
   $(".process-content").hide();
@@ -15,5 +49,14 @@ $(document).ready(function() {
   
   $('.process-content').sortable({
     cancel: 'input,.jqte'
+  })
+
+  $('.tags').tagsInput({
+    width: 'auto',
+    defaultText: 'Lägg till synonym',
+    removeWithBackspace: false,
+    height: '40px'
   });
+
+  initializeSpecialitetSelect();
 });
