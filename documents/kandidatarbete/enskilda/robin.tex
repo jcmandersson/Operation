@@ -1,11 +1,27 @@
-\section{Titel}
+\section{Checklista - Robin Andersson}
 \subsection{Inledning}
+Vårat system ska innehålla olika typer av checklistor på olika webbsidor. Om flera användare är inne på samma sida samtidigt och en person checkar en checkruta så ska den checkrutan bli checkad för alla användare som är inne på den sidan.\\
+
+Detta kommer att implementeras med hjälp av html, javascript och jquery samt Socket.IO för att checkrutor ska kunna uppdateras utan att webbsidan behöver uppdateras.
+
 \subsubsection{Syfte}
+Syftet med denna del av projektet är att flera sjuksköterskor samtidigt ska kunna plocka olika artiklar till en operation samtidigt utan att de råkar plocka samma artikel. Det ska även finnas en typ av checklista som innehåller olika förberedelser till en operation. 
+
 \subsubsection{Frågeställning}
+\begin{itemize}
+\item Går det att anpassa checklistan för en surfplatta medan den samtidigt innehåller information om var artiklar befinner sig samt hur många av varje artikel som behövs?
+\item Kommer Socket.IO vara tillräckligt snabbt för att flera personer ska kunna checka av artiklar samtidigt utan förvirring?
+\end{itemize}
+
 \subsubsection{Avgränsningar}
-\subsection{Bakgrund}
+Eftersom denna del av projektet endast innehåller checkande av checklistor så saknas etiska aspekter.
+
 \subsection{Teori}
+Huvuddelen i implementeringen av checklistan är kommunikationen med Socket.IO. Information om Socket.IO finns på webbplatsen: \textit{http://socket.io/}
+ 
 \subsection{Metod}
+Jag började med att fundera på hur kommunikationen ska se ut på för sätt. Jag kom fram till att när en användare går in på en operationsmanual så kommer denne in i ett rum. Varje gång en person sedan checkar en checkbox så skickas ett Socket.IO meddelande till servern som innehåller information om vilken checkruta som ska checkas samt vilket rum checkboxen ska checkas i. Servern skickar sedan ett meddelande till det givna rummet vilken checkruta som ska checkas och alla klienter som är anslutna till det rummet checkar den givna checkrutan.
+
 \subsection{Resultat}
 \subsection{Diskussion}
 \subsubsection{Resultat}

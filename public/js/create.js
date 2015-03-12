@@ -129,13 +129,16 @@ var createNewOperation = function() {
           var index = 0;
           add($('#underrubriker').children()[index], index, msg._id, {});
         });
+        
+        //Show the created handbook
+        document.location.href = '/info/'+msg.slug;
       })
       .fail(function (err, status) {
         console.log('Någonting gick fel!');
         console.log(err);
         console.log(status);
       });
-  };
+  }
 };
 
 var removeArticle = function(element) {
@@ -175,7 +178,7 @@ var addArticle = function(articleTemplate, results) {
 
 var findArticles = function(resultsTemplate, articleTemplate) {
   var articleName = $('#article-search').val();
-  var url = '/api/Kartotekartikels?text=' + articleName;
+  var url = '/api/search/Kartotekartikel?text=' + articleName;
   $.get(url).done(function(results) {
     $('#kartotekResults').html(resultsTemplate({ results: results }));
 
@@ -183,11 +186,11 @@ var findArticles = function(resultsTemplate, articleTemplate) {
       $('#article-search').addClass('has-results');
     }
     else {
-      $('#article-search')
+      $('#article-search').removeClass('has-results');
     }
 
     $('.add-column').click(function() {
-      addArticle.call(this, articleTemplate, results)
+      addArticle.call(this, articleTemplate, results);
       $('#article-search').val('').removeClass('has-results');
       $('.kartotekResults')
     });
@@ -268,7 +271,7 @@ $(function() {
   var underrubrikTemplate = Handlebars.compile(compiledUnderrubrik);
   
   $('#newOperationButton').click(createNewOperation);
-  $('#article-search').keydown(findArticles.bind(undefined, kartotekResultsTemplate, articleTemplate));
+  $('#article-search').keyup(findArticles.bind(undefined, kartotekResultsTemplate, articleTemplate));
   $('#add-synonym-btn').click(addSynonym.bind(undefined, synonymTemplate));
   $('#tags_1').tagsInput({
     width: 'auto',

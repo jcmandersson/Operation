@@ -2,7 +2,7 @@ var keystone = require('keystone');
 
 exports = module.exports = function (req, res) {
   var model = keystone.list(req.params.model);
-  model.model.findOne(req.params.slug)
+  model.model.findOne({slug: req.params.slug})
     .exec(function (err, data) {
       if (err) {
         res.status(500).send(err);
