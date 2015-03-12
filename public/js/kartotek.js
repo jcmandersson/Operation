@@ -73,7 +73,7 @@ var addArticle = function() {
       console.log(newArticle._id);
       // The first row (index 0) contains the header, the second row (index 1)
       // contains the "create" row, we want to append the new article after the create row.
-      var createRow = $('#artic').find('tr')[1];
+      var createRow = $('#articles').find('tr')[1];
       var newArticleElement = $(articleTemplate(newArticle)).insertAfter(createRow);
       
       $('#' + newArticle._id + 'remove').click(function() {
