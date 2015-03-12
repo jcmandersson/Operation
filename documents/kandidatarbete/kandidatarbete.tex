@@ -25,9 +25,73 @@
 
 \renewcommand\cftpartpresnum{Del~}
 
+
 \begin{document}
+\pagenumbering{roman}
+
+\begin{titlepage}
+\begin{center}
+  \textbf{\Huge Kandidatrapport}
+\end{center}
+\begin{center}
+  {\Large Redaktör: Pål Kastman}
+\end{center}
+\begin{center}
+  {\Large \textbf{Version 0.1}}
+\end{center}
+\end{titlepage}
+\newpage
+\begin{flushleft}
+  {\Large \textbf{Dokumenthistorik}}\\[0.5ex]
+  \begin{center}
+    \begin{tabular}{ | l | l | p{5cm} | l |}
+    \hline
+    \textbf{Datum} & \textbf{Version} & \textbf{Utförda ändringar} & \textbf{Utförda av} \\ \hline
+    2015-03-12 & 0.1 & Första utkast av gemensam och individuella rapporter & Pål Kastman \\ \hline
+    \end{tabular}
+  \end{center}
+\end{flushleft}
+
+\hfill
+
+\begin{flushleft}
+  {\Large \textbf{Projektidentitet}}\\[0.5ex]
+  {\small} Detta dokument gäller för grupp 7  i kursen TDDD77 på Linköpings Universitet
+  \begin{center}
+    \begin{tabular}{ | l | l | p{5cm} | l |}
+    \hline
+    \textbf{Namn} & \textbf{Ansvarsområde} & \textbf{E-post} \\ \hline
+    Daniel Rapp & Teamledare & danth407@student.liu.se \\ \hline
+    Daniel Falk & Analysansvarig & danfa519@student.liu.se \\ \hline
+    Jonas Andersson & Arkitekt & jonan111@student.liu.se \\ \hline
+    Albert Karlsson & Kvalitetssamordnare & albka735@student.liu.se \\ \hline
+    Erik Malmberg & Testledare & erima694@student.liu.se \\ \hline
+    Pål Kastman & Arkitekt & palka285@student.liu.se \\ \hline
+    \end{tabular}
+\end{center}
+\end{flushleft}
+
+\begin{flushleft}
+\textbf{Kund} \\ Region Östergötland \\
+\end{flushleft}
+\begin{flushleft}
+\textbf{Kundkontakt} \\ 
+Daniel Hall, daniel.hall@regionostergotland.se \\
+Erik Sundvall, erik.sundvall@regionostergotland.se \\
+Ingrid Hallander, ingrid.hallander@regionostergotland.se \\
+\end{flushleft}
+\begin{flushleft}
+\textbf{Handledare} \\ Lena Buffoni, lena.buffoni@liu.se \\
+\end{flushleft}
+\begin{flushleft}
+\textbf{Handledare} \\ Kristian Sandahl, kristian.sandahl@liu.se \\
+\end{flushleft}
+
+\newpage
 \tableofcontents
 \newpage
+\pagenumbering{arabic}
+
 \part{Gemensamma erfarenheter och diskussion}
 
 \section{Inledning}
@@ -37,7 +101,8 @@ Detta avsnitt behandlar varför detta projekt utförs.
 Region Östergötland har idag ett system med handböcker som en sjuksköterska går igenom inför varje operation. I dessa handböcker finns bland annat förberedelse-uppgifter och plocklistor. Handböckerna är idag inte interaktiva på något sätt, istället skrivs plocklistan och förberedelse\-uppgifterna ut och bockas av för hand. Plattformen med handböcker kan heller inte användas på andra avdelningar än ... på grund utav licensproblem. Utöver detta system så finns ett annat separat system, som heter kartoteket, för uppgifter om vilka artiklar som finns och var i lagret de ligger. Detta gör att personalen som ska förbereda inför operationer behöver gå in i två olika system om de inte vet var alla artiklar ligger.\\*
 
 \subsection{Syfte}
-Uppgiften som gruppen har fått är att skapa ett nytt system med handböcker som har interaktiva förberedelse-och plocklistor. Listorna ska uppdateras kontinuerligt när de bockas av så flera personer kan jobba på dem samtidigt. Plocklistan ska också innehålla uppgifter om var artiklarna ligger. Tanken är att personalen ska använda en iPad för listorna så de kan gå runt och plocka i lagret och bocka av samtidigt. \\*
+Uppgiften som gruppen har fått är att skapa ett nytt system med handböcker som har interaktiva förberedelse-och plocklistor. Listorna ska uppdateras kontinuerligt när de bockas av så flera personer kan jobba på dem samtidigt. Plocklistan ska också innehålla uppgifter om var artiklarna ligger. Tanken är att personalen 
+ska använda en iPad för listorna så de kan gå runt och plocka i lagret och bocka av samtidigt. \\*
 I mån av tid ska också extra funktionalitet implementeras. Till exempel sortera plocklistan med avseende på närmsta väg mellan artiklarna, lagersaldo och media i handböckerna. \\*
 Hela systemet ska ligga under en open-source licens så det kan användas fritt av alla.    
 \subsection{Frågeställning}
@@ -85,6 +150,7 @@ Nästan all utveckling har skett med hela gruppen samlad i samma lokal. Det har 
 \subsection{Arbetat i ett vidare sammanhang}
 
 \section{Slutsatser}
+   * = efter kl 18   Resultatbörsen 330 
 
 \section{Fortsatt arbete}
 
