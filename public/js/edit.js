@@ -12,4 +12,8 @@ $(document).ready(function() {
   });
   
   $('textarea:not(.wysiwyg)').addClass('wysiwyg').jqte();
+  
+  $('.process-content').sortable({
+    cancel: 'input,.jqte'
+  });
 });
