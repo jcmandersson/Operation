@@ -46,8 +46,8 @@
         <table class="table">
             <tr class="table-headerstriped">
                 <td></td>
-                <td>Namn</td>
                 <td>Antal</td>
+                <td>Namn</td>
                 <td>Förråd</td>
                 <td>Sektion</td>
                 <td>Hylla</td>
@@ -56,8 +56,8 @@
           {{# each articles }}
               <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js" id={{_id}}>
                   <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
-                  <td>{{ kartotek.name }}</td>
                   <td>{{ amount }}</td>
+                  <td>{{ kartotek.name }}</td>
                   <td>{{ kartotek.storage }}</td>
                   <td>{{ kartotek.section }}</td>
                   <td>{{ kartotek.shelf }}</td>
