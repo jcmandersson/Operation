@@ -4,12 +4,17 @@
         <div id="name">
             Namn:
             <input class="form-control" type="text" name="name" value="{{data.title}}" placeholder="Namn"/>
-        </div>
+        </div>        
+        <div id="synonyms">Synonymer: <input class="form-control tags" type="text" name="tags" placeholder="Synonymer" value="{{data.tags}}"/></div>
+        <div id="specialty">Specialitet: <select class="specialitet-select">
+          {{#if data.specialty }}
+            <option value="{{data.specialty.name}}" selected="selected">{{data.specialty.name}}</option>
+          {{ else }}
+              <option value="Specialitet" selected="selected">Lägg till specialitet</option>
+          {{/if}}
+        </select>
 
-        <div id="specialty">Specialitet: <input class="form-control" type="text" name="specialty" placeholder="Specialitet" value="{{data.specialty.name}}"/></div>
-
-        <div id="synonyms">Synonymer: <input class="form-control" type="text" name="tags" placeholder="Synonymer" value="{{data.tags}}"/></div>
-
+      
         <ul class="nav nav-pills">
           {{#each processes}}
               <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
