@@ -14,6 +14,7 @@
           {{#each processes}}
               <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
           {{/each}}
+            <button type="button" class="btn btn-default navbar-btn" id="Ny"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
             <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
         </ul>
 
@@ -53,7 +54,7 @@
                   </tr>
                 {{# each articles }}
                     <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js" id={{_id}}>
-                        <td><input class="form-control" type="checkbox" class="checkbox-js" id="{{_id}}"></td>
+                        <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
                         <td>{{ kartotek.name }}</td>
                         <td>{{ amount }}</td>
                         <td>{{ kartotek.storage }}</td>
