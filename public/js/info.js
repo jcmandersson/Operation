@@ -12,6 +12,6 @@ $(document).ready(function() {
   });
 });
 
-$("#startButtonkak").click(function(){
+$("#createOperationInstanceButton").click(function(){
   createNewOperation();
 });
