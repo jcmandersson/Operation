@@ -1,0 +1,77 @@
+{{!< default}}
+<div class="container" xmlns="http://www.w3.org/1999/html">
+    <form method="POST" class="operationForm">
+        <div id="name">
+            Namn:
+            <input class="form-control" type="text" name="name" value="{{data.title}}" placeholder="Namn"/>
+        </div>        
+        <div id="synonyms">Synonymer: <input class="form-control tags" type="text" name="tags" placeholder="Synonymer" value="{{data.tags}}"/></div>
+        <div id="specialty">Specialitet: <select class="specialitet-select">
+          {{#if data.specialty }}
+            <option value="{{data.specialty.name}}" selected="selected">{{data.specialty.name}}</option>
+          {{ else }}
+              <option value="Specialitet" selected="selected">Lägg till specialitet</option>
+          {{/if}}
+        </select>
+
+      
+        <ul class="nav nav-pills">
+          {{#each processes}}
+              <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
+          {{/each}}
+            <button type="button" class="btn btn-default navbar-btn" id="Ny"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
+        </ul>
+
+      {{#each processes}}
+          <div class="process-content" id="content{{@index}}" style="{{#if @index}}display: none;{{/if}}">
+            {{#each contents}}
+                <div class="process-content-item">
+                    <span class="contentTitle"><input class="form-control" type="text" value="{{ title }}"/></span>
+                    <span class="contentText"><textarea>{{ text }}</textarea></span>
+                </div>
+            {{/each}}
+              <div class="process-content-item">
+                  <span class="contentTitle"><input class="form-control" type="text" value="" placeholder="Ny rubrik"/></span>
+                  <span class="contentText"><textarea placeholder="Ny beskrivning"></textarea></span>
+              </div>
+              <!--{{#each prepares}}
+            <div class="process-content-item">
+                <span class="prepareTitle">{{title}}</span>
+                <span class="prepareText">{{{text}}}</span>
+            </div>
+        {{/each}}-->
+          </div>
+      {{/each}}
+
+
+      {{#if articles}}
+          <div class="process-content" id="contentchecklist" style="display: none;">
+              <table class="table">
+                  <tr class="table-headerstriped">
+                      <td></td>
+                      <td>Namn</td>
+                      <td>Antal</td>
+                      <td>Förråd</td>
+                      <td>Sektion</td>
+                      <td>Hylla</td>
+                      <td>Fack</td>
+                  </tr>
+                {{# each articles }}
+                    <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js" id={{_id}}>
+                        <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
+                        <td>{{ kartotek.name }}</td>
+                        <td>{{ amount }}</td>
+                        <td>{{ kartotek.storage }}</td>
+                        <td>{{ kartotek.section }}</td>
+                        <td>{{ kartotek.shelf }}</td>
+                        <td>{{ kartotek.tray }}</td>
+                    </tr>
+                {{/each}}
+              </table>
+          </div>
+      {{/if}}
+
+        <button type="button" id="editButton" class="btn btn-primary">Spara</button>
+    </form>
+</div>
