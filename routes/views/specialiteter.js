@@ -12,10 +12,15 @@ exports = module.exports = function (req, res) {
   locals.scripts = [
     'specialiteter.js'
   ];
+
+  locals.css = [
+    'site.css'
+  ];
+
   // locals.section is used to set the currently selected
   // item in the header navigation.
   locals.section = 'specialiteter';
-  
+
 
   view.on('init', function (next) {
     speciality.model.find({      

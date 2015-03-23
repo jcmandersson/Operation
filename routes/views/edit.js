@@ -20,6 +20,10 @@ exports = module.exports = function (req, res) {
     'edit.js'
   ];
 
+  locals.css = [
+    'site.css'
+  ];
+
   view.on('init', function(next) {
     operation.model.find({
       slug: req.params.slug
@@ -38,10 +42,10 @@ exports = module.exports = function (req, res) {
   });
 
   view.on('init', function(next) {
-    if(typeof locals.data === 'undefined'){
+    if (typeof locals.data === 'undefined') {
       next();
       return;
-    } 
+    }
     article.model.find({
       operation: locals.data._id
     }).populate('kartotek')
@@ -58,7 +62,7 @@ exports = module.exports = function (req, res) {
   });
 
   view.on('init', function(next) {
-    if(typeof locals.data === 'undefined'){
+    if (typeof locals.data === 'undefined') {
       next();
       return;
     }
@@ -79,7 +83,7 @@ exports = module.exports = function (req, res) {
   });
 
   view.on('init', function(next) {
-    if(typeof locals.data === 'undefined'){
+    if (typeof locals.data === 'undefined') {
       next();
       return;
     }
@@ -128,8 +132,8 @@ exports = module.exports = function (req, res) {
     });
     next(null);
   });
-  
-  view.on('init', function(next){
+
+  view.on('init', function(next) {
     if(typeof locals.processes === 'undefined') locals.processes = [];
     /*locals.processes.push({
       title: 'Ny'

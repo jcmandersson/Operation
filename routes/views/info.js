@@ -18,7 +18,11 @@ exports = module.exports = function(req, res) {
     'checklist.js',
     'checkEffect.js'
   ];
-  
+
+  locals.css = [
+    'site.css'
+  ];
+
   view.on('get', {operation: 'create'}, function(){
     console.log("AAAA: " + req.params.slug);
     operation.model.fromTemplate(req.params.slug, function(newOperation){
