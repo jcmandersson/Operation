@@ -25,11 +25,14 @@ var modifyArticle = function(tablerow) {
     if (e.keyCode == 13) {
       saveArticle(this);
       
+      console.log(tablerow);
+      
       var name = tablerow.find("td[data-name='name']").find("span").html();
       var storage = tablerow.find("td[data-name='storage']").find("span").html();
       var section = tablerow.find("td[data-name='section']").find("span").html();
       var shelf = tablerow.find("td[data-name='shelf']").find("span").html();
       var tray = tablerow.find("td[data-name='tray']").find("span").html();
+      console.log(section);
 
       $.ajax({
         type: 'GET',
@@ -80,7 +83,7 @@ var addArticle = function() {
         removeArticle.call(this, newArticle.slug);
       });
 
-      $('.modifyable-article-column > span').click(function(){
+      $('.modifyable-article-column > span:not(.hasListener)').addClass('hasListener').click(function(){
         modifyArticle.call(this, $(this).parent().parent());
       });
     })
@@ -120,7 +123,7 @@ $(function() {
   $('.article-remove').click(function() {
     removeArticle.call(this, $(this).parent().parent().data("slug"));
   });
-  $('.modifyable-article-column > span').click(function(){
+  $('.modifyable-article-column > span:not(.hasListener)').addClass('.hasListener').click(function(){
     modifyArticle.call(this, $(this).parent().parent());
   });
 });
