@@ -16,7 +16,7 @@ var modifyArticle = function(tablerow) {
   var compiledModify = $('#modify-template').html();
   var modifyTemplate = Handlebars.compile(compiledModify);
   var slug = tablerow.data("slug");
-  
+
   // This will essentially remove itself
   var currentValue = $(this).text();
   $(this).parent().html(modifyTemplate({ value: currentValue }));
@@ -24,7 +24,7 @@ var modifyArticle = function(tablerow) {
     // 13 = the enter key
     if (e.keyCode == 13) {
       saveArticle(this);
-      
+
       var name = tablerow.find("td[data-name='name']").find("span").html();
       var storage = tablerow.find("td[data-name='storage']").find("span").html();
       var section = tablerow.find("td[data-name='section']").find("span").html();
@@ -44,7 +44,7 @@ var modifyArticle = function(tablerow) {
       })
         .done(function( msg ) {
         })
-        .fail(function(err, status){
+        .fail(function(err, status) {
           console.log('Kunde inte ändra artikeln.');
           console.log(err);
           console.log(status);
@@ -75,7 +75,7 @@ var addArticle = function() {
       // contains the "create" row, we want to append the new article after the create row.
       var createRow = $('#articles').find('tr')[1];
       var newArticleElement = $(articleTemplate(newArticle)).insertAfter(createRow);
-      
+
       $('#' + newArticle._id + 'remove').click(function() {
         removeArticle.call(this, newArticle.slug);
       });
@@ -93,13 +93,11 @@ var addArticle = function() {
 
 var removeArticle = function(slug) {
   var confirmed = confirm("Är du säker på att du vill ta bort artikeln från kartoteket?");
-  if(confirmed){
+  if (confirmed) {
     $.ajax({
       type: 'DELETE',
       url: '/api/kartotekartikels/' + slug
     })
-      .done(function () {
-      })
       .fail(function (err, status) {
         console.log('Kartoteksartikel kunde inte tas bort!');
         console.log(err);
@@ -109,13 +107,12 @@ var removeArticle = function(slug) {
     var row = $(this).parent().parent();
     row.remove();
   }
-  else{
+  else {
     return false;
   }
 };
 
 $(function() {
-  // TODO: (Connect to)/(update in) database
   $('#article-add').click(addArticle);
   $('.article-remove').click(function() {
     removeArticle.call(this, $(this).parent().parent().data("slug"));
