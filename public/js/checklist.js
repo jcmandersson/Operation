@@ -8,14 +8,14 @@ $(function(){
   $('.check-js').click(function() {
     if(!$(this).prop('disabled')) {
       var checkbox = $(this).find('input')[0];
-      var checkObject = {operation: operationId, id: $(this).attr('id'), check: !checkbox.checked};
+      checkbox.checked = !checkbox.checked;
+      var checkObject = {operation: operationId, id: $(this).attr('id'), check: checkbox.checked};
       socket.emit('checkboxClick', checkObject);
-      checkbox.check = !checkbox.check;
     }
   });
   
   $('.checkbox-js').click(function() {
-    $(this.checked = !this.checked);
+    this.checked = !this.checked;
   })
 });
 
