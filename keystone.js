@@ -82,7 +82,7 @@ keystone.set('nav', {
 
 keystone.start({
   onHttpServerCreated: function() {
-    var checklist = require('./lib/checklist.js');//Load socket.io for checklists.
+    var checklist = require('./lib/checklist.js'); // Load socket.io for checklists.
     checklist(keystone);
   }
 });
