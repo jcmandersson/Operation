@@ -57,6 +57,17 @@ $(document).ready(function() {
     removeWithBackspace: false,
     height: '40px'
   });
+  
+  var createNewItem = function(){
+    $(this).unbind("keyup", createNewItem);
+    var $e = $(this).parents().eq(2);
+    console.log($e);
+    var $clone = $e.find('.process-content-item').first().clone().removeClass('hidden').appendTo($e);
+    $clone.find('.rubrik').keyup(createNewItem);
+  };
+  $('.process-content').each(function(i, e){
+    $(e).find('.process-content-item .rubrik').last().keyup(createNewItem);
+  });
 
   initializeSpecialitetSelect();
 });

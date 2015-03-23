@@ -25,15 +25,19 @@
 
       {{#each processes}}
           <div class="process-content" id="content{{@index}}" style="{{#if @index}}display: none;{{/if}}">
+              <div class="process-content-item hidden">
+                  <span class="contentTitle"><input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/></span>
+                  <span class="contentText"><textarea class="information" placeholder="Ny beskrivning"></textarea></span>
+              </div>
             {{#each contents}}
                 <div class="process-content-item">
-                    <span class="contentTitle"><input class="form-control" type="text" value="{{ title }}"/></span>
-                    <span class="contentText"><textarea>{{ text }}</textarea></span>
+                    <span class="contentTitle"><input class="form-control rubrik" type="text" value="{{ title }}"/></span>
+                    <span class="contentText"><textarea class="information">{{ text }}</textarea></span>
                 </div>
             {{/each}}
               <div class="process-content-item">
-                  <span class="contentTitle"><input class="form-control" type="text" value="" placeholder="Ny rubrik"/></span>
-                  <span class="contentText"><textarea placeholder="Ny beskrivning"></textarea></span>
+                  <span class="contentTitle"><input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/></span>
+                  <span class="contentText"><textarea class="information" placeholder="Ny beskrivning"></textarea></span>
               </div>
               <!--{{#each prepares}}
             <div class="process-content-item">
