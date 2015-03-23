@@ -73,8 +73,30 @@
       <form method="get" id="createOperationInstanceButton">
           <input type="hidden" name="operation" value="create">
           <input type="hidden" name="operationId" value="{{data._id}}">
-          <input type="submit" value="Skapa operation" class="btn btn-primary">
+          <input type="button" value="Påbörja förberedelse" class="btn btn-primary" data-toggle="modal" data-target="#start">
+
+          <!-- Modal -->
+          <div class="modal fade" id="start" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="modalLabel">Påbörja operationsförberedelse</h4>
+                </div>
+                <div class="modal-body">
+                  <label>LindaID:</label>
+                  <input type="text" id="lindaID" class="form-control"/>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                  <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
+                </div>
+              </div>
+            </div>
+          </div>
       </form>
   {{/if}}
+
   <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+
 </div>
