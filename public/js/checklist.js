@@ -9,6 +9,7 @@ $(function(){
     if(!$(this).prop('disabled')) {
       var checkbox = $(this).find('input')[0];
       checkbox.checked = !checkbox.checked;
+      changeTableGraphics($(this), checkbox.checked); //Function in checkEffect.js
       var checkObject = {operation: operationId, id: $(this).attr('id'), check: checkbox.checked};
       socket.emit('checkboxClick', checkObject);
     }
