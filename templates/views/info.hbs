@@ -46,22 +46,22 @@
         <table class="table">
             <tr class="table-headerstriped">
                 <td></td>
-                <td>Antal</td>
-                <td>Namn</td>
-                <td>Förråd</td>
-                <td>Sektion</td>
-                <td>Hylla</td>
-                <td>Fack</td>
+                <td class="centered">Antal</td>
+                <td class="centered">Namn</td>
+                <td class="centered">Förråd</td>
+                <td class="centered">Sektion</td>
+                <td class="centered">Hylla</td>
+                <td class="centered">Fack</td>
             </tr>
           {{# each articles }}
               <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js" id={{_id}}>
                   <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
-                  <td>{{ amount }}</td>
-                  <td>{{ kartotek.name }}</td>
-                  <td>{{ kartotek.storage }}</td>
-                  <td>{{ kartotek.section }}</td>
-                  <td>{{ kartotek.shelf }}</td>
-                  <td>{{ kartotek.tray }}</td>
+                  <td class="centered"><b>{{ amount }}</b></td>
+                  <td class="centered">{{ kartotek.name }}</td>
+                  <td class="centered">{{ kartotek.storage }}</td>
+                  <td class="centered">{{ kartotek.section }}</td>
+                  <td class="centered">{{ kartotek.shelf }}</td>
+                  <td class="centered">{{ kartotek.tray }}</td>
               </tr>
           {{/each}}
         </table>
