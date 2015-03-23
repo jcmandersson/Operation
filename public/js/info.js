@@ -1,14 +1,17 @@
 $(document).ready(function() {
 
-  $(".process-content").hide();
-  $("#content0").show();
-  $("#0").addClass('active');
+  $("#contentchecklist").hide();
+  $("#all").addClass('active');
 
   $(".nav-pills > .navbar-btn").click(function() {
     $(this).addClass('active').siblings().removeClass('active');
-    $(".process-content").hide();
-    $("#content"+this.id).show();
-
+    if(this.id == "all") { 
+      $(".process-content").show();
+      $("#contentchecklist").hide();
+    } else {
+      $(".process-content").hide();
+      $("#content"+this.id).show();
+    } 
   });
 });
 
