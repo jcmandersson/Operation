@@ -7,9 +7,16 @@ var operationId;
 $(function(){
   $('.check-js').click(function() {
     if(!$(this).prop('disabled')) {
-      socket.emit('checkboxClick', {operationId: operationId, id: $(this).attr('id')});
+      var checkbox = $(this).find('input')[0];
+      var checkObject = {operation: operationId, id: $(this).attr('id'), check: !checkbox.checked};
+      socket.emit('checkboxClick', checkObject);
+      checkbox.check = !checkbox.check;
     }
   });
+  
+  $('.checkbox-js').click(function() {
+    $(this.checked = !this.checked);
+  })
 });
 
 socket.on('connect', function(){ //Runs after socket has been started.
