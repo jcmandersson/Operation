@@ -15,6 +15,7 @@
     <!--nav nav-pills-->
     <!--btn btn-default navbar-btn-->
     <ul class="nav nav-pills">
+      <button type="button" class="btn btn-default navbar-btn" id="all">All information</button>
       {{#each processes}}
           <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
       {{/each}}
@@ -46,23 +47,25 @@
         <table class="table">
             <tr class="table-headerstriped">
                 <td></td>
-                <td>Antal</td>
-                <td>Namn</td>
-                <td>Förråd</td>
-                <td>Sektion</td>
-                <td>Hylla</td>
-                <td>Fack</td>
+                <td class="centered">Antal</td>
+                <td class="centered">Namn</td>
+                <td class="centered">Förråd</td>
+                <td class="centered">Sektion</td>
+                <td class="centered">Hylla</td>
+                <td class="centered">Fack</td>
+                <td class="centered">Kommentar</td>
             </tr>
           {{# each articles }}
               <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js" id={{_id}}>
                   <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
-                  <td>{{ amount }}</td>
-                  <td>{{ kartotek.name }}</td>
-                  <td>{{ kartotek.storage }}</td>
-                  <td>{{ kartotek.section }}</td>
-                  <td>{{ kartotek.shelf }}</td>
-                  <td>{{ kartotek.tray }}</td>
-              </tr>
+                  <td class="centered"><b>{{ amount }}</b></td>
+                  <td class="centered">{{ kartotek.name }}</td>
+                  <td class="centered">{{ kartotek.storage }}</td>
+                  <td class="centered">{{ kartotek.section }}</td>
+                  <td class="centered">{{ kartotek.shelf }}</td>
+                  <td class="centered">{{ kartotek.tray }}</td>
+                  <td class="centered"><button type="button" class="btn btn-primary" id="checklist"><p class="glyphicon glyphicon-comment"></p></button></td>
+                </tr>
           {{/each}}
         </table>
     </div>
@@ -72,8 +75,30 @@
       <form method="get" id="createOperationInstanceButton">
           <input type="hidden" name="operation" value="create">
           <input type="hidden" name="operationId" value="{{data._id}}">
-          <input type="submit" value="Skapa operation" class="btn btn-primary">
+          <input type="button" value="Påbörja förberedelse" class="btn btn-primary" data-toggle="modal" data-target="#start">
+
+          <!-- Modal -->
+          <div class="modal fade" id="start" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="modalLabel">Påbörja operationsförberedelse</h4>
+                </div>
+                <div class="modal-body">
+                  <label>LindaID:</label>
+                  <input type="text" id="lindaID" class="form-control"/>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                  <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
+                </div>
+              </div>
+            </div>
+          </div>
       </form>
   {{/if}}
+
   <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+
 </div>
