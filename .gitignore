@@ -34,4 +34,4 @@ data/*
 .idea/*
 
 *.sw*
-public/styles/site.min.css
+*.min.css

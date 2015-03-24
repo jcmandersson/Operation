@@ -27,7 +27,6 @@ Process.schema.statics.fromTemplate = function fromTemplate(operationId, newOper
     operation: operationId
   }).exec(function(err, docs) {
     if(err) console.log(err);
-    console.log(docs);
     for(var i = 0; i < docs.length; ++i) {
       var doc = docs[i];
       var newObject = JSON.parse(JSON.stringify(doc));

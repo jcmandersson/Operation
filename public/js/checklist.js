@@ -19,7 +19,26 @@ $(function(){
   
   $('.checkbox-js').click(function() {
     this.checked = !this.checked;
-  })
+  });
+  
+  $('.saveComment').click(function(){
+    var id = $(this).data('id');
+    var commentObject = {operation: operationId, id: id, comment: $('#checkComment' + id).val()};
+    socket.emit('saveComment', commentObject);
+    $('#checkComment' + id).attr('disabled', true);
+    $(this).attr('disabled', true);
+  });
+  
+  $('.showComment').click(function(){
+    var id = $(this).data('id');
+    $('#commentSaved' + id).hide();
+    $('#checkComment' + id).attr('disabled', false);
+    $('#saveComment' + id).attr('disabled', false);
+  });
+});
+
+socket.on('saved', function(id){
+  $('#commentSaved' + id).show();
 });
 
 socket.on('connect', function(){ //Runs after socket has been started.

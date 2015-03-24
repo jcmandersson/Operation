@@ -21,8 +21,13 @@ exports = module.exports = function (req, res) {
   ];
 
   locals.css = [
-    'site.css'
+    'site/edit.css'
   ];
+  
+  view.on('post', function(next){
+    console.log(req);
+    next();
+  });
 
   view.on('init', function(next) {
     operation.model.find({
@@ -124,7 +129,6 @@ exports = module.exports = function (req, res) {
               console.log(err);
               return;
             }
-            console.log(prepareData);
             e.prepares = prepareData;
             next(err);
           });
