@@ -20,7 +20,7 @@ exports = module.exports = function(req, res) {
   ];
 
   locals.css = [
-    'site.css'
+    'site/info.css'
   ];
 
   view.on('get', {operation: 'create'}, function(){
