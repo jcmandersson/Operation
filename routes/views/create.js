@@ -15,6 +15,10 @@ exports = module.exports = function (req, res) {
     'updown-counter.js'
   ];
 
+  locals.css = [
+    'site.css'
+  ];
+
   // Render the view
   view.render('create');
 };

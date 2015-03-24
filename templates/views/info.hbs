@@ -53,7 +53,7 @@
                 <td class="centered">Sektion</td>
                 <td class="centered">Hylla</td>
                 <td class="centered">Fack</td>
-                <td class="centered comment">Kommentar</td>
+                <td class="centered">Kommentar</td>
             </tr>
           {{# each articles }}
               <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js" id={{_id}}>
@@ -64,7 +64,7 @@
                   <td class="centered">{{ kartotek.section }}</td>
                   <td class="centered">{{ kartotek.shelf }}</td>
                   <td class="centered">{{ kartotek.tray }}</td>
-                  <td class="centered comment"><button type="button" class="btn btn-primary" id="checklist"><p class="glyphicon glyphicon-comment"></p></button></td>
+                  <td class="centered"><button type="button" class="btn btn-primary" id="checklist"><p class="glyphicon glyphicon-comment"></p></button></td>
                 </tr>
           {{/each}}
         </table>

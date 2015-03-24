@@ -18,7 +18,11 @@ exports = module.exports = function(req, res) {
     'checklist.js',
     'checkEffect.js'
   ];
-  
+
+  locals.css = [
+    'site/info.css'
+  ];
+
   view.on('get', {operation: 'create'}, function(){
     console.log("AAAA: " + req.params.slug);
     operation.model.fromTemplate(req.params.slug, function(newOperation){
@@ -113,7 +117,6 @@ exports = module.exports = function(req, res) {
               console.log(err);
               return;
             }
-            console.log(prepareData);
             e.prepares = prepareData;
             next(err);
           });

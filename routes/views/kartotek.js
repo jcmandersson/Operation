@@ -11,6 +11,10 @@ exports = module.exports = function(req, res) {
     'kartotek.js'
   ];
 
+  locals.css = [
+    'site.css'
+  ]
+
   kartotek.model.find()
     .exec(function(err, data) {
     if (err) {

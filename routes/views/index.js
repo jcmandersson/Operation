@@ -9,7 +9,10 @@ exports = module.exports = function(req, res) {
   locals.section = 'home';
 
   locals.scripts = [
-    
+  ];
+
+  locals.css = [
+    'site.css'
   ];
 
   kartotek.model.find()
