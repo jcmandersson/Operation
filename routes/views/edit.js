@@ -21,7 +21,8 @@ exports = module.exports = function (req, res) {
   ];
 
   locals.css = [
-    'site.css'
+    'site/info.less',
+    'site/edit.less'
   ];
 
   view.on('init', function(next) {
