@@ -25,9 +25,6 @@ $(function(){
     var id = $(this).data('id');
     var commentObject = {id: id, comment: $('#checkComment' + id).val()};
     socket.emit('saveComment', commentObject);
-    
-    console.log($("#checkComment" + $(this).data('id')).val());
-    console.log($(this).data('id'));  
   });
 });
 
