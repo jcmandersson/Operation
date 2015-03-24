@@ -1,6 +1,9 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
     <form method="POST" class="operationForm">
+{{#if data.specialty }}
+    <input type="text" name="_id" value="{{data._id}}" class="hidden"/>
+{{/if}}
         <div id="name">
             Namn:
             <input class="form-control" type="text" name="name" value="{{data.title}}" placeholder="Namn"/>
@@ -18,7 +21,7 @@
 
         <ul class="nav nav-pills">
           {{#each processes}}
-              <button type="button" name="process{{$index}}" value="{{title}}" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
+              <input type="text" name="process{{@index}}" value="{{title}}" class="process btn btn-default navbar-btn" id="{{@index}}">
           {{/each}}
             <div class="form-group has-feedback newProcess">
                 <input type="text" class="form-control" placeholder="Ny"/>

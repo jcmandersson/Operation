@@ -90,14 +90,14 @@ $(document).ready(function () {
   bindProcess();
   
   var newProcess = function (e) {
-    var $item = $('.nav-pills button:not(#checklist)').last();
+    var $item = $('.nav-pills input:not(.form-control)').last();
     var $clone = $item.clone().removeClass('hasEvent').removeClass('active');
     var $input = $('.newProcess input');
     var newId = parseInt($clone.attr('id')) + 1;
 
     if (!$input.val().length) return;
 
-    $clone.attr('id', newId).attr('name', 'process'+newId).val($input.val()).text($input.val()).insertAfter($item);
+    $clone.attr('id', newId).attr('name', 'process'+newId).val($input.val()).insertAfter($item);
     $input.val('');
 
     var $process = $('.process-content.mall').clone().removeClass('mall').removeClass('hidden').hide().attr('id', 'content' + newId).attr('data-id', newId).insertAfter($('.process-content:not(#contentchecklist)').last());
@@ -107,7 +107,7 @@ $(document).ready(function () {
     initNavbar();
     initWysiwyg();
 
-    $('.nav-pills button:not(#checklist)').last().click();
+    $('.nav-pills input:not(.form-control)').last().click();
   };
   $('.newProcess input').keyup(function (event) {
     var key = event.keyCode || event.which;
