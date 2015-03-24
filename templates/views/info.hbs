@@ -65,12 +65,12 @@
                   <td class="centered">{{ kartotek.shelf }}</td>
                   <td class="centered">{{ kartotek.tray }}</td>
                   <td class="centered">
-                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#checkComment{{_id}}">
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
                           <p class="glyphicon glyphicon-comment"></p>
                       </button>
                   </td>
 
-                  <div class="modal fade" id="checkComment{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="checkCommentModal{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                           <div class="modal-content">
                               <div class="modal-header">
@@ -78,12 +78,11 @@
                                   <h4 class="modal-title" id="myModalLabel">Kommentar för: {{kartotek.name}}</h4>
                               </div>
                               <div class="modal-body">
-                                  <textarea rows="8" cols="60">
-                                  </textarea>
+                                  <textarea id="checkComment{{_id}}" rows="8" cols="60">{{ comment }}</textarea>
                               </div>
                               <div class="modal-footer">
                                   <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                                  <button type="button" class="btn btn-primary">Spara</button>
+                                  <button data-message="" data-id="{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
                               </div>
                           </div>
                       </div>

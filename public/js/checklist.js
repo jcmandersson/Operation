@@ -19,7 +19,16 @@ $(function(){
   
   $('.checkbox-js').click(function() {
     this.checked = !this.checked;
-  })
+  });
+  
+  $('.saveComment').click(function(){
+    var id = $(this).data('id');
+    var commentObject = {id: id, comment: $('#checkComment' + id).val()};
+    socket.emit('saveComment', commentObject);
+    
+    console.log($("#checkComment" + $(this).data('id')).val());
+    console.log($(this).data('id'));  
+  });
 });
 
 socket.on('connect', function(){ //Runs after socket has been started.
