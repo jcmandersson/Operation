@@ -124,7 +124,6 @@ exports = module.exports = function (req, res) {
               console.log(err);
               return;
             }
-            console.log(prepareData);
             e.prepares = prepareData;
             next(err);
           });
