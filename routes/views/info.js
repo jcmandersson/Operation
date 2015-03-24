@@ -20,7 +20,7 @@ exports = module.exports = function(req, res) {
   ];
 
   locals.css = [
-    'site.css'
+    'site/info.css'
   ];
 
   view.on('get', {operation: 'create'}, function(){
@@ -117,7 +117,6 @@ exports = module.exports = function(req, res) {
               console.log(err);
               return;
             }
-            console.log(prepareData);
             e.prepares = prepareData;
             next(err);
           });

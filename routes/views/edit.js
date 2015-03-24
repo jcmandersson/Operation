@@ -21,7 +21,8 @@ exports = module.exports = function (req, res) {
   ];
 
   locals.css = [
-    'site.css'
+    'site/info.less',
+    'site/edit.less'
   ];
 
   view.on('init', function(next) {
@@ -124,7 +125,6 @@ exports = module.exports = function (req, res) {
               console.log(err);
               return;
             }
-            console.log(prepareData);
             e.prepares = prepareData;
             next(err);
           });
