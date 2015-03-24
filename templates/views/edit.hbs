@@ -1,9 +1,9 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
     <form method="POST" class="operationForm">
-{{#if data.specialty }}
-    <input type="text" name="_id" value="{{data._id}}" class="hidden"/>
-{{/if}}
+      {{#if data.specialty }}
+          <input type="text" name="_id" value="{{data._id}}" class="hidden"/>
+      {{/if}}
         <div id="name">
             Namn:
             <input class="form-control" type="text" name="name" value="{{data.title}}" placeholder="Namn"/>
@@ -21,7 +21,8 @@
 
         <ul class="nav nav-pills">
           {{#each processes}}
-              <input type="text" name="process{{@index}}" value="{{title}}" class="process btn btn-default navbar-btn" id="{{@index}}">
+              <input type="text" name="process{{@index}}" value="{{title}}" class="process btn btn-default navbar-btn"
+                     id="{{@index}}">
           {{/each}}
             <div class="form-group has-feedback newProcess">
                 <input type="text" class="form-control" placeholder="Ny"/>
@@ -45,7 +46,8 @@
             </div>
         </div>
       {{#each processes}}
-          <div class="process-content" id="content{{@index}}" data-id="{{@index}}" style="{{#if @index}}display: none;{{/if}}">
+          <div class="process-content" id="content{{@index}}" data-id="{{@index}}"
+               style="{{#if @index}}display: none;{{/if}}">
               <div class="process-content-item hidden">
                       <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
                                                         placeholder="Ny rubrik"/></span>
@@ -54,9 +56,11 @@
               </div>
             {{#each contents}}
                 <div class="process-content-item" data-parent="{{@../index}}" data-id="{{@index}}">
-                    <span class="contentTitle"><input class="form-control rubrik" type="text" name="content{{@../index}}title{{@index}}"
+                    <span class="contentTitle"><input class="form-control rubrik" type="text"
+                                                      name="content{{@../index}}title{{@index}}"
                                                       value="{{ title }}"/></span>
-                    <span class="contentText"><textarea class="information" name="content{{@../index}}text{{@index}}">{{ text }}</textarea></span>
+                    <span class="contentText"><textarea class="information"
+                                                        name="content{{@../index}}text{{@index}}">{{ text }}</textarea></span>
                 </div>
             {{/each}}
               <div class="process-content-item init" data-parent="{{@index}}">

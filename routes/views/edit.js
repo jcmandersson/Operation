@@ -37,32 +37,32 @@ exports = module.exports = function (req, res) {
         }
 
         //data.remove();
-        
+
         console.log('Operation created!');
 
         for (var i = 0; typeof req.body['process' + i] !== 'undefined'; ++i) {
-          var index = i;
           var newProcess = new process.model({
             title: req.body['process' + i],
             operation: data._id
-          }).save(function (err, data) {
+          });
+          var call = function(index){
+            newProcess.save(function (err, data) {
+              saving = false;
               if (err) {
                 console.log('Processen kunde inte skapas.!');
                 return;
               }
-              //data.remove();
-
 
               console.log('Process created!');
-              
+
               for (var j = 0; typeof req.body['content' + index + 'title' + j] !== 'undefined'; ++j) {
-              console.log(j);
+                console.log('content' + index + 'title' + j);
                 var newContent = new content.model({
                   order: j,
                   title: req.body['content' + index + 'title' + j],
                   text: req.body['content' + index + 'text' + j],
                   process: data._id
-                }).save(function(){
+                }).save(function () {
                     if (err) {
                       console.log('Content kunde inte skapas.!');
                       return;
@@ -72,6 +72,8 @@ exports = module.exports = function (req, res) {
                   });
               }
             });
+          };
+          call(i);
         }
       });
   });
