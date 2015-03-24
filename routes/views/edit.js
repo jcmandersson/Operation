@@ -21,9 +21,13 @@ exports = module.exports = function (req, res) {
   ];
 
   locals.css = [
-    'site/info.less',
-    'site/edit.less'
+    'site/edit.css'
   ];
+  
+  view.on('post', function(next){
+    console.log(req);
+    next();
+  });
 
   view.on('init', function(next) {
     operation.model.find({
