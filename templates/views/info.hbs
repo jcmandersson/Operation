@@ -12,6 +12,10 @@
       <div id ="synonyms">Synonymer: {{data.tags}}</div>
   {{/if}}
 
+  {{#unless data.template}}
+    <div id="lindaid">Linda-ID: {{data.linda_id}}</div>
+  {{/unless}}
+
     <!--nav nav-pills-->
     <!--btn btn-default navbar-btn-->
     <ul class="nav nav-pills">
@@ -87,7 +91,7 @@
                 </div>
                 <div class="modal-body">
                   <label>LindaID:</label>
-                  <input type="text" id="lindaID" class="form-control"/>
+                  <input type="text" id="lindaID" name="linda" class="form-control"/>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>

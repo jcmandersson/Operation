@@ -26,6 +26,17 @@ exports = module.exports = function(req, res) {
   view.on('get', {operation: 'create'}, function(){
     console.log("AAAA: " + req.params.slug);
     operation.model.fromTemplate(req.params.slug, function(newOperation){
+      console.log(newOperation);
+
+      operation.model.findOne({slug: newOperation.slug }, function (err, data){
+        if(err){
+          console.log('Operationen kunde inte ändras.');
+          return;
+        }
+        data.linda_id = req.query.linda;
+        data.save(); 
+      });
+
       res.redirect("/info/" + newOperation.slug);
     });
   });
@@ -44,7 +55,7 @@ exports = module.exports = function(req, res) {
           //view.render('info');
         } else {
           locals.data = data[0];
-          //console.log(data);
+          console.log(data);
         }
         next(err);
       });
