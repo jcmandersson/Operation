@@ -25,27 +25,19 @@ exports = module.exports = function (req, res) {
   ];
 
   view.on('post', function (next) {
-    console.log(req.body);
-    var newOperation = new operation.model({
-      title: req.body.name,
-      tags: req.body.tags,
-      specialty: req.body.specialty
-    }).save(function (err, data) {
+
+    if (typeof req.body._id !== 'undefined') {
+      operation.model.findOne({_id: req.body._id}, function (err, data) {
         if (err) {
           console.log('Operationen kunde inte skapas.!');
           return;
         }
-
-        //data.remove();
-
-        console.log('Operation created!');
-
         for (var i = 0; typeof req.body['process' + i] !== 'undefined'; ++i) {
           var newProcess = new process.model({
             title: req.body['process' + i],
             operation: data._id
           });
-          var call = function(index){
+          var call = function (index) {
             newProcess.save(function (err, data) {
               saving = false;
               if (err) {
@@ -53,10 +45,7 @@ exports = module.exports = function (req, res) {
                 return;
               }
 
-              console.log('Process created!');
-
               for (var j = 0; typeof req.body['content' + index + 'title' + j] !== 'undefined'; ++j) {
-                console.log('content' + index + 'title' + j);
                 var newContent = new content.model({
                   order: j,
                   title: req.body['content' + index + 'title' + j],
@@ -67,8 +56,6 @@ exports = module.exports = function (req, res) {
                       console.log('Content kunde inte skapas.!');
                       return;
                     }
-                    //data.remove();
-                    console.log('Content created!');
                   });
               }
             });
@@ -76,6 +63,13 @@ exports = module.exports = function (req, res) {
           call(i);
         }
       });
+    }
+
+    /*var newOperation = new operation.model({
+     title: req.body.name,
+     tags: req.body.tags,
+     specialty: req.body.specialty
+     }).save();*/
   });
 
   view.on('init', function (next) {
