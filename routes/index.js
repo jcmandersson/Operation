@@ -47,7 +47,7 @@ exports = module.exports = function(app) {
 
   app.get('/index', routes.views.index);
 
-
+  app.get('/api/print/:slug', routes.views.apiPrint);
   app.get('/api/search/:model', routes.views.apiSearch);
   app.get('/api/update/:model/:slug', routes.views.apiUpdate);
 

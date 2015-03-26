@@ -65,11 +65,10 @@
                   <td class="centered">{{ kartotek.shelf }}</td>
                   <td class="centered">{{ kartotek.tray }}</td>
                   <td class="centered comment-button">
-                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
                           <p class="glyphicon glyphicon-comment"></p>
                       </button>
                   </td>
-
                   <div class="modal fade" id="checkCommentModal{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                           <div class="modal-content">
@@ -87,8 +86,9 @@
                           </div>
                       </div>
                   </div>
+
                   
-                  <td class="centered comment-button"><button type="button" class="btn btn-primary" id="checklist"><p class="glyphicon glyphicon-comment"></p></button></td>
+                  
                 </tr>
           {{/each}}
         </table>
@@ -114,8 +114,8 @@
                   <input type="text" id="lindaID" class="form-control"/>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                  <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                    <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
                 </div>
               </div>
             </div>
