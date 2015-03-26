@@ -11,6 +11,6 @@ indent_style = space
 indent_size = 2
 
 
-[{*.yml,*.json}]
+[{*.yml,*.json,*.js}]
 indent_style = space
 indent_size = 2

@@ -4,6 +4,7 @@ var process = keystone.list('Processteg');
 var content = keystone.list('Processinnehall');
 var article = keystone.list('Artikel');
 var prepare = keystone.list('Förberedelse');
+var mongoose = require('mongoose');
 
 exports = module.exports = function (req, res) {
   var view = new keystone.View(req, res),
@@ -26,50 +27,66 @@ exports = module.exports = function (req, res) {
 
   view.on('post', function (next) {
 
-    if (typeof req.body._id !== 'undefined') {
-      operation.model.findOne({_id: req.body._id}, function (err, data) {
+    /*
+     var query = {'username':req.user.username};
+     req.newData.username = req.user.username;
+     MyModel.findOneAndUpdate(query, req.newData, {upsert:true}, function(err, doc){
+     if (err) return res.send(500, { error: err });
+     return res.send("succesfully saved");
+     });
+    
+     */
+    
+    console.log( req.body);
+    
+      operation.model.findOneAndUpdate({_id: typeof req.body._id !== 'undefined' ? req.body._id : mongoose.Types.ObjectId()}, {
+        title: req.body.name,
+        tags: req.body.tags,
+        specialty: req.body.specialty
+      }, {upsert: true}, function (err, data) {
         if (err) {
           console.log('Operationen kunde inte skapas.!');
           return;
         }
         for (var i = 0; typeof req.body['process' + i] !== 'undefined'; ++i) {
-          var newProcess = new process.model({
+          
+          var newProcess = process.model.findOneAndUpdate({_id: typeof req.body['processId'+i] !== 'undefined' ? req.body['processId'+i] : mongoose.Types.ObjectId()}, {
             title: req.body['process' + i],
             operation: data._id
-          });
+          }, {upsert: true});
+          
           var call = function (index) {
-            newProcess.save(function (err, data) {
-              saving = false;
+
+            var savedProcess = function (err, data) {
               if (err) {
-                console.log('Processen kunde inte skapas.!');
+                console.log('Processen '+index+' kunde inte skapas!');
+                console.log(err);
                 return;
               }
 
               for (var j = 0; typeof req.body['content' + index + 'title' + j] !== 'undefined'; ++j) {
-                var newContent = new content.model({
+                if(!req.body['content' + index + 'title' + j].length) continue;
+                var id = typeof req.body['content'+ index +'Id' + j] !== 'undefined' ? req.body['content'+ index +'Id' + j] : mongoose.Types.ObjectId();
+                var newContent = content.model.findOneAndUpdate({_id: id}, {
                   order: j,
                   title: req.body['content' + index + 'title' + j],
                   text: req.body['content' + index + 'text' + j],
                   process: data._id
-                }).save(function () {
+                }, {upsert: true}).exec(function (err, data) {
                     if (err) {
                       console.log('Content kunde inte skapas.!');
+                      console.log(err);
                       return;
                     }
                   });
               }
-            });
+            };
+            
+            newProcess.exec(savedProcess);
           };
           call(i);
         }
       });
-    }
-
-    /*var newOperation = new operation.model({
-     title: req.body.name,
-     tags: req.body.tags,
-     specialty: req.body.specialty
-     }).save();*/
   });
 
   view.on('init', function (next) {
@@ -102,7 +119,6 @@ exports = module.exports = function (req, res) {
           console.log(err);
           return;
         }
-        //console.log(articleData);
         locals.articles = articleData;
         next(err);
       });

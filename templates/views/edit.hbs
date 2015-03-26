@@ -46,7 +46,7 @@
       </div>
     </div>
     {{#each processes}}
-      <input class="hidden" type="text" name="processId{{@index}}" val="{{ _id }}"/>
+      <input class="hidden" type="text" name="processId{{@index}}" value="{{ _id }}"/>
 
       <div class="process-content" id="content{{@index}}" data-id="{{@index}}"
            style="{{#if @index}}display: none;{{/if}}">
@@ -57,7 +57,7 @@
                                                           placeholder="Ny beskrivning"></textarea></span>
         </div>
         {{#each contents}}
-          <input class="hidden" type="text" name="contentId{{@index}}" val="{{ _id }}"/>
+          <input class="hidden" type="text" name="content{{@../index}}Id{{@index}}" value="{{ _id }}"/>
 
           <div class="process-content-item" data-parent="{{@../index}}" data-id="{{@index}}">
                     <span class="contentTitle"><input class="form-control rubrik" type="text"
