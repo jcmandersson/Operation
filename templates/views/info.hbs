@@ -12,6 +12,10 @@
       <div id ="synonyms">Synonymer: {{data.tags}}</div>
   {{/if}}
 
+  {{#unless data.template}}
+    <div id="lindaid">Linda-ID: {{data.linda_id}}</div>
+  {{/unless}}
+
     <!--nav nav-pills-->
     <!--btn btn-default navbar-btn-->
     <ul class="nav nav-pills">
@@ -65,10 +69,11 @@
                   <td class="centered">{{ kartotek.shelf }}</td>
                   <td class="centered">{{ kartotek.tray }}</td>
                   <td class="centered comment-button">
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
                           <p class="glyphicon glyphicon-comment"></p>
                       </button>
                   </td>
+
                   <div class="modal fade" id="checkCommentModal{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                           <div class="modal-content">
@@ -80,15 +85,13 @@
                                   <textarea id="checkComment{{_id}}" rows="8" cols="60">{{ comment }}</textarea>
                               </div>
                               <div class="modal-footer">
+                                  <p id="commentSaved{{_id}}">Sparad!</p>
                                   <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                                  <button data-message="" data-id="{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
+                                  <button id="saveComment{{_id}}" data-message="" data-id="{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
                               </div>
                           </div>
                       </div>
                   </div>
-
-                  
-                  
                 </tr>
           {{/each}}
         </table>
@@ -111,11 +114,11 @@
                 </div>
                 <div class="modal-body">
                   <label>LindaID:</label>
-                  <input type="text" id="lindaID" class="form-control"/>
+                  <input type="text" id="lindaID" name="linda" class="form-control"/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                    <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                  <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
                 </div>
               </div>
             </div>

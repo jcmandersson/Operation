@@ -23,13 +23,56 @@ exports = module.exports = function (req, res) {
   locals.css = [
     'site/edit.css'
   ];
-  
-  view.on('post', function(next){
-    console.log(req);
-    next();
+
+  view.on('post', function (next) {
+
+    if (typeof req.body._id !== 'undefined') {
+      operation.model.findOne({_id: req.body._id}, function (err, data) {
+        if (err) {
+          console.log('Operationen kunde inte skapas.!');
+          return;
+        }
+        for (var i = 0; typeof req.body['process' + i] !== 'undefined'; ++i) {
+          var newProcess = new process.model({
+            title: req.body['process' + i],
+            operation: data._id
+          });
+          var call = function (index) {
+            newProcess.save(function (err, data) {
+              saving = false;
+              if (err) {
+                console.log('Processen kunde inte skapas.!');
+                return;
+              }
+
+              for (var j = 0; typeof req.body['content' + index + 'title' + j] !== 'undefined'; ++j) {
+                var newContent = new content.model({
+                  order: j,
+                  title: req.body['content' + index + 'title' + j],
+                  text: req.body['content' + index + 'text' + j],
+                  process: data._id
+                }).save(function () {
+                    if (err) {
+                      console.log('Content kunde inte skapas.!');
+                      return;
+                    }
+                  });
+              }
+            });
+          };
+          call(i);
+        }
+      });
+    }
+
+    /*var newOperation = new operation.model({
+     title: req.body.name,
+     tags: req.body.tags,
+     specialty: req.body.specialty
+     }).save();*/
   });
 
-  view.on('init', function(next) {
+  view.on('init', function (next) {
     operation.model.find({
       slug: req.params.slug
     }).populate('specialty')
@@ -40,13 +83,12 @@ exports = module.exports = function (req, res) {
           return;
         } else if (data.length) {
           locals.data = data[0];
-          //console.log(data);
         }
         next(err);
       });
   });
 
-  view.on('init', function(next) {
+  view.on('init', function (next) {
     if (typeof locals.data === 'undefined') {
       next();
       return;
@@ -66,7 +108,7 @@ exports = module.exports = function (req, res) {
       });
   });
 
-  view.on('init', function(next) {
+  view.on('init', function (next) {
     if (typeof locals.data === 'undefined') {
       next();
       return;
@@ -87,13 +129,13 @@ exports = module.exports = function (req, res) {
       });
   });
 
-  view.on('init', function(next) {
+  view.on('init', function (next) {
     if (typeof locals.data === 'undefined') {
       next();
       return;
     }
     locals.processes.forEach(function (e, i) {
-      view.on('init', function(next) {
+      view.on('init', function (next) {
         content.model.find({
           process: e._id
         })
@@ -113,13 +155,13 @@ exports = module.exports = function (req, res) {
   });
 
 
-  view.on('init', function(next) {
-    if(typeof locals.data === 'undefined'){
+  view.on('init', function (next) {
+    if (typeof locals.data === 'undefined') {
       next();
       return;
     }
     locals.processes.forEach(function (e, i) {
-      view.on('init', function(next) {
+      view.on('init', function (next) {
         prepare.model.find({
           process: e._id
         })
@@ -137,11 +179,11 @@ exports = module.exports = function (req, res) {
     next(null);
   });
 
-  view.on('init', function(next) {
-    if(typeof locals.processes === 'undefined') locals.processes = [];
+  view.on('init', function (next) {
+    if (typeof locals.processes === 'undefined') locals.processes = [];
     /*locals.processes.push({
-      title: 'Ny'
-    });*/
+     title: 'Ny'
+     });*/
     // TODO, add standard processes.
     next();
   });

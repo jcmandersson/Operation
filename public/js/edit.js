@@ -44,20 +44,18 @@ var initNavbar = function () {
 
 $(document).ready(function () {
 
-  $(".process-content").hide();
+  $(".process-content").hide().sortable({
+    cancel: 'input,.jqte'
+  });
   $("#content0").show();
   $("#0").addClass('active');
 
   initNavbar();
 
-  var initWysiwyg = function() { 
+  var initWysiwyg = function () {
     $('.process-content:not(.hidden) textarea:not(.wysiwyg)').addClass('wysiwyg').jqte();
   };
   initWysiwyg();
-
-  $('.process-content').sortable({
-    cancel: 'input,.jqte'
-  })
 
   $('.tags').tagsInput({
     width: 'auto',
@@ -69,35 +67,37 @@ $(document).ready(function () {
   var createNewItem = function () {
     $(this).unbind("keyup", createNewItem);
     var $e = $(this).parents().eq(2);
-    var $clone = $e.find('.process-content-item').first().clone().removeClass('hidden').appendTo($e);
+    var $clone = $e.find('.process-content-item').first().clone().removeClass('hidden').addClass('init').appendTo($e);
     $clone.find('.rubrik').keyup(createNewItem);
+
+    bindProcess();
   };
-  
-  var bindProcess = function(){
+
+  var bindProcess = function () {
     $('.process-content').each(function (i, e) {
       $(e).find('.process-content-item .rubrik').last().unbind('keyup', createNewItem).keyup(createNewItem);
-      
+
       var $last = $(e).find('.process-content-item:not(.init,.hidden)').last();
       var parent = parseInt($(e).attr('data-id'));
       var id = $last.length == 0 ? 0 : parseInt($last.attr('data-id')) + 1;
       var $init = $(e).find('.init').removeClass('init');
       $init.attr('data-parent', parent).attr('data-id', id);
-      
-      $init.find('input.rubrik').attr('name', 'content'+parent+'title'+id);
-      $init.find('textarea').attr('name', 'content'+parent+'text'+id);
+
+      $init.find('input.rubrik').attr('name', 'content' + parent + 'title' + id);
+      $init.find('textarea').attr('name', 'content' + parent + 'text' + id);
     });
   };
   bindProcess();
-  
+
   var newProcess = function (e) {
-    var $item = $('.nav-pills button:not(#checklist)').last();
+    var $item = $('.nav-pills input:not(.form-control)').last();
     var $clone = $item.clone().removeClass('hasEvent').removeClass('active');
     var $input = $('.newProcess input');
     var newId = parseInt($clone.attr('id')) + 1;
 
     if (!$input.val().length) return;
 
-    $clone.attr('id', newId).attr('name', 'process'+newId).val($input.val()).text($input.val()).insertAfter($item);
+    $clone.attr('id', newId).attr('name', 'process' + newId).val($input.val()).insertAfter($item);
     $input.val('');
 
     var $process = $('.process-content.mall').clone().removeClass('mall').removeClass('hidden').hide().attr('id', 'content' + newId).attr('data-id', newId).insertAfter($('.process-content:not(#contentchecklist)').last());
@@ -107,7 +107,7 @@ $(document).ready(function () {
     initNavbar();
     initWysiwyg();
 
-    $('.nav-pills button:not(#checklist)').last().click();
+    $('.nav-pills input:not(.form-control)').last().click();
   };
   $('.newProcess input').keyup(function (event) {
     var key = event.keyCode || event.which;
@@ -116,11 +116,10 @@ $(document).ready(function () {
     }
   });
   $('.newProcess i').click(newProcess);
-  
-  var save = function(e){
+
+  var save = function (e) {
     e.preventDefault();
-    console.log($(".operationForm").serialize());
-    $.post('', $(".operationForm").serialize(), function(msg){
+    $.post('', $(".operationForm").serialize(), function (msg) {
       console.log(msg);
     });
   };
