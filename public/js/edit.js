@@ -63,14 +63,26 @@ $(document).ready(function () {
     removeWithBackspace: false,
     height: '40px'
   });
+  
+  var initDynamicWidth = function(){
+    var $input = $('input.process');
+    $input.each(function(i, e){
+      $(e).width(($(e).val().length+1)*8);
+    });
+    $input.unbind('keypress').on('keypress', function(){
+      $(this).width(($(this).val().length+1)*8);
+    });
+  };
+  initDynamicWidth();
 
   var createNewItem = function () {
     $(this).unbind("keyup", createNewItem);
     var $e = $(this).parents().eq(2);
-    var $clone = $e.find('.process-content-item').first().clone().removeClass('hidden').addClass('init').appendTo($e);
+    var $clone = $('.hidden .process-content-item').first().clone().removeClass('hidden').addClass('init').appendTo($e);
     $clone.find('.rubrik').keyup(createNewItem);
 
     bindProcess();
+    initWysiwyg();
   };
 
   var bindProcess = function () {
@@ -106,6 +118,7 @@ $(document).ready(function () {
     bindProcess();
     initNavbar();
     initWysiwyg();
+    initDynamicWidth();
 
     $('.nav-pills input:not(.form-control)').last().click();
   };
