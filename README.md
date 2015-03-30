@@ -29,7 +29,6 @@ URLer: (biblioteket lägger automatiskt på ett s på modellerna.)
 * /api/operations
 * /api/Processtegs
 * /api/artikels
-* /api/Förberedelses
 * /api/Kommentars
 * /api/Specialitets
 * /api/users

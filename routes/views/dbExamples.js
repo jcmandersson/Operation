@@ -18,7 +18,6 @@ exports = module.exports = function (req, res) {
         console.log(err);
         return;
       }
-      operation.model.fromTemplate(data[0]._id);
     });
 
   view.render('dbExamples');

@@ -24,31 +24,36 @@ Process.add({
  =============
  */
 
-Process.relationship({path: 'prepares', ref: 'Förberedelse', refPath: 'process'});
 
-
-Process.schema.statics.fromTemplate = function fromTemplate(operationId, newOperationId, callback) {
+Process.schema.statics.cloneToOperation = function cloneToOperation(operationId, newOperationId, callback) {
   var thisDoc = this;
+  
+  console.log('Saving process');
 
   this.model('Processteg').find({
     operation: operationId
   }).exec(function (err, docs) {
     if (err) console.log(err);
+    
+    console.log('Saving process1');
+    
     for (var i = 0; i < docs.length; ++i) {
       var doc = docs[i];
       var newObject = JSON.parse(JSON.stringify(doc));
       delete newObject._id;
       delete newObject.slug;
       newObject.operation = newOperationId;
-      newObject.template = false;
 
       var newDoc = new Process.model(newObject);
       var saving = true;
       newDoc.save(function (err, savedDoc) {
         if (err) console.log(err);
-        thisDoc.model('Processinnehall').fromTemplate(doc._id, savedDoc._id, function () {
+
+        console.log('Saving process2');
+        /*thisDoc.model('Processinnehall').cloneToOperation(doc._id, savedDoc._id, function () {
           saving = false;
-        });
+        });*/
+        saving = false;
       });
       while (saving) {
         require('deasync').runLoopOnce();

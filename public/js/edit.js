@@ -41,7 +41,7 @@ var initNavbar = function () {
     $(".process-content").hide();
     $("#content" + $this.attr('data-id')).show();
   });
-}
+};
 
 $(document).ready(function () {
 
