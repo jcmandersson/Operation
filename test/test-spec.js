@@ -7,5 +7,3 @@ describe("A suite is just a function", function() {
     expect(a).toBe(true);
   });
 });
-
-
