@@ -1,0 +1,18 @@
+{{!< default}}
+<div class="container" xmlns="http://www.w3.org/1999/html">
+  <form method="POST" class="operationForm">
+    
+    <h2>Skapa ny handbok</h2>
+    
+    <div id="name">
+      Namn:
+      <input class="form-control" type="text" required="true" name="name" value="" placeholder="Namn"/>
+    </div>
+    
+    <div id="specialty">Specialitet: <select required="true" name="specialty" class="specialitet-select">
+        <option value="none" selected="selected">Lägg till specialitet</option>
+    </select></div>
+    
+    <input type="submit" id="saveButton" class="btn btn-primary" style="margin-top: 10px;" name="action" value="Spara">
+  </form>
+</div>

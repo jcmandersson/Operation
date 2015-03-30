@@ -6,7 +6,6 @@ var operation = keystone.list('Operation');
 var process = keystone.list('Processteg');
 var content = keystone.list('Processinnehall');
 var article = keystone.list('Artikel');
-var prepare = keystone.list('Förberedelse');
 
 
 exports = module.exports = function(req, res) {
@@ -115,26 +114,6 @@ exports = module.exports = function(req, res) {
     next(null);
   });
 
-
-  view.on('init', function(next) {
-    locals.processes.forEach(function (e, i) {
-      view.on('init', function(next) {
-        prepare.model.find({
-          process: e._id
-        })
-          .exec(function (err, prepareData) {
-            if (err) {
-              console.log('DB error');
-              console.log(err);
-              return;
-            }
-            e.prepares = prepareData;
-            next(err);
-          });
-      });
-    });
-    next(null);
-  });
   
   view.render('info');
 

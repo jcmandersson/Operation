@@ -19,7 +19,7 @@ ProcessContent.add({
   checked: {type: Types.Boolean, required: false, default: false}
 });
 
-ProcessContent.schema.statics.fromTemplate = function fromTemplate(processId, newProcessId, callback) {
+ProcessContent.schema.statics.cloneToProcess = function cloneToProcess(processId, newProcessId, callback) {
   var thisDoc = this;
 
   this.model('Processinnehall').find({
@@ -32,7 +32,6 @@ ProcessContent.schema.statics.fromTemplate = function fromTemplate(processId, ne
       delete newObject._id;
       delete newObject.slug;
       newObject.process = newProcessId;
-      newObject.template = false;
 
       var newDoc = new ProcessContent.model(newObject);
       var saving = true;
