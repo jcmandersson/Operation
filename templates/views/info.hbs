@@ -31,7 +31,11 @@
     {{#each processes}}
       <div class="process-content" id="content{{@index}}">
       {{#each contents}}
-        <div class="process-content-item">
+        <div class="process-content-item check-js" data-operationId="{{../operation}}" data-preparation="true" id="{{_id}}">
+            {{#if checkAble}}
+                
+            {{/if}}
+            <input type="checkbox" class="checkbox-js" id="processCheck{{_id}}">
             <span class="contentTitle">{{title}}</span>
             <span class="contentText">{{{text}}}</span>
         </div>
@@ -60,7 +64,7 @@
                 <td class="centered comment-header">Kommentar</td>
             </tr>
           {{# each articles }}
-              <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js" id={{_id}}>
+              <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false", class="check-js" id={{_id}}>
                   <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
                   <td class="centered"><b>{{ amount }}</b></td>
                   <td class="centered">{{ kartotek.name }}</td>

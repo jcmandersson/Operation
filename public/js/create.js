@@ -7,6 +7,8 @@ function add(data, index, operation, addedProccesstegs) {
     var underrubrikName = $(data).find('#underrubrik-name').val();
     var underrubrikText = $(data).find('#underrubrik-text').val();
     var processteg = $(data).find('.select-processteg').val();
+    var checkbar = $(data).find("#pcheckbar");
+    console.log(checkbar);
     
     if (!(processteg in addedProccesstegs)) {
       $.ajax({
@@ -28,6 +30,7 @@ function add(data, index, operation, addedProccesstegs) {
               order: 0,
               title: underrubrikName,
               text: underrubrikText,
+              checkAble: checkbar,
               process: msg._id
             }
           })
@@ -57,6 +60,7 @@ function add(data, index, operation, addedProccesstegs) {
           order: 0,
           title: underrubrikName,
           text: underrubrikText,
+          checkAble: checkbar,
           process: addedProccesstegs[processteg][1]
         }
       })
@@ -239,13 +243,16 @@ var initializeSpecialitetSelect = function() {
 var addUnderrubrik = function(underrubrikTemplate){
   var name = $('#underrubrik-name').val();
   var text = $('#underrubrik-text').val();
+  var checkbar = $('#checkbar').prop('checked');
+  console.log(checkbar);
+  console.log($("#checkbar"));
   
   //hardcoded for now (iteration1)
   var processteg = ["Anestesi", 
                     "Operation", 
                     "Patientpositionering"];
     
-  $(underrubrikTemplate({ name: name, text: text, processteg: processteg })).appendTo('#underrubriker');
+  $(underrubrikTemplate({ name: name, text: text, processteg: processteg, checkbar: checkbar })).appendTo('#underrubriker');
 
   //Set select2 for new underrubrik
   $(".select-processteg").select2({
