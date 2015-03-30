@@ -35,10 +35,11 @@ var initializeSpecialitetSelect = function () {
 };
 
 var initNavbar = function () {
-  $(".nav-pills > .navbar-btn:not(.hasEvent)").addClass('hasEvent').click(function () {
-    $(this).addClass('active').siblings().removeClass('active');
+  $(".nav-pills .navbar-btn:not(.hasEvent)").addClass('hasEvent').click(function () {
+    $('.nav-pills li.process-item .active').removeClass('active');
+    var $this = $(this).addClass('active');
     $(".process-content").hide();
-    $("#content" + this.id).show();
+    $("#content" + $this.attr('data-id')).show();
   });
 }
 
@@ -75,6 +76,19 @@ $(document).ready(function () {
   };
   initDynamicWidth();
 
+
+
+  var removeProcessContent = function(e){
+
+  };
+
+  var removeProcess = function(e){
+    var processId = $(this).parent().find('.process').attr('data-id');
+    $('[name="processId'+processId+'"]').attr('name', 'removeProcess'+processId);
+    $(this).parent().remove();
+    $('#content'+processId).remove();
+  };
+  
   var createNewItem = function () {
     $(this).unbind("keyup", createNewItem);
     var $e = $(this).parents().eq(2);
@@ -84,7 +98,7 @@ $(document).ready(function () {
     bindProcess();
     initWysiwyg();
   };
-
+  
   var bindProcess = function () {
     $('.process-content').each(function (i, e) {
       $(e).find('.process-content-item .rubrik').last().unbind('keyup', createNewItem).keyup(createNewItem);
@@ -98,29 +112,52 @@ $(document).ready(function () {
       $init.find('input.rubrik').attr('name', 'content' + parent + 'title' + id);
       $init.find('textarea').attr('name', 'content' + parent + 'text' + id);
     });
+    
+    $('.nav-pills .glyphicon-remove:not(.hasEvent)').addClass('hasEvent').click(removeProcess);
   };
   bindProcess();
-
+  
+  var getNextId = function(){
+    var high = 0;
+    var $ids = $('.processIdInput');
+    
+    for(var i = 0; i < $ids.length; ++i){
+      if( parseInt($ids.eq(i).attr('name').replace(/\D/g,'')) > high ){
+        high = parseInt($ids.eq(i).attr('name').replace(/\D/g,''));
+      }
+    }
+    
+    return high + 1;
+  };
+  
+  
   var newProcess = function (e) {
-    var $item = $('.nav-pills input:not(.form-control)').last();
-    var $clone = $item.clone().removeClass('hasEvent').removeClass('active');
-    var $input = $('.newProcess input');
-    var newId = parseInt($clone.attr('id')) + 1;
+    $.get('/api/mongoose/id', function(msg){
+      var mongooseId = JSON.parse(msg).newId;
 
-    if (!$input.val().length) return;
+      var $item = $('.nav-pills li.process-item').last();
+      var $clone = $item.clone().removeClass('hidden');
+      $clone.find('.hasEvent').removeClass('hasEvent');
+      $clone.find('.active').removeClass('active');
+      var $input = $('.newProcess input');
+      var newId = getNextId();
 
-    $clone.attr('id', newId).attr('name', 'process' + newId).val($input.val()).insertAfter($item);
-    $input.val('');
+      if (!$input.val().length) return;
 
-    var $process = $('.process-content.mall').clone().removeClass('mall').removeClass('hidden').hide().attr('id', 'content' + newId).attr('data-id', newId).insertAfter($('.process-content:not(#contentchecklist)').last());
-    $process.find('.process-content-item').last().addClass('init');
+      $clone.insertAfter($item).find('input').attr('data-id', newId).attr('name', 'process' + newId).val($input.val());
+      $input.val('');
 
-    bindProcess();
-    initNavbar();
-    initWysiwyg();
-    initDynamicWidth();
+      var $processId = $('<input type="text"/>').addClass('hidden processIdInput').attr('name', 'processId' + newId).val(mongooseId).insertAfter($('.process-content:not(#contentchecklist)').last());
+      var $process = $('.process-content.mall').clone().removeClass('mall').removeClass('hidden').hide().attr('id', 'content' + newId).attr('data-id', newId).insertAfter($processId);
+      $process.find('.process-content-item').last().addClass('init');
+      
+      bindProcess();
+      initNavbar();
+      initWysiwyg();
+      initDynamicWidth();
 
-    $('.nav-pills input:not(.form-control)').last().click();
+      $('.nav-pills li.process-item input').last().click();
+    });
   };
   $('.newProcess input').keyup(function (event) {
     var key = event.keyCode || event.which;
@@ -128,12 +165,13 @@ $(document).ready(function () {
       newProcess(event);
     }
   });
-  $('.newProcess i').click(newProcess);
+  $('.newProcess i.glyphicon-plus').click(newProcess);
 
   var save = function (e) {
     e.preventDefault();
     $.post('', $(".operationForm").serialize(), function (msg) {
       console.log(msg);
+      $('.removeOnSubmit').remove();
     });
   };
   $('.operationForm').submit(save);
