@@ -19,8 +19,9 @@ $(function(){
       if (!$(this).prop('disabled')) {
         var checkbox = $(this).find('input')[0];
         checkbox.checked = !checkbox.checked;
-        changeTableGraphics($(this), checkbox.checked); //Function in checkEffect.js
-        var checkObject = {operation: operationId, id: $(this).attr('id'), check: checkbox.checked};
+        var preparation = $(this).hasClass("process-content-item") ? true : false;
+        changeTableGraphics($(this), checkbox.checked, preparation); //Function in checkEffect.js
+        var checkObject = {preparation: $(this).data('preparation'), operation: operationId, id: $(this).attr('id'), check: checkbox.checked};
         socket.emit('checkboxClick', checkObject);
       }
     }
@@ -77,12 +78,13 @@ socket.on('connect', function(){ //Runs after socket has been started.
 var updateTableRow = function(tableRow, isChecked, isTemplate){
   var checkbox = tableRow.find('input');
   checkbox.prop('checked', isChecked);
+  var preparation = tableRow.hasClass("process-content-item") ? true : false;
   if(isTemplate){
     checkbox.prop('disabled', true);
     tableRow.prop('disabled', true);
   }
 
-  changeTableGraphics(tableRow, isChecked); //Function in checkEffect.js
+  changeTableGraphics(tableRow, isChecked, preparation); //Function in checkEffect.js
 };
 
 socket.on('checkboxClick', function(checkObject){

@@ -40,6 +40,7 @@
                 <option>Patientpositionering</option>
             </select>
             <textarea id="underrubrik-text" class="form-control" rows="5"></textarea>
+            <p>Checkbar: <input type="checkbox" id="checkbar"></p>
             <button type="button" id="newUnderrubrikButton" class="btn btn-primary">Skapa Underrubrik</button>
             <div id="underrubriker"></div>
 
@@ -112,5 +113,6 @@
           \{{/each}}
         </select>
         <textarea id="underrubrik-text" class="form-control" rows="5">\{{ text }}</textarea>
+        <p id="pcheckbar" data-checked="\{{checkbar}}"></p>
     </div>
 </script>
