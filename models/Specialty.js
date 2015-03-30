@@ -8,7 +8,7 @@ var Specialty = new keystone.List('Specialitet', {
 
 Specialty.add({
   name: { type: String, required: true },
-  abbrevation: { type: String, required: true, initial: true }
+  abbreviation: { type: String, required: true, initial: true }
 });
 
 Specialty.relationship({ ref: 'Operation', path: 'operations', refPath: 'speciality'});
@@ -19,7 +19,7 @@ Specialty.schema.statics.search = function(text, callback) {
     $or: [{
       name: search
     }, {
-      abbrevation: search
+      abbreviation: search
     }]
   });
 };
