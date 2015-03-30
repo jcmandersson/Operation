@@ -41,12 +41,11 @@ $(document).ready(function() {
   $(".nav-pills > .navbar-btn").click(function() {
     $(this).addClass('active').siblings().removeClass('active');
     $(".process-content").hide();
-    $("#content"+this.id).show();
-
+    $("#content" + this.id).show();
   });
-  
+
   $('textarea:not(.wysiwyg)').addClass('wysiwyg').jqte();
-  
+
   $('.process-content').sortable({
     cancel: 'input,.jqte'
   })
@@ -56,6 +55,17 @@ $(document).ready(function() {
     defaultText: 'Lägg till synonym',
     removeWithBackspace: false,
     height: '40px'
+  });
+
+  var createNewItem = function() {
+    $(this).unbind("keyup", createNewItem);
+    var $e = $(this).parents().eq(2);
+    console.log($e);
+    var $clone = $e.find('.process-content-item').first().clone().removeClass('hidden').appendTo($e);
+    $clone.find('.rubrik').keyup(createNewItem);
+  };
+  $('.process-content').each(function(i, e) {
+    $(e).find('.process-content-item .rubrik').last().keyup(createNewItem);
   });
 
   initializeSpecialitetSelect();

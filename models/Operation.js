@@ -12,7 +12,7 @@ Operation.add({
   title: {type: String, required: true},
   linda_id: {type: String, default: '0', required: true},
   tags: { type: String },
-  state: {type: Types.Select, options: 'Utkast, Publicerad, Arkiverad', default: 'Utkast'},
+  state: {type: Types.Select, options: 'Utkast, Redigering, Granskning, Publicerad', default: 'Utkast'},
   specialty: {type: Types.Relationship, ref: 'Specialitet', many: false},
   template: {type: Types.Boolean, default: true},
   isDone: {type: Types.Boolean, default: false}

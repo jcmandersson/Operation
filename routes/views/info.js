@@ -8,7 +8,6 @@ var content = keystone.list('Processinnehall');
 var article = keystone.list('Artikel');
 var prepare = keystone.list('Förberedelse');
 
-
 exports = module.exports = function(req, res) {
   var view = new keystone.View(req, res),
     locals = res.locals;
@@ -18,7 +17,11 @@ exports = module.exports = function(req, res) {
     'checklist.js',
     'checkEffect.js'
   ];
-  
+
+  locals.css = [
+    'site/info.css'
+  ];
+
   view.on('get', {operation: 'create'}, function(){
     console.log("AAAA: " + req.params.slug);
     operation.model.fromTemplate(req.params.slug, function(newOperation){
@@ -56,7 +59,7 @@ exports = module.exports = function(req, res) {
           console.log(err);
           return;
         }
-        //console.log(articleData);
+        console.log(articleData);
         locals.articles = articleData;
         next(err);
       });
@@ -99,8 +102,7 @@ exports = module.exports = function(req, res) {
     });
     next(null);
   });
-
-
+  
   view.on('init', function(next) {
     locals.processes.forEach(function (e, i) {
       view.on('init', function(next) {
@@ -113,7 +115,6 @@ exports = module.exports = function(req, res) {
               console.log(err);
               return;
             }
-            console.log(prepareData);
             e.prepares = prepareData;
             next(err);
           });

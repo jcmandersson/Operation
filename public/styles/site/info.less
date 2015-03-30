@@ -1,3 +1,17 @@
+@import "variables.less";
+@import "functions.less";
+
+@media print {
+  .btn {
+    display: none;
+  }
+  
+  .process-content-item {
+    border: solid;
+    border-width: 2px;
+  }
+}
+
 .navbar-btn {
   border-radius: 5px;
   margin-right: 10px;
@@ -17,7 +31,7 @@
 
 #createOperationInstanceButton {
   display: inline-block;
-}
+};
 
 .contentTitle {
   font-weight: bold;
@@ -160,4 +174,11 @@ h1 .banner-left:before {
   border-left-width:24px;
 right:-10px;
   border-bottom-width:21px;
+}
+
+input[type="text"] {
+  width: 50px;
+  box-sizing: border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing: border-box;
 }

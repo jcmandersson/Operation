@@ -25,22 +25,91 @@
 
 \renewcommand\cftpartpresnum{Del~}
 
+
 \begin{document}
+\pagenumbering{roman}
+
+\begin{titlepage}
+\begin{center}
+  \textbf{\Huge Kandidatarbete}
+\end{center}
+\begin{center}
+  {\Large Redaktör: Pål Kastman}
+\end{center}
+\begin{center}
+  {\Large Datum: 2015-03-13}
+\end{center}
+\begin{center}
+  {\Large \textbf{Version 0.1}}
+\end{center}
+\end{titlepage}
+\newpage
+\begin{flushleft}
+  {\Large \textbf{Dokumenthistorik}}\\[0.5ex]
+  \begin{center}
+    \begin{tabular}{ | l | l | p{5cm} | l |}
+    \hline
+    \textbf{Datum} & \textbf{Version} & \textbf{Utförda ändringar} & \textbf{Utförda av} \\ \hline
+    2015-03-13 & 0.1 & Första utkast av gemensam och individuella rapporter & Pål Kastman \\ \hline
+    \end{tabular}
+  \end{center}
+\end{flushleft}
+
+\hfill
+
+\begin{flushleft}
+  {\Large \textbf{Projektidentitet}}\\[0.5ex]
+  {\small} Detta dokument gäller för grupp 7  i kursen TDDD77 på Linköpings universitet
+  \begin{center}
+    \begin{tabular}{ | l | l | p{5cm} | l |}
+    \hline
+    \textbf{Namn} & \textbf{Ansvarsområde} & \textbf{E-post} \\ \hline
+    Daniel Rapp & Teamledare & danth407@student.liu.se \\ \hline
+    Daniel Falk & Analysansvarig & danfa519@student.liu.se \\ \hline
+    Jonas Andersson & Arkitekt & jonan111@student.liu.se \\ \hline
+    Albert Karlsson & Kvalitetssamordnare & albka735@student.liu.se \\ \hline
+    Erik Malmberg & Testledare & erima694@student.liu.se \\ \hline
+    Pål Kastman & Arkitekt & palka285@student.liu.se \\ \hline
+    \end{tabular}
+\end{center}
+\end{flushleft}
+
+\begin{flushleft}
+\textbf{Kund} \\ Region Östergötland \\
+\end{flushleft}
+\begin{flushleft}
+\textbf{Kundkontakt} \\ 
+Daniel Hall, daniel.hall@regionostergotland.se \\
+Erik Sundvall, erik.sundvall@regionostergotland.se \\
+Ingrid Hallander, ingrid.hallander@regionostergotland.se \\
+\end{flushleft}
+\begin{flushleft}
+\textbf{Handledare} \\ Lena Buffoni, lena.buffoni@liu.se \\
+\end{flushleft}
+\begin{flushleft}
+\textbf{Handledare} \\ Kristian Sandahl, kristian.sandahl@liu.se \\
+\end{flushleft}
+
+\newpage
 \tableofcontents
 \newpage
+\pagenumbering{arabic}
+
 \part{Gemensamma erfarenheter och diskussion}
 
 \section{Inledning}
 Detta avsnitt behandlar varför detta projekt utförs. 
 \subsection{Motivering}
 
-Region Östergötland har idag ett system med handböcker som en sjuksköterska går igenom inför varje operation. I dessa handböcker finns bland annat förberedelse-uppgifter och plocklistor. Handböckerna är idag inte interaktiva på något sätt, istället skrivs plocklistan och förberedelse\-uppgifterna ut och bockas av för hand. Plattformen med handböcker kan heller inte användas på andra avdelningar än ... på grund utav licensproblem. Utöver detta system så finns ett annat separat system, som heter kartoteket, för uppgifter om vilka artiklar som finns och var i lagret de ligger. Detta gör att personalen som ska förbereda inför operationer behöver gå in i två olika system om de inte vet var alla artiklar ligger.\\*
+Region Östergötland har idag ett system med handböcker som en sjuksköterska går igenom inför varje operation. I dessa handböcker finns bland annat förberedelse-uppgifter och plocklistor. Handböckerna är idag inte interaktiva på något sätt, istället skrivs plocklistan och förberedelse\-uppgifterna ut och bockas av för hand. Plattformen med handböcker kan heller inte återanvändas på olika avdelningar på grund utav licensproblem. Utöver detta system så finns ett annat separat system, som heter kartoteket, för uppgifter om vilka artiklar som finns och var i lagret de ligger. Detta gör att personalen som ska förbereda inför operationer behöver gå in i två olika system om de inte vet var alla artiklar ligger.\\*
 
 \subsection{Syfte}
-Uppgiften som gruppen har fått är att skapa ett nytt system med handböcker som har interaktiva förberedelse-och plocklistor. Listorna ska uppdateras kontinuerligt när de bockas av så flera personer kan jobba på dem samtidigt. Plocklistan ska också innehålla uppgifter om var artiklarna ligger. Tanken är att personalen ska använda en iPad för listorna så de kan gå runt och plocka i lagret och bocka av samtidigt. \\*
+Uppgiften som gruppen har fått är att skapa ett nytt system med handböcker som har interaktiva förberedelse-och plocklistor. Listorna ska uppdateras kontinuerligt när de bockas av så flera personer kan jobba på dem samtidigt. Plocklistan ska också innehålla uppgifter om var artiklarna ligger. Tanken är att personalen 
+ska använda en iPad för listorna så de kan gå runt och plocka i lagret och bocka av samtidigt. \\*
 I mån av tid ska också extra funktionalitet implementeras. Till exempel sortera plocklistan med avseende på närmsta väg mellan artiklarna, lagersaldo och media i handböckerna. \\*
 Hela systemet ska ligga under en open-source licens så det kan användas fritt av alla.    
 \subsection{Frågeställning}
+Rapporten ska besvara följande frågeställningar.
 \begin{itemize}
 \item Hur kan ett system för operationsförberedelser realiseras så arbetet blir lättare och mer effektivt?
 \item Kan man använda plattformen keystone för att bygga detta system?
@@ -54,15 +123,20 @@ Studenterna som studerar kursen TDDD77 fick i januari 2015 ett uppdrag att utfö
 
 
 \section{Teori}
+Node.js Keystone.js 
 
 \section{Metod}
+I detta avsnitt beskrivs det hur arbetet med projektet har gått till.
+\subsection{Kravinsamling}
 Gruppen utgick ifrån projektdirektivet och började tänka över hur systemet skulle byggas. 
 Det kom fram ganska snabbt att ingen i gruppen hade koll på hur operationsförberedelser går till, vilket gjorde att utbildning inom detta krävdes. För att få mer insyn så gjordes ett studiebesök på universitetssjukhuset i Linköping. Under detta studiebesök gjordes bestämdes också hur insamlingen av krav skulle gå till. Analysansvarig utsågs till ansvarig för detta. Denne skulle med hjälp av kunden arbeta fram en kravspecifikation som båda parter vara nöjda med. Detta gjordes genom flera möten och ett gemensamt dokument på Google drive där båda parter kunde gå in för att redigera och skriva kommentarer. 
 
 \subsection{Utvecklingsmetod}
-Projektet har utvecklats iterativt med en utvecklingsmetodik som påminner mycket om SCRUM. Aktiviteterna i projektet har visats på en gemensam SCRUM-board med hjälp av webbsidan Trello. Boarden hade kategorierna TODO, DOING och DONE. När en medlem valt en aktivitet så märktes aktiviteten med medlemens namn och flyttades till den aktuella kategorin.
+Projektet har utvecklats iterativt med en utvecklingsmetodik som påminner mycket om SCRUM. Aktiviteterna i projektet har visats på en gemensam SCRUM-board med hjälp av webbsidan Trello. Boarden hade kategorierna TODO, DOING och DONE. När en medlem valt en aktivitet så märktes aktiviteten med medlemens namn och flyttades till den aktuella kategorin. Varje vecka har gruppen haft ett kort SCRUM-möte på 15 minuter. På mötet har varje gruppmedlem berättat vad som har gjorts den föregående veckan och vad som ska göras nästa vecka. SCRUM-mötet har oftast utförts i samband med varje veckas handledarmöte.
 
-Nästan all utveckling har skett med hela gruppen samlad i samma lokal. Det har gjort att alla frågor om andra gruppmedlemmars kod har kunnat besvaratas snabbt. Det har gjort att arbetet kunnat hålla hög fart och att inga onödiga förseningar har uppstått på grund av osäkerheter i hur en del av koden fungerar.
+Ett system med alpha state cards har använts för att gruppen ska kunna veta hur långt projektet har fortskridit. Korten har även använts till att identifiera aspekter av projektet som kan förbättras och som gruppen behöver arbeta mer med. De aspekter av projektet som kunnat förbättras har använts som mål för kommande iterationer. De olika korten har uppdaterats kontinuerligt under projektets gång.
+
+Nästan all utveckling har skett med hela gruppen samlad i samma lokal. Det har gjort att alla frågor om andra gruppmedlemmars kod har kunnat besvaratas snabbt. Det har gjort att arbetet kunnat hålla hög fart och att inga onödiga förseningar har uppstått på grund av osäkerheter i hur en del av koden fungerar. Problem har också kunnat lösas fort eftersom alla gruppmedlemmars olika kompetens har funnits tillgänglig.
 
 \subsection{Forskningsmetod}
 
@@ -81,7 +155,7 @@ Nästan all utveckling har skett med hela gruppen samlad i samma lokal. Det har 
 \subsection{Arbetat i ett vidare sammanhang}
 
 \section{Slutsatser}
-
+   
 \section{Fortsatt arbete}
 
 \newpage

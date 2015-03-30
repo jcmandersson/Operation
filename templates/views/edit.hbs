@@ -4,74 +4,95 @@
         <div id="name">
             Namn:
             <input class="form-control" type="text" name="name" value="{{data.title}}" placeholder="Namn"/>
-        </div>        
-        <div id="synonyms">Synonymer: <input class="form-control tags" type="text" name="tags" placeholder="Synonymer" value="{{data.tags}}"/></div>
+        </div>
+        <div id="synonyms">Synonymer: <input class="form-control tags" type="text" name="tags" placeholder="Synonymer"
+                                             value="{{data.tags}}"/></div>
         <div id="specialty">Specialitet: <select class="specialitet-select">
           {{#if data.specialty }}
-            <option value="{{data.specialty.name}}" selected="selected">{{data.specialty.name}}</option>
+              <option value="{{data.specialty.name}}" selected="selected">{{data.specialty.name}}</option>
           {{ else }}
               <option value="Specialitet" selected="selected">Lägg till specialitet</option>
           {{/if}}
         </select>
 
-      
-        <ul class="nav nav-pills">
-          {{#each processes}}
-              <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
-          {{/each}}
-            <button type="button" class="btn btn-default navbar-btn" id="Ny"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-            <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
-        </ul>
 
-      {{#each processes}}
-          <div class="process-content" id="content{{@index}}" style="{{#if @index}}display: none;{{/if}}">
-            {{#each contents}}
-                <div class="process-content-item">
-                    <span class="contentTitle"><input class="form-control" type="text" value="{{ title }}"/></span>
-                    <span class="contentText"><textarea>{{ text }}</textarea></span>
+            <ul class="nav nav-pills">
+              {{#each processes}}
+                  <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
+              {{/each}}
+                <div class="form-group has-feedback newProcess">
+                    <input type="text" class="form-control" placeholder="Ny" />
+                    <i class="glyphicon glyphicon-plus form-control-feedback"></i>
                 </div>
-            {{/each}}
-              <div class="process-content-item">
-                  <span class="contentTitle"><input class="form-control" type="text" value="" placeholder="Ny rubrik"/></span>
-                  <span class="contentText"><textarea placeholder="Ny beskrivning"></textarea></span>
-              </div>
-              <!--{{#each prepares}}
-            <div class="process-content-item">
-                <span class="prepareTitle">{{title}}</span>
-                <span class="prepareText">{{{text}}}</span>
+                <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
+            </ul>
+
+            <div class="process-content mall hidden" id="contentMall">
+                <div class="process-content-item hidden">
+                    <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
+                                                      placeholder="Ny rubrik"/></span>
+                    <span class="contentText"><textarea class="information"
+                                                        placeholder="Ny beskrivning"></textarea></span>
+                </div>
+                <div class="process-content-item">
+                    <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
+                                                      placeholder="Ny rubrik"/></span>
+                    <span class="contentText"><textarea class="information"
+                                                        placeholder="Ny beskrivning"></textarea></span>
+                </div>
             </div>
-        {{/each}}-->
-          </div>
-      {{/each}}
-
-
-      {{#if articles}}
-          <div class="process-content" id="contentchecklist" style="display: none;">
-              <table class="table">
-                  <tr class="table-headerstriped">
-                      <td></td>
-                      <td>Namn</td>
-                      <td>Antal</td>
-                      <td>Förråd</td>
-                      <td>Sektion</td>
-                      <td>Hylla</td>
-                      <td>Fack</td>
-                  </tr>
-                {{# each articles }}
-                    <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js" id={{_id}}>
-                        <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
-                        <td>{{ kartotek.name }}</td>
-                        <td>{{ amount }}</td>
-                        <td>{{ kartotek.storage }}</td>
-                        <td>{{ kartotek.section }}</td>
-                        <td>{{ kartotek.shelf }}</td>
-                        <td>{{ kartotek.tray }}</td>
-                    </tr>
+          {{#each processes}}
+              <div class="process-content" id="content{{@index}}" style="{{#if @index}}display: none;{{/if}}">
+                  <div class="process-content-item hidden">
+                      <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
+                                                        placeholder="Ny rubrik"/></span>
+                      <span class="contentText"><textarea class="information"
+                                                          placeholder="Ny beskrivning"></textarea></span>
+                  </div>
+                {{#each contents}}
+                    <div class="process-content-item">
+                        <span class="contentTitle"><input class="form-control rubrik" type="text" value="{{ title }}"/></span>
+                        <span class="contentText"><textarea class="information">{{ text }}</textarea></span>
+                    </div>
                 {{/each}}
-              </table>
-          </div>
-      {{/if}}
+                  <div class="process-content-item">
+                      <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
+                                                        placeholder="Ny rubrik"/></span>
+                      <span class="contentText"><textarea class="information"
+                                                          placeholder="Ny beskrivning"></textarea></span>
+                  </div>
+              </div>
+          {{/each}}
 
-        <button type="button" id="editButton" class="btn btn-primary">Spara</button>
+
+          {{#if articles}}
+              <div class="process-content" id="contentchecklist" style="display: none;">
+                  <table class="table">
+                      <tr class="table-headerstriped">
+                          <td></td>
+                          <td>Namn</td>
+                          <td>Antal</td>
+                          <td>Förråd</td>
+                          <td>Sektion</td>
+                          <td>Hylla</td>
+                          <td>Fack</td>
+                      </tr>
+                    {{# each articles }}
+                        <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js"
+                            id={{_id}}>
+                            <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
+                            <td>{{ kartotek.name }}</td>
+                            <td>{{ amount }}</td>
+                            <td>{{ kartotek.storage }}</td>
+                            <td>{{ kartotek.section }}</td>
+                            <td>{{ kartotek.shelf }}</td>
+                            <td>{{ kartotek.tray }}</td>
+                        </tr>
+                    {{/each}}
+                  </table>
+              </div>
+          {{/if}}
+
+            <button type="button" id="editButton" class="btn btn-primary">Spara</button>
     </form>
 </div>

@@ -33,7 +33,7 @@ var routes = {
 
 // Setup Route Bindings
 exports = module.exports = function(app) {
-	
+
 	// Views
   app.get('/', routes.views.start);
   app.get('/create', routes.views.create);
@@ -44,7 +44,7 @@ exports = module.exports = function(app) {
   app.get('/info', routes.views.info);
   app.get('/info/:slug', routes.views.info);  
   app.get('/specialiteter', routes.views.specialiteter);
-  
+
   app.get('/index', routes.views.index);
 
 

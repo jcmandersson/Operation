@@ -9,9 +9,15 @@
 
     <link href="/js/lib/select2/css/select2.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/js/jquery.tagsinput.css" media="screen" />
-      <link rel="stylesheet" type="text/css" href="/js/lib/jquery-ui-1.11.3.custom/jquery-ui.min.css" media="screen" />
-      <link rel="stylesheet" type="text/css" href="/js/lib/jQuery-TE_v.1.4.0/jquery-te-1.4.0.css" media="screen" />
-    <link href="/styles/site.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/js/lib/jquery-ui-1.11.3.custom/jquery-ui.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/js/lib/jQuery-TE_v.1.4.0/jquery-te-1.4.0.css" media="screen" />
+    <!--<link href="/styles/site.min.css" rel="stylesheet">-->
+      <link href="/styles/site.min.css" rel="stylesheet">
+      <link href="/styles/site/layout.min.css" rel="stylesheet">
+      <link href="/styles/site/header.min.css" rel="stylesheet">
+    {{#each css}}
+      <link href="/styles/{{this}}" rel="stylesheet">
+    {{/each}}
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"/>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"/>
