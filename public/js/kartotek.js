@@ -1,3 +1,5 @@
+/*
+
 // This happends when we've replaced the uneditable table-element with
 // an input-box. Now we want to listen to changes.
 var saveArticle = function(elem) {
@@ -124,4 +126,227 @@ $(function() {
   });
 });
 
+*/
 
+/*
+var addArticle = function() {
+  var compiledArticle = $('#article-template').html();
+  var articleTemplate = Handlebars.compile(compiledArticle);
+  var row = $(this).parent().parent();
+
+  $.ajax({
+    type: 'POST',
+    url: '/api/kartotekartikels',
+    data: {
+      name: row.find('[data-type="name"]').val(),
+      storage: row.find('[data-type="storage"]').val(),
+      section: row.find('[data-type="section"]').val(),
+      shelf: row.find('[data-type="shelf"]').val(),
+      tray: row.find('[data-type="tray"]').val()
+    }
+  })
+    .done(function (newArticle) {
+      console.log(newArticle._id);
+      // The first row (index 0) contains the header, the second row (index 1)
+      // contains the "create" row, we want to append the new article after the create row.
+      var createRow = $('#articles').find('tr')[1];
+      var newArticleElement = $(articleTemplate(newArticle)).insertAfter(createRow);
+
+      $('#' + newArticle._id + 'remove').click(function() {
+        removeArticle.call(this, newArticle.slug);
+      });
+
+      $('.modifyable-article-column > span:not(.hasListener)').addClass('hasListener').click(function() {
+        modifyArticle.call(this, $(this).parent().parent());
+      });
+    })
+    .fail(function (err, status) {
+      console.log('Kartoteksartikel kunde inte läggas till!');
+      console.log(err);
+      console.log(status);
+    });
+};
+*/
+
+var Article = function() {
+  this.data = {};
+};
+
+Article.prototype.compileRow = function() {
+  var compiledArticle = $('#article-template').html();
+  var articleTemplate = Handlebars.compile(compiledArticle);
+  return articleTemplate(this.data);
+};
+
+Article.prototype.createInDatabase = function(callback) {
+  var self = this;
+  $.ajax({
+    type: 'POST',
+    url: '/api/kartotekartikels',
+    data: {
+      name:    this.data.name,
+      storage: this.data.storage,
+      section: this.data.section,
+      shelf:   this.data.shelf,
+      tray:    this.data.tray
+    }
+  }).done(function(newArticle) {
+    self.data.slug = newArticle.slug;
+    callback();
+  });
+};
+
+Article.prototype.removeFromDatabase = function(callback) {
+  $.ajax({
+    type: 'DELETE',
+    url:  '/api/kartotekartikels/' + this.data.slug
+  }).done(callback);
+};
+
+// This takes a single `td` element, and fills itself (i.e. this.data) with the columns.
+Article.prototype.fillFromElement = function(elem) {
+  this.data.name    = $(elem).find('[data-name="name"]').text();
+  this.data.storage = $(elem).find('[data-name="storage"]').text();
+  this.data.section = $(elem).find('[data-name="section"]').text();
+  this.data.shelf   = $(elem).find('[data-name="shelf"]').text();
+  this.data.tray    = $(elem).find('[data-name="shelf"]').text();
+  this.data.slug    = $(elem).find('[data-name="slug"]').text();
+};
+
+// This takes a single `td` element, and fills itself (i.e. this.data) with the columns.
+// The difference between this and .fillFromElement is that this takes
+// data from `input` elements, whereas .fillFromElement takes data from `td` elements.
+Article.prototype.fillFromInput = function(elem) {
+  this.data.name    = $(elem).find('[data-name="name"]').val();
+  this.data.storage = $(elem).find('[data-name="storage"]').val();
+  this.data.section = $(elem).find('[data-name="section"]').val();
+  this.data.shelf   = $(elem).find('[data-name="shelf"]').val();
+  this.data.tray    = $(elem).find('[data-name="shelf"]').val();
+  this.data.slug    = $(elem).find('[data-name="slug"]').val();
+};
+
+// Extract essentials (e.g. only name, storage, section, shelf, no functions(?), etc).
+// Basically just the stuff that is necessary to render it to a template.
+Article.prototype.essentials = function() {
+  return this.data;
+};
+
+var articles = {
+  data: {
+    id: '#articles',
+    template: '#articles-template',
+    add: '#article-add',
+    articles: []
+  },
+  // Fills itself (this.data.articles) with
+  // the content in the $(this.data.id) DOM-element.
+  // This is supposed to be used directly after the site has
+  // loaded, thus it will assume the structure is similar
+  // to that of the $('#articles') element in kartotek.hbs.
+  fillFromElement: function(elem) {
+    var elems = $(this.data.id).find('tr');
+    // The first and second element contains the header and the
+    // "add article" column, so ignore those.
+    for (var i = 2; i < elems.length; i++) {
+      var newArticle = new Article();
+      newArticle.fillFromElement(elems[i]);
+      this.data.articles.push(newArticle);
+    }
+
+    // Yes, we could to this inside the above loop.
+    // Yes, this is three times slower.
+    // But the truth is that performance doesn't matter much.
+    // This is not a bottleneck. (E.g. the internet is a much larger bottleneck.)
+    this.attachModifyArticleListeners();
+    this.attachRemoveArticleListeners();
+  },
+  findArticle: function(slugName) {
+    for (var i = 0; i < this.data.articles.length; i++) {
+      if (slugName === this.data.articles[i].data.slug) {
+        return i;
+      }
+    }
+  },
+  // Extract the essentials from this.data.
+  // Basically just the stuff that is necessary to render it to a template.
+  essentials: function() {
+    var essentials = [];
+    for (var i = 0; i < this.data.articles.length; i++) {
+      essentials.push(this.data.articles[i].essentials());
+    }
+
+    return essentials;
+  },
+  render: function() {
+    var templateHTML     = $(this.data.template).html();
+    var compiledTemplate = Handlebars.compile(templateHTML);
+    var newHTML          = compiledTemplate({ articles: this.essentials() });
+    $(this.data.id).html(newHTML);
+
+    this.attachAddArticleListener();
+    this.attachModifyArticleListeners();
+    this.attachRemoveArticleListeners();
+  },
+  getRowWhichContainsCreate: function() {
+    // The first row (index 0) contains the header, the second row (index 1)
+    // contains the "create" row, we want to append the new article after the create row.
+    return $(this.data.id).find('tr')[1];
+  },
+  addArticle: function(article) {
+    var self = this;
+    // Assumes it is added to the top in the database.
+    // A clear way would be to query the db, but that
+    // feels unnecessary.
+    this.data.articles.unshift(article);
+    article.createInDatabase(this.render.bind(this));
+  },
+  attachAddArticleListener: function() {
+    var self = this;
+
+    $(this.data.add).click(function() {
+      var newArticle = new Article();
+      var rowWhichContainsCreate = $(self.getRowWhichContainsCreate());
+      newArticle.fillFromInput(rowWhichContainsCreate);
+
+      self.addArticle(newArticle);
+    });
+  },
+  attachModifyArticleListeners: function() {
+    var elems = $(this.data.id).find('.modifyable-article-column');
+    for (var i = 0; i < elems.length; i++) {
+      var self = this;
+      $(elems[i]).click(function(e) {
+        var slug   = $(e.target).parent().parent().find('[data-name="slug"]').text();
+        var column = $(e.target).parent().data('name');
+        self.modifyArticleListener(slug, column);
+      });
+    }
+  },
+  attachRemoveArticleListeners: function() {
+    var elems = $(this.data.id).find('tr');
+    for (var i = 0; i < elems.length; i++) {
+      $(elems[i]).find('.article-remove').click(this.removeArticleListener);
+    }
+  },
+  removeArticleListener: function() {
+    var confirmed = confirm("Är du säker på att du vill ta bort artikeln från kartoteket?");
+    if (confirmed) {
+      var rowToDelete    = $(this).parent().parent();
+      var slugName       = rowToDelete.find('[data-name="slug"]').html();
+      var articleIndex   = articles.findArticle(slugName);
+      var removedArticle = articles.data.articles.splice(articleIndex, 1)[0];
+      removedArticle.removeFromDatabase();
+      // Alternatively we could to `rowToDelete.remove()` here
+      // (if performance becomes an issue), but this is cleaner.
+      articles.render();
+    }
+  },
+  modifyArticleListener: function(slug, name) {
+    console.log(slug, name);
+  }
+};
+
+$(function() {
+  window.articles.fillFromElement();
+  window.articles.attachAddArticleListener();
+});
