@@ -172,12 +172,6 @@ var Article = function() {
   this.data = {};
 };
 
-Article.prototype.compileRow = function() {
-  var compiledArticle = $('#article-template').html();
-  var articleTemplate = Handlebars.compile(compiledArticle);
-  return articleTemplate(this.data);
-};
-
 Article.prototype.createInDatabase = function(callback) {
   var self = this;
   $.ajax({
@@ -231,11 +225,14 @@ Article.prototype.essentials = function() {
   return this.data;
 };
 
+
 var articles = {
   data: {
     id: '#articles',
     template: '#articles-template',
     add: '#article-add',
+    currentlyModifyingArticle: undefined,
+    currentlyModifyingColumn: undefined,
     articles: []
   },
   // Fills itself (this.data.articles) with
@@ -257,7 +254,7 @@ var articles = {
     // Yes, this is three times slower.
     // But the truth is that performance doesn't matter much.
     // This is not a bottleneck. (E.g. the internet is a much larger bottleneck.)
-    this.attachModifyArticleListeners();
+    this.attachModifyEntryListeners();
     this.attachRemoveArticleListeners();
   },
   findArticle: function(slugName) {
@@ -266,6 +263,10 @@ var articles = {
         return i;
       }
     }
+  },
+  // This should essentially only be used when attaching event listeners.
+  findArticleInDOM: function(slug) {
+    return $(this.data.id).find('[data-slug="'+slug+'"]');
   },
   // Extract the essentials from this.data.
   // Basically just the stuff that is necessary to render it to a template.
@@ -284,7 +285,8 @@ var articles = {
     $(this.data.id).html(newHTML);
 
     this.attachAddArticleListener();
-    this.attachModifyArticleListeners();
+    this.attachModifyEntryListeners();
+    this.attachModifyEntryFinishedListener();
     this.attachRemoveArticleListeners();
   },
   getRowWhichContainsCreate: function() {
@@ -311,14 +313,18 @@ var articles = {
       self.addArticle(newArticle);
     });
   },
-  attachModifyArticleListeners: function() {
+  resetCurrentlyModifying: function() {
+    this.data.articleCurrentlyModifying.reset();
+    this.render();
+  },
+  attachModifyEntryListeners: function() {
     var elems = $(this.data.id).find('.modifyable-article-column');
     for (var i = 0; i < elems.length; i++) {
       var self = this;
       $(elems[i]).click(function(e) {
         var slug   = $(e.target).parent().parent().find('[data-name="slug"]').text();
         var column = $(e.target).parent().data('name');
-        self.modifyArticleListener(slug, column);
+        self.modifyEntryListener.call(self, slug, column);
       });
     }
   },
@@ -341,12 +347,43 @@ var articles = {
       articles.render();
     }
   },
-  modifyArticleListener: function(slug, name) {
-    console.log(slug, name);
+  isEntryThatIsCurrentlyBeingModified: function(slugName, type) {
+    if (this.currentlyModifyingArticle === undefined ||
+        this.currentlyModifyingArticle === undefined) {
+      return false;
+    }
+    return (this.currentlyModifyingArticle.data.slug  === slugName) &&
+           (this.currentlyModifyingColumn === type);
+  },
+  modifyEntryListener: function(slug, type) {
+    if (!this.isEntryThatIsCurrentlyBeingModified(slug, type)) {
+      var article = this.findArticle(slug);
+      this.currentlyModifyingArticle = this.data.articles[article];
+      this.currentlyModifyingColumn  = type;
+      this.render();
+    }
+  },
+  attachModifyEntryFinishedListener: function() {
+    // TODO:
+    // 1) Make it work to press enter.
+    // 2) Autofocus on currentlyModifying entry. (Do this in modifyEntryListener probably.)
+    // 3) Make sure all modification events are re-connected on render.
+    // 4) Connect modification to DB.
+    // 5) Implement search.
   }
 };
 
 $(function() {
+  // This is ugly, and they should really be inside the helper below, but we
+  // need to do this for performance reasons.
+  var compiledModified = $('#modify-template').html();
+  var modifiedTemplate = Handlebars.compile(compiledModified);
+
+  Handlebars.registerHelper('modifyable', function(slugName, type, currentValue) {
+    var isModifyable = articles.isEntryThatIsCurrentlyBeingModified(slugName, type);
+    return modifiedTemplate({ isModifyable: isModifyable, value: currentValue });
+  });
+
   window.articles.fillFromElement();
   window.articles.attachAddArticleListener();
 });

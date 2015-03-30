@@ -1,12 +1,11 @@
 {{!< default}}
 
 <script id="modify-template" type="text/x-handlebars-template">
-  <input type="text" class="form-control" value="\{{value}}" id="currently-modifying" />
-</script>
-
-<!-- This template and the above are replaced with eachother when you edit an entry in the table -->
-<script id="modified-template" type="text/x-handlebars-template">
-  <td class="modifyable-article-column"><span>\{{ name }}</span></td>
+  \{{#if isModifyable}}
+    <input type="text" class="form-control" value="\{{value}}" id="currently-modifying" />
+  \{{else}}
+    <span>\{{ value }}</span>
+  \{{/if}}
 </script>
 
 <script id="article-template" type="text/x-handlebars-template">
@@ -45,11 +44,11 @@
     <tr class="check-js" id="\{{_id}}" data-slug="\{{slug}}">
       <!-- The reason for the additional <span> is so that we can attach an event listener
         to it, should then dissapear/not activate anymore when we replace it with an input. -->
-      <td class="modifyable-article-column" data-name="name"><span>\{{ name }}</span></td>
-      <td class="modifyable-article-column" data-name="storage"><span>\{{ storage }}</span></td>
-      <td class="modifyable-article-column" data-name="section"><span>\{{ section }}</span></td>
-      <td class="modifyable-article-column" data-name="shelf"><span>\{{ shelf }}</span></td>
-      <td class="modifyable-article-column" data-name="tray"><span>\{{ tray }}</span></td>
+      <td class="modifyable-article-column" data-name="name">\{{#modifyable slug 'name' name}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column" data-name="storage">\{{#modifyable slug 'storage' storage}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column" data-name="section">\{{#modifyable slug 'section' section}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column" data-name="shelf">\{{#modifyable slug 'shelf' shelf}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column" data-name="tray">\{{#modifyable slug 'tray' tray}}\{{/modifyable}}</td>
       <td class="modifyable-article-column hidden" data-name="slug">\{{ slug }}</td>
       <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
         with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
