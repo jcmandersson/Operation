@@ -14,7 +14,7 @@ CheckArticle.add({
   template: { type: Types.Boolean, default: true },
   kartotek: { type: Types.Relationship, ref: 'Kartotekartikel', refPath: 'kartotek', initial: true},
   amount: { type: Types.Number, default: 1 },
-  comment: {type: String, required: true, default: ""}
+  comment: {type: String, required: false, default: ""}
 });
 
 /**

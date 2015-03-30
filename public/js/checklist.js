@@ -3,9 +3,18 @@
  */
 var socket = io();
 var operationId;
+var oldText;
+var saved = false;
 
 $(function(){
-  $('.check-js').click(function(e) {
+  var rows = $('.check-js');
+  rows.each(function(index, row){
+    var comment = $('#checkComment' + row.id);
+    var commentButton = $('#commentButton' + row.id);
+    changeCommentButton(comment, commentButton);
+  });
+
+  rows.click(function(e) {
     if(!(e.target.tagName == 'P' || e.target.tagName == 'BUTTON')) {
       if (!$(this).prop('disabled')) {
         var checkbox = $(this).find('input')[0];
@@ -16,23 +25,42 @@ $(function(){
       }
     }
   });
-  
+
   $('.checkbox-js').click(function() {
     this.checked = !this.checked;
   });
-  
+
+  $('.cancelComment').click(function(){
+    if(!saved) {
+      var id = $(this).data('id');
+      var checkComment = $('#checkComment' + id);
+      checkComment.val(oldText);
+    }else{
+      saved = false;
+    }
+  });
+
   $('.saveComment').click(function(){
     var id = $(this).data('id');
-    var commentObject = {operation: operationId, id: id, comment: $('#checkComment' + id).val()};
+    var checkComment = $('#checkComment' + id);
+    if (checkComment.val() == ""){
+      checkComment.val("-");
+    }
+    var commentObject = {operation: operationId, id: id, comment: checkComment.val()};
     socket.emit('saveComment', commentObject);
-    $('#checkComment' + id).attr('disabled', true);
+    var commentButton = $('#commentButton' + id);
+    changeCommentButton(checkComment, commentButton);
+    checkComment.attr('disabled', true);
     $(this).attr('disabled', true);
+    saved = true;
   });
-  
+
   $('.showComment').click(function(){
     var id = $(this).data('id');
     $('#commentSaved' + id).hide();
-    $('#checkComment' + id).attr('disabled', false);
+    var checkComment = $("#checkComment" + id);
+    checkComment.attr('disabled', false);
+    oldText = checkComment.val();
     $('#saveComment' + id).attr('disabled', false);
   });
 });
@@ -53,7 +81,7 @@ var updateTableRow = function(tableRow, isChecked, isTemplate){
     checkbox.prop('disabled', true);
     tableRow.prop('disabled', true);
   }
-  
+
   changeTableGraphics(tableRow, isChecked); //Function in checkEffect.js
 };
 

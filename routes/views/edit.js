@@ -27,15 +27,6 @@ exports = module.exports = function (req, res) {
 
   view.on('post', function (next) {
 
-    /*
-     var query = {'username':req.user.username};
-     req.newData.username = req.user.username;
-     MyModel.findOneAndUpdate(query, req.newData, {upsert:true}, function(err, doc){
-     if (err) return res.send(500, { error: err });
-     return res.send("succesfully saved");
-     });
-    
-     */
     
     console.log( req.body);
     
@@ -49,10 +40,14 @@ exports = module.exports = function (req, res) {
           return;
         }
         for (var i = 0; typeof req.body['process' + i] !== 'undefined'; ++i) {
-          
+          console.log(typeof req.body['processId'+i] !== 'undefined');
+          console.log(req.body['processId'+i]);
+          console.log(mongoose.Types.ObjectId());
+          console.log(typeof req.body['processId'+i] !== 'undefined' ? req.body['processId'+i] : mongoose.Types.ObjectId());
           var newProcess = process.model.findOneAndUpdate({_id: typeof req.body['processId'+i] !== 'undefined' ? req.body['processId'+i] : mongoose.Types.ObjectId()}, {
             title: req.body['process' + i],
-            operation: data._id
+            operation: data._id,
+            slug: mongoose.Types.ObjectId()
           }, {upsert: true});
           
           var call = function (index) {
@@ -60,6 +55,8 @@ exports = module.exports = function (req, res) {
             var savedProcess = function (err, data) {
               if (err) {
                 console.log('Processen '+index+' kunde inte skapas!');
+                console.log(req.body['processId'+index]);
+                console.log(req.body['processId'+index]);
                 console.log(err);
                 return;
               }
@@ -71,7 +68,8 @@ exports = module.exports = function (req, res) {
                   order: j,
                   title: req.body['content' + index + 'title' + j],
                   text: req.body['content' + index + 'text' + j],
-                  process: data._id
+                  process: data._id,
+                  slug: mongoose.Types.ObjectId()
                 }, {upsert: true}).exec(function (err, data) {
                     if (err) {
                       console.log('Content kunde inte skapas.!');
