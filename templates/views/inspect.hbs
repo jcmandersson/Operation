@@ -1,7 +1,7 @@
 {{!< default}}
 
 <div class="container">
-  <h2>Pågående operationsförberedelser</h2>
+  <h2>Handböcker att granska</h2>
   {{#if operations.length}}
     <div class="row">
       {{#each operations }}
@@ -10,17 +10,14 @@
             <a href="/info/{{ slug }}"></a>
 
             <div class="title">{{ title }}&nbsp;</div>
-            <div class="specialty">{{ specialty.abbreviation }}&nbsp;</div>
             <div class="tags">{{ tags }}&nbsp;</div>
-            <div class="progressbar" data-total="{{ progress.all.total }}"
-                 data-checked="{{ progress.all.checked }}" data-percent="{{ progress.all.percent }}"></div>
           </div>
         </div>
       {{/each}}
     </div>
   {{ else }}
     <p>
-      Just nu finns det inga pågående operationer.
+      Just nu finns det inga operationer att granska.
     </p>
   {{/if}}
 </div>
