@@ -16,7 +16,9 @@ $(function(){
   });
 
   rows.click(function(e) {  //When a checkable row is clicked, check the row and emit to socket.io
-    if(!(e.target.tagName == 'P' || e.target.tagName == 'BUTTON' || e.target.className.split(" ")[0] == 'amount')) {
+    var targetClassName = e.target.className.split(" ")[0];
+    if(!(e.target.tagName == 'P' || e.target.tagName == 'BUTTON' 
+      || targetClassName == 'amount' || targetClassName == 'article-remove' || targetClassName == 'cross'))  {
       if (!$(this).prop('disabled')) {
         var checkbox = $(this).find('input')[0];
         var preparation = $(this).hasClass("process-content-item") ? true : false;
@@ -75,8 +77,16 @@ $(function(){
   addAmountClick($('.amount'));
 
   $('.article-remove').click(function() {
-    console.log($(this).parent().parent().data("kartotekID"));
-    //removeArticle.call(this, $(this).parent().parent().data("slug"));
+    var checkArticleID = $(this).parent().parent().attr('id');
+    var operationID = $(this).parent().parent().attr("data-operationId");
+
+    var confirmed = confirm("Är du säker på att du vill ta bort artikeln?");
+    if (confirmed) {
+      socket.emit('removeCheckArticle', checkArticleID, operationID);
+    }
+    else {
+      return false;
+    }
   });
   
 });
@@ -121,6 +131,12 @@ var editAmountDone = function (e, tag) {
     return false;
   }
 };
+
+socket.on('removeCheckArticleUpdate', function(checkArticleID){
+  console.log($('#'+checkArticleID));
+  var row = $('#'+checkArticleID);
+  row.remove();
+});
 
 socket.on('saved', function(id){ //Show saved text when the database has successfully stored the comment.
   $('#commentSaved' + id).show();
