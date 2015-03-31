@@ -111,10 +111,9 @@ Operation.schema.methods.calculateProgress = function calculateProgress(cb) {
     //thisOp.model('Förberedelse').calculateProgress(thisOp, function (prepareProgress) {
       var data = {
         article: articleProgress,
-        prepare: articleProgress,
         all: {
-          total: articleProgress.total + articleProgress.total,
-          checked: articleProgress.checked + articleProgress.checked
+          total: articleProgress.total,
+          checked: articleProgress.checked
         }
       };
 

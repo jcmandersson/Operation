@@ -75,9 +75,7 @@ $(document).ready(function () {
     });
   };
   initDynamicWidth();
-
-
-
+  
   var removeProcessContent = function(e){
 
   };
@@ -169,10 +167,13 @@ $(document).ready(function () {
 
   var save = function (e) {
     e.preventDefault();
-    $.post('', $(".operationForm").serialize(), function (msg) {
-      console.log(msg);
-      $('.removeOnSubmit').remove();
-    });
+    $.post('', $(".operationForm").serialize())
+      .done( function(msg) { console.log(msg); } )
+      .fail( function(xhr, textStatus, errorThrown) {
+        alert(xhr.responseText);
+        console.log(textStatus);
+        console.log(errorThrown);
+      });
   };
   $('.operationForm').submit(save);
 

@@ -1,8 +1,11 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
   <form method="POST" class="operationForm">
-    {{#if data.specialty }}
+    {{#if data._id }}
       <input type="text" name="_id" value="{{data._id}}" class="hidden"/>
+    {{/if}}
+    {{#if data.slug }}
+      <input type="text" name="operationSlug" value="{{data.slug}}" class="hidden"/>
     {{/if}}
     <div id="name">
       Namn:
@@ -18,6 +21,40 @@
       {{/if}}
     </select></div>
 
+    <div class="hidden data">
+      <div class="data-operation">
+        {{#eachProperty data}}
+          <input type="text" data-operation="{{property}}" value="{{value}}"/>
+        {{/eachProperty}}
+      </div>
+      <div class="data-processes">
+        {{#each processes}}
+          <div data-process-id="{{ _id }}" data-process-index="{{ @index }}">
+            {{#eachProperty this}}
+              <input type="text" data-process="{{property}}" value="{{value}}"/>
+            {{/eachProperty}}
+            <div class="data-processContents">
+              {{#each contents}}
+                <div data-content-id="{{ _id }}" data-content-index="{{ @index }}">
+                  {{#eachProperty this}}
+                    <input type="text" data-process-content="{{property}}" value="{{value}}"/>
+                  {{/eachProperty}}
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+      <div class="data-plocklista">
+        {{#each articles}}
+          <div data-id="{{ _id }}" data-index="{{ @index }}">
+            {{#eachProperty this}}
+              <input type="text" data-article="{{property}}" value="{{value}}"/>
+            {{/eachProperty}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
 
     <ul class="nav nav-pills">
 
@@ -116,6 +153,6 @@
       </div>
     {{/if}}
 
-    <input type="submit" id="saveButton" class="btn btn-primary" name="action" value="Spara">
+    <!--<input type="submit" id="saveButton" class="btn btn-primary" name="action" value="Spara">-->
   </form>
 </div>

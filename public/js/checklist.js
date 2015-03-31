@@ -27,7 +27,16 @@ $(function(){
         changeTableGraphics($(this), checkbox.checked, preparation); //Function in checkEffect.js
         var checkObject = {preparation: $(this).data('preparation'), operation: operationId, id: $(this).attr('id'), check: checkbox.checked};
         socket.emit('checkboxClick', checkObject);
-      }
+        
+        var done = true;
+        $('.checkbox-js').each( function(i, box) {
+          if (!box.checked) {
+            done = false;
+            return false;
+          }
+        });
+        socket.emit('markAsDone', { operation: operationId, isDone: done});
+      }      
     }
   });
 
@@ -76,20 +85,24 @@ $(function(){
   
   addAmountClick($('.amount'));
 
-  $('.article-remove').click(function() {
-    var checkArticleID = $(this).parent().parent().attr('id');
-    var operationID = $(this).parent().parent().attr("data-operationId");
-
-    var confirmed = confirm("Är du säker på att du vill ta bort artikeln?");
-    if (confirmed) {
-      socket.emit('removeCheckArticle', checkArticleID, operationID);
-    }
-    else {
-      return false;
-    }
-  });
+  $('.article-remove').click(removeArticle);
   
 });
+
+
+
+var removeArticle = function() {
+  var checkArticleID = $(this).parent().parent().attr('id');
+  var operationID = $(this).parent().parent().attr("data-operationId");
+
+  var confirmed = confirm("Är du säker på att du vill ta bort artikeln?");
+  if (confirmed) {
+    socket.emit('removeCheckArticle', checkArticleID, operationID);
+  }
+  else {
+    return false;
+  }
+};
 
 var addAmountClick = function(amount){
   amount.click(function(){
@@ -133,7 +146,6 @@ var editAmountDone = function (e, tag) {
 };
 
 socket.on('removeCheckArticleUpdate', function(checkArticleID){
-  console.log($('#'+checkArticleID));
   var row = $('#'+checkArticleID);
   row.remove();
 });
@@ -143,7 +155,7 @@ socket.on('saved', function(id){ //Show saved text when the database has success
 });
 
 socket.on('connect', function(){ //Runs after socket has been started. Get all checkbox statuses from db.
-  operationId = $('.check-js').attr('data-operationId');
+  operationId = $('#opName').attr('data-operationId');
   socket.emit('operationOpen', operationId);
 });
 
@@ -155,7 +167,6 @@ var updateTableRow = function(tableRow, isChecked, isTemplate){ //set checked st
     checkbox.prop('disabled', true);
     tableRow.prop('disabled', true);
   }
-
   changeTableGraphics(tableRow, isChecked, preparation); //Function in checkEffect.js
 };
 
@@ -176,12 +187,27 @@ socket.on('getCheckboxes', function(checkboxesAndTemplate){
   }
 });
 
+socket.on('markAsDone', function(data) {
+  if (data.isDone){
+    $('#btn-done').addClass('btn-done');
+  } else {
+    $('#btn-done').removeClass('btn-done');
+  }
+});
+
+$('#btn-done').click( function() {
+  if ($('#btn-done').hasClass('btn-done')) {
+    socket.emit('markAsDone', { operation: operationId, isDone: false});
+  } else {   
+    socket.emit('markAsDone', { operation: operationId, isDone: true});
+  }
+});
+
 socket.on('articleAmountUpdate', function(amount, articleID){
   $('#amount'+articleID).children().text(amount);
 });
 
 socket.on('newArticleUpdate', function(checkArticle, kartotekArticle, operationID){
-
   var compiledArticle = $('#article-template').html();
   var articleTemplate = Handlebars.compile(compiledArticle);
 
@@ -193,5 +219,10 @@ socket.on('newArticleUpdate', function(checkArticle, kartotekArticle, operationI
     kartotekshelf: kartotekArticle.shelf, kartotektray: kartotekArticle.tray  })).appendTo('.articleTable');
 
   $(commentTemplate({ kartotekname: kartotekArticle.name, _id: checkArticle._id, comment: '' })).appendTo('.process-content');
+  
+  //add clickfunctions here
+  $('#'+checkArticle._id+'.check-js').find('.article-remove').click(removeArticle);
+  addAmountClick($('#'+checkArticle._id+'.check-js').find('.amount'));
+  
 });
 
