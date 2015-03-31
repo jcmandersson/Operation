@@ -1,3 +1,85 @@
+var abstractUpdate = function (url, data, preKey, callback) {
+  var slug = $('.data ' + preKey + 'slug"]').val();
+
+  $.ajax({
+    type: 'GET',
+    url: url + slug,
+    data: data
+  })
+    .done(function (msg) {
+
+      for (var key in msg) {
+        var $e = $('.data [data-operation="' + key + '"]');
+        var $e = $('.data ' + preKey + key + '"]');
+        if ($e.length) {
+          $e.val(msg[key])
+        }
+      }
+
+      callback(null, msg);
+    })
+    .fail(function (err, status) {
+      if (err) alert(err);
+      callback(err, status);
+    });
+};
+
+var abstractRest = function (type, url, preKey, callback) {
+  var slug = $('.data ' + preKey + 'slug"]').val();
+
+  $.ajax({
+    type: type,
+    url: url + slug
+  })
+    .done(function (msg) {
+      callback(null, msg);
+    })
+    .fail(function (err, status) {
+      if (err) alert(err);
+      callback(err, status);
+    });
+};
+
+var updateOperation = function (data, callback) {
+  return abstractUpdate(
+    '/api/update/operations/',
+    data,
+    '[data-operation="',
+    callback
+  );
+};
+
+var updateProcess = function (index, data, callback) {
+  return abstractUpdate(
+    '/api/update/Processteg/',
+    data,
+    '[data-process-index="' + index + '"] [data-process="',
+    callback
+  );
+};
+var removeProcess = function (index, callback) {
+  return abstractRest('DELETE',
+    '/api/Processtegs/',
+    '[data-process-index="' + index + '"] [data-process="',
+    function (err, msg) {
+      if (!err) {
+        removeAllProcessContent(index, function (err, msg) {
+          if (!err) $('.data [data-process-index="' + index + '"]').remove();
+        });
+      }
+      callback(err, msg);
+    });
+};
+
+var updateProcessContent = function (processIndex, index, data, callback) {
+  return abstractUpdate(
+    '/api/update/Processinnehall/',
+    data,
+    '[data-process-index="' + processIndex + '"] [data-content-index="' + index + '"] [data-process-content="',
+    callback
+  );
+};
+
 var initializeSpecialitetSelect = function () {
   $(".specialitet-select").select2({
 
@@ -40,9 +122,53 @@ var initNavbar = function () {
     $("#content" + $this.attr('data-id')).show();
   });
 };
+var changeProcessContent = function(parentIndex, index){
+  console.log('edited');
+  
+  var $parent;
+  if($(this).hasClass('rubrik')){
+    $parent = $(this).parent().parent();
+  }else{
+    $parent = $('.process-content-item[data-parent="'+parentIndex+'"][data-id="'+index+'"]');
+  }
+  var rubrik = $parent.find('.rubrik').val();
+  var content = $parent.find('textarea').val();
+  if(!rubrik) return;
+
+  var processIndex = $parent.attr('data-parent');
+  var thisIndex = $parent.attr('data-id');
+
+  var $data = $('.data [data-process-index="'+processIndex+'"] [data-content-index="'+thisIndex+'"]');
+  var data = {
+    title: rubrik,
+    text: content
+  };
+
+  if($data.length){
+    console.log('UPDATE');
+    updateProcessContent(processIndex, thisIndex, data, function(err, msg){
+
+    });
+  }else{
+    console.log('ADD');
+    addProcessContent(processIndex, data, function(err, msg){
+
+    });
+  }
+};
 
 var initWysiwyg = function () {
-  $('.process-content:not(.hidden) textarea:not(.wysiwyg)').addClass('wysiwyg').jqte();
+  $('input.rubrik').unbind('change').change(changeProcessContent);
+  
+  $('.process-content:not(.hidden) .process-content-item').each(function(i, e){
+    $(e).find('textarea:not(.wysiwyg)').addClass('wysiwyg').jqte({
+      blur: function(){
+        var parentIndex = $(e).attr('data-parent');
+        var index = $(e).attr('data-id');
+        changeProcessContent(parentIndex, index);
+      }
+    });
+  });
 };
 
 var initDynamicWidth = function () {
@@ -55,18 +181,10 @@ var initDynamicWidth = function () {
   });
 };
 
-var initAll = function () {
+var initOnce = function(){
   initializeSpecialitetSelect();
-  initNavbar();
-
-  $(".process-content").hide().sortable({
-    cancel: 'input,.jqte'
-  });
-
-  $("#content0").show();
-  $("#0").addClass('active');
-
-  initWysiwyg();
+  
+  $('ul.nav-pills [data-id="0"]').click();
 
   $('.tags').tagsInput({
     width: 'auto',
@@ -81,92 +199,50 @@ var initAll = function () {
       }
     }
   });
+};
+
+var initAll = function () {
+  initNavbar();
+
+  $(".process-content").hide().sortable({
+    cancel: 'input,.jqte'
+  });
 
   initDynamicWidth();
+
+  var createNewItem = function () {
+    $(this).unbind("keyup", createNewItem);
+    var $e = $(this).parents().eq(2);
+    var $clone = $('.hidden .process-content-item').first().clone().removeClass('hidden').addClass('init').appendTo($e);
+    $clone.find('.rubrik').keyup(createNewItem);
+    initAll();
+  };
+
+  $('.process-content').each(function (i, e) {
+    $(e).find('.process-content-item .rubrik').unbind('keyup', createNewItem).last().keyup(createNewItem);
+    
+    var $last = $(e).find('.process-content-item:not(.init,.hidden)').last();
+    var parent = parseInt($(e).attr('data-id'));
+    var id = $last.length == 0 ? 0 : parseInt($last.attr('data-id')) + 1;
+    var $init = $(e).find('.init').removeClass('init');
+    $init.attr('data-parent', parent).attr('data-id', id);
+
+    $init.find('input.rubrik').attr('name', 'content' + parent + 'title' + id);
+    $init.find('textarea').attr('name', 'content' + parent + 'text' + id);
+  });
+
+  initWysiwyg();
 };
 
-var updateOperation = function (data, callback) {
-  var slug = $('.data [data-operation="slug"]').val();
-
-  $.ajax({
-    type: 'GET',
-    url: '/api/update/operations/' + slug,
-    data: data
-  })
-    .done(function (msg) {
-      for (var key in msg) {
-        var $e = $('.data [data-operation="' + key + '"]');
-        if ($e.length) {
-          $e.val(msg[key])
-        }
-      }
-      callback(null, msg);
-    })
-    .fail(function (err, status) {
-      if (err) alert(err);
-      callback(err, status);
-    });
-};
-
-var updateProcess = function (index, data, callback) {
-  var slug = $('.data [data-process-index="' + index + '"] [data-process="slug"]').val();
-
-  $.ajax({
-    type: 'GET',
-    url: '/api/update/Processteg/' + slug,
-    data: data
-  })
-    .done(function (msg) {
-      console.log(msg);
-      for (var key in msg) {
-        var $e = $('.data [data-process-index="' + index + '"] [data-process="' + key + '"]');
-        if ($e.length) {
-          $e.val(msg[key])
-        }
-      }
-      callback(null, msg);
-    })
-    .fail(function (err, status) {
-      if (err) alert(err);
-      callback(err, status);
-    });
-};
-
-/*
-
- <div data-process-id="5511b57a306174b82744def9" data-process-index="0">
-   <input type="text" data-process="slug" value="551a7fde370c57a01f88f6fb">
-   <input type="text" data-process="title" value="test">
-   <input type="text" data-process="id" value="5511b57a306174b82744def9">
-   <div class="data-processContents">
-     <div data-content-id="5511b57a306174b82744defa" data-content-index="0">
-       <input type="text" data-process-content="slug" value="551a7fde370c57a01f88f705">
-       <input type="text" data-process-content="text" value="asdasd">
-       <input type="text" data-process-content="title" value="avasd">
-       <input type="text" data-process-content="id" value="5511b57a306174b82744defa">
-     </div>
-     <div data-content-id="5511b57a306174b82744defb" data-content-index="1">
-       <input type="text" data-process-content="slug" value="551a7fde370c57a01f88f706">
-       <input type="text" data-process-content="text" value="asdasdasd">
-       <input type="text" data-process-content="title" value="asdasdasdasd">
-       <input type="text" data-process-content="id" value="5511b57a306174b82744defb">
-     </div>
-   </div>
- </div>
- */
-
-var addProcess = function(data, callback){
+var addProcess = function (data, callback) {
   var nextIndex = 0;
   var $lastElement = $('.data [data-process-index]');
-  if($lastElement.length){
+  if ($lastElement.length) {
     nextIndex = parseInt($lastElement.last().attr('data-process-index')) + 1;
   }
-  console.log(nextIndex); 
-  
+
   data.operation = $('.data [data-operation="id"]').val();
-  
-  console.log(data);
-  
+
   $.ajax({
     type: 'POST',
     url: '/api/Processtegs',
@@ -175,7 +251,7 @@ var addProcess = function(data, callback){
     .done(function (msg) {
       console.log(msg);
       var $newData = $('<div></div>').attr('data-process-index', nextIndex).attr('data-proecss-id', msg._id);
-           
+
       for (var key in msg) {//<input type="text" data-process="slug" value="551a7fde370c57a01f88f6fb">
         if (typeof msg[key] == 'string' || msg[key] instanceof String) {
           var $e = $('<input type="text">').attr('data-process', key).val(msg[key]);
@@ -191,9 +267,45 @@ var addProcess = function(data, callback){
     });
 };
 
-var removeAllProcessContent = function(processIndex, callback){
-  var $processData = $('.data [data-process-index="'+processIndex+'"] .data-processContents');
-  $processData.find('[data-content-index]').each(function(i, e){
+
+var addProcessContent = function(processIndex, data, callback){
+  var nextIndex = 0;
+  var $lastElement = $('.data [data-process-index="'+processIndex+'"] [data-content-index]');
+  if ($lastElement.length) {
+    nextIndex = parseInt($lastElement.last().attr('data-content-index')) + 1;
+  }
+  
+  data.process = $('.data [data-process-index="'+processIndex+'"]').attr('data-process-id');
+  
+  console.log(data);
+  
+  $.ajax({
+    type: 'POST',
+    url: '/api/Processinnehalls',
+    data: data
+  })
+    .done(function (msg) {
+      console.log(msg);
+      var $newData = $('<div></div>').attr('data-content-index', nextIndex).attr('data-content-id', msg._id);
+
+      for (var key in msg) {
+        if (typeof msg[key] == 'string' || msg[key] instanceof String) {
+          var $e = $('<input type="text">').attr('data-process-content', key).val(msg[key]);
+          $e.appendTo($newData);
+        }
+      }
+      $newData.appendTo($('.data [data-process-index="'+processIndex+'"] .data-processContents'));
+      callback(null, msg);
+    })
+    .fail(function (err, status) {
+      if (err) alert(err);
+      callback(err, status);
+    });
+};
+
+var removeAllProcessContent = function (processIndex, callback) {
+  var $processData = $('.data [data-process-index="' + processIndex + '"] .data-processContents');
+  $processData.find('[data-content-index]').each(function (i, e) {
     $.ajax({
       type: 'DELETE',
       url: '/api/Processinnehalls/' + $(e).find('[data-process-content="slug"]').val()
@@ -208,28 +320,9 @@ var removeAllProcessContent = function(processIndex, callback){
   });
 };
 
-var removeProcess = function(index, callback){ //TODO: Remove all content!
-  var slug = $('.data [data-process-index="' + index + '"] [data-process="slug"]').val();
-  
-  $.ajax({
-    type: 'DELETE',
-    url: '/api/Processtegs/' + slug
-  })
-    .done(function (msg) {
-      removeAllProcessContent(index, function(){
-        if(!err) $('.data [data-process-index="' + index + '"]').remove();
-      });
-      
-      callback(null, msg);
-    })
-    .fail(function (err, status) {
-      if (err) alert(err);
-      callback(err, status);
-    });
-};
 
 $(document).ready(function () {
-
+  initOnce();
   initAll();
 
   $('input[name="name"]:not(.bound)').addClass('bound').change(function (e) {
@@ -260,12 +353,24 @@ $(document).ready(function () {
   });
 
   var newProcess = function (e) {
-    
-    addProcess({title: $('.newProcess input').val()}, function(err, msg){
-      //TODO: Add navbar button, add ProcessContentFields
-    });
 
-    $('.nav-pills li.process-item input').last().click();
+    var value = $('.newProcess input').val();
+    if (!value) return;
+
+    addProcess({title: value}, function (err, msg) {
+      var $last = $('.process-item').last();
+      var $clone = $last.clone().removeClass('hidden');
+      $clone.find('.bound').removeClass('bound');
+      var $input = $clone.find('.process');
+      var newIndex = parseInt($input.attr('data-id')) + 1;
+      $input.attr('data-id', newIndex).attr('name', 'process' + newIndex).val(value);
+      $clone.insertAfter($last);
+
+      //TODO: add ProcessContentFields
+
+      $('.newProcess input').val('');
+      $('.nav-pills li.process-item input').last().click();
+    });
   };
   $('.newProcess input').keyup(function (event) {
     var key = event.keyCode || event.which;
@@ -274,90 +379,23 @@ $(document).ready(function () {
     }
   });
   $('.newProcess i.glyphicon-plus').click(newProcess);
-  
+
   var delProcess = function (e) {
-    if(!window.confirm('Vill du verkligen ta bort hela processen?')) return;
-    
+    if (!window.confirm('Vill du verkligen ta bort hela processen?')) return;
+
     var index = $(this).parent().find('.process').attr('data-id');
-    removeProcess(index, function(err, msg){
-      $('input.process[data-id="'+index+'"]').parent().remove();
-      $('.process-content[data-id="'+index+'"]').remove();
-      $('[name="processId'+index+'"]').remove();
+    removeProcess(index, function (err, msg) {
+      $('input.process[data-id="' + index + '"]').parent().remove();
+      $('.process-content[data-id="' + index + '"]').remove();
+      $('[name="processId' + index + '"]').remove();
     });
   };
 
   $('.nav-pills .glyphicon-remove').click(delProcess);
 
-  console.log();
+  addProcessContent(1, {title: 'testContent', text: '<b>hejsan</b>'}, function(err, msg){
+    console.log(err);
+    console.log(msg);
+  });
   
-  /*
-
-   var removeProcessContent = function(e){
-
-   };
-
-   var removeProcess = function(e){
-   var processId = $(this).parent().find('.process').attr('data-id');
-   $('[name="processId'+processId+'"]').attr('name', 'removeProcess'+processId);
-   $(this).parent().remove();
-   $('#content'+processId).remove();
-   };
-
-   var createNewItem = function () {
-   $(this).unbind("keyup", createNewItem);
-   var $e = $(this).parents().eq(2);
-   var $clone = $('.hidden .process-content-item').first().clone().removeClass('hidden').addClass('init').appendTo($e);
-   $clone.find('.rubrik').keyup(createNewItem);
-
-   bindProcess();
-   initWysiwyg();
-   };
-
-   var bindProcess = function () {
-   $('.process-content').each(function (i, e) {
-   $(e).find('.process-content-item .rubrik').last().unbind('keyup', createNewItem).keyup(createNewItem);
-
-   var $last = $(e).find('.process-content-item:not(.init,.hidden)').last();
-   var parent = parseInt($(e).attr('data-id'));
-   var id = $last.length == 0 ? 0 : parseInt($last.attr('data-id')) + 1;
-   var $init = $(e).find('.init').removeClass('init');
-   $init.attr('data-parent', parent).attr('data-id', id);
-
-   $init.find('input.rubrik').attr('name', 'content' + parent + 'title' + id);
-   $init.find('textarea').attr('name', 'content' + parent + 'text' + id);
-   });
-
-   $('.nav-pills .glyphicon-remove:not(.hasEvent)').addClass('hasEvent').click(removeProcess);
-   };
-   bindProcess();
-
-   var getNextId = function(){
-   var high = 0;
-   var $ids = $('.processIdInput');
-
-   for(var i = 0; i < $ids.length; ++i){
-   if( parseInt($ids.eq(i).attr('name').replace(/\D/g,'')) > high ){
-   high = parseInt($ids.eq(i).attr('name').replace(/\D/g,''));
-   }
-   }
-
-   return high + 1;
-   };
-
-
-
-
-   var save = function (e) {
-   e.preventDefault();
-   $.post('', $(".operationForm").serialize())
-   .done( function(msg) { console.log(msg); } )
-   .fail( function(xhr, textStatus, errorThrown) {
-   alert(xhr.responseText);
-   console.log(textStatus);
-   console.log(errorThrown);
-   });
-   };
-   $('.operationForm').submit(save);
-
-   initializeSpecialitetSelect();*/
 });
