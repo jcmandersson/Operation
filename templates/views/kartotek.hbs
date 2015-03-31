@@ -1,12 +1,11 @@
 {{!< default}}
 
 <script id="modify-template" type="text/x-handlebars-template">
-  <input type="text" class="form-control" value="\{{value}}" id="currently-modifying" />
-</script>
-
-<!-- This template and the above are replaced with eachother when you edit an entry in the table -->
-<script id="modified-template" type="text/x-handlebars-template">
-  <td class="modifyable-article-column"><span>\{{ name }}</span></td>
+  \{{#if isModifyable}}
+    <input type="text" class="form-control" value="\{{value}}" id="currently-modifying" />
+  \{{else}}
+    <span>\{{ value }}</span>
+  \{{/if}}
 </script>
 
 <script id="article-template" type="text/x-handlebars-template">
@@ -22,6 +21,42 @@
   </tr>
 </script>
 
+<!-- We're essentially duplicating code here. We should really separate this template into a separate file, used by both node and the front-end. -->
+<script id="articles-template" type="text/x-handlebars-template">
+  <tr class="table-headerstriped">
+    <td>Namn</td>
+    <td>Förråd</td>
+    <td>Sektion</td>
+    <td>Hylla</td>
+    <td>Fack</td>
+    <td></td>
+  </tr>
+  <tr id="\{{_id}}">
+    <td><input data-name="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
+    <td><input data-name="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
+    <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
+    <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
+    <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
+    <td><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
+  </tr>
+
+  \{{# each articles }}
+    <tr class="check-js" id="\{{_id}}" data-slug="\{{slug}}">
+      <!-- The reason for the additional <span> is so that we can attach an event listener
+        to it, should then dissapear/not activate anymore when we replace it with an input. -->
+      <td class="modifyable-article-column" data-name="name">\{{#modifyable slug 'name' name}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column" data-name="storage">\{{#modifyable slug 'storage' storage}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column" data-name="section">\{{#modifyable slug 'section' section}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column" data-name="shelf">\{{#modifyable slug 'shelf' shelf}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column" data-name="tray">\{{#modifyable slug 'tray' tray}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden" data-name="slug">\{{ slug }}</td>
+      <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
+        with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
+      <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
+    </tr>
+  \{{/each}}
+</script>
+
 <div class="container">
   <div class="row">
     <div class="input-box">
@@ -35,12 +70,12 @@
             <td>Fack</td>
             <td></td>
           </tr>
-          <tr class="check-js" id="{{_id}}">
-            <td><input data-type="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
-            <td><input data-type="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
-            <td><input data-type="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
-            <td><input data-type="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
-            <td><input data-type="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
+          <tr id="{{_id}}">
+            <td><input data-name="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
+            <td><input data-name="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
+            <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
+            <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
+            <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
             <td><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
           </tr>
 
@@ -53,6 +88,7 @@
               <td class="modifyable-article-column" data-name="section"><span>{{ section }}</span></td>
               <td class="modifyable-article-column" data-name="shelf"><span>{{ shelf }}</span></td>
               <td class="modifyable-article-column" data-name="tray"><span>{{ tray }}</span></td>
+              <td class="modifyable-article-column hidden" data-name="slug">{{ slug }}</td>
               <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
                 with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
               <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
