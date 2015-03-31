@@ -8,7 +8,6 @@ var content = keystone.list('Processinnehall');
 var article = keystone.list('Artikel');
 var prepare = keystone.list('Förberedelse');
 
-
 exports = module.exports = function(req, res) {
   var view = new keystone.View(req, res),
     locals = res.locals;
@@ -114,7 +113,6 @@ exports = module.exports = function(req, res) {
     });
     next(null);
   });
-
   
   view.render('info');
 
