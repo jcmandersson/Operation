@@ -1,6 +1,5 @@
 $(document).ready(function() {
-
-
+  
   $("#all").addClass('active');
 
   $(".nav-pills > .navbar-btn").click(function() {

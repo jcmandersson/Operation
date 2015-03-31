@@ -23,9 +23,7 @@
       {{#each processes}}
           <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
       {{/each}}
-    {{#if articles}}
         <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
-    {{/if}}
     </ul>
 
     {{#each processes}}
@@ -43,8 +41,6 @@
       </div>
     {{/each}}
 
-
-{{#if articles}}
     <div class="process-content" id="contentchecklist">
         <table class="table articleTable">
             <tr class="table-headerstriped">
@@ -58,47 +54,50 @@
                 <td class="centered comment-header">Kommentar</td>
                 <td class="centered"></td>
             </tr>
-          {{# each articles }}
-              <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false", class="check-js" id={{_id}}>
-                  <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
-                  <td class="centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
-                  <td class="centered">{{ kartotek.name }}</td>
-                  <td class="centered">{{ kartotek.storage }}</td>
-                  <td class="centered">{{ kartotek.section }}</td>
-                  <td class="centered">{{ kartotek.shelf }}</td>
-                  <td class="centered">{{ kartotek.tray }}</td>
-                  <td class="centered">
-                      <button id="commentButton{{_id}}" data-id="{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
-                          <p class="glyphicon glyphicon-comment"></p>
-                      </button>
-                  </td>
-                  <td><a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a></td>
+          {{#if articles}}
 
-
-                  <!--this is loaded under process-content-->
-                  <div class="modal fade" id="checkCommentModal{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                          <div class="modal-content">
-                              <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                  <h4 class="modal-title" id="myModalLabel">Kommentar för: {{kartotek.name}}</h4>
-                              </div>
-                              <div class="modal-body">
-                                  <textarea id="checkComment{{_id}}" rows="8" cols="60">{{ comment }}</textarea>
-                              </div>
-                              <div class="modal-footer">
-                                  <button type="button" data-id="{{_id}}" class="btn btn-default cancelComment" data-dismiss="modal">Stäng</button>
-                                  <button id="saveComment{{_id}}" data-message="" data-id="{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
-                                  <p></p>
-                                  <p id="commentSaved{{_id}}">Sparad!</p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+            {{# each articles }}
+                <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false", class="check-js" id={{_id}}>
+                    <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
+                    <td class="centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
+                    <td class="centered">{{ kartotek.name }}</td>
+                    <td class="centered">{{ kartotek.storage }}</td>
+                    <td class="centered">{{ kartotek.section }}</td>
+                    <td class="centered">{{ kartotek.shelf }}</td>
+                    <td class="centered">{{ kartotek.tray }}</td>
+                    <td class="centered">
+                        <button id="commentButton{{_id}}" data-id="{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
+                            <p class="glyphicon glyphicon-comment"></p>
+                        </button>
+                    </td>
+                    <td><a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a></td>
+                  
+                    <!--this is loaded under process-content-->
+                    <div class="modal fade" id="checkCommentModal{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Kommentar för: {{kartotek.name}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <textarea id="checkComment{{_id}}" rows="8" cols="60">{{ comment }}</textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" data-id="{{_id}}" class="btn btn-default cancelComment" data-dismiss="modal">Stäng</button>
+                                    <button id="saveComment{{_id}}" data-message="" data-id="{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
+                                    <p></p>
+                                    <p id="commentSaved{{_id}}">Sparad!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </tr>
-          {{/each}}
+            {{/each}}
+          {{/if}}
+
         </table>
-      
+
       {{#unless data.template}}
           <div id="editChecklist">
               <div class="search-box articleSearch">
@@ -107,10 +106,8 @@
               <div id="kartotekResults"></div>
           </div>
       {{/unless}}
-        
     </div>
-{{/if}}
-  
+
 {{#if data.template}}
   <form method="get" id="createOperationInstanceButton">
     <input type="hidden" name="operation" value="create">
@@ -136,14 +133,12 @@
               </div>
             </div>
           </div>
-        
-     
+      
     </form>
     <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
 {{else}}
     <div id='btn-done' data-slug={{ data.slug }} class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
 {{/if}}
-    
 </div>
 
 <script id="kartotekResults-template" type="text/x-handlebars-template">
@@ -166,7 +161,7 @@
 <script id="article-template" type="text/x-handlebars-template">
     <tr data-kartotekID="\{{kartotekid}}" data-operationId="\{{operation}}" class="check-js" id=\{{_id}}>
         <td><input type="checkbox" class="checkbox-js" id="\{{_id}}"></td>
-        <td class="centered" id="amount\{{kartotekid}}"><b class="lol">\{{ amount }}</b></td>
+        <td class="centered" id="amount\{{kartotekid}}"><b class="amount">\{{ amount }}</b></td>
         <td class="centered" id="lol">\{{ kartotekname }}</td>
         <td class="centered">\{{ kartotekstorage }}</td>
         <td class="centered">\{{ kartoteksection }}</td>
