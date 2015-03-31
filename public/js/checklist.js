@@ -39,7 +39,7 @@ $(function(){
       }      
     }
   });
-
+  
   //If the actual checkbox is clicked we will get a double-click effect. So we compensate for that here.
   $('.checkbox-js').click(function() {  
     this.checked = !this.checked;
