@@ -33,7 +33,7 @@ exports = module.exports = function (req, res) {
         specialty: req.body.specialty
       }, {upsert: true}, function (err, data) {
         if (err) {
-          console.log('Operationen kunde inte skapas.!');
+          console.log('Operationen kunde inte skapas!');
           return;
         }
         for (var i = 0; typeof req.body['process' + i] !== 'undefined' || typeof req.body['removeProcess' + i] !== 'undefined'; ++i) {

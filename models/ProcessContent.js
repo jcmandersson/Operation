@@ -21,11 +21,12 @@ ProcessContent.add({
 
 ProcessContent.schema.statics.cloneToProcess = function cloneToProcess(processId, newProcessId, callback) {
   var thisDoc = this;
-
+  
   this.model('Processinnehall').find({
     process: processId
   }).exec(function (err, docs) {
     if (err) console.log(err);
+    
     for (var i = 0; i < docs.length; ++i) {
       var doc = docs[i];
       var newObject = JSON.parse(JSON.stringify(doc));
