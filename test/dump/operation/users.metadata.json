@@ -1,0 +1,1 @@
+{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "operation.users", "name" : "_id_" }, { "v" : 1, "key" : { "email" : 1 }, "ns" : "operation.users", "name" : "email_1", "background" : true, "safe" : null }, { "v" : 1, "key" : { "isAdmin" : 1 }, "ns" : "operation.users", "name" : "isAdmin_1", "background" : true, "safe" : null } ] }

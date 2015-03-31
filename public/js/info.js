@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  $("#contentchecklist").hide();
+
   $("#all").addClass('active');
 
   $(".nav-pills > .navbar-btn").click(function() {

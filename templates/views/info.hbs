@@ -12,6 +12,10 @@
       <div id ="synonyms">Synonymer: {{data.tags}}</div>
   {{/if}}
 
+  {{#unless data.template}}
+    <div id="lindaid">Linda-ID: {{data.linda_id}}</div>
+  {{/unless}}
+
     <!--nav nav-pills-->
     <!--btn btn-default navbar-btn-->
     <ul class="nav nav-pills">
@@ -27,17 +31,15 @@
     {{#each processes}}
       <div class="process-content" id="content{{@index}}">
       {{#each contents}}
-        <div class="process-content-item">
+        <div class="process-content-item check-js" data-operationId="{{../operation}}" data-preparation="true" id="{{_id}}">
+            {{#if checkAble}}
+                
+            {{/if}}
+            <input type="checkbox" class="checkbox-js" id="processCheck{{_id}}">
             <span class="contentTitle">{{title}}</span>
             <span class="contentText">{{{text}}}</span>
         </div>
       {{/each}}
-        {{#each prepares}}
-            <div class="process-content-item">
-                <span class="prepareTitle">{{title}}</span>
-                <span class="prepareText">{{{text}}}</span>
-            </div>
-        {{/each}}
       </div>
     {{/each}}
 
@@ -53,10 +55,10 @@
                 <td class="centered">Sektion</td>
                 <td class="centered">Hylla</td>
                 <td class="centered">Fack</td>
-                <td class="centered">Kommentar</td>
+                <td class="centered comment-header">Kommentar</td>
             </tr>
           {{# each articles }}
-              <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js" id={{_id}}>
+              <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false", class="check-js" id={{_id}}>
                   <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
                   <td class="centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
                   <td class="centered">{{ kartotek.name }}</td>
@@ -65,7 +67,7 @@
                   <td class="centered">{{ kartotek.shelf }}</td>
                   <td class="centered">{{ kartotek.tray }}</td>
                   <td class="centered">
-                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
+                      <button id="commentButton{{_id}}" data-id="{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
                           <p class="glyphicon glyphicon-comment"></p>
                       </button>
                   </td>
@@ -82,13 +84,14 @@
                                   <textarea id="checkComment{{_id}}" rows="8" cols="60">{{ comment }}</textarea>
                               </div>
                               <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                                  <button data-message="" data-id="{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
+                                  <button type="button" data-id="{{_id}}" class="btn btn-default cancelComment" data-dismiss="modal">Stäng</button>
+                                  <button id="saveComment{{_id}}" data-message="" data-id="{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
+                                  <p></p>
+                                  <p id="commentSaved{{_id}}">Sparad!</p>
                               </div>
                           </div>
                       </div>
                   </div>
-                  
                 </tr>
           {{/each}}
         </table>
@@ -121,7 +124,7 @@
                 </div>
                 <div class="modal-body">
                   <label>LindaID:</label>
-                  <input type="text" id="lindaID" class="form-control"/>
+                  <input type="text" id="lindaID" name="linda" class="form-control"/>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>

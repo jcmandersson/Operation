@@ -1,0 +1,1 @@
+{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "operation.specialitets", "name" : "_id_" }, { "v" : 1, "key" : { "key" : 1 }, "ns" : "operation.specialitets", "name" : "key_1", "background" : true, "safe" : null } ] }

@@ -37,8 +37,9 @@ exports = module.exports = function(app) {
 	// Views
   app.get('/', routes.views.start);
   app.get('/create', routes.views.create);
-  app.get('/edit', routes.views.edit);
-  app.get('/edit/:slug', routes.views.edit);
+  app.all('/new', routes.views.new);
+  app.all('/edit', routes.views.edit);
+  app.all('/edit/:slug', routes.views.edit);
   app.get('/kartotek', routes.views.kartotek);
   app.get('/db', routes.views.dbExamples);
   app.get('/info', routes.views.info);
@@ -47,10 +48,10 @@ exports = module.exports = function(app) {
 
   app.get('/index', routes.views.index);
 
-
+  app.get('/api/print/:slug', routes.views.apiPrint);
   app.get('/api/search/:model', routes.views.apiSearch);
   app.get('/api/update/:model/:slug', routes.views.apiUpdate);
-
+  app.get('/api/mongoose/id', routes.views.apiMongoose);
 	
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
