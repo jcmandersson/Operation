@@ -22,7 +22,10 @@ $(document).ready(function(){
   });
 
   var socket = io();
-  socket.emit('overviewOpen');
+  socket.on('connect', function() {
+    socket.emit('overviewOpen');
+  })
+  
   
   socket.on('updateProgress', function (progress) {
     console.log(progress);
