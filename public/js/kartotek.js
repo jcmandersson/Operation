@@ -190,6 +190,24 @@ Article.prototype.createInDatabase = function(callback) {
   });
 };
 
+Article.prototype.modifyInDatabase = function(callback) {
+  var self = this;
+  $.ajax({
+    type: 'GET',
+    url: '/api/update/Kartotekartikel/' + this.data.slug,
+    data: {
+      name:    this.data.name,
+      storage: this.data.storage,
+      section: this.data.section,
+      shelf:   this.data.shelf,
+      tray:    this.data.tray
+    }
+  }).done(function(newArticle) {
+    self.data.slug = newArticle.slug;
+    if (typeof callback !== 'undefined') callback();
+  });
+};
+
 Article.prototype.removeFromDatabase = function(callback) {
   $.ajax({
     type: 'DELETE',
@@ -268,6 +286,12 @@ var articles = {
   findArticleInDOM: function(slug) {
     return $(this.data.id).find('[data-slug="'+slug+'"]');
   },
+  // Give this an element (like the `td` storage-column on the third row),
+  // and it'll return the slug-name for that row.
+  findSlugNameFromEntryElement: function(el) {
+    //return $(el).parent().find('[data-name="slug"]').text();
+    return $(el).parent().parent().find('[data-name="slug"]').text();
+  },
   // Extract the essentials from this.data.
   // Basically just the stuff that is necessary to render it to a template.
   essentials: function() {
@@ -295,12 +319,20 @@ var articles = {
     return $(this.data.id).find('tr')[1];
   },
   addArticle: function(article) {
-    var self = this;
     // Assumes it is added to the top in the database.
     // A clear way would be to query the db, but that
     // feels unnecessary.
     this.data.articles.unshift(article);
     article.createInDatabase(this.render.bind(this));
+  },
+  modifyEntry: function(el) {
+    var slugName     = this.findSlugNameFromEntryElement(el);
+    var articleIndex = this.findArticle(slugName);
+    var columnType   = $(el).parent().data('name');
+    var article      = this.data.articles[articleIndex];
+    article.data[columnType] = $(el).val();
+
+    article.modifyInDatabase();
   },
   attachAddArticleListener: function() {
     var self = this;
@@ -314,7 +346,8 @@ var articles = {
     });
   },
   resetCurrentlyModifying: function() {
-    this.data.articleCurrentlyModifying.reset();
+    this.currentlyModifyingArticle = undefined;
+    this.currentlyModifyingColumn  = undefined;
     this.render();
   },
   attachModifyEntryListeners: function() {
@@ -364,11 +397,18 @@ var articles = {
     }
   },
   attachModifyEntryFinishedListener: function() {
+    var self = this;
+
+    $('#currently-modifying').keyup(function(e) {
+      var ENTER_KEYCODE = 13;
+      if (e.keyCode == ENTER_KEYCODE) {
+        self.modifyEntry.call(self, e.target);
+        self.resetCurrentlyModifying.call(self);
+      }
+    });
+
     // TODO:
-    // 1) Make it work to press enter.
     // 2) Autofocus on currentlyModifying entry. (Do this in modifyEntryListener probably.)
-    // 3) Make sure all modification events are re-connected on render.
-    // 4) Connect modification to DB.
     // 5) Implement search.
   }
 };
