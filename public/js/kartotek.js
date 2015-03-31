@@ -1,5 +1,6 @@
-var Article = function() {
-  this.data = {};
+var Article = function(data) {
+  if (typeof data !== 'undefined') this.data = data;
+  else this.data = {};
 };
 
 Article.prototype.createInDatabase = function(callback) {
@@ -105,6 +106,13 @@ var articles = {
     this.attachModifyEntryListeners();
     this.attachRemoveArticleListeners();
   },
+  fillFromDB: function(dbRes) {
+    this.data.articles = [];
+    for (var i = 0; i < dbRes.length; i++) {
+      this.data.articles.push(new Article(dbRes[i]));
+    }
+    this.render();
+  },
   findArticle: function(slugName) {
     for (var i = 0; i < this.data.articles.length; i++) {
       if (slugName === this.data.articles[i].data.slug) {
@@ -119,7 +127,6 @@ var articles = {
   // Give this an element (like the `td` storage-column on the third row),
   // and it'll return the slug-name for that row.
   findSlugNameFromEntryElement: function(el) {
-    //return $(el).parent().find('[data-name="slug"]').text();
     return $(el).parent().parent().find('[data-name="slug"]').text();
   },
   // Extract the essentials from this.data.
@@ -229,6 +236,7 @@ var articles = {
   attachModifyEntryFinishedListener: function() {
     var self = this;
 
+    $('#currently-modifying').focus();
     $('#currently-modifying').keyup(function(e) {
       var ENTER_KEYCODE = 13;
       if (e.keyCode == ENTER_KEYCODE) {
@@ -236,15 +244,24 @@ var articles = {
         self.resetCurrentlyModifying.call(self);
       }
     });
+  },
+  attachSearchArticleListener: function() {
+    var self = this;
 
-    // TODO:
-    // 2) Autofocus on currentlyModifying entry. (Do this in modifyEntryListener probably.)
-    // 5) Implement search.
+    $('#search-article').keyup(function() {
+      $.ajax({
+        type: 'GET',
+        url:  '/api/search/Kartotekartikel',
+        data: {
+          text: $(this).val()
+        }
+      }).done(self.fillFromDB.bind(self));
+    });
   }
 };
 
 $(function() {
-  // This is ugly, and they should really be inside the helper below, but we
+  // This is ugly, and this compilation should really be inside the helper below, but we
   // need to do this for performance reasons.
   var compiledModified = $('#modify-template').html();
   var modifiedTemplate = Handlebars.compile(compiledModified);
@@ -256,4 +273,5 @@ $(function() {
 
   window.articles.fillFromElement();
   window.articles.attachAddArticleListener();
+  window.articles.attachSearchArticleListener();
 });
