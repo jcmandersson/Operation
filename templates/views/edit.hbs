@@ -29,13 +29,13 @@
       </div>
       <div class="data-processes">
         {{#each processes}}
-          <div data-id="{{ _id }}" data-index="{{ @index }}">
+          <div data-process-id="{{ _id }}" data-process-index="{{ @index }}">
             {{#eachProperty this}}
               <input type="text" data-process="{{property}}" value="{{value}}"/>
             {{/eachProperty}}
             <div class="data-processContents">
               {{#each contents}}
-                <div data-id="{{ _id }}" data-index="{{ @index }}">
+                <div data-content-id="{{ _id }}" data-content-index="{{ @index }}">
                   {{#eachProperty this}}
                     <input type="text" data-process-content="{{property}}" value="{{value}}"/>
                   {{/eachProperty}}
@@ -153,6 +153,6 @@
       </div>
     {{/if}}
 
-    <input type="submit" id="saveButton" class="btn btn-primary" name="action" value="Spara">
+    <!--<input type="submit" id="saveButton" class="btn btn-primary" name="action" value="Spara">-->
   </form>
 </div>

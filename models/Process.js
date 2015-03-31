@@ -12,10 +12,8 @@ Process.add({
   operation: {
     type: Types.Relationship,
     ref: 'Operation',
-    refPath: 'processes',
     required: true,
-    initial: true,
-    index: true
+    initial: true
   }
 });
 
@@ -23,7 +21,6 @@ Process.add({
  Relationships
  =============
  */
-
 
 Process.schema.statics.cloneToOperation = function cloneToOperation(operationId, newOperationId, callback) {
   var thisDoc = this;
