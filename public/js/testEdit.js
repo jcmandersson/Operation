@@ -14,8 +14,6 @@ var initializeSpecialitetSelect = function () {
         };
       },
       processResults: function (data) {
-        console.log(data);
-
         return {
           results: $.map(data, function (item) {
             return {
@@ -43,38 +41,103 @@ var initNavbar = function () {
   });
 };
 
-$(document).ready(function () {
+var initWysiwyg = function () {
+  $('.process-content:not(.hidden) textarea:not(.wysiwyg)').addClass('wysiwyg').jqte();
+};
+
+var initDynamicWidth = function(){
+  var $input = $('input.process');
+  $input.each(function(i, e){
+    $(e).width(($(e).val().length+1)*8);
+  });
+  $input.unbind('keypress').on('keypress', function(){
+    $(this).width(($(this).val().length+1)*8);
+  });
+};
+
+var initAll = function(){
+  initializeSpecialitetSelect();
+  initNavbar();
 
   $(".process-content").hide().sortable({
     cancel: 'input,.jqte'
   });
+
   $("#content0").show();
   $("#0").addClass('active');
-
-  initNavbar();
-
-  var initWysiwyg = function () {
-    $('.process-content:not(.hidden) textarea:not(.wysiwyg)').addClass('wysiwyg').jqte();
-  };
+  
   initWysiwyg();
 
   $('.tags').tagsInput({
     width: 'auto',
     defaultText: 'Lägg till synonym',
     removeWithBackspace: false,
-    height: '40px'
+    height: '40px'/*,
+    'onChange': function($input, tag){
+      var value = input.val();
+      if(value.length){
+        updateOperation({tags: value}, function(err, msg){})
+      }
+    }*/
   });
   
-  var initDynamicWidth = function(){
-    var $input = $('input.process');
-    $input.each(function(i, e){
-      $(e).width(($(e).val().length+1)*8);
-    });
-    $input.unbind('keypress').on('keypress', function(){
-      $(this).width(($(this).val().length+1)*8);
-    });
-  };
   initDynamicWidth();
+};
+
+var updateOperation = function(data, callback){
+  var slug = $('.data [data-operation="slug"]').val();
+  
+  $.ajax({
+    type: 'GET',
+    url: '/api/update/operations/' + slug,
+    data: data
+  })
+    .done(function( msg ) {
+      for (var key in msg) {
+        var $e = $('.data [data-operation="'+key+'"]');
+        if($e.length){
+          $e.val(msg[key])
+        }
+      }
+      callback(null, msg);
+    })
+    .fail(function(err, status){
+      if(err) alert(err);
+      callback(err, status);
+    });
+};
+
+$(document).ready(function () {
+
+  initAll();
+  
+  $('input[name="name"]').change(function(e){
+    var value = $(this).val();
+    if(value.length){
+      updateOperation({title: value}, function(err, msg){})
+    } 
+  });
+  
+  /*$(".specialitet-select").change(function(e){
+    var value = $(this).val();
+    if(value.length){
+      updateOperation({specialty: value}, function(err, msg){})
+    }
+  });
+  
+  $('input.process').change(function(e){
+    var value = $(this).val();
+    console.log(value);
+  });*/
+  
+  /*
+  
+
+
+  
+
+  
+  
   
   var removeProcessContent = function(e){
 
@@ -177,5 +240,5 @@ $(document).ready(function () {
   };
   $('.operationForm').submit(save);
 
-  initializeSpecialitetSelect();
+  initializeSpecialitetSelect();*/
 });
