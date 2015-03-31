@@ -191,6 +191,23 @@ var addProcess = function(data, callback){
     });
 };
 
+var removeAllProcessContent = function(processIndex, callback){
+  var $processData = $('.data [data-process-index="'+processIndex+'"] .data-processContents');
+  $processData.find('[data-content-index]').each(function(i, e){
+    $.ajax({
+      type: 'DELETE',
+      url: '/api/Processinnehalls/' + $(e).find('[data-process-content="slug"]').val()
+    })
+      .done(function (msg) {
+        callback(null, msg);
+      })
+      .fail(function (err, status) {
+        if (err) alert(err);
+        callback(err, status);
+      });
+  });
+};
+
 var removeProcess = function(index, callback){ //TODO: Remove all content!
   var slug = $('.data [data-process-index="' + index + '"] [data-process="slug"]').val();
   
@@ -199,7 +216,10 @@ var removeProcess = function(index, callback){ //TODO: Remove all content!
     url: '/api/Processtegs/' + slug
   })
     .done(function (msg) {
-      $('.data [data-process-index="' + index + '"]').remove();
+      removeAllProcessContent(index, function(){
+        if(!err) $('.data [data-process-index="' + index + '"]').remove();
+      });
+      
       callback(null, msg);
     })
     .fail(function (err, status) {
@@ -256,6 +276,8 @@ $(document).ready(function () {
   $('.newProcess i.glyphicon-plus').click(newProcess);
   
   var delProcess = function (e) {
+    if(!window.confirm('Vill du verkligen ta bort hela processen?')) return;
+    
     var index = $(this).parent().find('.process').attr('data-id');
     removeProcess(index, function(err, msg){
       $('input.process[data-id="'+index+'"]').parent().remove();
@@ -266,6 +288,8 @@ $(document).ready(function () {
 
   $('.nav-pills .glyphicon-remove').click(delProcess);
 
+  console.log();
+  
   /*
 
    var removeProcessContent = function(e){
