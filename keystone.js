@@ -68,7 +68,6 @@ keystone.set('nav', {
     'Specialitet',
     'Operation',
     'Processteg',
-    'Förberedelse',
     'Artikel',
     'Kommentar',
     'Processinnehall'

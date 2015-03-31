@@ -5,40 +5,42 @@ var keystone = require('keystone'),
   Types = keystone.Field.Types;
 
 var ProcessContent = new keystone.List('Processinnehall', {
-  map: { name: 'title' },
-  autokey: { path: 'slug', from: 'title', unique: true },
-  track: true  
+  map: {name: 'title'},
+  autokey: {path: 'slug', from: 'title', unique: true},
+  track: true
 });
 
 ProcessContent.add({
-  order: { type: Number, required: true, default: 0},
-  title: { type: String, required: true },
-  text: { type: Types.Html, wysiwyg: true, height: 400},
-  process: { type: Types.Relationship, ref: 'Processteg', many: true, initial: true, required: true}
+  order: {type: Number, required: true, default: 0},
+  title: {type: String, required: true},
+  text: {type: Types.Html, wysiwyg: true, height: 400},
+  process: {type: Types.Relationship, ref: 'Processteg', many: true, initial: true, required: true},
+  checkAble: {type: Types.Boolean, required: false, default: true}, //TODO: Borde vara required
+  checked: {type: Types.Boolean, required: false, default: false}
 });
 
-ProcessContent.schema.statics.fromTemplate = function fromTemplate(processId, newProcessId, callback) {
+ProcessContent.schema.statics.cloneToProcess = function cloneToProcess(processId, newProcessId, callback) {
   var thisDoc = this;
-
+  
   this.model('Processinnehall').find({
     process: processId
-  }).exec(function(err, docs) {
-    if(err) console.log(err);
-    for(var i = 0; i < docs.length; ++i) {
+  }).exec(function (err, docs) {
+    if (err) console.log(err);
+    
+    for (var i = 0; i < docs.length; ++i) {
       var doc = docs[i];
       var newObject = JSON.parse(JSON.stringify(doc));
       delete newObject._id;
       delete newObject.slug;
       newObject.process = newProcessId;
-      newObject.template = false;
 
       var newDoc = new ProcessContent.model(newObject);
       var saving = true;
-      newDoc.save(function(err, savedDoc){
-        if(err) console.log(err);
+      newDoc.save(function (err, savedDoc) {
+        if (err) console.log(err);
         saving = false;
       });
-      while(saving) {
+      while (saving) {
         require('deasync').runLoopOnce();
       }
     }

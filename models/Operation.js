@@ -1,5 +1,5 @@
 var keystone = require('keystone'),
-    Types = keystone.Field.Types;
+  Types = keystone.Field.Types;
 
 var Operation = new keystone.List('Operation', {
   plural: 'Operationer',
@@ -11,7 +11,7 @@ var Operation = new keystone.List('Operation', {
 Operation.add({
   title: {type: String, required: true},
   linda_id: {type: String, default: '0', required: true},
-  tags: { type: String },
+  tags: {type: String},
   state: {type: Types.Select, options: 'Utkast, Redigering, Granskning, Publicerad', default: 'Utkast'},
   specialty: {type: Types.Relationship, ref: 'Specialitet', many: false},
   template: {type: Types.Boolean, default: true},
@@ -25,10 +25,9 @@ Operation.add({
 
 Operation.relationship({path: 'processes', ref: 'Processteg', refPath: 'operation'});
 Operation.relationship({path: 'articles', ref: 'Artikel', refPath: 'operation'});
-Operation.relationship({path: 'prepares', ref: 'Förberedelse', refPath: 'operation'});
 Operation.relationship({path: 'comments', ref: 'Kommentar', refPath: 'operation'});
 
-Operation.schema.statics.search = function(text, callback) {
+Operation.schema.statics.search = function (text, callback) {
   var search = new RegExp(text, 'ig');
   return this.model('Operation').find({
     $or: [{
@@ -41,49 +40,86 @@ Operation.schema.statics.search = function(text, callback) {
   });
 };
 
+Operation.schema.statics.createOperation = function createOperation(title, specialty, callback) {
+  var thisDoc = this;
+
+  var OperationModel = this.model('Operation');
+
+  new OperationModel({
+    title: title,
+    tags: '',
+    specialty: specialty
+  }).save(function (err, savedDoc) {
+      if (err) {
+        console.log('Operationen kunde inte skapas.!');
+        return;
+      }
+
+      OperationModel.findOne({
+        slug: 'mall'
+      }, function (err, doc) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('Sparar...');
+        console.log(doc);
+        console.log(savedDoc);
+        thisDoc.model('Processteg').cloneToOperation(doc._id, savedDoc._id, function () {
+          console.log('Psteg');
+          thisDoc.model('Artikel').cloneToOperation(doc._id, savedDoc._id, function () {
+            console.log('artikel');
+            callback(savedDoc);
+          });
+        });
+      });
+    });
+};
+
 Operation.schema.statics.fromTemplate = function fromTemplate(slug, callback) {
   var thisDoc = this;
-  
-  this.model('Operation').findOne({ 
-      slug: slug 
-  }).exec(function(err, doc) {
-    if(err) console.log(err);
-    
+
+  this.model('Operation').findOne({
+    slug: slug
+  }).exec(function (err, doc) {
+    if (err) console.log(err);
+
     var newObject = JSON.parse(JSON.stringify(doc));
     delete newObject._id;
     delete newObject.slug;
     newObject.template = false;
     
     var newDoc = new Operation.model(newObject);
-    newDoc.save(function(err, savedDoc){
-      if(err) console.log(err);
-      thisDoc.model('Processteg').fromTemplate(doc._id, savedDoc._id, function(){
-        thisDoc.model('Artikel').fromTemplate(doc._id, savedDoc._id, function(){
-          thisDoc.model('Förberedelse').fromTemplate(doc._id, savedDoc._id, function(){
-            callback(savedDoc);
-          });
+    newDoc.save(function (err, savedDoc) {
+      if (err) console.log(err);
+      console.log('operation påbörjad');
+      thisDoc.model('Processteg').cloneToOperation(doc._id, savedDoc._id, function () {
+        console.log('processer påbörjad');
+        thisDoc.model('Artikel').cloneToOperation(doc._id, savedDoc._id, function () {
+          console.log('Artiklar påbörjad');
+          callback(savedDoc);
         });
-      });      
+      });
     });
   });
 };
 
-Operation.schema.methods.calculateProgress = function calculateProgress(cb){
+Operation.schema.methods.calculateProgress = function calculateProgress(cb) {
   var thisOp = this;
-  
-  thisOp.model('Artikel').calculateProgress(thisOp, function(articleProgress){
-    thisOp.model('Förberedelse').calculateProgress(thisOp, function(prepareProgress){
+
+  thisOp.model('Artikel').calculateProgress(thisOp, function (articleProgress) {
+    //thisOp.model('Förberedelse').calculateProgress(thisOp, function (prepareProgress) {
       var data = {
         article: articleProgress,
-        prepare: prepareProgress,
+        prepare: articleProgress,
         all: {
-          total: articleProgress.total + prepareProgress.total,
-          checked: articleProgress.checked + prepareProgress.checked
+          total: articleProgress.total + articleProgress.total,
+          checked: articleProgress.checked + articleProgress.checked
         }
       };
-      
+
       cb(data);
-    });
+    //});
   });
 };
 

@@ -11,9 +11,9 @@ CheckArticle.add({
   operation: { type: Types.Relationship, ref: 'Operation', refPath: 'articles', required: true, initial: true },
   name: { type: String, required: true, initial: true },
   checked: { type: Types.Boolean, default: false },
-  template: { type: Types.Boolean, default: true },
   kartotek: { type: Types.Relationship, ref: 'Kartotekartikel', refPath: 'kartotek', initial: true},
-  amount: { type: Types.Number, default: 1 }
+  amount: { type: Types.Number, default: 1 },
+  comment: {type: String, required: false, default: ""}
 });
 
 /**
@@ -21,7 +21,7 @@ CheckArticle.add({
  =============
  */
 
-CheckArticle.schema.statics.fromTemplate = function fromTemplate(operationId, newOperationId, callback) {
+CheckArticle.schema.statics.cloneToOperation = function fromTemplate(operationId, newOperationId, callback) {
   var thisDoc = this;
 
   this.model('Artikel').find({
@@ -34,7 +34,6 @@ CheckArticle.schema.statics.fromTemplate = function fromTemplate(operationId, ne
       delete newObject._id;
       delete newObject.slug;
       newObject.operation = newOperationId;
-      newObject.template = false;
 
       var newDoc = new CheckArticle.model(newObject);
       var saving = true;

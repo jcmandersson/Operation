@@ -6,8 +6,6 @@ var operation = keystone.list('Operation');
 var process = keystone.list('Processteg');
 var content = keystone.list('Processinnehall');
 var article = keystone.list('Artikel');
-var prepare = keystone.list('Förberedelse');
-
 
 exports = module.exports = function(req, res) {
   var view = new keystone.View(req, res),
@@ -26,6 +24,17 @@ exports = module.exports = function(req, res) {
   view.on('get', {operation: 'create'}, function(){
     console.log("AAAA: " + req.params.slug);
     operation.model.fromTemplate(req.params.slug, function(newOperation){
+      console.log(newOperation);
+
+      operation.model.findOne({slug: newOperation.slug }, function (err, data){
+        if(err){
+          console.log('Operationen kunde inte ändras.');
+          return;
+        }
+        data.linda_id = req.query.linda;
+        data.save(); 
+      });
+
       res.redirect("/info/" + newOperation.slug);
     });
   });
@@ -44,7 +53,7 @@ exports = module.exports = function(req, res) {
           //view.render('info');
         } else {
           locals.data = data[0];
-          //console.log(data);
+          console.log(data);
         }
         next(err);
       });
@@ -97,27 +106,6 @@ exports = module.exports = function(req, res) {
             }
             //console.log(contentData);
             e.contents = contentData;
-            next(err);
-          });
-      });
-    });
-    next(null);
-  });
-
-
-  view.on('init', function(next) {
-    locals.processes.forEach(function (e, i) {
-      view.on('init', function(next) {
-        prepare.model.find({
-          process: e._id
-        })
-          .exec(function (err, prepareData) {
-            if (err) {
-              console.log('DB error');
-              console.log(err);
-              return;
-            }
-            e.prepares = prepareData;
             next(err);
           });
       });
