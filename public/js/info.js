@@ -13,8 +13,12 @@ $(document).ready(function() {
       $("#content"+this.id).show();
     } 
   });
+
+  $("#createOperationInstanceButton").click(function(){
+    createNewOperation();
+  });
+  
+
 });
 
-$("#createOperationInstanceButton").click(function(){
-  createNewOperation();
-});
+

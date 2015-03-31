@@ -1,5 +1,6 @@
 @import "variables.less";
 @import "functions.less";
+@import "../bootstrap/mixins/buttons.less";
 
 @media print {
   
@@ -38,6 +39,13 @@
     padding: 10px;
     margin-bottom: 10px;
   };
+}
+
+.btn-done {
+  //background-color: rgba(0, 51, 25, 1);
+  //border-color: rgba(0, 51, 25, 1);
+  
+   .button-variant(white; @darkgreen; @darkgreen);
 }
 
 .contentTitle {

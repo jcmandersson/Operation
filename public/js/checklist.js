@@ -22,8 +22,19 @@ $(function(){
         changeTableGraphics($(this), checkbox.checked); //Function in checkEffect.js
         var checkObject = {operation: operationId, id: $(this).attr('id'), check: checkbox.checked};
         socket.emit('checkboxClick', checkObject);
-      }
+        
+        var done = true;
+        $('.checkbox-js').each( function(i, box) {
+          if (!box.checked) {
+            done = false;
+            return false;
+          }
+        });
+        socket.emit('markAsDone', { operation: operationId, isDone: done});
+      }      
     }
+    
+   
   });
 
   $('.checkbox-js').click(function() {
@@ -99,5 +110,21 @@ socket.on('getCheckboxes', function(checkboxesAndTemplate){
     var isChecked = checkbox.checked;
     //var isDisabled = checkbox.attr("disabled");
     updateTableRow(tableRow, isChecked, isTemplate);
+  }
+});
+
+socket.on('markAsDone', function(data) {
+  if (data.isDone){
+    $('#btn-done').addClass('btn-done');
+  } else {
+    $('#btn-done').removeClass('btn-done');
+  }
+});
+
+$('#btn-done').click( function() {
+  if ($('#btn-done').hasClass('btn-done')) {
+    socket.emit('markAsDone', { operation: operationId, isDone: false});
+  } else {   
+    socket.emit('markAsDone', { operation: operationId, isDone: true});
   }
 });

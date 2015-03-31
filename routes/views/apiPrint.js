@@ -3,9 +3,10 @@
  */
 var keystone = require('keystone');
 var wkhtmltopdf = require('wkhtmltopdf');
+var os = require('os');
 
 exports = module.exports = function (req, res) {
-  if (os.platform === 'win32') {
+  if (os.platform() === 'win32') {
     //Change to the filepath of wkhtmltopdf.exe if you are on windows. 
     wkhtmltopdf.command = 'c:/program files/wkhtmltopdf/bin/wkhtmltopdf.exe';
   }
