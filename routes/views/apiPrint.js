@@ -12,7 +12,6 @@ exports = module.exports = function (req, res) {
   }
   //As this is sending the address to another program a relative address cannot be used here.
   wkhtmltopdf('http://localhost:3000/info/' + req.params.slug, { printMediaType: true, output: req.params.slug + '.pdf'});
-  console.log('Print');
   
   res.send('saved to pdf');
 
