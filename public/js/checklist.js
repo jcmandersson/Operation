@@ -73,6 +73,12 @@ $(function(){
   });
   
   addAmountClick($('.amount'));
+
+  $('.article-remove').click(function() {
+    console.log($(this).parent().parent().data("kartotekID"));
+    //removeArticle.call(this, $(this).parent().parent().data("slug"));
+  });
+  
 });
 
 var addAmountClick = function(amount){
