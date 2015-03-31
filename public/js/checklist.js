@@ -16,7 +16,7 @@ $(function(){
   });
 
   rows.click(function(e) {  //When a checkable row is clicked, check the row and emit to socket.io
-    if(!(e.target.tagName == 'P' || e.target.tagName == 'BUTTON')) {
+    if(!(e.target.tagName == 'P' || e.target.tagName == 'BUTTON' || e.target.className.split(" ")[0] == 'amount')) {
       if (!$(this).prop('disabled')) {
         var checkbox = $(this).find('input')[0];
         var preparation = $(this).hasClass("process-content-item") ? true : false;
@@ -71,7 +71,50 @@ $(function(){
     oldText = checkComment.val();
     $('#saveComment' + id).attr('disabled', false);
   });
+  
+  addAmountClick($('.amount'));
 });
+
+var addAmountClick = function(amount){
+  amount.click(function(){
+    var val = $(this).text();
+    var input = $('<input type="text" class="amount form-control" id="editAmount"/>');
+    input.val(val);
+    $(this).replaceWith(input);
+    $(input).focus();
+
+    $(input).keypress(function(e){
+      editAmountDone(e, $(input));
+    });
+
+    setTimeout(function(){
+      $('body').click(function(e){
+        if(e.target.id == "editAmount") {
+          return;
+        }
+        editAmountDone(e, $(input));
+      });
+    },0);
+
+  });
+};
+
+var editAmountDone = function (e, tag) {
+  var val = $(tag).val();
+  if (e.which == 13 || e.type === 'click') {
+    $('body').unbind();
+    var input = $('<b class="amount">' + val + '</b>');
+    input.val(val);
+    $(tag).replaceWith(input);
+    addAmountClick(input);
+
+    var checkArticleID = $(input).parent().parent().attr('id');
+    var operationID = $(input).parent().parent().attr('data-operationId');
+    socket.emit('amountChange', checkArticleID, operationID, val);
+
+    return false;
+  }
+};
 
 socket.on('saved', function(id){ //Show saved text when the database has successfully stored the comment.
   $('#commentSaved' + id).show();
@@ -110,3 +153,23 @@ socket.on('getCheckboxes', function(checkboxesAndTemplate){
     updateTableRow(tableRow, isChecked, isTemplate);
   }
 });
+
+socket.on('articleAmountUpdate', function(amount, articleID){
+  $('#amount'+articleID).children().text(amount);
+});
+
+socket.on('newArticleUpdate', function(checkArticle, kartotekArticle, operationID){
+
+  var compiledArticle = $('#article-template').html();
+  var articleTemplate = Handlebars.compile(compiledArticle);
+
+  var compiledComment = $('#comment-template').html();
+  var commentTemplate = Handlebars.compile(compiledComment);
+  
+  $(articleTemplate({ kartotekid: kartotekArticle._id, operation: operationID, _id: checkArticle._id,
+    amount: 1, kartotekname: kartotekArticle.name, kartotekstorage : kartotekArticle.storage, kartoteksection: kartotekArticle.section,
+    kartotekshelf: kartotekArticle.shelf, kartotektray: kartotekArticle.tray  })).appendTo('.articleTable');
+
+  $(commentTemplate({ kartotekname: kartotekArticle.name, _id: checkArticle._id, comment: '' })).appendTo('.process-content');
+});
+
