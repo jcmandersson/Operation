@@ -7,7 +7,6 @@ var os = require('os');
 
 exports = module.exports = function (req, res) {
   if (os.platform() === 'win32') {
-    console.log("HEJ");
     //Change to the filepath of wkhtmltopdf.exe if you are on windows. 
     wkhtmltopdf.command = "C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe";
   }
