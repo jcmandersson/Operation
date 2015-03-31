@@ -111,10 +111,10 @@
     </div>
 {{/if}}
   
-  {{#if data.template}}
-      <form method="get" id="createOperationInstanceButton">
-          <input type="hidden" name="operation" value="create">
-          <input type="hidden" name="operationId" value="{{data._id}}">
+{{#if data.template}}
+  <form method="get" id="createOperationInstanceButton">
+    <input type="hidden" name="operation" value="create">
+    <input type="hidden" name="operationId" value="{{data._id}}">
           <input type="button" value="Påbörja förberedelse" class="btn btn-primary" data-toggle="modal" data-target="#start">
 
           <!-- Modal -->
@@ -136,11 +136,14 @@
               </div>
             </div>
           </div>
-      </form>
-  
-      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
-
-  {{/if}}
+        
+     
+    </form>
+    <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+{{else}}
+    <div id='btn-done' data-slug={{ data.slug }} class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
+{{/if}}
+    
 </div>
 
 <script id="kartotekResults-template" type="text/x-handlebars-template">

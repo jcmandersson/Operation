@@ -9,15 +9,18 @@
           <div class="operation-card">
             <a href="/info/{{ slug }}"></a>
 
-            <div class="title">{{ title }}&nbsp;</div>
-            <div class="specialty">{{ specialty.abbreviation }}&nbsp;</div>
-            <div class="tags">{{ tags }}&nbsp;</div>
-            <div class="progressbar" data-total="{{ progress.all.total }}"
-                 data-checked="{{ progress.all.checked }}" data-percent="{{ progress.all.percent }}"></div>
-          </div>
-        </div>
-      {{/each}}
-    </div>
+                    <div class="title">{{ title }}&nbsp;</div>
+                    <div class="specialty">{{ specialty.abbreviation }}&nbsp;</div>
+                    <div class="lindaID">{{ linda_id }}&nbsp;</div>
+                    <div class="tags">{{ tags }}&nbsp;</div>                    
+                    <div class="progressbar {{#if operations.isDone}} isDone {{/if}}" data-total="{{ progress.all.total }}"
+                         data-checked="{{ progress.all.checked }}" data-percent="{{ progress.all.percent }}">
+                        
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+      </div>
   {{ else }}
     <p>
       Just nu finns det inga pågående operationer.
