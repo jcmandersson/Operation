@@ -27,15 +27,11 @@ Process.add({
 
 Process.schema.statics.cloneToOperation = function cloneToOperation(operationId, newOperationId, callback) {
   var thisDoc = this;
-  
-  console.log('Saving process');
 
   this.model('Processteg').find({
     operation: operationId
   }).exec(function (err, docs) {
     if (err) console.log(err);
-    
-    console.log('Saving process1');
     
     for (var i = 0; i < docs.length; ++i) {
       var doc = docs[i];
@@ -49,11 +45,9 @@ Process.schema.statics.cloneToOperation = function cloneToOperation(operationId,
       newDoc.save(function (err, savedDoc) {
         if (err) console.log(err);
 
-        console.log('Saving process2');
-        /*thisDoc.model('Processinnehall').cloneToOperation(doc._id, savedDoc._id, function () {
+        thisDoc.model('Processinnehall').cloneToProcess(doc._id, savedDoc._id, function () {
           saving = false;
-        });*/
-        saving = false;
+        });
       });
       while (saving) {
         require('deasync').runLoopOnce();

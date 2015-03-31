@@ -36,4 +36,5 @@ data/*
 *.sw*
 *.min.css
 */styles/*.css
+*/styles/site/*.css
 
