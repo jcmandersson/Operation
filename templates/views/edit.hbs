@@ -20,16 +20,26 @@
 
 
     <ul class="nav nav-pills">
-      {{#each processes}}
-          <input type="text" name="process{{@index}}" value="{{title}}" class="process btn btn-default navbar-btn"
-                 id="{{@index}}">
+
+      <li class="process-item hidden">
+        <input type="text" class="process btn btn-default navbar-btn"
+               data-id="-1">
         <i class="glyphicon glyphicon-remove"></i>
+      </li>
+      {{#each processes}}
+        <li class="process-item">
+          <input type="text" name="process{{@index}}" value="{{title}}" class="process btn btn-default navbar-btn"
+                 data-id="{{@index}}">
+          <i class="glyphicon glyphicon-remove"></i>
+        </li>
       {{/each}}
-      <div class="form-group has-feedback newProcess">
+      <li class="form-group has-feedback newProcess">
         <input type="text" class="form-control" placeholder="Ny"/>
         <i class="glyphicon glyphicon-plus form-control-feedback"></i>
-      </div>
-      <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
+      </li>
+      <li>
+        <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
+      </li>
     </ul>
 
     <div class="process-content mall hidden" id="contentMall">
@@ -47,7 +57,7 @@
       </div>
     </div>
     {{#each processes}}
-      <input class="hidden" type="text" name="processId{{@index}}" value="{{ _id }}"/>
+      <input class="hidden processIdInput" type="text" name="processId{{@index}}" value="{{ _id }}"/>
 
       <div class="process-content" id="content{{@index}}" data-id="{{@index}}"
            style="{{#if @index}}display: none;{{/if}}">

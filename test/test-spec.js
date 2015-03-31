@@ -1,11 +1,10 @@
-describe("A suite is just a function", function() {
+describe("Jasmine", function() {
   var a;
 
-  it("and so is a spec", function() {
+  it("is up and running.", function() {
     a = true;
 
     expect(a).toBe(true);
   });
 });
-
 
