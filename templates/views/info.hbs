@@ -31,9 +31,8 @@
       {{#each contents}}
         <div class="process-content-item check-js" data-operationId="{{../operation}}" data-preparation="true" id="{{_id}}">
             {{#if checkAble}}
-                
+              <input type="checkbox" class="checkbox-js" {{#if checked}} checked="checked" {{/if}} id="processCheck{{_id}}">
             {{/if}}
-            <input type="checkbox" class="checkbox-js" id="processCheck{{_id}}">
             <span class="contentTitle">{{title}}</span>
             <span class="contentText">{{{text}}}</span>
         </div>
@@ -109,35 +108,37 @@
     </div>
 
 {{#if data.template}}
-  <form method="get" id="createOperationInstanceButton">
-    <input type="hidden" name="operation" value="create">
-    <input type="hidden" name="operationId" value="{{data._id}}">
-          <input type="button" value="Påbörja förberedelse" class="btn btn-primary" data-toggle="modal" data-target="#start">
+  {{#ifNotString data.state 'Granskning'}}
+      <form method="get" id="createOperationInstanceButton">
+        <input type="hidden" name="operation" value="create">
+        <input type="hidden" name="operationId" value="{{data._id}}">
+        <input type="button" value="Påbörja förberedelse" class="btn btn-primary" data-toggle="modal" data-target="#start">
 
-          <!-- Modal -->
-          <div class="modal fade" id="start" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="modalLabel">Påbörja operationsförberedelse</h4>
-                </div>
-                <div class="modal-body">
-                  <label>LindaID:</label>
-                  <input type="text" id="lindaID" name="linda" class="form-control"/>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                  <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
-                </div>
+        <!-- Modal -->
+        <div class="modal fade" id="start" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">Påbörja operationsförberedelse</h4>
+              </div>
+              <div class="modal-body">
+                <label>LindaID:</label>
+                <input type="text" id="lindaID" name="linda" class="form-control"/>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
               </div>
             </div>
           </div>
-      
-    </form>
+        </div>
+      </form>
+  {{/ifNotString}}
     <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+  </div>
 {{else}}
-    <div id='btn-done' data-slug={{ data.slug }} class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
+  <div id='btn-done' data-slug={{ data.slug }} class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
 {{/if}}
 </div>
 
