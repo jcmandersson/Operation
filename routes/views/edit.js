@@ -17,6 +17,7 @@ exports = module.exports = function (req, res) {
     'jquery.tagsinput.js',
     'lib/jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js',
     'updown-counter.js',
+    'lib/dateFormat.js',
     'edit.js'
   ];
 

@@ -1,3 +1,7 @@
+var setLastSaved = function(date){
+  $('.lastSave .time').text(new Date(date).format());
+};
+
 var abstractUpdate = function (url, data, preKey, callback) {
   var slug = $('.data ' + preKey + 'slug"]').val();
 
@@ -15,6 +19,8 @@ var abstractUpdate = function (url, data, preKey, callback) {
           $e.val(msg[key])
         }
       }
+      
+      setLastSaved(new Date());
 
       callback(null, msg);
     })
@@ -32,6 +38,7 @@ var abstractRest = function (type, url, preKey, callback) {
     url: url + slug
   })
     .done(function (msg) {
+      setLastSaved(new Date());
       callback(null, msg);
     })
     .fail(function (err, status) {
@@ -143,6 +150,7 @@ var changeProcessContent = function(parentIndex, index){
   var processIndex = $parent.attr('data-parent');
   var thisIndex = $parent.attr('data-id');
 
+  console.log('.data [data-process-index="'+processIndex+'"] [data-content-index="'+thisIndex+'"]');
   var $data = $('.data [data-process-index="'+processIndex+'"] [data-content-index="'+thisIndex+'"]');
   var data = {
     title: rubrik,
@@ -151,10 +159,12 @@ var changeProcessContent = function(parentIndex, index){
   };
 
   if($data.length){
+    console.log('UPDATE');
     updateProcessContent(processIndex, thisIndex, data, function(err, msg){
 
     });
   }else{
+    console.log('ADD');
     addProcessContent(processIndex, data, function(err, msg){
       initAll();
     });
@@ -184,7 +194,9 @@ var addProcess = function (data, callback) {
           $e.appendTo($newData);
         }
       }
+      $newData.append('<div class="data-processContents"></div>');
       $newData.appendTo($('.data-processes'));
+      setLastSaved(new Date());
       callback(null, msg);
     })
     .fail(function (err, status) {
@@ -233,6 +245,7 @@ var removeAllProcessContent = function (processIndex, callback) {
       url: '/api/Processinnehalls/' + $(e).find('[data-process-content="slug"]').val()
     })
       .done(function (msg) {
+        setLastSaved(new Date());
         callback(null, msg);
       })
       .fail(function (err, status) {
@@ -292,6 +305,9 @@ var changeName = function (e) {
   var value = $(this).val();
   if (value.length) {
     updateOperation({title: value}, function (err, msg) {
+      if(typeof window.history.pushState !== 'undefined') {
+        window.history.pushState(msg.title, document.title, '/edit/'+msg.slug);
+      }
     });
   }
 };
@@ -323,6 +339,7 @@ var createNewItem = function () {
 };
 
 var delProcessContent = function(e){
+  if(!confirm('Vill du verkligen ta bort underrubriken?')) return;
   var $parent = $(this).parent();
   var processIndex = $parent.attr('data-parent');
   var index = $parent.attr('data-id');
@@ -384,7 +401,7 @@ var initChange = function(){
   
   
   var timeout = undefined;
-  $('body').on('keypress', 'input', function(){
+  $('body').on('keyup', 'input', function(){
     if(typeof timeout !== 'undefined'){
       clearTimeout(timeout);
     } 
@@ -437,10 +454,14 @@ var initOnce = function(){
     $(e).width(($(e).val().length + 1) * 8);
   });
   
+  setLastSaved($('.lastSave .time').text());
+  
   $('ul.nav-pills [data-id="0"]').click();
 };
 
 var initAll = function () {
+  console.log('InitAll');
+  
   initWysiwyg();
 
   $(".process-content").sortable({
@@ -452,5 +473,5 @@ var initAll = function () {
 
 $(document).ready(function () {
   initOnce();
-  initAll();  
+  initAll();
 });
