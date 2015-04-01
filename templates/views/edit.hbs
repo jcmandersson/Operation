@@ -94,8 +94,6 @@
       </div>
     </div>
     {{#each processes}}
-      <input class="hidden processIdInput" type="text" name="processId{{@index}}" value="{{ _id }}"/>
-
       <div class="process-content" id="content{{@index}}" data-id="{{@index}}"
            style="{{#if @index}}display: none;{{/if}}">
         <div class="process-content-item hidden">
