@@ -1,59 +1,59 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
-    <div id="opName" data-operationId="{{data._id}}">
-      {{data.title}}
-    </div>
-  
-  {{#if data.specialty.name}}
+  <div id="opName" data-operationId="{{data._id}}" data-operationSlug="{{data.slug}}">
+    {{data.title}}
+  </div>
+
+{{#if data.specialty.name}}
     <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
-  {{/if}}
+{{/if}}
 
-  {{#if data.tags}}
-      <div id ="synonyms">Synonymer: {{data.tags}}</div>
-  {{/if}}
+{{#if data.tags}}
+    <div id ="synonyms">Synonymer: {{data.tags}}</div>
+{{/if}}
 
-  {{#unless data.template}}
+{{#unless data.template}}
     <div id="lindaid">Linda-ID: {{data.linda_id}}</div>
-  {{/unless}}
+{{/unless}}
 
-    <!--nav nav-pills-->
-    <!--btn btn-default navbar-btn-->
-    <ul class="nav nav-pills">
-      <button type="button" class="btn btn-default navbar-btn" id="all">All information</button>
-      {{#each processes}}
-          <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
-      {{/each}}
-        <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
-    </ul>
-
+  <!--nav nav-pills-->
+  <!--btn btn-default navbar-btn-->
+  <ul class="nav nav-pills">
+    <button type="button" class="btn btn-default navbar-btn" id="all">All information</button>
     {{#each processes}}
-      <div class="process-content" id="content{{@index}}">
+      <button type="button" class="btn btn-default navbar-btn" id="{{@index}}">{{title}}</button>
+    {{/each}}
+    <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
+  </ul>
+
+{{#each processes}}
+    <div class="process-content" id="content{{@index}}">
       {{#each contents}}
         <div class="process-content-item check-js" data-operationId="{{../operation}}" data-preparation="true" id="{{_id}}">
-            {{#if checkAble}}
-              <input type="checkbox" class="checkbox-js" {{#if checked}} checked="checked" {{/if}} id="processCheck{{_id}}">
-            {{/if}}
-            <span class="contentTitle">{{title}}</span>
-            <span class="contentText">{{{text}}}</span>
+          {{#if checkAble}}
+            <input type="checkbox" class="checkbox-js" {{#if checked}} checked="checked" {{/if}} id="processCheck{{_id}}">
+          {{/if}}
+          <span class="contentTitle">{{title}}</span>
+          <span class="contentText">{{{text}}}</span>
         </div>
       {{/each}}
-      </div>
-    {{/each}}
+    </div>
+{{/each}}
 
-    <div class="process-content" id="contentchecklist">
-        <table class="table articleTable">
-            <tr class="table-headerstriped">
-                <td></td>
-                <td class="centered">Antal</td>
-                <td class="centered">Namn</td>
-                <td class="centered">Förråd</td>
-                <td class="centered">Sektion</td>
-                <td class="centered">Hylla</td>
-                <td class="centered">Fack</td>
-                <td class="centered"></td>
-                <td class="centered"></td>
-            </tr>
-          {{#if articles}}
+  <div class="process-content" id="contentchecklist">
+    <table class="table articleTable">
+      <tr class="table-headerstriped">
+        <td></td>
+        <td class="centered">Antal</td>
+        <td class="centered">Namn</td>
+        <td class="centered">Förråd</td>
+        <td class="centered">Sektion</td>
+        <td class="centered">Hylla</td>
+        <td class="centered">Fack</td>
+        <td class="centered comment-header">Kommentar</td>
+        <td class="centered"></td>
+      </tr>
+      {{#if articles}}
 
             {{# each articles }}
                 <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false" class="check-js" id={{_id}}>
