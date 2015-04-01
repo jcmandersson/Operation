@@ -110,19 +110,21 @@ var addAmountClick = function(){
   $(this).replaceWith(input);
   $(input).focus();
 
-  $(input).keypress(function(e){
-    editAmountDone(e, $(input));
-  });
-
-  setTimeout(function(){
-    $('body').click(function(e){
-      if(e.target.id == "editAmount") {
-        return;
-      }
+    $(input).keypress(function(e){
       editAmountDone(e, $(input));
     });
-  },0);
-};
+
+    setTimeout(function(){
+      $('body').click(function(e){
+        if(e.target.id == "editAmount") {
+          return;
+        }
+        editAmountDone(e, $(input));
+      });
+    },0);
+
+  };
+
 
 var editAmountDone = function (e, tag) {
   var val = $(tag).val();
