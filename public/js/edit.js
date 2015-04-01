@@ -71,6 +71,18 @@ var removeProcess = function (index, callback) {
     });
 };
 
+var removeProcessContent = function (processIndex, index, callback) {
+  return abstractRest('DELETE',
+    '/api/Processinnehalls/',
+    '[data-process-index="' + processIndex + '"] [data-content-index="' + index + '"] [data-process-content="',
+    function (err, msg) {
+      if (!err) {
+          $('.data [data-process-index="' + processIndex + '"] [data-content-index="' + index + '"]').remove();
+      }
+      callback(err, msg);
+    });
+};
+
 var updateProcessContent = function (processIndex, index, data, callback) {
   return abstractUpdate(
     '/api/update/Processinnehall/',
@@ -118,11 +130,14 @@ var changeProcessContent = function(parentIndex, index){
   var $parent;
   if($(this).hasClass('rubrik')){
     $parent = $(this).parent().parent();
-  }else{
+  } else if($(this).hasClass('checkAble')) {
+    $parent = $(this).parent().parent().parent();
+  } else {
     $parent = $('.process-content-item[data-parent="'+parentIndex+'"][data-id="'+index+'"]');
   }
   var rubrik = $parent.find('.rubrik').val();
   var content = $parent.find('textarea').val();
+  var checkAble = $parent.find('.checkAble').is(":checked");
   if(!rubrik || !rubrik.length) return;
 
   var processIndex = $parent.attr('data-parent');
@@ -131,7 +146,8 @@ var changeProcessContent = function(parentIndex, index){
   var $data = $('.data [data-process-index="'+processIndex+'"] [data-content-index="'+thisIndex+'"]');
   var data = {
     title: rubrik,
-    text: content
+    text: content,
+    checkAble: checkAble
   };
 
   if($data.length){
@@ -312,6 +328,18 @@ var createNewItem = function () {
   initAll();
 };
 
+var delProcessContent = function(e){
+  var $parent = $(this).parent();
+  var processIndex = $parent.attr('data-parent');
+  var index = $parent.attr('data-id');
+
+  removeProcessContent(processIndex, index, function(err, msg){
+    if(!err){
+      $('.process-content-item[data-parent="'+processIndex+'"][data-id="'+index+'"]').remove();
+    }
+  });
+};
+
 var changeWidth = function () {
   $(this).width(($(this).val().length + 1) * 8);
 };
@@ -336,7 +364,7 @@ var initWysiwyg = function () {
     };
     
     var timeout = undefined;
-    $(e).find('textarea:not(.wysiwyg)').addClass('wysiwyg').jqte({
+    $(e).find(':not(.jqte) textarea:not(.wysiwyg)').addClass('wysiwyg').jqte({
       change: function(){
         if(typeof timeout !== 'undefined'){
           clearTimeout(timeout);
@@ -357,7 +385,8 @@ var initChange = function(){
   $('body')
     .on('change', 'input[name="name"]', changeName)
     .on('change', 'input.process', changedProcess)
-    .on('change', 'input.rubrik', changeProcessContent);
+    .on('change', 'input.rubrik', changeProcessContent)
+    .on('change', '.checkAble', changeProcessContent);
   
   
   var timeout = undefined;
@@ -394,6 +423,7 @@ var initClick = function(){
   $('body')
     .on('click', '.newProcess i.glyphicon-plus', newProcess)
     .on('click', '.nav-pills .glyphicon-remove', delProcess)
+    .on('click', '.process-content-item .glyphicon-remove', delProcessContent)
     .on('click', '.nav-pills .navbar-btn', navClick);
 };
 
