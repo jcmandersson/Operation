@@ -31,9 +31,8 @@
       {{#each contents}}
         <div class="process-content-item check-js" data-operationId="{{../operation}}" data-preparation="true" id="{{_id}}">
             {{#if checkAble}}
-                
+              <input type="checkbox" class="checkbox-js" {{#if checked}} checked="checked" {{/if}} id="processCheck{{_id}}">
             {{/if}}
-            <input type="checkbox" class="checkbox-js" id="processCheck{{_id}}">
             <span class="contentTitle">{{title}}</span>
             <span class="contentText">{{{text}}}</span>
         </div>
@@ -57,7 +56,7 @@
           {{#if articles}}
 
             {{# each articles }}
-                <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false", class="check-js" id={{_id}}>
+                <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false" class="check-js" id={{_id}}>
                     <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
                     <td class="centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
                     <td class="centered">{{ kartotek.name }}</td>
@@ -70,7 +69,7 @@
                             <p class="glyphicon glyphicon-comment"></p>
                         </button>
                     </td>
-                    <td><a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a></td>
+                    <td><a class="article-remove btn btn-danger btn-lg" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a></td>
                   
                     <!--this is loaded under process-content-->
                     <div class="modal fade" id="checkCommentModal{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -109,35 +108,37 @@
     </div>
 
 {{#if data.template}}
-  <form method="get" id="createOperationInstanceButton">
-    <input type="hidden" name="operation" value="create">
-    <input type="hidden" name="operationId" value="{{data._id}}">
-          <input type="button" value="Påbörja förberedelse" class="btn btn-primary" data-toggle="modal" data-target="#start">
+  {{#ifNotString data.state 'Granskning'}}
+      <form method="get" id="createOperationInstanceButton">
+        <input type="hidden" name="operation" value="create">
+        <input type="hidden" name="operationId" value="{{data._id}}">
+        <input type="button" value="Påbörja förberedelse" class="btn btn-primary" data-toggle="modal" data-target="#start">
 
-          <!-- Modal -->
-          <div class="modal fade" id="start" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="modalLabel">Påbörja operationsförberedelse</h4>
-                </div>
-                <div class="modal-body">
-                  <label>LindaID:</label>
-                  <input type="text" id="lindaID" name="linda" class="form-control"/>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                  <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
-                </div>
+        <!-- Modal -->
+        <div class="modal fade" id="start" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">Påbörja operationsförberedelse</h4>
+              </div>
+              <div class="modal-body">
+                <label>LindaID:</label>
+                <input type="text" id="lindaID" name="linda" class="form-control"/>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
               </div>
             </div>
           </div>
-      
-    </form>
+        </div>
+      </form>
+  {{/ifNotString}}
     <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+  </div>
 {{else}}
-    <div id='btn-done' data-slug={{ data.slug }} class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
+  <div id='btn-done' data-slug={{ data.slug }} class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
 {{/if}}
 </div>
 
@@ -168,11 +169,11 @@
         <td class="centered">\{{ kartotekshelf }}</td>
         <td class="centered">\{{ kartotektray }}</td>
         <td class="centered">
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#checkCommentModal\{{_id}}">
+            <button id="commentButton\{{_id}}" data-id="\{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal\{{_id}}">
                 <p class="glyphicon glyphicon-comment"></p>
             </button>
         </td>
-        <td><a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a></td>
+        <td><a class="article-remove btn btn-danger btn-lg" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a></td>
     </tr>
 </script>
 
@@ -188,8 +189,10 @@
                     <textarea id="checkComment\{{_id}}" rows="8" cols="60">\{{ comment }}</textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                    <button data-message="" data-id="\{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
+                    <button type="button" data-id="\{{_id}}" class="btn btn-default cancelComment" data-dismiss="modal">Stäng</button>
+                    <button id="saveComment\{{_id}}" data-message="" data-id="\{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
+                    <p></p>
+                    <p id="commentSaved\{{_id}}">Sparad!</p>
                 </div>
             </div>
         </div>

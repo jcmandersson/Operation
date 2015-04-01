@@ -1,6 +1,14 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
   <form method="POST" class="operationForm">
+    <div class="lastSave">
+      Sparad: 
+      <span class="time">
+        {{#if data.updatedAt }}
+          {{ data.updatedAt }}
+        {{/if}}
+      </span>
+    </div>
     {{#if data._id }}
       <input type="text" name="_id" value="{{data._id}}" class="hidden"/>
     {{/if}}
@@ -9,11 +17,13 @@
     {{/if}}
     <div id="name">
       Namn:
-      <input class="form-control" type="text" name="name" value="{{data.title}}" placeholder="Namn"/>
+      <input class="form-control" type="text" name="name" {{#ifeq data.slug "mall" }} disabled="disabled" {{/ifeq}}
+             value="{{data.title}}" placeholder="Namn"/>
     </div>
     <div id="synonyms">Synonymer: <input class="form-control tags" type="text" name="tags" placeholder="Synonymer"
                                          value="{{data.tags}}"/></div>
-    <div id="specialty">Specialitet: <select name="specialty" class="specialitet-select">
+    <div id="specialty">Specialitet: <select name="specialty" {{#ifeq data.slug "mall" }} disabled="disabled" {{/ifeq}}
+                                             class="specialitet-select">
       {{#if data.specialty }}
         <option value="{{data.specialty._id}}" selected="selected">{{data.specialty.name}}</option>
       {{ else }}
@@ -81,16 +91,30 @@
 
     <div class="process-content mall hidden" id="contentMall">
       <div class="process-content-item hidden">
-                    <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
-                                                      placeholder="Ny rubrik"/></span>
-                    <span class="contentText"><textarea class="information"
-                                                        placeholder="Ny beskrivning"></textarea></span>
+          <span class="contentTitle">
+            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
+            <span>
+             Checkbar: 
+             <input type="checkbox" class="checkAble" value="true">
+            </span>
+          </span>
+          <span class="contentText">
+            <textarea class="information" placeholder="Ny beskrivning"></textarea>
+          </span>
+        <i class="glyphicon glyphicon-remove"></i>
       </div>
-      <div class="process-content-item">
-                    <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
-                                                      placeholder="Ny rubrik"/></span>
-                    <span class="contentText"><textarea class="information"
-                                                        placeholder="Ny beskrivning"></textarea></span>
+      <div class="process-content-item init">
+          <span class="contentTitle">
+            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
+            <span>
+             Checkbar: 
+             <input type="checkbox" class="checkAble" value="true">
+            </span>
+          </span>
+          <span class="contentText">
+            <textarea class="information" placeholder="Ny beskrivning"></textarea>
+          </span>
+        <i class="glyphicon glyphicon-remove"></i>
       </div>
     </div>
     {{#each processes}}
@@ -106,18 +130,33 @@
           <input class="hidden" type="text" name="content{{@../index}}Id{{@index}}" value="{{ _id }}"/>
 
           <div class="process-content-item" data-parent="{{@../index}}" data-id="{{@index}}">
-                    <span class="contentTitle"><input class="form-control rubrik" type="text"
-                                                      name="content{{@../index}}title{{@index}}"
-                                                      value="{{ title }}"/></span>
-                    <span class="contentText"><textarea class="information"
-                                                        name="content{{@../index}}text{{@index}}">{{ text }}</textarea></span>
+            <span class="contentTitle">
+               <input class="form-control rubrik" type="text" name="content{{@../index}}title{{@index}}"
+                      value="{{ title }}"/>
+                 <span>
+                   Checkbar: 
+                   <input type="checkbox" class="checkAble" {{#if checkAble}}
+                          checked="checked" {{/if}}value="true">
+                 </span>
+            </span>
+            <span class="contentText">
+              <textarea class="information" name="content{{@../index}}text{{@index}}">{{ text }}</textarea>
+              </span>
+            <i class="glyphicon glyphicon-remove"></i>
           </div>
         {{/each}}
         <div class="process-content-item init" data-parent="{{@index}}">
-                      <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
-                                                        placeholder="Ny rubrik"/></span>
-                      <span class="contentText"><textarea class="information"
-                                                          placeholder="Ny beskrivning"></textarea></span>
+          <span class="contentTitle">
+            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
+            <span>
+             Checkbar: 
+             <input type="checkbox" class="checkAble" {{#if checkAble}} checked="checked" {{/if}}value="true">
+            </span>
+          </span>
+          <span class="contentText">
+            <textarea class="information" placeholder="Ny beskrivning"></textarea>
+          </span>
+          <i class="glyphicon glyphicon-remove"></i>
         </div>
       </div>
     {{/each}}
