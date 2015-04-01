@@ -314,9 +314,11 @@ var delProcess = function (e) {
   });
 };
 
-var sendToPreview = function(){
+var sendToPreview = function(e){
+  e.preventDefault();
+  
   updateOperation({state: 'Granskning'}, function (err, msg) {
-    window.location = '/info'+msg.slug;
+    window.location = '/info/'+msg.slug;
   });
 };
 
@@ -469,7 +471,7 @@ var initClick = function () {
     .on('click', '.nav-pills .glyphicon-remove', delProcess)
     .on('click', '.process-content-item .glyphicon-remove', delProcessContent)
     .on('click', '.nav-pills .navbar-btn', navClick)
-    .on('click', 'toPreview', sendToPreview);
+    .on('click', '.toReview', sendToPreview);
 };
 
 var initLiveEvents = function () {
@@ -505,7 +507,13 @@ var initAll = function () {
   $('.process-content').each(initProcessContent);
 };
 
+var initDropzone = function(){
+  //var myDropzone = new Dropzone("div.dropzone", { url: "/api/upload"});
+  //console.log(myDropzone);
+};
+
 $(document).ready(function () {
+  initDropzone();
   initOnce();
   initAll();
 });
