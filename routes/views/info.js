@@ -53,7 +53,6 @@ exports = module.exports = function(req, res) {
           //view.render('info');
         } else {
           locals.data = data[0];
-          console.log(data);
         }
         next(err);
       });

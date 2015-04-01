@@ -25,13 +25,13 @@ exports = module.exports = function (req, res) {
       .exec(function (err, docs) {
         locals.operations = docs; 
         locals.operations.forEach(function(e, i) {
-          view.on('init', function(next) {
+                    view.on('init', function(next) {
             //Check if the operation has any comments.
             checkArticle.model.find({
               operation: e._id
             }).exec( function(err, data) {
               data.forEach( function(checkbox, j) {                
-                if (checkbox.comment) {
+                if (checkbox.comment !== '' && checkbox.comment !== '-') {
                   locals.operations[i].comment = true;
                   return false;
                 }

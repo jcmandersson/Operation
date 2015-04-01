@@ -323,6 +323,28 @@ module.exports = function() {
     }
     return ret;
   };
-	
+  
+  _helpers.groupedEach = function(every, context, options) {
+    var out = "", subcontext = [], i;
+    if (context && context.length > 0) {
+      for (i = 0; i < context.length; i++) {
+        if (i > 0 && i % every === 0) {
+          out += options.fn(subcontext);
+          subcontext = [];
+        }
+        subcontext.push(context[i]);
+      }
+      out += options.fn(subcontext);
+    }
+    return out;
+  };
+
+  _helpers.ifNotString = function(v1, v2, options) {
+    if(v1 != v2) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  };
+  
 	return _helpers;
 };

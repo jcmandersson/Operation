@@ -141,6 +141,13 @@ var editAmountDone = function (e, tag) {
   }
 };
 
+socket.on('saveComment', function(commentObject) {
+  var comment = $('#checkComment' + commentObject.id);
+  var commentButton = $('#commentButton' + commentObject.id);
+  comment.val(commentObject.comment);
+  changeCommentButton(comment, commentButton);
+});
+
 socket.on('removeCheckArticleUpdate', function(checkArticleID){
   var row = $('#'+checkArticleID);
   row.remove();
