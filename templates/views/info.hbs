@@ -31,9 +31,8 @@
       {{#each contents}}
         <div class="process-content-item check-js" data-operationId="{{../operation}}" data-preparation="true" id="{{_id}}">
             {{#if checkAble}}
-                
+              <input type="checkbox" class="checkbox-js" {{#if checked}} checked="checked" {{/if}} id="processCheck{{_id}}">
             {{/if}}
-            <input type="checkbox" class="checkbox-js" id="processCheck{{_id}}">
             <span class="contentTitle">{{title}}</span>
             <span class="contentText">{{{text}}}</span>
         </div>
