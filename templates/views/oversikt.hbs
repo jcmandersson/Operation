@@ -15,7 +15,7 @@
                   <span class="comment-icon glyphicon glyphicon-comment {{#unless comment}} hidden {{/unless}}"></span>
               </div>              
               <div class="tags">{{ tags }}&nbsp;</div>                    
-              <div class="progressbar {{#if operations.isDone}} isDone {{/if}}" data-total="{{ progress.all.total }}"
+              <div class="progressbar {{#if isDone}} isDone {{/if}}" data-total="{{ progress.all.total }}"
                    data-checked="{{ progress.all.checked }}" data-percent="{{ progress.all.percent }}">
                   
               </div>
