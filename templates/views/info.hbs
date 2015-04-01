@@ -168,7 +168,7 @@
         <td class="centered">\{{ kartotekshelf }}</td>
         <td class="centered">\{{ kartotektray }}</td>
         <td class="centered">
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#checkCommentModal\{{_id}}">
+            <button id="commentButton\{{_id}}" data-id="\{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal\{{_id}}">
                 <p class="glyphicon glyphicon-comment"></p>
             </button>
         </td>
@@ -188,8 +188,10 @@
                     <textarea id="checkComment\{{_id}}" rows="8" cols="60">\{{ comment }}</textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                    <button data-message="" data-id="\{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
+                    <button type="button" data-id="\{{_id}}" class="btn btn-default cancelComment" data-dismiss="modal">Stäng</button>
+                    <button id="saveComment\{{_id}}" data-message="" data-id="\{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
+                    <p></p>
+                    <p id="commentSaved\{{_id}}">Sparad!</p>
                 </div>
             </div>
         </div>

@@ -14,20 +14,20 @@ $(function(){
     var commentButton = $('#commentButton' + row.id);
     changeCommentButton(comment, commentButton);
   });
-
-  rows.click(function(e) {  //When a checkable row is clicked, check the row and emit to socket.io
+  
+  $('.container').on("click", '.check-js', function(e) {  //When a checkable row is clicked, check the row and emit to socket.io
     var targetClassName = e.target.className.split(" ")[0];
-    if(!(e.target.tagName == 'P' || e.target.tagName == 'BUTTON' 
+    if(!(e.target.tagName == 'P' || e.target.tagName == 'BUTTON'
       || targetClassName == 'amount' || targetClassName == 'article-remove' || targetClassName == 'cross'))  {
       if (!$(this).prop('disabled')) {
         var checkbox = $(this).find('input')[0];
         var preparation = $(this).hasClass("process-content-item") ? true : false;
-        
+
         checkbox.checked = !checkbox.checked;
         changeTableGraphics($(this), checkbox.checked, preparation); //Function in checkEffect.js
         var checkObject = {preparation: $(this).data('preparation'), operation: operationId, id: $(this).attr('id'), check: checkbox.checked};
         socket.emit('checkboxClick', checkObject);
-        
+
         var done = true;
         $('.checkbox-js').each( function(i, box) {
           if (!box.checked) {
@@ -36,16 +36,16 @@ $(function(){
           }
         });
         socket.emit('markAsDone', { operation: operationId, isDone: done});
-      }      
+      }
     }
   });
   
   //If the actual checkbox is clicked we will get a double-click effect. So we compensate for that here.
-  $('.checkbox-js').click(function() {  
+  $('.container').on("click", '.checkbox-js', function() {
     this.checked = !this.checked;
   });
-
-  $('.cancelComment').click(function(){ //Throw away texted comment if cancel button is clicked.
+  
+  $('.process-content').on("click", '.cancelComment', function(){ //Throw away texted comment if cancel button is clicked.
     if(!saved) {
       var id = $(this).data('id');
       var checkComment = $('#checkComment' + id);
@@ -54,42 +54,41 @@ $(function(){
       saved = false;
     }
   });
-
-  $('.saveComment').click(function(){ //Save the comment locally and emit to back-end to save in database.
+  
+  $('.process-content').on("click", '.saveComment', function(){ //Save the comment locally and emit to back-end to save in database.
+    console.log($(this));
     var id = $(this).data('id');
     var checkComment = $('#checkComment' + id);
     var commentButton = $('#commentButton' + id);
-    
+
     if (checkComment.val() == ""){
       checkComment.val("-");
     }
-    
+
     var commentObject = {operation: operationId, id: id, comment: checkComment.val()};
     socket.emit('saveComment', commentObject);
     changeCommentButton(checkComment, commentButton);
-    
+
     checkComment.attr('disabled', true);
     $(this).attr('disabled', true);
     saved = true;
   });
-
-  $('.showComment').click(function(){ //Hide the "Saved" text, enable the comment field and save the old text if the user presses cancel.
+  
+  $('.process-content').on("click", '.showComment', function(){ //Hide the "Saved" text, enable the comment field and save the old text if the user presses cancel.
+    console.log($(this));
     var id = $(this).data('id');
     var checkComment = $("#checkComment" + id);
-    
+
     $('#commentSaved' + id).hide();
     checkComment.attr('disabled', false);
     oldText = checkComment.val();
     $('#saveComment' + id).attr('disabled', false);
   });
   
-  addAmountClick($('.amount'));
-
-  $('.article-remove').click(removeArticle);
+  $('.articleTable tbody').on("click", '.article-remove', removeArticle);
+  $('.articleTable tbody').on("click", '.amount', addAmountClick);
   
 });
-
-
 
 var removeArticle = function() {
   var checkArticleID = $(this).parent().parent().attr('id');
@@ -104,28 +103,25 @@ var removeArticle = function() {
   }
 };
 
-var addAmountClick = function(amount){
-  amount.click(function(){
-    var val = $(this).text();
-    var input = $('<input type="text" class="amount form-control" id="editAmount"/>');
-    input.val(val);
-    $(this).replaceWith(input);
-    $(input).focus();
+var addAmountClick = function(){
+  var val = $(this).text();
+  var input = $('<input type="text" min="1" class="amount form-control" id="editAmount"/>');
+  input.val(val);
+  $(this).replaceWith(input);
+  $(input).focus();
 
-    $(input).keypress(function(e){
+  $(input).keypress(function(e){
+    editAmountDone(e, $(input));
+  });
+
+  setTimeout(function(){
+    $('body').click(function(e){
+      if(e.target.id == "editAmount") {
+        return;
+      }
       editAmountDone(e, $(input));
     });
-
-    setTimeout(function(){
-      $('body').click(function(e){
-        if(e.target.id == "editAmount") {
-          return;
-        }
-        editAmountDone(e, $(input));
-      });
-    },0);
-
-  });
+  },0);
 };
 
 var editAmountDone = function (e, tag) {
@@ -218,11 +214,7 @@ socket.on('newArticleUpdate', function(checkArticle, kartotekArticle, operationI
     amount: 1, kartotekname: kartotekArticle.name, kartotekstorage : kartotekArticle.storage, kartoteksection: kartotekArticle.section,
     kartotekshelf: kartotekArticle.shelf, kartotektray: kartotekArticle.tray  })).appendTo('.articleTable');
 
-  $(commentTemplate({ kartotekname: kartotekArticle.name, _id: checkArticle._id, comment: '' })).appendTo('.process-content');
-  
-  //add clickfunctions here
-  $('#'+checkArticle._id+'.check-js').find('.article-remove').click(removeArticle);
-  addAmountClick($('#'+checkArticle._id+'.check-js').find('.amount'));
+  $(commentTemplate({ kartotekname: kartotekArticle.name, _id: checkArticle._id, comment: '' })).appendTo('.articleTable');
   
 });
 
