@@ -30,7 +30,7 @@ exports = module.exports = function (req, res) {
             checkArticle.model.find({
               operation: e._id
             }).exec( function(err, data) {
-              data.forEach( function(checkbox, j) {                
+              data.forEach( function(checkbox, j) {
                 if (checkbox.comment) {
                   locals.operations[i].comment = true;
                   return false;

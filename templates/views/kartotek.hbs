@@ -8,19 +8,6 @@
   \{{/if}}
 </script>
 
-<script id="article-template" type="text/x-handlebars-template">
-  <tr class="check-js" id=\{{_id}}>
-    <!-- The reason for the additional <span> is so that we can attach an event listener
-      to it, should then dissapear/not activate anymore when we replace it with an input. -->
-    <td class="modifyable-article-column"><span>\{{ name }}</span></td>
-    <td class="modifyable-article-column"><span>\{{ storage }}</span></td>
-    <td class="modifyable-article-column"><span>\{{ section }}</span></td>
-    <td class="modifyable-article-column"><span>\{{ shelf }}</span></td>
-    <td class="modifyable-article-column"><span>\{{ tray }}</span></td>
-    <td><a class="btn btn-danger article-remove" href="#" role="button" id="\{{_id}}remove"><span class="glyphicon glyphicon-remove"></span></a></td>
-  </tr>
-</script>
-
 <!-- We're essentially duplicating code here. We should really separate this template into a separate file, used by both node and the front-end. -->
 <script id="articles-template" type="text/x-handlebars-template">
   <tr class="table-headerstriped">
@@ -29,6 +16,9 @@
     <td>Sektion</td>
     <td>Hylla</td>
     <td>Fack</td>
+    {{#if user.isAdmin}}
+      <td>Pris</td>
+    {{/if}}
     <td></td>
   </tr>
   <tr id="\{{_id}}">
@@ -37,6 +27,9 @@
     <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
     <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
     <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
+    {{#if user.isAdmin}}
+      <td><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
+    {{/if}}
     <td><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
   </tr>
 
@@ -49,6 +42,9 @@
       <td class="modifyable-article-column" data-name="section">\{{#modifyable slug 'section' section}}\{{/modifyable}}</td>
       <td class="modifyable-article-column" data-name="shelf">\{{#modifyable slug 'shelf' shelf}}\{{/modifyable}}</td>
       <td class="modifyable-article-column" data-name="tray">\{{#modifyable slug 'tray' tray}}\{{/modifyable}}</td>
+      {{#if user.isAdmin}}
+        <td class="modifyable-article-column" data-name="price">\{{#modifyable slug 'price' price}}\{{/modifyable}}</td>
+      {{/if}}
       <td class="modifyable-article-column hidden" data-name="slug">\{{ slug }}</td>
       <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
         with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
@@ -72,6 +68,9 @@
             <td>Sektion</td>
             <td>Hylla</td>
             <td>Fack</td>
+            {{#if user.isAdmin}}
+              <td>Pris</td>
+            {{/if}}
             <td></td>
           </tr>
           <tr id="{{_id}}">
@@ -80,10 +79,13 @@
             <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
             <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
             <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
+            {{#if user.isAdmin}}
+              <td><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
+            {{/if}}
             <td><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
           </tr>
 
-          {{# each articles }}
+          {{#each articles}}
             <tr class="check-js" id="{{_id}}" data-slug="{{slug}}">
               <!-- The reason for the additional <span> is so that we can attach an event listener
                 to it, should then dissapear/not activate anymore when we replace it with an input. -->
@@ -92,6 +94,9 @@
               <td class="modifyable-article-column" data-name="section"><span>{{ section }}</span></td>
               <td class="modifyable-article-column" data-name="shelf"><span>{{ shelf }}</span></td>
               <td class="modifyable-article-column" data-name="tray"><span>{{ tray }}</span></td>
+              {{#if ../user.isAdmin}}
+                <td class="modifyable-article-column" data-name="price"><span>{{ price }}</span></td>
+              {{/if}}
               <td class="modifyable-article-column hidden" data-name="slug">{{ slug }}</td>
               <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
                 with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
