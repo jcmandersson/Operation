@@ -17,5 +17,16 @@ describe("CalculateProgress", function() {
     expect(res).toBe(1);
   });
 
+  it("can handle 0 total", function() {
+    var object = {checked: 1, total: 0};
+    var res = calculateProgress(object);
+    expect(res).toBe(1);
+  });
+
+  it("can handle 0 checked", function() {
+    var object = {checked: 0, total: 1};
+    var res = calculateProgress(object);
+    expect(res).toBe(1);
+  });
 });
 
