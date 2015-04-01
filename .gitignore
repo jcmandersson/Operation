@@ -41,3 +41,6 @@ data/*
 */styles/*.css
 */styles/site/*.css
 
+*/uploads/*
+
+

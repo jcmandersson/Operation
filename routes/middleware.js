@@ -24,15 +24,22 @@ exports.initLocals = function(req, res, next) {
 	var locals = res.locals;
 	
 	locals.navLinks = [
-		{ label: 'Översikt',		key: 'oversikt',		href: '/' },
-    { label: 'Skapa Handbok',			key: 'new',     	href: '/new' },
-    { label: 'Kartotek',  key: 'kartotek',    href:'/kartotek'}
+		{ label: 'Översikt',      key: 'oversikt',  href: '/'         },
+    { label: 'Skapa Handbok', key: 'new',       href: '/new'      },
+    { label: 'Kartotek',      key: 'kartotek',  href: '/kartotek' }
 	];
+
+  if (typeof req.user === 'undefined') {
+    locals.navLinks.push({
+      label: 'Logga in',
+      key: 'login',
+      href: '/login'
+    });
+  }
 	
 	locals.user = req.user;
 	
 	next();
-	
 };
 
 

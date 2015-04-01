@@ -21,6 +21,22 @@
 <div class="process-content" id="content1"></div>
 <div class="process-content" id="contentchecklist"></div>
 </div>
+
+<div id="specialty-test">
+<ul class="list-group">
+<li class="list-group-item">
+<div class="speciality" id="al">
+Allmän (al) <span class="badge">1</span>
+</div>
+<div class="hidden operations" id="opList">
+<div class="operation">
+<a href="info/blindtarm" class="div-full">Blindtarm</a>
+</div>
+</div>
+</li>
+</ul> 
+</div>
+
 <% with (scripts) { %>
   <% [].concat(polyfills, jasmine, boot, vendor, helpers, src, specs,reporters).forEach(function(script){ %>
   <script src="<%= script %>"></script>
