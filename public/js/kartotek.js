@@ -251,7 +251,7 @@ var articles = {
     $('#search-article').keyup(function() {
       $.ajax({
         type: 'GET',
-        url:  '/api/search/Kartotekartikel',
+        url:  '/api/search/Kartotekartikel/?all',
         data: {
           text: $(this).val()
         }
