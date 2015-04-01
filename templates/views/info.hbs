@@ -109,10 +109,11 @@
     </div>
 
 {{#if data.template}}
-  <form method="get" id="createOperationInstanceButton">
-    <input type="hidden" name="operation" value="create">
-    <input type="hidden" name="operationId" value="{{data._id}}">
-          <input type="button" value="Påbörja förberedelse" class="btn btn-primary" data-toggle="modal" data-target="#start">
+  {{#ifNotString data.state 'Granskning'}}
+      <form method="get" id="createOperationInstanceButton">
+        <input type="hidden" name="operation" value="create">
+        <input type="hidden" name="operationId" value="{{data._id}}">
+        <input type="button" value="Påbörja förberedelse" class="btn btn-primary" data-toggle="modal" data-target="#start">
 
           <!-- Modal -->
           <div class="modal fade" id="start" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -133,11 +134,13 @@
               </div>
             </div>
           </div>
-      
-    </form>
+        </div>
+
+      </form>
+  {{/ifNotString}}
     <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
 {{else}}
-    <div id="btn-done" class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
+    <div id='btn-done' data-slug={{ data.slug }} class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
 {{/if}}
 </div>
 
