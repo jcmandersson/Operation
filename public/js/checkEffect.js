@@ -4,10 +4,10 @@ var changeTableGraphics = function(tablerow, isChecked, preparation){//Changes t
   }
   else {
     if(preparation){
-      tablerow.css('background-color', '#E5F3FF');
+      tablerow.css('background-color', '');
     }
     else {
-      tablerow.css('background-color', 'rgba(0,0,0,0)');
+      tablerow.css('background-color', '');
     }
   }
 };
@@ -18,6 +18,6 @@ var changeCommentButton = function (comment, commentButton) {
     commentButton.css('background-color','red');
   }
   else{
-    commentButton.css('background-color', 'blue');
+    commentButton.css('background-color', '');
   }
 };

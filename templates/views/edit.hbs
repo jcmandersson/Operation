@@ -9,11 +9,11 @@
     {{/if}}
     <div id="name">
       Namn:
-      <input class="form-control" type="text" name="name" value="{{data.title}}" placeholder="Namn"/>
+      <input class="form-control" type="text" name="name" {{#ifeq data.slug "mall" }} disabled="disabled" {{/ifeq}} value="{{data.title}}" placeholder="Namn"/>
     </div>
     <div id="synonyms">Synonymer: <input class="form-control tags" type="text" name="tags" placeholder="Synonymer"
                                          value="{{data.tags}}"/></div>
-    <div id="specialty">Specialitet: <select name="specialty" class="specialitet-select">
+    <div id="specialty">Specialitet: <select name="specialty" {{#ifeq data.slug "mall" }} disabled="disabled" {{/ifeq}}  class="specialitet-select">
       {{#if data.specialty }}
         <option value="{{data.specialty._id}}" selected="selected">{{data.specialty.name}}</option>
       {{ else }}
@@ -94,8 +94,6 @@
       </div>
     </div>
     {{#each processes}}
-      <input class="hidden processIdInput" type="text" name="processId{{@index}}" value="{{ _id }}"/>
-
       <div class="process-content" id="content{{@index}}" data-id="{{@index}}"
            style="{{#if @index}}display: none;{{/if}}">
         <div class="process-content-item hidden">

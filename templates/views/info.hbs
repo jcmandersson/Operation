@@ -57,7 +57,7 @@
           {{#if articles}}
 
             {{# each articles }}
-                <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false", class="check-js" id={{_id}}>
+                <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false" class="check-js" id={{_id}}>
                     <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
                     <td class="centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
                     <td class="centered">{{ kartotek.name }}</td>
@@ -70,7 +70,7 @@
                             <p class="glyphicon glyphicon-comment"></p>
                         </button>
                     </td>
-                    <td><a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a></td>
+                    <td><a class="article-remove btn btn-danger btn-lg" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a></td>
                   
                     <!--this is loaded under process-content-->
                     <div class="modal fade" id="checkCommentModal{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
