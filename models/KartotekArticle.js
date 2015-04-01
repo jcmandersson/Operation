@@ -13,7 +13,8 @@ KartotekArticle.add({
   section: { label: 'Sektion', type: String, required: true, initial: true },
   shelf: { label: 'Hylla', type: String, required: true, initial: true },
   tray: { label: 'Fack', type: String, required: true, initial: true },
-  price: { label: 'Pris', type: Types.Money, required: false, initial: true } //TODO Ändra till required när det är implementerat.
+  price: { label: 'Pris', type: Types.Money, required: false, initial: true }, //TODO Ändra till required när det är implementerat.
+  articleNumber: { type: String, required: false, initial: true }
 });
 
 /**

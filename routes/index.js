@@ -54,6 +54,7 @@ exports = module.exports = function(app) {
   app.get('/api/search/:model', routes.views.apiSearch);
   app.get('/api/update/:model/:slug', routes.views.apiUpdate);
   app.get('/api/mongoose/id', routes.views.apiMongoose);
+  app.all('/api/upload', routes.views.apiUpload);
 	
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);

@@ -91,29 +91,31 @@
 
     <div class="process-content mall hidden" id="contentMall">
       <div class="process-content-item hidden">
-          <span class="contentTitle">
-            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
-            <span>
-             Checkbar: 
-             <input type="checkbox" class="checkAble" value="true">
-            </span>
+        <span class="contentTitle">
+          <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
+          <span>
+            Checkbar: 
+            <input type="checkbox" class="checkAble" value="true">
           </span>
-          <span class="contentText">
-            <textarea class="information" placeholder="Ny beskrivning"></textarea>
-          </span>
+        </span>
+        <span class="contentText">
+          <textarea class="information" placeholder="Ny beskrivning"></textarea>
+        </span>
+        <form action="/api/upload" class="dropzone"></form>
         <i class="glyphicon glyphicon-remove"></i>
       </div>
       <div class="process-content-item init">
-          <span class="contentTitle">
-            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
-            <span>
-             Checkbar: 
-             <input type="checkbox" class="checkAble" value="true">
-            </span>
+        <span class="contentTitle">
+          <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
+          <span>
+            Checkbar: 
+            <input type="checkbox" class="checkAble" value="true">
           </span>
-          <span class="contentText">
-            <textarea class="information" placeholder="Ny beskrivning"></textarea>
-          </span>
+        </span>
+        <span class="contentText">
+          <textarea class="information" placeholder="Ny beskrivning"></textarea>
+        </span>
+        <form action="/api/upload" class="dropzone"></form>
         <i class="glyphicon glyphicon-remove"></i>
       </div>
     </div>
@@ -121,10 +123,18 @@
       <div class="process-content" id="content{{@index}}" data-id="{{@index}}"
            style="{{#if @index}}display: none;{{/if}}">
         <div class="process-content-item hidden">
-                      <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
-                                                        placeholder="Ny rubrik"/></span>
-                      <span class="contentText"><textarea class="information"
-                                                          placeholder="Ny beskrivning"></textarea></span>
+          <span class="contentTitle">
+            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
+            <span>
+             Checkbar: 
+             <input type="checkbox" class="checkAble" value="true">
+            </span>
+          </span>
+          <span class="contentText">
+            <textarea class="information" placeholder="Ny beskrivning"></textarea>
+          </span>
+          <form action="/api/upload" class="dropzone"></form>
+          <i class="glyphicon glyphicon-remove"></i>
         </div>
         {{#each contents}}
           <input class="hidden" type="text" name="content{{@../index}}Id{{@index}}" value="{{ _id }}"/>
@@ -141,7 +151,8 @@
             </span>
             <span class="contentText">
               <textarea class="information" name="content{{@../index}}text{{@index}}">{{ text }}</textarea>
-              </span>
+            </span>
+            <form action="/api/upload" class="dropzone"></form>
             <i class="glyphicon glyphicon-remove"></i>
           </div>
         {{/each}}
@@ -156,6 +167,7 @@
           <span class="contentText">
             <textarea class="information" placeholder="Ny beskrivning"></textarea>
           </span>
+          <form action="/api/upload" class="dropzone"></form>
           <i class="glyphicon glyphicon-remove"></i>
         </div>
       </div>
@@ -190,6 +202,7 @@
       </div>
     {{/if}}
 
-    <!--<input type="submit" id="saveButton" class="btn btn-primary" name="action" value="Spara">-->
+    <a href="/info/{{data.slug}}" target="_blank" class="btn btn-primary">Förhandstitt</a>
+    <a href="" class="btn btn-primary toReview">Skicka till granskning</a>
   </form>
 </div>
