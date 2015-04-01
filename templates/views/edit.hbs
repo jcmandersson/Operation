@@ -5,7 +5,7 @@
       Sparad: 
       <span class="time">
         {{#if data.updatedAt }}
-          {{ data.updatedAt  }}
+          {{ data.updatedAt }}
         {{/if}}
       </span>
     </div>
@@ -101,8 +101,9 @@
           <span class="contentText">
             <textarea class="information" placeholder="Ny beskrivning"></textarea>
           </span>
+        <i class="glyphicon glyphicon-remove"></i>
       </div>
-      <div class="process-content-item">
+      <div class="process-content-item init">
           <span class="contentTitle">
             <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
             <span>
@@ -113,6 +114,7 @@
           <span class="contentText">
             <textarea class="information" placeholder="Ny beskrivning"></textarea>
           </span>
+        <i class="glyphicon glyphicon-remove"></i>
       </div>
     </div>
     {{#each processes}}
@@ -154,6 +156,7 @@
           <span class="contentText">
             <textarea class="information" placeholder="Ny beskrivning"></textarea>
           </span>
+          <i class="glyphicon glyphicon-remove"></i>
         </div>
       </div>
     {{/each}}
