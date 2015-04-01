@@ -1,23 +1,30 @@
 {{!< default}}
+{{!< default}}
 
 <div class="container">
-  <h2>Handböcker att granska</h2>
+  <h2>Pågående operationsförberedelser</h2>
   {{#if operations.length}}
-    <div class="row">
-      {{#each operations }}
-        <div class="col-md-6 operation" data-id="{{ _id }}">
-          <div class="operation-card">
-            <a href="/info/{{ slug }}"></a>
 
-            <div class="title">{{ title }}&nbsp;</div>
-            <div class="tags">{{ tags }}&nbsp;</div>
+    {{#groupedEach 2 operations}}
+      <div class="row">
+        {{#each this }}
+          <div class="col-md-6 operation" data-id="{{ _id }}">
+            <div class="operation-card">
+              <a href="/info/{{ slug }}"></a>
+
+              <div class="title">{{ title }}&nbsp;</div>
+              <div class="specialty">{{ specialty.abbreviation }}&nbsp;</div>
+              <div class="lindaID">{{ linda_id }}&nbsp;
+              </div>
+              <div class="tags">{{ tags }}&nbsp;</div>
+              </div>
           </div>
-        </div>
-      {{/each}}
-    </div>
+        {{/each}}
+      </div>
+    {{/groupedEach}}
   {{ else }}
     <p>
-      Just nu finns det inga handböcker att granska.
+      Just nu finns det inga pågående operationer.
     </p>
   {{/if}}
 </div>
