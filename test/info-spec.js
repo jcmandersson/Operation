@@ -7,6 +7,10 @@ describe("Info page tabs", function() {
       tabClick(this); 
     });
 
+    $('#checklist').click(function() {
+      tabClick(this); 
+    });
+
   it("can show the tabs content on click", function() {
     $('#content0').hide();   
     $('#0').click();
@@ -19,6 +23,12 @@ describe("Info page tabs", function() {
     expect($('#content1')).toBeHidden();
   });
 
+  it("can show the plocklista on click", function() {
+    $('#contentchecklist').hide();   
+    $('#checklist').click();
+    expect($('#contentchecklist')).toBeVisible();
+  });
+
   it("can show all contents with All information", function() {
     $('#content0').hide();   
     $('#content1').hide();   
@@ -29,6 +39,5 @@ describe("Info page tabs", function() {
     expect($('#contentchecklist')).toBeHidden();
     $('#nav-test').remove();
   });
-
 });
 
