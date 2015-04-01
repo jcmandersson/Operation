@@ -68,6 +68,7 @@ $(function(){
     socket.emit('saveComment', commentObject);
     changeCommentButton(checkComment, commentButton);
     
+    
     checkComment.attr('disabled', true);
     $(this).attr('disabled', true);
     saved = true;

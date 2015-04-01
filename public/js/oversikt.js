@@ -45,4 +45,12 @@ $(document).ready(function(){
     }
   });
   
+  socket.on('commentExist', function(commentData) {
+    if (commentData.hasComment) {
+      $('#comment-icon' + commentData.id).removeClass('hidden');      
+    } else {
+      $('#comment-icon' + commentData.id).addClass('hidden');
+    }
+  });
+  
 });
