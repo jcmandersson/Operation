@@ -34,6 +34,7 @@ exports = module.exports = function (req, res) {
       }, {upsert: true}, function (err, data) {
         if (err) {
           console.log('Operationen kunde inte skapas!');
+          res.status(500).send('Operationen kunde inte skapas: "'+err+'" ');
           return;
         }
         for (var i = 0; typeof req.body['process' + i] !== 'undefined' || typeof req.body['removeProcess' + i] !== 'undefined'; ++i) {
@@ -43,7 +44,7 @@ exports = module.exports = function (req, res) {
             process.model.findOneAndRemove({_id: req.body['removeProcess'+i]}, function(err){
               if (err) {
                 console.log('Processen kunde inte tas bort.');
-                console.log(err);
+                res.status(500).send('En process kunde inte tas bort: "'+err+'" ');
               }
             });
 
@@ -51,7 +52,10 @@ exports = module.exports = function (req, res) {
               if(err) {
                 console.log('Kunde inte ta bort processContent');
                 console.log(err);
+                res.status(500).send('En processContent kunde inte tas bort: "'+err+'" ');
               }
+              
+              res.status(200).send('Success');
             });
 
           } else {
@@ -67,6 +71,7 @@ exports = module.exports = function (req, res) {
                 if (err) {
                   console.log('Processen '+index+' kunde inte skapas!');
                   console.log(err);
+                  res.status(500).send('En process kunde inte tas bort: "'+err+'" ');
                   return;
                 }
 
@@ -83,8 +88,10 @@ exports = module.exports = function (req, res) {
                     if (err) {
                       console.log('Content kunde inte skapas.!');
                       console.log(err);
+                      res.status(500).send('En processContent kunde inte tas bort: "'+err+'" ');
                       return;
                     }
+                    res.status(200).send('Success');
                   });
                 }
               };

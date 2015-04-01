@@ -312,6 +312,17 @@ module.exports = function() {
 		}
 		return new hbs.SafeString(output);
 	};
+  
+  _helpers.eachProperty = function(context, options) {
+    var ret = "";
+    for(var prop in context)
+    {
+      if(typeof context[prop] == 'string' || context[prop] instanceof String) {
+        ret = ret + options.fn({property: prop, value: context[prop]});
+      }
+    }
+    return ret;
+  };
 	
 	return _helpers;
 };

@@ -11,6 +11,7 @@ module.exports = function(grunt) {
               'public/js/lib/jquery/jquery-2.1.1.js',
               'node_modules/jasmine-jquery/lib/jasmine-jquery.js'
             ],
+            keepRunner: true,
             specs: 'test/*-spec.js'
           }
         }
