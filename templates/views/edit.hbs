@@ -1,6 +1,14 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
   <form method="POST" class="operationForm">
+    <div class="lastSave">
+      Sparad: 
+      <span class="time">
+        {{#if data.updatedAt }}
+          {{ data.updatedAt  }}
+        {{/if}}
+      </span>
+    </div>
     {{#if data._id }}
       <input type="text" name="_id" value="{{data._id}}" class="hidden"/>
     {{/if}}
@@ -83,16 +91,28 @@
 
     <div class="process-content mall hidden" id="contentMall">
       <div class="process-content-item hidden">
-                    <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
-                                                      placeholder="Ny rubrik"/></span>
-                    <span class="contentText"><textarea class="information"
-                                                        placeholder="Ny beskrivning"></textarea></span>
+          <span class="contentTitle">
+            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
+            <span>
+             Checkbar: 
+             <input type="checkbox" class="checkAble" value="true">
+            </span>
+          </span>
+          <span class="contentText">
+            <textarea class="information" placeholder="Ny beskrivning"></textarea>
+          </span>
       </div>
       <div class="process-content-item">
-                    <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
-                                                      placeholder="Ny rubrik"/></span>
-                    <span class="contentText"><textarea class="information"
-                                                        placeholder="Ny beskrivning"></textarea></span>
+          <span class="contentTitle">
+            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
+            <span>
+             Checkbar: 
+             <input type="checkbox" class="checkAble" value="true">
+            </span>
+          </span>
+          <span class="contentText">
+            <textarea class="information" placeholder="Ny beskrivning"></textarea>
+          </span>
       </div>
     </div>
     {{#each processes}}

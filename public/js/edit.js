@@ -151,12 +151,10 @@ var changeProcessContent = function(parentIndex, index){
   };
 
   if($data.length){
-    console.log('UPDATE');
     updateProcessContent(processIndex, thisIndex, data, function(err, msg){
 
     });
   }else{
-    console.log('ADD');
     addProcessContent(processIndex, data, function(err, msg){
       initAll();
     });
@@ -178,7 +176,6 @@ var addProcess = function (data, callback) {
     data: data
   })
     .done(function (msg) {
-      console.log(msg);
       var $newData = $('<div></div>').attr('data-process-index', nextIndex).attr('data-process-id', msg._id);
 
       for (var key in msg) {//<input type="text" data-process="slug" value="551a7fde370c57a01f88f6fb">
@@ -205,15 +202,12 @@ var addProcessContent = function(processIndex, data, callback){
   }
   data.process = $('.data [data-process-index="'+processIndex+'"]').attr('data-process-id');
   
-  console.log(data);
-  
   $.ajax({
     type: 'POST',
     url: '/api/Processinnehalls',
     data: data
   })
     .done(function (msg) {
-      console.log(msg);
       var $newData = $('<div></div>').attr('data-content-index', nextIndex).attr('data-content-id', msg._id);
 
       for (var key in msg) {
@@ -410,8 +404,7 @@ var initChange = function(){
       if(typeof tag === 'undefined') return;
       var value = $($input).val();
       if (value.length) {
-        updateOperation({tags: value}, function (err, msg) {
-        });
+        updateOperation({tags: value}, function (err, msg) {});
       }
     }
   });
