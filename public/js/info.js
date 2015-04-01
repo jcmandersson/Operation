@@ -49,8 +49,8 @@ var findArticles = function(resultsTemplate) {
       
       var operationID = $('#opName').attr("data-operationId");
       socket.emit('articleAdd', articleObject, operationID);
-
       $('#article-search').val('').removeClass('has-results');
+      $('#kartotekResults').empty();
     });
   });
 };

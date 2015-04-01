@@ -4,10 +4,10 @@ var changeTableGraphics = function(tablerow, isChecked, preparation){//Changes t
   }
   else {
     if(preparation){
-      tablerow.css('background-color', '#E5F3FF');
+      tablerow.css('background-color', '');
     }
     else {
-      tablerow.css('background-color', 'rgba(0,0,0,0)');
+      tablerow.css('background-color', '');
     }
   }
 };
@@ -15,9 +15,22 @@ var changeTableGraphics = function(tablerow, isChecked, preparation){//Changes t
 var changeCommentButton = function (comment, commentButton) {
   if(comment.val() == "-") comment.val("");
   if(comment.val() != ""){
-    commentButton.css('background-color','red');
+    commentButton.css('background-color','#D9534F');
+    commentButton.css('border-color','#D9534F');
+    commentButton.hover(function(){
+      commentButton.css('background-color', '#C9302C');
+    }, function(){
+      commentButton.css('background-color', '#D9534F');
+    });
+    
   }
   else{
-    commentButton.css('background-color', 'blue');
+    commentButton.hover(function(){
+      commentButton.css('background-color', '');
+    }, function(){
+      commentButton.css('background-color', '')
+    });
+    commentButton.css('border-color','');
+    commentButton.css('background-color', '');
   }
 };
