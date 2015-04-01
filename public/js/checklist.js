@@ -110,21 +110,20 @@ var addAmountClick = function(){
   $(this).replaceWith(input);
   $(input).focus();
 
-    $(input).keypress(function(e){
+  $(input).keypress(function(e){
+    editAmountDone(e, $(input));
+  });
+
+  setTimeout(function(){
+    $('body').click(function(e){
+      if(e.target.id == "editAmount") {
+        return;
+      }
       editAmountDone(e, $(input));
     });
+  },0);
 
-    setTimeout(function(){
-      $('body').click(function(e){
-        if(e.target.id == "editAmount") {
-          return;
-        }
-        editAmountDone(e, $(input));
-      });
-    },0);
-
-  };
-
+};
 
 var editAmountDone = function (e, tag) {
   var val = $(tag).val();
@@ -142,6 +141,25 @@ var editAmountDone = function (e, tag) {
     return false;
   }
 };
+
+var updateTableRow = function(tableRow, isChecked, isTemplate){ //set checked status and update row color.
+  var checkbox = tableRow.find('input');
+  checkbox.prop('checked', isChecked);
+  var preparation = tableRow.hasClass("process-content-item") ? true : false;
+  if(isTemplate){
+    checkbox.prop('disabled', true);
+    tableRow.prop('disabled', true);
+  }
+  changeTableGraphics(tableRow, isChecked, preparation); //Function in checkEffect.js
+};
+
+$('#btn-done').click( function() {
+  if ($('#btn-done').hasClass('btn-done')) {
+    socket.emit('markAsDone', { operation: operationId, isDone: false});
+  } else {
+    socket.emit('markAsDone', { operation: operationId, isDone: true});
+  }
+});
 
 socket.on('saveComment', function(commentObject) {
   var comment = $('#checkComment' + commentObject.id);
@@ -163,17 +181,6 @@ socket.on('connect', function(){ //Runs after socket has been started. Get all c
   operationId = $('#opName').attr('data-operationId');
   socket.emit('operationOpen', operationId);
 });
-
-var updateTableRow = function(tableRow, isChecked, isTemplate){ //set checked status and update row color.
-  var checkbox = tableRow.find('input');
-  checkbox.prop('checked', isChecked);
-  var preparation = tableRow.hasClass("process-content-item") ? true : false;
-  if(isTemplate){
-    checkbox.prop('disabled', true);
-    tableRow.prop('disabled', true);
-  }
-  changeTableGraphics(tableRow, isChecked, preparation); //Function in checkEffect.js
-};
 
 socket.on('checkboxClick', function(checkObject){
   var tableRow = $('#' + checkObject.id);
@@ -200,14 +207,6 @@ socket.on('markAsDone', function(data) {
   }
 });
 
-$('#btn-done').click( function() {
-  if ($('#btn-done').hasClass('btn-done')) {
-    socket.emit('markAsDone', { operation: operationId, isDone: false});
-  } else {   
-    socket.emit('markAsDone', { operation: operationId, isDone: true});
-  }
-});
-
 socket.on('articleAmountUpdate', function(amount, articleID){
   $('#amount'+articleID).children().text(amount);
 });
@@ -226,4 +225,3 @@ socket.on('newArticleUpdate', function(checkArticle, kartotekArticle, operationI
   $(commentTemplate({ kartotekname: kartotekArticle.name, _id: checkArticle._id, comment: '' })).appendTo('.articleTable');
   
 });
-
