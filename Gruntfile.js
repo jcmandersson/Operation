@@ -12,7 +12,8 @@ module.exports = function(grunt) {
               'node_modules/jasmine-jquery/lib/jasmine-jquery.js'
             ],
             keepRunner: true,
-            specs: 'test/*-spec.js'
+            specs: 'test/*-spec.js',
+            template: 'test/template/spec-template.tmpl'
           }
         }
       }
