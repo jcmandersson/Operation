@@ -15,7 +15,8 @@ $(document).ready(function(){
     }).children('.ui-progressbar-value')
       //.html('&nbsp;&nbsp;&nbsp;' + $(e).attr('data-checked') + ' / ' + $(e).attr('data-total'))
       .html('&nbsp;&nbsp;&nbsp;' + percentage + '% (' + $(e).attr('data-checked') + '/' + $(e).attr('data-total') + ')')
-      .css("display", "block");
+      .css( {display: 'block',
+              height: 'auto'});
     if ($(e).hasClass('isDone')) {
       $(e).children('.ui-progressbar-value').addClass('progressbar-done');
     }
