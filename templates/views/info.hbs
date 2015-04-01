@@ -140,9 +140,9 @@
     <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
   </div>
 {{else}}
-  <div id='btn-done' data-slug={{ data.slug }} class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
+  <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
+  <div id='btn-removePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort operation</div>
 {{/if}}
-</div>
 
 <script id="kartotekResults-template" type="text/x-handlebars-template">
     <table class="table table-striped table-bordered table-hover" id="result-table">
