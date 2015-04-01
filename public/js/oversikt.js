@@ -16,7 +16,7 @@ $(document).ready(function(){
       //.html('&nbsp;&nbsp;&nbsp;' + $(e).attr('data-checked') + ' / ' + $(e).attr('data-total'))
       .html('&nbsp;&nbsp;&nbsp;' + percentage + '% (' + $(e).attr('data-checked') + '/' + $(e).attr('data-total') + ')')
       .css("display", "block");
-    if (percentage === 100 || $(e).hasClass('isDone')) {
+    if ($(e).hasClass('isDone')) {
       $(e).children('.ui-progressbar-value').addClass('progressbar-done');
     }
   });
@@ -24,7 +24,7 @@ $(document).ready(function(){
   var socket = io();
   socket.on('connect', function() {
     socket.emit('overviewOpen');
-  })
+  });
   
   
   socket.on('updateProgress', function (progress) {
