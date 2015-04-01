@@ -43,7 +43,7 @@ exports = module.exports = function(app) {
   app.get('/kartotek', routes.views.kartotek);
   app.get('/db', routes.views.dbExamples);
   app.get('/info', routes.views.info);
-  app.get('/info/:slug', routes.views.info);  
+  app.get('/info/:slug', routes.views.info);
   app.get('/specialiteter', routes.views.specialiteter);
   app.get('/granska', routes.views.inspect);
 
