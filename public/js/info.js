@@ -1,16 +1,20 @@
+tabClick = function(elem) {
+  $(elem).addClass('active').siblings().removeClass('active');
+  if(elem.id == "all") { 
+    $(".process-content").show();
+    $("#contentchecklist").hide();
+  } else {
+    $(".process-content").hide();
+    $("#content"+elem.id).show();
+  }
+};
+
 $(document).ready(function() {
   
   $("#all").addClass('active');
 
   $(".nav-pills > .navbar-btn").click(function() {
-    $(this).addClass('active').siblings().removeClass('active');
-    if(this.id == "all") { 
-      $(".process-content").show();
-      $("#contentchecklist").hide();
-    } else {
-      $(".process-content").hide();
-      $("#content"+this.id).show();
-    } 
+    tabClick(this);
   });
 
   var compiledResults = $('#kartotekResults-template').html();

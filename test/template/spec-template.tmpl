@@ -10,6 +10,17 @@
 
 </head>
 <body>
+<div id="nav-test">
+<ul class="nav nav-pills">
+<button type="button" class="btn btn-default navbar-btn" id="all">All information</button>
+<button type="button" class="btn btn-default navbar-btn" id="0">Anestesi</button>
+<button type="button" class="btn btn-default navbar-btn" id="1">Preopera</button>
+<button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
+</ul>
+<div class="process-content" id="content0"></div>
+<div class="process-content" id="content1"></div>
+<div class="process-content" id="contentchecklist"></div>
+</div>
 <% with (scripts) { %>
   <% [].concat(polyfills, jasmine, boot, vendor, helpers, src, specs,reporters).forEach(function(script){ %>
   <script src="<%= script %>"></script>
