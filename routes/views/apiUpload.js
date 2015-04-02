@@ -27,17 +27,3 @@ exports = module.exports = function (req, res) {
     });
   });
 };
-
-
-
-path.exists('foo.txt', function(exists) {
-  if (exists) {
-    // do something 
-  }
-});
-
-// or 
-
-if (path.existsSync('foo.txt')) {
-  // do something 
-} 
