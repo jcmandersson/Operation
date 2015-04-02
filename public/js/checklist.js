@@ -33,7 +33,7 @@ $(function() {
   
   $('#btn-done').click( btnDone);
   
-  socket.on('saveComment', saveComment);
+  socket.on('saveComment', saveCommentSocket);
   
   socket.on('removeCheckArticleUpdate', removeCheckArticleUpdate);
   
@@ -199,7 +199,7 @@ var btnDone = function() {
   }
 };
 
-var saveComment = function(commentObject) {
+var saveCommentSocket = function(commentObject) {
   var comment = $('#checkComment' + commentObject.id);
   var commentButton = $('#commentButton' + commentObject.id);
   comment.val(commentObject.comment);
