@@ -408,19 +408,27 @@ var initWysiwyg = function () {
       var index = $eUpdated.attr('data-id');
       changeProcessContent(parentIndex, index);
     };
-
+    
     var timeout = undefined;
-    $(e).find(':not(.jqte) textarea:not(.wysiwyg)').addClass('wysiwyg').jqte({
-      change: function () {
-        if (typeof timeout !== 'undefined') {
-          clearTimeout(timeout);
-        }
-        var $this = $(this);
-        timeout = setTimeout(function () {
-          wysiwygBlur();
-        }, 500);
-      },
-      blur: wysiwygBlur
+    $(e).find(':not(.mce-tinymce) textarea:not(.wysiwyg)').addClass('wysiwyg').tinymce({
+      plugins:  'advlist autoresize charmap contextmenu image ' +
+                'media print anchor link paste tabfocus textcolor ' +
+                'autolink insertdatetime lists searchreplace table ' +
+                'wordcount imageupload',
+
+      toolbar1: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify |  | bullist numlist outdent indent | link image imageupload',
+      imageupload_url: '/api/upload',
+      setup: function(editor) {
+        editor.on('change', function(e) {
+          if (typeof timeout !== 'undefined') {
+            clearTimeout(timeout);
+          }
+          var $this = $(this);
+          timeout = setTimeout(function () {
+            wysiwygBlur();
+          }, 500);
+        });
+      }
     });
   });
 };
@@ -507,13 +515,7 @@ var initAll = function () {
   $('.process-content').each(initProcessContent);
 };
 
-var initDropzone = function(){
-  //var myDropzone = new Dropzone("div.dropzone", { url: "/api/upload"});
-  //console.log(myDropzone);
-};
-
 $(document).ready(function () {
-  initDropzone();
   initOnce();
   initAll();
 });

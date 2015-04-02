@@ -15,9 +15,10 @@ exports = module.exports = function (req, res) {
 
   locals.scripts = [
     'jquery.tagsinput.js',
-    'lib/jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js',
+    'lib/jquery.iframe-post-form.js',
+    //'lib/jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js',
+    'lib/tinymce/tinymce.min.js',
     'updown-counter.js',
-    'lib/dropzone.js',
     'lib/dateFormat.js',
     'edit.js'
   ];
