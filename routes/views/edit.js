@@ -24,7 +24,6 @@ exports = module.exports = function (req, res) {
   ];
 
   locals.css = [
-    'lib/dropzone.css',
     'site/edit.css'
   ];
 

@@ -14,10 +14,13 @@ exports = module.exports = function(req, res) {
   locals.scripts = [
     'info.js',
     'checklist.js',
-    'checkEffect.js'
+    'checkEffect.js',
+    'lib/featherlight/featherlight.min.js',
+    'lightbox.js'
   ];
 
   locals.css = [
+    'lib/featherlight.min.css',
     'site/info.css'
   ];
 
