@@ -1,7 +1,5 @@
 $(document).ready(function(){
   $('.process-content').each(function(i, e){
-    console.log(e);
-    var index = 0;
     var $imgs = $(e).find('.process-content-item img').each(function(i ,e){
       var $img = $(e);
       var $new = $('<a></a>')
@@ -11,14 +9,5 @@ $(document).ready(function(){
       
       $img.wrap($new);
     });
-  });
-
-  $(document).on('click', '*[data-toggle="lightbox"]', function(event) {
-    console.log('click');
-    event.preventDefault();
-  });
-  
-  $(document).on('load', '.ekko-lightbox-container img', function(event){
-    console.log('load');
   });
 });
