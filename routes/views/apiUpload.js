@@ -14,7 +14,9 @@ exports = module.exports = function (req, res) {
   var view = new keystone.View(req, res),
     locals = res.locals;
   
-  console.log(req.files);
+  if(!path.existsSync(__dirname + '/../../public/uploads')){
+    fs.mkdirSync(__dirname + '/../../public/uploads');
+  }
 
   fs.readFile(req.files.file.path, function (err, data) {
     var newPath = __dirname + "/../../public/uploads/" + req.files.file.name;
@@ -25,7 +27,6 @@ exports = module.exports = function (req, res) {
     }
     console.log(newPath);
     fs.writeFile(newPath, data, function (err) {
-      console.log('success');
       res.status(200).send('{"error":false,"path": "/uploads/'+req.files.file.name+'"}');
     });
   });
