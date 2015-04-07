@@ -19,9 +19,9 @@
 }
 
 .newProcess {
-  display: inline-block;
   margin-right: 10px;
-  margin-top: 8px;
+  margin-top: 4px;
+  margin-bottom: 0;
 }
 
 .form-control-feedback {
@@ -33,9 +33,17 @@
   cursor: pointer;
 }
 
-.process.btn {
+.process.btn, .btn-checklist {
   width: 100px;
   cursor: text;
+}
+
+.process.btn {
+  padding-right: 25px;
+}
+
+.btn-checklist {
+  margin-top: 4px;
 }
 
 .process-content-item {
@@ -56,11 +64,21 @@
   cursor: pointer;
 }
 
-.dropzone {
-  display: inline-block;
-  width: 13%;
-  height: 100%;
-  min-height: 139px;
-  vertical-align: top;
-  border: 1px dashed black;
+.contentText {
+  width: 70%;
+}
+
+.nav .glyphicon-remove {
+  font-size: 16px;
+  line-height: 34px;
+  position: relative;
+  margin-left: -32px;
+  margin-right: 10px;
+  top: 4px;
+  font-weight: 100;
+  color: rgb(244, 74, 0);
+}
+
+ul.nav li {
+  box-sizing: content-box;
 }

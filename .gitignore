@@ -37,7 +37,6 @@ data/*
 .idea/*
 
 *.sw*
-*.min.css
 */styles/*.css
 */styles/site/*.css
 

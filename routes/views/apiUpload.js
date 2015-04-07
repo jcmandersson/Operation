@@ -6,12 +6,17 @@ var article = keystone.list('Artikel');
 var mongoose = require('mongoose');
 var fs = require('fs');
 var path = require('path');
+if(typeof path.exist === 'undefined'){
+  path = fs;
+}
 
 exports = module.exports = function (req, res) {
   var view = new keystone.View(req, res),
     locals = res.locals;
   
-  console.log(req.files.file);
+  if(!path.existsSync(__dirname + '/../../public/uploads')){
+    fs.mkdirSync(__dirname + '/../../public/uploads');
+  }
 
   fs.readFile(req.files.file.path, function (err, data) {
     var newPath = __dirname + "/../../public/uploads/" + req.files.file.name;
@@ -22,22 +27,7 @@ exports = module.exports = function (req, res) {
     }
     console.log(newPath);
     fs.writeFile(newPath, data, function (err) {
-      console.log('sucess');
-      res.status(200).send('Success!');
+      res.status(200).send('{"error":false,"path": "/uploads/'+req.files.file.name+'"}');
     });
   });
 };
-
-
-
-path.exists('foo.txt', function(exists) {
-  if (exists) {
-    // do something 
-  }
-});
-
-// or 
-
-if (path.existsSync('foo.txt')) {
-  // do something 
-} 
