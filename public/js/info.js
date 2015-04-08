@@ -3,9 +3,11 @@ tabClick = function(elem) {
   if(elem.id == "all") {
     $(".process-content").show();
     $("#contentchecklist").hide();
+    window.location.hash = '#all';
   } else {
     $(".process-content").hide();
     $("#content"+elem.id).show();
+    window.location.hash = '#' + elem.id;
   }
 };
 
@@ -28,8 +30,16 @@ $("#btn-removePreparation").click(function() {
 });
 
 $(document).ready(function() {
+  var hash = window.location.hash.substring(1);
+  if (!hash || hash === 'all'){
+    $("#all").addClass('active');
+  } else {
+    $('#' + hash).addClass('active').siblings().removeClass('active');
+    $(".process-content").hide();
+    $("#content" + hash).show();
+  }
 
-  $("#all").addClass('active');
+  
 
   $(".nav-pills > .navbar-btn").click(function() {
     tabClick(this);
