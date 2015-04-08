@@ -60,18 +60,57 @@ exports = module.exports = function(req, res) {
         next(err);
       });
   });
+  
+  //Compare for finding shortest route.
+  var compare = function(a, b) {
+    if (a.kartotek.storage > b.kartotek.storage) {
+      return 1;
+    }
+    if (a.kartotek.storage < b.kartotek.storage) {
+      return -1;
+    }
+    if (a.kartotek.storage === b.kartotek.storage) {
+      if (a.kartotek.section > b.kartotek.section) {
+        return 1;
+      }
+      if (a.kartotek.section < b.kartotek.section) {
+        return -1;
+      }
+      if (a.kartotek.section === b.kartotek.section) {
+        if (a.kartotek.shelf > b.kartotek.shelf) {
+          return 1;
+        }
+        if (a.kartotek.shelf < b.kartotek.shelf) {
+          return -1;
+        }
+        if (a.kartotek.shelf === b.kartotek.shelf) {
+          if (a.kartotek.tray > b.kartotek.tray) {
+            return 1;
+          }
+          if (a.kartotek.tray < b.kartotek.tray) {
+            return -1;
+          }
+          if (a.kartotek.tray === b.kartotek.tray) {
+            return 0;
+          }
+        }
+      } 
+    } 
+  };
 
   view.on('init', function(next) {
     article.model.find({
       operation: locals.data._id
     }).populate('kartotek')
       .exec(function (err, articleData) {
+        
         if (err) {
           console.log('DB error');
           console.log(err);
           return;
         }
         //console.log(articleData);
+        articleData.sort(compare);
         locals.articles = articleData;
         next(err);
       });

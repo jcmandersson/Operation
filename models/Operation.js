@@ -32,10 +32,12 @@ Operation.schema.statics.search = function (text, callback) {
   return this.model('Operation').find({
     $or: [{
       title: search,
-      template: true
+      template: true,
+      state: 'Publicerad'
     }, {
       tags: search,
-      template: true
+      template: true,
+      state: 'Publicerad'
     }]
   });
 };
