@@ -69,33 +69,28 @@ exports = module.exports = function(req, res) {
     if (a.kartotek.storage < b.kartotek.storage) {
       return -1;
     }
-    if (a.kartotek.storage === b.kartotek.storage) {
-      if (a.kartotek.section > b.kartotek.section) {
-        return 1;
-      }
-      if (a.kartotek.section < b.kartotek.section) {
-        return -1;
-      }
-      if (a.kartotek.section === b.kartotek.section) {
-        if (a.kartotek.shelf > b.kartotek.shelf) {
-          return 1;
-        }
-        if (a.kartotek.shelf < b.kartotek.shelf) {
-          return -1;
-        }
-        if (a.kartotek.shelf === b.kartotek.shelf) {
-          if (a.kartotek.tray > b.kartotek.tray) {
-            return 1;
-          }
-          if (a.kartotek.tray < b.kartotek.tray) {
-            return -1;
-          }
-          if (a.kartotek.tray === b.kartotek.tray) {
-            return 0;
-          }
-        }
-      } 
-    } 
+    
+    if (a.kartotek.section > b.kartotek.section) {
+      return 1;
+    }
+    if (a.kartotek.section < b.kartotek.section) {
+      return -1;
+    }
+      
+    if (a.kartotek.shelf > b.kartotek.shelf) {
+      return 1;
+    }
+    if (a.kartotek.shelf < b.kartotek.shelf) {
+      return -1;
+    }
+        
+    if (a.kartotek.tray > b.kartotek.tray) {
+      return 1;
+    }
+    if (a.kartotek.tray < b.kartotek.tray) {
+      return -1;
+    }
+    return 0;
   };
 
   view.on('init', function(next) {
