@@ -63,33 +63,17 @@ exports = module.exports = function(req, res) {
   
   //Compare for finding shortest route.
   var compare = function(a, b) {
-    if (a.kartotek.storage > b.kartotek.storage) {
-      return 1;
-    }
-    if (a.kartotek.storage < b.kartotek.storage) {
-      return -1;
-    }
+    if (a.kartotek.storage > b.kartotek.storage) return 1;
+    if (a.kartotek.storage < b.kartotek.storage) return -1;    
     
-    if (a.kartotek.section > b.kartotek.section) {
-      return 1;
-    }
-    if (a.kartotek.section < b.kartotek.section) {
-      return -1;
-    }
+    if (a.kartotek.section > b.kartotek.section) return 1;
+    if (a.kartotek.section < b.kartotek.section) return -1;
       
-    if (a.kartotek.shelf > b.kartotek.shelf) {
-      return 1;
-    }
-    if (a.kartotek.shelf < b.kartotek.shelf) {
-      return -1;
-    }
+    if (a.kartotek.shelf > b.kartotek.shelf) return 1;
+    if (a.kartotek.shelf < b.kartotek.shelf) return -1;
         
-    if (a.kartotek.tray > b.kartotek.tray) {
-      return 1;
-    }
-    if (a.kartotek.tray < b.kartotek.tray) {
-      return -1;
-    }
+    if (a.kartotek.tray > b.kartotek.tray) return 1;
+    if (a.kartotek.tray < b.kartotek.tray) return -1;
     return 0;
   };
 
