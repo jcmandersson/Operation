@@ -346,5 +346,13 @@ module.exports = function() {
     return options.inverse(this);
   };
   
+  _helpers.exists = function(variable, options) {
+    if (typeof variable !== 'undefined') {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  };
+  
 	return _helpers;
 };

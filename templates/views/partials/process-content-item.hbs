@@ -1,0 +1,26 @@
+<div class="process-content-item {{#if extraClass }}{{extraClass}}{{/if}}"
+  {{#exists @../index}}
+     data-parent="{{@../index}}"
+     data-id="{{@index}}"
+  {{else}}
+    {{#if @index}}
+     data-parent="{{@index}}"
+    {{/if}}
+  {{/exists}}
+  >
+            <span class="contentTitle">
+               <input class="form-control rubrik" type="text"
+                      {{#exists @../index }}name="content{{@../index}}title{{@index}}"{{/exists}}
+                      value="{{#if title }}{{title}}{{/if}}" placeholder="Ny rubrik"/>
+                 <span>
+                   Checkbar: 
+                   <input type="checkbox" class="checkAble" {{#if checkAble}}
+                          checked="checked" {{/if}}value="true">
+                 </span>
+            </span>
+            <span class="contentText">
+              <textarea class="information"
+                        {{#exists @../index }}name="content{{@../index}}text{{@index}}"{{/exists}}>{{#if text }}{{ text }}{{/if}}</textarea>
+            </span>
+  <i class="glyphicon glyphicon-remove"></i>
+</div>

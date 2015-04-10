@@ -156,6 +156,7 @@ var changeProcessContent = function (parentIndex, index) {
   } else {
     $parent = $('.process-content-item[data-parent="' + parentIndex + '"][data-id="' + index + '"]').last();
   }
+  console.log($parent);
   var rubrik = $parent.find('.rubrik').val();
   var content = $parent.find('textarea').val();
   var checkAble = $parent.find('.checkAble').is(":checked");
@@ -170,7 +171,7 @@ var changeProcessContent = function (parentIndex, index) {
     text: content,
     checkAble: checkAble
   };
-
+  console.log('SAVE');
   if ($data.length) {
     updateProcessContent(processIndex, thisIndex, data, function (err, msg) {
 
@@ -402,6 +403,7 @@ var initWysiwyg = function () {
     $(e).attr('data-wysiwyg', thisIndex);
 
     var wysiwygBlur = function (e) {
+      console.log('BLUR');
       var $eUpdated = $('[data-wysiwyg="' + thisIndex + '"]');
 
       var parentIndex = $eUpdated.attr('data-parent');
@@ -420,6 +422,7 @@ var initWysiwyg = function () {
       imageupload_url: '/api/upload',
       setup: function(editor) {
         editor.on('change', function(e) {
+          console.log('CHANGE');
           if (typeof timeout !== 'undefined') {
             clearTimeout(timeout);
           }

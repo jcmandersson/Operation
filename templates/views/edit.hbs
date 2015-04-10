@@ -90,84 +90,19 @@
     </ul>
 
     <div class="process-content mall hidden" id="contentMall">
-      <div class="process-content-item hidden">
-        <span class="contentTitle">
-          <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
-          <span>
-            Checkbar: 
-            <input type="checkbox" class="checkAble" value="true">
-          </span>
-        </span>
-        <span class="contentText">
-          <textarea class="information" placeholder="Ny beskrivning"></textarea>
-        </span>
-        <i class="glyphicon glyphicon-remove"></i>
-      </div>
-      <div class="process-content-item init">
-        <span class="contentTitle">
-          <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
-          <span>
-            Checkbar: 
-            <input type="checkbox" class="checkAble" value="true">
-          </span>
-        </span>
-        <span class="contentText">
-          <textarea class="information" placeholder="Ny beskrivning"></textarea>
-        </span>
-        <i class="glyphicon glyphicon-remove"></i>
-      </div>
+      {{> process-content-item extraClass='hidden'}}
+      {{> process-content-item extraClass='init'}}
     </div>
     {{#each processes}}
       <div class="process-content" id="content{{@index}}" data-id="{{@index}}"
            style="{{#if @index}}display: none;{{/if}}">
-        <div class="process-content-item hidden">
-          <span class="contentTitle">
-            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
-            <span>
-             Checkbar: 
-             <input type="checkbox" class="checkAble" value="true">
-            </span>
-          </span>
-          <span class="contentText">
-            <textarea class="information" placeholder="Ny beskrivning"></textarea>
-          </span>
-          
-          <i class="glyphicon glyphicon-remove"></i>
-        </div>
+        {{> process-content-item extraClass='hidden'}}
         {{#each contents}}
           <input class="hidden" type="text" name="content{{@../index}}Id{{@index}}" value="{{ _id }}"/>
 
-          <div class="process-content-item" data-parent="{{@../index}}" data-id="{{@index}}">
-            <span class="contentTitle">
-               <input class="form-control rubrik" type="text" name="content{{@../index}}title{{@index}}"
-                      value="{{ title }}"/>
-                 <span>
-                   Checkbar: 
-                   <input type="checkbox" class="checkAble" {{#if checkAble}}
-                          checked="checked" {{/if}}value="true">
-                 </span>
-            </span>
-            <span class="contentText">
-              <textarea class="information" name="content{{@../index}}text{{@index}}">{{ text }}</textarea>
-            </span>
-            
-            <i class="glyphicon glyphicon-remove"></i>
-          </div>
+          {{> process-content-item}}
         {{/each}}
-        <div class="process-content-item init" data-parent="{{@index}}">
-          <span class="contentTitle">
-            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
-            <span>
-             Checkbar: 
-             <input type="checkbox" class="checkAble" {{#if checkAble}} checked="checked" {{/if}}value="true">
-            </span>
-          </span>
-          <span class="contentText">
-            <textarea class="information" placeholder="Ny beskrivning"></textarea>
-          </span>
-          
-          <i class="glyphicon glyphicon-remove"></i>
-        </div>
+        {{> process-content-item extraClass='init'}}
       </div>
     {{/each}}
 
