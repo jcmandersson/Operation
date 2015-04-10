@@ -47,6 +47,7 @@ exports = module.exports = function(app) {
   app.get('/specialiteter', routes.views.specialiteter);
   app.get('/granska', middleware.requireUser, routes.views.inspect);
   app.get('/login', routes.views.login);
+  app.get('/list', routes.views.list);
 
   app.get('/index', routes.views.index);
 
