@@ -313,11 +313,11 @@ var delProcess = function (e) {
   });
 };
 
-var sendToPreview = function(e){
+var sendToPreview = function (e) {
   e.preventDefault();
-  
+
   updateOperation({state: 'Granskning'}, function (err, msg) {
-    window.location = '/info/'+msg.slug;
+    window.location = '/info/' + msg.slug;
   });
 };
 
@@ -406,18 +406,18 @@ var initWysiwyg = function () {
       var index = $eUpdated.attr('data-id');
       changeProcessContent(parentIndex, index);
     };
-    
+
     var timeout = undefined;
     $(e).find(':not(.mce-tinymce) textarea:not(.wysiwyg)').addClass('wysiwyg').tinymce({
-      plugins:  'advlist autoresize charmap contextmenu image ' +
-                'media print anchor link paste tabfocus textcolor ' +
-                'autolink insertdatetime lists searchreplace table ' +
-                'wordcount imageupload',
+      plugins: 'advlist autoresize charmap contextmenu image ' +
+      'media print anchor link paste tabfocus textcolor ' +
+      'autolink insertdatetime lists searchreplace table ' +
+      'wordcount imageupload',
 
       toolbar1: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify |  | bullist numlist outdent indent | link image imageupload',
       imageupload_url: '/api/upload',
-      setup: function(editor) {
-        var onChange = function(e) {
+      setup: function (editor) {
+        var onChange = function (e) {
           if (typeof timeout !== 'undefined') {
             clearTimeout(timeout);
           }
@@ -435,24 +435,21 @@ var initWysiwyg = function () {
 var initChange = function () {
   $('.specialitet-select').change(changeSpecialitet);
 
+  var timeout = undefined;
   $('body')
     .on('change', 'input[name="name"]', changeName)
     .on('change', 'input.process', changedProcess)
     .on('change', 'input.rubrik', changeProcessContent)
-    .on('change', '.checkAble', changeProcessContent);
-
-
-  var timeout = undefined;
-  $('body').on('keyup', 'input', function () {
-    if (typeof timeout !== 'undefined') {
-      clearTimeout(timeout);
-    }
-    var $this = $(this);
-    timeout = setTimeout(function () {
-      $this.trigger('change');
-    }, 500);
-  });
-
+    .on('change', '.checkAble', changeProcessContent)
+    .on('keyup', 'input', function () {
+      if (typeof timeout !== 'undefined') {
+        clearTimeout(timeout);
+      }
+      var $this = $(this);
+      timeout = setTimeout(function () {
+        $this.trigger('change');
+      }, 500);
+    });
 
   $('.tags').tagsInput({
     width: 'auto',
