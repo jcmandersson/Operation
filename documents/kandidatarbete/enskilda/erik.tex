@@ -1,27 +1,45 @@
 \section{Erik Malmberg}
 \subsection{Inledning}
-Den här enskilda utredningen är en del av kandidatrapporten i kursen TDDD77 vid Linköpings universitet. Utredningen behandlar en del av utvecklingen av ett webb-baserat system för att underlätta förberedelser inför en operation. Systemet utvecklades på uppdrag av Region Östergötland.
+Den här enskilda utredningen är en del av kandidatrapporten i kursen TDDD77 vid Linköpings universitet.
+Utredningen behandlar en del av utvecklingen av ett webb-baserat system för att underlätta förberedelser
+inför en operation. Systemet utvecklades på uppdrag av Region Östergötland.
 
 \subsubsection{Syfte}
-Syftet med den här enskilda delen av kandidatarbetet är att ge insikt i hur kontinuerlig integration och automatiserade tester kan användas för att effektivisera testandet i ett projekt som använder en agil utvecklingsmetod. Speciellt ska det undersökas hur väl det går att använda Travis CI tillsammans med MongoDB.
+Syftet med den här enskilda delen av kandidatarbetet är att ge insikt i hur kontinuerlig integration och 
+automatiserade tester kan användas för att effektivisera testandet i ett projekt som använder en agil 
+utvecklingsmetod. Speciellt ska det undersökas hur väl det går att använda Travis CI tillsammans med MongoDB.
 
 \subsubsection{Frågeställning}
 Hur lång tid tar det för Travis CI att sätta upp en testversion av en MongoDB-databas?\\
-Hur många tester hinner Travis CI köra på en minut?\\\\
+Hur många tester hinner Travis CI köra på en minut?\\
+Vilka typer av tester är svåra att utföra?\\
 
-I svaren på frågeställningarna ska testversionen av MongoDB-databasen och testerna specifieras noggrant så att svaren inte blir tvetydiga.
+I svaren på frågeställningarna ska testversionen av MongoDB-databasen och testerna specifieras noggrant 
+så att svaren inte blir tvetydiga.
 
 \subsubsection{Avgränsningar}
-Inga undersökningar kommer att utföras om hur andra lösningar än Travis CI kan användas för kontinuerlig integration. De databaser som kommer användas kommer uteslutande vara av typen MongoDB.
+Inga undersökningar kommer att utföras om hur andra lösningar än Travis CI kan användas för kontinuerlig 
+integration. De databaser som kommer användas kommer uteslutande att vara av typen MongoDB.
 
 \subsection{Bakgrund}
 \subsection{Teori}
-I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. Om ett problem då identifieras under integrationen så är det krångligt att gå tillbaka och åtgärda problemet. Det kan leda till förseningar av projektet.\\
+I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. 
+Om ett problem då identifieras under integrationen så är det krångligt att gå tillbaka och åtgärda problemet. 
+Det kan leda till förseningar av projektet.\\
 
-Kontinuerlig integration och automatiserade tester kan leda till att problemen identifieras tidigare i utvecklingsprocessen. Problemen blir då lättare att åtgärda.\\
+Kontinuerlig integration och automatiserade tester kan leda till att problemen identifieras tidigare i 
+utvecklingsprocessen. Problemen blir då lättare att åtgärda.\\
 
 Det finns många lösningar för att köra automatiserade tester. Några av de vanligaste är Travis CI, Codeship och Drone.\\
 
+Travis CI är en webb-baserad tjänst för att köra automatiserade enhetstester och integrationstester
+på projekt som finns på GitHub. Travis CI är byggd på öppen källkod och är gratis att använda. 
+Tjänsten har stöd för många olika programmeringsspråk, men det som är relevant för innehållet i den här rapporten
+är JavaScript med Node.js.\\
+
+Node.js är runtime environment för internetapplikationer. Det kan till exempel användas för att skapa webbservrar.
+Node.js är baserat på öppen källkod och det är enkelt att lägga till nya moduler för att anpassa det system man vill
+använda. För att lägga till nya moduler används node package manager (npm).\\
 \subsection{Metod}
 Travis CI kommer att kopplas till en repository på GitHub.
 
