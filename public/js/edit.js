@@ -156,7 +156,6 @@ var changeProcessContent = function (parentIndex, index) {
   } else {
     $parent = $('.process-content-item[data-parent="' + parentIndex + '"][data-id="' + index + '"]').last();
   }
-  console.log($parent);
   var rubrik = $parent.find('.rubrik').val();
   var content = $parent.find('textarea').val();
   var checkAble = $parent.find('.checkAble').is(":checked");
@@ -171,7 +170,6 @@ var changeProcessContent = function (parentIndex, index) {
     text: content,
     checkAble: checkAble
   };
-  console.log('SAVE');
   if ($data.length) {
     updateProcessContent(processIndex, thisIndex, data, function (err, msg) {
 
@@ -397,15 +395,13 @@ var initProcessContent = function (i, e) {
 var wysiwygIndex = 0;
 var initWysiwyg = function () {
   $('.process-content:not(.hidden) .process-content-item').each(function (i, e) {
-    if ($(e).find('.jqte').length) return;
+    if ($(e).find('.mce-tinymce').length) return;
 
     var thisIndex = wysiwygIndex++;
     $(e).attr('data-wysiwyg', thisIndex);
 
     var wysiwygBlur = function (e) {
-      console.log('BLUR');
       var $eUpdated = $('[data-wysiwyg="' + thisIndex + '"]');
-
       var parentIndex = $eUpdated.attr('data-parent');
       var index = $eUpdated.attr('data-id');
       changeProcessContent(parentIndex, index);
@@ -421,16 +417,16 @@ var initWysiwyg = function () {
       toolbar1: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify |  | bullist numlist outdent indent | link image imageupload',
       imageupload_url: '/api/upload',
       setup: function(editor) {
-        editor.on('change', function(e) {
-          console.log('CHANGE');
+        var onChange = function(e) {
           if (typeof timeout !== 'undefined') {
             clearTimeout(timeout);
           }
-          var $this = $(this);
           timeout = setTimeout(function () {
             wysiwygBlur();
           }, 500);
-        });
+        };
+        editor.on('keyup', onChange);
+        editor.on('change', onChange);
       }
     });
   });
@@ -511,7 +507,7 @@ var initAll = function () {
   console.log('InitAll');
 
   $(".process-content").sortable({
-    cancel: 'input,.jqte'
+    cancel: 'input,.mce-tinymce'
   });
 
   initWysiwyg();
