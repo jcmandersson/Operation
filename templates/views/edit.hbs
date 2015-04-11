@@ -5,7 +5,7 @@
       Sparad: 
       <span class="time">
         {{#if data.updatedAt }}
-          {{ data.updatedAt  }}
+          {{ data.updatedAt }}
         {{/if}}
       </span>
     </div>
@@ -85,76 +85,24 @@
         <i class="glyphicon glyphicon-plus form-control-feedback"></i>
       </li>
       <li>
-        <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
+        <button type="button" class="btn-checklist btn btn-default navbar-btn" id="checklist">Plocklista</button>
       </li>
     </ul>
 
     <div class="process-content mall hidden" id="contentMall">
-      <div class="process-content-item hidden">
-          <span class="contentTitle">
-            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
-            <span>
-             Checkbar: 
-             <input type="checkbox" class="checkAble" value="true">
-            </span>
-          </span>
-          <span class="contentText">
-            <textarea class="information" placeholder="Ny beskrivning"></textarea>
-          </span>
-      </div>
-      <div class="process-content-item">
-          <span class="contentTitle">
-            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
-            <span>
-             Checkbar: 
-             <input type="checkbox" class="checkAble" value="true">
-            </span>
-          </span>
-          <span class="contentText">
-            <textarea class="information" placeholder="Ny beskrivning"></textarea>
-          </span>
-      </div>
+      {{> process-content-item extraClass='hidden'}}
+      {{> process-content-item extraClass='init'}}
     </div>
     {{#each processes}}
       <div class="process-content" id="content{{@index}}" data-id="{{@index}}"
            style="{{#if @index}}display: none;{{/if}}">
-        <div class="process-content-item hidden">
-                      <span class="contentTitle"><input class="form-control rubrik" type="text" value=""
-                                                        placeholder="Ny rubrik"/></span>
-                      <span class="contentText"><textarea class="information"
-                                                          placeholder="Ny beskrivning"></textarea></span>
-        </div>
+        {{> process-content-item extraClass='hidden'}}
         {{#each contents}}
           <input class="hidden" type="text" name="content{{@../index}}Id{{@index}}" value="{{ _id }}"/>
 
-          <div class="process-content-item" data-parent="{{@../index}}" data-id="{{@index}}">
-            <span class="contentTitle">
-               <input class="form-control rubrik" type="text" name="content{{@../index}}title{{@index}}"
-                      value="{{ title }}"/>
-                 <span>
-                   Checkbar: 
-                   <input type="checkbox" class="checkAble" {{#if checkAble}}
-                          checked="checked" {{/if}}value="true">
-                 </span>
-            </span>
-            <span class="contentText">
-              <textarea class="information" name="content{{@../index}}text{{@index}}">{{ text }}</textarea>
-              </span>
-            <i class="glyphicon glyphicon-remove"></i>
-          </div>
+          {{> process-content-item}}
         {{/each}}
-        <div class="process-content-item init" data-parent="{{@index}}">
-          <span class="contentTitle">
-            <input class="form-control rubrik" type="text" value="" placeholder="Ny rubrik"/>
-            <span>
-             Checkbar: 
-             <input type="checkbox" class="checkAble" {{#if checkAble}} checked="checked" {{/if}}value="true">
-            </span>
-          </span>
-          <span class="contentText">
-            <textarea class="information" placeholder="Ny beskrivning"></textarea>
-          </span>
-        </div>
+        {{> process-content-item extraClass='init'}}
       </div>
     {{/each}}
 
@@ -187,6 +135,7 @@
       </div>
     {{/if}}
 
-    <!--<input type="submit" id="saveButton" class="btn btn-primary" name="action" value="Spara">-->
+    <a href="/info/{{data.slug}}" target="_blank" class="btn btn-primary">Förhandstitt</a>
+    <a href="" class="btn btn-primary toReview">Skicka till granskning</a>
   </form>
 </div>

@@ -30,11 +30,16 @@ node_modules
 # Ignore .DS_Store files on OS X
 .DS_Store
 
+#Ignore Jasmine SpecRunner
+_SpecRunner.html
+
 data/*
 .idea/*
 
 *.sw*
-*.min.css
 */styles/*.css
 */styles/site/*.css
+
+*/uploads/*
+
 

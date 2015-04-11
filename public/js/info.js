@@ -1,27 +1,55 @@
-$(document).ready(function() {
+tabClick = function(elem) {
+  $(elem).addClass('active').siblings().removeClass('active');
+  if(elem.id == "all") {
+    $(".process-content").show();
+    $("#contentchecklist").hide();
+    window.location.hash = '#all';
+  } else {
+    $(".process-content").hide();
+    $("#content"+elem.id).show();
+    window.location.hash = '#' + elem.id;
+  }
+};
+
+$("#btn-removePreparation").click(function() {
+  var slug = $('#opName').attr('data-operationSlug');
   
-  $("#all").addClass('active');
+  $.ajax({
+    type: 'DELETE',
+    url: '/api/operations/' + slug
+  })
+    .done(function( msg ) {
+      console.log(JSON.parse(msg));
+    })
+    .fail(function(err, status){
+      console.log('Error');
+      console.log(err);
+      console.log(status);
+    });
+  window.location="/";
+});
+
+$(document).ready(function() {
+  var hash = window.location.hash.substring(1);
+  if (!hash || hash === 'all'){
+    $("#all").addClass('active');
+  } else {
+    $('#' + hash).addClass('active').siblings().removeClass('active');
+    $(".process-content").hide();
+    $("#content" + hash).show();
+  }
+
+  
 
   $(".nav-pills > .navbar-btn").click(function() {
-    $(this).addClass('active').siblings().removeClass('active');
-    if(this.id == "all") { 
-      $(".process-content").show();
-      $("#contentchecklist").hide();
-    } else {
-      $(".process-content").hide();
-      $("#content"+this.id).show();
-    } 
+    tabClick(this);
   });
 
   var compiledResults = $('#kartotekResults-template').html();
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
-  
-  $('#article-search').keyup(findArticles.bind(undefined, kartotekResultsTemplate));
-  
-});
 
-$("#createOperationInstanceButton").click(function(){
-  createNewOperation();
+  $('#article-search').keyup(findArticles.bind(undefined, kartotekResultsTemplate));
+
 });
 
 var findArticles = function(resultsTemplate) {
@@ -38,11 +66,11 @@ var findArticles = function(resultsTemplate) {
     }
 
     $('.add-column').click(function() {
-      
+
       //add here
       var id = $(this).attr('data-kartotekid');
       var articleObject = jQuery.grep(results, function(e){ return e._id == id; });
-      
+
       var operationID = $('#opName').attr("data-operationId");
       socket.emit('articleAdd', articleObject, operationID);
       $('#article-search').val('').removeClass('has-results');

@@ -13,7 +13,8 @@ Article.prototype.createInDatabase = function(callback) {
       storage: this.data.storage,
       section: this.data.section,
       shelf:   this.data.shelf,
-      tray:    this.data.tray
+      tray:    this.data.tray,
+      price:   this.data.price
     }
   }).done(function(newArticle) {
     self.data.slug = newArticle.slug;
@@ -31,7 +32,8 @@ Article.prototype.modifyInDatabase = function(callback) {
       storage: this.data.storage,
       section: this.data.section,
       shelf:   this.data.shelf,
-      tray:    this.data.tray
+      tray:    this.data.tray,
+      price:   this.data.price
     }
   }).done(function(newArticle) {
     self.data.slug = newArticle.slug;
@@ -53,6 +55,7 @@ Article.prototype.fillFromElement = function(elem) {
   this.data.section = $(elem).find('[data-name="section"]').text();
   this.data.shelf   = $(elem).find('[data-name="shelf"]').text();
   this.data.tray    = $(elem).find('[data-name="shelf"]').text();
+  this.data.price   = $(elem).find('[data-name="price"]').text();
   this.data.slug    = $(elem).find('[data-name="slug"]').text();
 };
 
@@ -65,6 +68,7 @@ Article.prototype.fillFromInput = function(elem) {
   this.data.section = $(elem).find('[data-name="section"]').val();
   this.data.shelf   = $(elem).find('[data-name="shelf"]').val();
   this.data.tray    = $(elem).find('[data-name="shelf"]').val();
+  this.data.price   = $(elem).find('[data-name="price"]').val();
   this.data.slug    = $(elem).find('[data-name="slug"]').val();
 };
 

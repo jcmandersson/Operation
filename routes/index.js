@@ -43,9 +43,11 @@ exports = module.exports = function(app) {
   app.get('/kartotek', routes.views.kartotek);
   app.get('/db', routes.views.dbExamples);
   app.get('/info', routes.views.info);
-  app.get('/info/:slug', routes.views.info);  
+  app.get('/info/:slug', routes.views.info);
   app.get('/specialiteter', routes.views.specialiteter);
-  app.get('/granska', routes.views.inspect);
+  app.get('/granska', middleware.requireUser, routes.views.inspect);
+  app.get('/login', routes.views.login);
+  app.get('/list', routes.views.list);
 
   app.get('/index', routes.views.index);
 
@@ -53,6 +55,7 @@ exports = module.exports = function(app) {
   app.get('/api/search/:model', routes.views.apiSearch);
   app.get('/api/update/:model/:slug', routes.views.apiUpdate);
   app.get('/api/mongoose/id', routes.views.apiMongoose);
+  app.all('/api/upload', routes.views.apiUpload);
 	
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);

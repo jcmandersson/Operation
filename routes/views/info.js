@@ -14,10 +14,13 @@ exports = module.exports = function(req, res) {
   locals.scripts = [
     'info.js',
     'checklist.js',
-    'checkEffect.js'
+    'checkEffect.js',
+    'lib/featherlight/featherlight.min.js',
+    'lightbox.js'
   ];
 
   locals.css = [
+    'lib/featherlight.min.css',
     'site/info.css'
   ];
 
@@ -57,18 +60,36 @@ exports = module.exports = function(req, res) {
         next(err);
       });
   });
+  
+  //Compare for finding shortest route.
+  var compare = function(a, b) {
+    if (a.kartotek.storage > b.kartotek.storage) return 1;
+    if (a.kartotek.storage < b.kartotek.storage) return -1;    
+    
+    if (a.kartotek.section > b.kartotek.section) return 1;
+    if (a.kartotek.section < b.kartotek.section) return -1;
+      
+    if (a.kartotek.shelf > b.kartotek.shelf) return 1;
+    if (a.kartotek.shelf < b.kartotek.shelf) return -1;
+        
+    if (a.kartotek.tray > b.kartotek.tray) return 1;
+    if (a.kartotek.tray < b.kartotek.tray) return -1;
+    return 0;
+  };
 
   view.on('init', function(next) {
     article.model.find({
       operation: locals.data._id
     }).populate('kartotek')
       .exec(function (err, articleData) {
+        
         if (err) {
           console.log('DB error');
           console.log(err);
           return;
         }
         //console.log(articleData);
+        articleData.sort(compare);
         locals.articles = articleData;
         next(err);
       });
