@@ -104,8 +104,10 @@ var removeArticle = function() {
 };
 
 var addAmountClick = function(){
+  console.log(this);
   var val = $(this).text();
-  var input = $('<input type="text" min="1" class="amount form-control" id="editAmount"/>');
+  console.log($(this).text());
+  var input = $('<input type="number" class="amount form-control" id="editAmount"/>');
   input.val(val);
   $(this).replaceWith(input);
   $(input).focus();
@@ -132,12 +134,9 @@ var editAmountDone = function (e, tag) {
     var input = $('<b class="amount">' + val + '</b>');
     input.val(val);
     $(tag).replaceWith(input);
-    addAmountClick(input);
-
     var checkArticleID = $(input).parent().parent().attr('id');
     var operationID = $(input).parent().parent().attr('data-operationId');
     socket.emit('amountChange', checkArticleID, operationID, val);
-
     return false;
   }
 };
@@ -218,10 +217,13 @@ socket.on('newArticleUpdate', function(checkArticle, kartotekArticle, operationI
   var compiledComment = $('#comment-template').html();
   var commentTemplate = Handlebars.compile(compiledComment);
   
-  $(articleTemplate({ kartotekid: kartotekArticle._id, operation: operationID, _id: checkArticle._id,
+/*  $(articleTemplate({ kartotekid: kartotekArticle._id, operation: operationID, _id: checkArticle._id,
     amount: 1, kartotekname: kartotekArticle.name, kartotekstorage : kartotekArticle.storage, kartoteksection: kartotekArticle.section,
-    kartotekshelf: kartotekArticle.shelf, kartotektray: kartotekArticle.tray  })).appendTo('.articleTable');
+    kartotekshelf: kartotekArticle.shelf, kartotektray: kartotekArticle.tray})).appendTo('.articleTable');
+  */
 
-  $(commentTemplate({ kartotekname: kartotekArticle.name, _id: checkArticle._id, comment: '' })).appendTo('.articleTable');
+  $(articleTemplate({ kartotek : kartotekArticle, operation: operationID, _id : checkArticle._id, amount : 1 })).appendTo('.articleTable');
+  
+  $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
   
 });

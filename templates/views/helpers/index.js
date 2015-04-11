@@ -346,5 +346,43 @@ module.exports = function() {
     return options.inverse(this);
   };
   
+  //Register and render partials
+  _helpers.renderPartial = function(partialName, options){
+    if (!partialName) {
+      console.error('No partial name given.');
+      return '';
+    }
+
+    var fs = require('fs');
+    var path = require('path');
+    var partialsDir = path.join(__dirname, '../..', '/views/partials');
+    
+    /*var filenames = fs.readdirSync(partialsDir);
+
+    filenames.forEach(function (filename) {
+      var matches = /^([^.]+).hbs$/.exec(filename);
+      if (!matches) {
+        return;
+      }
+      var name = matches[1];
+      var template = fs.readFileSync(partialsDir + '/' + filename, 'utf8');
+      console.log(name);
+      console.log(template);
+      hbs.registerPartial(name, template);
+    });*/
+
+    var matches = /^([^.]+).hbs$/.exec(partialName+'.hbs');
+    var name = matches[1];
+    var template = fs.readFileSync(partialsDir + '/' + partialName+'.hbs', 'utf8');
+    hbs.registerPartial(name, template);
+    
+    var partial = hbs.partials[partialName];
+    
+    if (!partial) {
+      console.error('Couldnt find the compiled partial: ' + partialName);
+      return '';
+    }
+    return new hbs.SafeString( partial );
+  };
 	return _helpers;
 };
