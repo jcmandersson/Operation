@@ -1,3 +1,5 @@
+var socket = io();
+
 $('.confirmRemovePreparation').click(function() {
   var slug = $(this).attr('data-slug');
   $.ajax({
@@ -11,5 +13,6 @@ $('.confirmRemovePreparation').click(function() {
       console.log(err);
       console.log(status);
     });
+  socket.emit('updateOverview');
   window.location.href = '/';
 });

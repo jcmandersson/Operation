@@ -37,6 +37,7 @@ exports = module.exports = function(req, res) {
         }
         data.linda_id = req.query.linda;
         data.save(); 
+        keystone.io.emit('updateOverview')
       });
 
       res.redirect("/info/" + newOperation.slug);

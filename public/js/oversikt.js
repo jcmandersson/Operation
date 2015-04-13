@@ -54,4 +54,8 @@ $(document).ready(function(){
     }
   });
   
+  socket.on('updateOverview', function(){
+    window.location.reload();
+  });
+  
 });
