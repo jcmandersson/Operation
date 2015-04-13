@@ -16,7 +16,8 @@ exports = module.exports = function(req, res) {
     'checklist.js',
     'checkEffect.js',
     'lib/featherlight/featherlight.min.js',
-    'lightbox.js'
+    'lightbox.js',
+    'removePreparation.js'
   ];
 
   locals.css = [
@@ -89,6 +90,8 @@ exports = module.exports = function(req, res) {
           return;
         }
         //console.log(articleData);
+        //articleData.sort(compare);
+        console.log(articleData);
         //articleData.sort(compare);
         locals.articles = articleData;
         next(err);

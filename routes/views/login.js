@@ -4,7 +4,7 @@ var session = keystone.session;
 
 exports = module.exports = function (req, res) {
   var view = new keystone.View(req, res),
-      locals = res.locals;
+    locals = res.locals;
 
   locals.section = 'login';
 
@@ -16,26 +16,32 @@ exports = module.exports = function (req, res) {
     'site.css',
     'login.css'
   ];
-  
+
+  view.on('init', function (next) {
+    if (typeof req.query.logout === 'undefined') {
+      next();
+      return;
+    }
+    session.signout(req, res, function () {
+      res.redirect('/login');
+    });
+  });
+
   view.on('post', {login: ''}, function (next) {
 
     if (!req.body.email || !req.body.password) {
       req.flash('error', 'Skriv in ett giltigt användarnamn och lösenord.');
       return next();
     }
-    var onSuccess = function(user) {
-      if (req.query.from && req.query.from.match(/^(?!http|\/\/|javascript).+/)) {
-        res.redirect(req.query.from);
-      } else if ('string' === typeof keystone.get('login redirect')) {
-        res.redirect(keystone.get('login redirect'));
-      } else if ('function' === typeof keystone.get('login redirect')) {
-        keystone.get('login redirect')(user, req, res);
+    var onSuccess = function (user) {
+      if (req.query.redirect){
+        res.redirect(req.query.redirect);
       } else {
         res.redirect('/');
       }
     };
 
-    var onFail = function() {
+    var onFail = function () {
       req.flash('error', 'Felaktigt användarnamn eller lösenord.');
       return next();
     };
