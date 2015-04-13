@@ -253,6 +253,8 @@ var articles = {
     var self = this;
 
     $('#search-article').keyup(function() {
+      var value = $(this).val();
+      if(value.length < 3) return;
       $.ajax({
         type: 'GET',
         url:  '/api/search/Kartotekartikel/?all',
