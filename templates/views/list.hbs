@@ -7,7 +7,7 @@
       <th><a href="?{{currentQuery}}sort={{#ifeq sort 'tags'}}-{{/ifeq}}tags">Sökord</a></th>
       <th><a href="?{{currentQuery}}sort={{#ifeq sort 'specialty'}}-{{/ifeq}}specialty">Specialitet</a></th>
       <th><a href="?{{currentQuery}}sort={{#ifeq sort 'state'}}-{{/ifeq}}state">Tillstånd</a></th>
-      <th><a href="?{{currentQuery}}sort={{#ifeq sort 'updatedAt'}}-{{/ifeq}}updatedAt">Senast sparad</a></th>
+      <th class="date"><a href="?{{currentQuery}}sort={{#ifeq sort 'updatedAt'}}-{{/ifeq}}updatedAt">Senast sparad</a></th>
     </tr>
     {{#each operations}}
       <tr onclick="document.location = '/info/{{slug}}';">
@@ -16,7 +16,7 @@
         <td>{{tags}}</td>
         <td><a href="?specialty={{specialty.name}}">{{specialty.name}}</a></td>
         <td><a href="?state={{state}}">{{state}}</a></td>
-        <td>{{#splitDate updatedAt}}
+        <td class="date">{{#splitDate updatedAt}}
           {{dayOfMonth}}/{{month}} {{year}} {{hour}}:{{minute}}
         {{/splitDate}}</td>
       </tr>
