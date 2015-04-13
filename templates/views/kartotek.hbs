@@ -2,9 +2,9 @@
 
 <script id="modify-template" type="text/x-handlebars-template">
   \{{#if isModifyable}}
-    <input type="text" class="form-control" value="\{{value}}" id="currently-modifying" />
+  <input type="text" class="form-control" value="\{{value}}" id="currently-modifying" />
   \{{else}}
-    <span>\{{ value }}</span>
+  <span>\{{ value }}</span>
   \{{/if}}
 </script>
 
@@ -34,22 +34,22 @@
   </tr>
 
   \{{# each articles }}
-    <tr class="check-js" id="\{{_id}}" data-slug="\{{slug}}">
-      <!-- The reason for the additional <span> is so that we can attach an event listener
-        to it, should then dissapear/not activate anymore when we replace it with an input. -->
-      <td class="modifyable-article-column" data-name="name">\{{#modifyable slug 'name' name}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column" data-name="storage">\{{#modifyable slug 'storage' storage}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column" data-name="section">\{{#modifyable slug 'section' section}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column" data-name="shelf">\{{#modifyable slug 'shelf' shelf}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column" data-name="tray">\{{#modifyable slug 'tray' tray}}\{{/modifyable}}</td>
-      {{#if user.isAdmin}}
-        <td class="modifyable-article-column" data-name="price">\{{#modifyable slug 'price' price}}\{{/modifyable}}</td>
-      {{/if}}
-      <td class="modifyable-article-column hidden" data-name="slug">\{{ slug }}</td>
-      <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
-        with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
-      <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
-    </tr>
+  <tr class="check-js" id="\{{_id}}" data-slug="\{{slug}}">
+    <!-- The reason for the additional <span> is so that we can attach an event listener
+      to it, should then dissapear/not activate anymore when we replace it with an input. -->
+    <td class="modifyable-article-column" data-name="name">\{{#modifyable slug 'name' name}}\{{/modifyable}}</td>
+    <td class="modifyable-article-column" data-name="storage">\{{#modifyable slug 'storage' storage}}\{{/modifyable}}</td>
+    <td class="modifyable-article-column" data-name="section">\{{#modifyable slug 'section' section}}\{{/modifyable}}</td>
+    <td class="modifyable-article-column" data-name="shelf">\{{#modifyable slug 'shelf' shelf}}\{{/modifyable}}</td>
+    <td class="modifyable-article-column" data-name="tray">\{{#modifyable slug 'tray' tray}}\{{/modifyable}}</td>
+    {{#if user.isAdmin}}
+      <td class="modifyable-article-column" data-name="price">\{{#modifyable slug 'price' price}}\{{/modifyable}}</td>
+    {{/if}}
+    <td class="modifyable-article-column hidden" data-name="slug">\{{ slug }}</td>
+    <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
+      with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
+    <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
+  </tr>
   \{{/each}}
 </script>
 
@@ -57,56 +57,56 @@
   <div class="row">
     <div class="form-group has-feedback search-article">
       <input type="search" id="search-article" class="form-control" autocomplete="off" placeholder="Sök artikel..." />
-      <i class="glyphicon glyphicon-search form-control-feedback"></i>   
-    </div>  
-     
+      <i class="glyphicon glyphicon-search form-control-feedback"></i>
+    </div>
+
   </div>
 
   <div class="row">
     <div class="input-box">
       <table class="table">
         <tbody id="articles">
-          <tr class="table-headerstriped">
-            <td>Namn</td>
-            <td>Förråd</td>
-            <td>Sektion</td>
-            <td>Hylla</td>
-            <td>Fack</td>
-            {{#if user.isAdmin}}
-              <td>Pris</td>
-            {{/if}}
-            <td></td>
-          </tr>
-          <tr id="{{_id}}">
-            <td><input data-name="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
-            <td><input data-name="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
-            <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
-            <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
-            <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
-            {{#if user.isAdmin}}
-              <td><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
-            {{/if}}
-            <td><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
-          </tr>
+        <tr class="table-headerstriped">
+          <td>Namn</td>
+          <td>Förråd</td>
+          <td>Sektion</td>
+          <td>Hylla</td>
+          <td>Fack</td>
+          {{#if user.isAdmin}}
+            <td>Pris</td>
+          {{/if}}
+          <td></td>
+        </tr>
+        <tr id="{{_id}}">
+          <td><input data-name="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
+          <td><input data-name="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
+          <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
+          <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
+          <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
+          {{#if user.isAdmin}}
+            <td><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
+          {{/if}}
+          <td><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
+        </tr>
 
-          {{#each articles}}
-            <tr class="check-js" id="{{_id}}" data-slug="{{slug}}">
-              <!-- The reason for the additional <span> is so that we can attach an event listener
-                to it, should then dissapear/not activate anymore when we replace it with an input. -->
-              <td class="modifyable-article-column" data-name="name"><span>{{ name }}</span></td>
-              <td class="modifyable-article-column" data-name="storage"><span>{{ storage }}</span></td>
-              <td class="modifyable-article-column" data-name="section"><span>{{ section }}</span></td>
-              <td class="modifyable-article-column" data-name="shelf"><span>{{ shelf }}</span></td>
-              <td class="modifyable-article-column" data-name="tray"><span>{{ tray }}</span></td>
-              {{#if ../user.isAdmin}}
-                <td class="modifyable-article-column" data-name="price"><span>{{ price }}</span></td>
-              {{/if}}
-              <td class="modifyable-article-column hidden" data-name="slug">{{ slug }}</td>
-              <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
-                with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
-              <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
-            </tr>
-          {{/each}}
+        {{#each articles}}
+          <tr class="check-js" id="{{_id}}" data-slug="{{slug}}">
+            <!-- The reason for the additional <span> is so that we can attach an event listener
+              to it, should then dissapear/not activate anymore when we replace it with an input. -->
+            <td class="modifyable-article-column" data-name="name"><span>{{ name }}</span></td>
+            <td class="modifyable-article-column" data-name="storage"><span>{{ storage }}</span></td>
+            <td class="modifyable-article-column" data-name="section"><span>{{ section }}</span></td>
+            <td class="modifyable-article-column" data-name="shelf"><span>{{ shelf }}</span></td>
+            <td class="modifyable-article-column" data-name="tray"><span>{{ tray }}</span></td>
+            {{#if ../user.isAdmin}}
+              <td class="modifyable-article-column" data-name="price"><span>{{ price }}</span></td>
+            {{/if}}
+            <td class="modifyable-article-column hidden" data-name="slug">{{ slug }}</td>
+            <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
+              with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
+            <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
+          </tr>
+        {{/each}}
         </tbody>
       </table>
     </div>
