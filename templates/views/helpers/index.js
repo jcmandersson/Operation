@@ -454,20 +454,6 @@ module.exports = function() {
     var path = require('path');
     var partialsDir = path.join(__dirname, '../..', '/views/partials');
     
-    /*var filenames = fs.readdirSync(partialsDir);
-
-    filenames.forEach(function (filename) {
-      var matches = /^([^.]+).hbs$/.exec(filename);
-      if (!matches) {
-        return;
-      }
-      var name = matches[1];
-      var template = fs.readFileSync(partialsDir + '/' + filename, 'utf8');
-      console.log(name);
-      console.log(template);
-      hbs.registerPartial(name, template);
-    });*/
-
     var matches = /^([^.]+).hbs$/.exec(partialName+'.hbs');
     var name = matches[1];
     var template = fs.readFileSync(partialsDir + '/' + partialName+'.hbs', 'utf8');
