@@ -2,7 +2,7 @@
 
 <script id="modify-template" type="text/x-handlebars-template">
   \{{#if isModifyable}}
-  <input type="text" class="form-control" value="\{{value}}" id="currently-modifying" />
+  <input type="text" class="form-control" value="\{{value}}" id="currently-modifying"/>
   \{{else}}
   <span>\{{ value }}</span>
   \{{/if}}
@@ -18,28 +18,34 @@
     <td>Fack</td>
     {{#if user.isAdmin}}
       <td>Pris</td>
+      <td></td>
     {{/if}}
-    <td></td>
   </tr>
-  <tr id="\{{_id}}">
-    <td><input data-name="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
-    <td><input data-name="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
-    <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
-    <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
-    <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
-    {{#if user.isAdmin}}
-      <td><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
-    {{/if}}
-    <td><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
-  </tr>
+
+  {{#if user.isAdmin}}
+    <tr id="\{{_id}}">
+      <td><input data-name="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
+      <td><input data-name="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
+      <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
+      <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
+      <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
+      {{#if user.isAdmin}}
+        <td><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
+      {{/if}}
+      <td><a class="btn btn-success" id="article-add" href="#" role="button"><span
+        class="glyphicon glyphicon-plus"></span></a></td>
+    </tr>
+  {{/if}}
 
   \{{# each articles }}
   <tr class="check-js" id="\{{_id}}" data-slug="\{{slug}}">
     <!-- The reason for the additional <span> is so that we can attach an event listener
       to it, should then dissapear/not activate anymore when we replace it with an input. -->
     <td class="modifyable-article-column" data-name="name">\{{#modifyable slug 'name' name}}\{{/modifyable}}</td>
-    <td class="modifyable-article-column" data-name="storage">\{{#modifyable slug 'storage' storage}}\{{/modifyable}}</td>
-    <td class="modifyable-article-column" data-name="section">\{{#modifyable slug 'section' section}}\{{/modifyable}}</td>
+    <td class="modifyable-article-column" data-name="storage">\{{#modifyable slug 'storage' storage}}\{{/modifyable}}
+    </td>
+    <td class="modifyable-article-column" data-name="section">\{{#modifyable slug 'section' section}}\{{/modifyable}}
+    </td>
     <td class="modifyable-article-column" data-name="shelf">\{{#modifyable slug 'shelf' shelf}}\{{/modifyable}}</td>
     <td class="modifyable-article-column" data-name="tray">\{{#modifyable slug 'tray' tray}}\{{/modifyable}}</td>
     {{#if user.isAdmin}}
@@ -48,7 +54,10 @@
     <td class="modifyable-article-column hidden" data-name="slug">\{{ slug }}</td>
     <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
       with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
-    <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
+    {{#if user.isAdmin}}
+      <td><a class="btn btn-danger article-remove" href="#" role="button"><span
+        class="glyphicon glyphicon-remove"></span></a></td>
+    {{/if}}
   </tr>
   \{{/each}}
 </script>
@@ -56,7 +65,7 @@
 <div class="container">
   <div class="row">
     <div class="form-group has-feedback search-article">
-      <input type="search" id="search-article" class="form-control" autocomplete="off" placeholder="Sök artikel..." />
+      <input type="search" id="search-article" class="form-control" autocomplete="off" placeholder="Sök artikel..."/>
       <i class="glyphicon glyphicon-search form-control-feedback"></i>
     </div>
 
@@ -64,7 +73,7 @@
 
   <div class="row">
     <div class="input-box">
-      <table class="table">
+      <table class="table table-striped">
         <tbody id="articles">
         <tr class="table-headerstriped">
           <td>Namn</td>
@@ -74,20 +83,23 @@
           <td>Fack</td>
           {{#if user.isAdmin}}
             <td>Pris</td>
+            <td></td>
           {{/if}}
-          <td></td>
         </tr>
-        <tr id="{{_id}}">
-          <td><input data-name="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
-          <td><input data-name="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
-          <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
-          <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
-          <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
-          {{#if user.isAdmin}}
-            <td><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
-          {{/if}}
-          <td><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
-        </tr>
+        {{#if user.isAdmin}}
+          <tr id="{{_id}}">
+            <td><input data-name="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
+            <td><input data-name="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
+            <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
+            <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
+            <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
+            {{#if user.isAdmin}}
+              <td><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
+            {{/if}}
+            <td><a class="btn btn-success" id="article-add" href="#" role="button"><span
+              class="glyphicon glyphicon-plus"></span></a></td>
+          </tr>
+        {{/if}}
 
         {{#each articles}}
           <tr class="check-js" id="{{_id}}" data-slug="{{slug}}">
@@ -104,7 +116,10 @@
             <td class="modifyable-article-column hidden" data-name="slug">{{ slug }}</td>
             <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
               with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
-            <td><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
+            {{#if ../user.isAdmin}}
+              <td><a class="btn btn-danger article-remove" href="#" role="button"><span
+                class="glyphicon glyphicon-remove"></span></a></td>
+            {{/if}}
           </tr>
         {{/each}}
         </tbody>
