@@ -93,7 +93,6 @@ var checkjs = function(e) {  //When a checkable row is clicked, check the row an
         }
       });
       socket.emit('markAsDone', { operation: operationId, isDone: done});
-      
     }
   }
 };
