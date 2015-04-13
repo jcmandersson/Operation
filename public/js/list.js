@@ -31,4 +31,9 @@ var initializeSpecialitetSelect = function () {
 
 $(document).ready(function () {
   initializeSpecialitetSelect();
+
+  $('.specialitet-select').change(function() {
+    window.location.href = window.location.href.split('?')[0] + "?specialty=" + $(this).children().last().html();  
+  });
+
 });

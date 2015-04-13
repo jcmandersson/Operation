@@ -1,0 +1,15 @@
+<!--Are you sure that you want to remove this preparation sign -->
+<div class="modal fade" id="alertRemovePreparation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Är du säker på att du vill ta bort denna förberedelse?</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-id="{{_id}}" class="btn btn-default cancelComment" data-dismiss="modal">Nej</button>
+        <button data-message="" data-slug="{{ slug }}" data-id="{{_id}}" type="button" class="btn btn-primary confirmRemovePreparation">Ja</button>
+      </div>
+    </div>
+  </div>
+</div>
