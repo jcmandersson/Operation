@@ -88,7 +88,7 @@ exports = module.exports = function(req, res) {
           console.log(err);
           return;
         }
-        //console.log(articleData);
+        console.log(articleData);
         articleData.sort(compare);
         locals.articles = articleData;
         next(err);

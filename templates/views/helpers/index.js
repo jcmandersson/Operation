@@ -355,6 +355,7 @@ module.exports = function() {
   };
   
   _helpers.splitDate = function(date, options){
+    if(typeof date === 'undefined') return '';
     var date = new Date(date.toString());
     return options.fn({
       year: date.getFullYear(),
