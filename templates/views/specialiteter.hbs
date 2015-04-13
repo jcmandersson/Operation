@@ -1,22 +1,22 @@
 {{!< default}}
 <div class="container">
-  
-    <ul class="list-group"> 
-      {{# each specialities}}
-        <li class="list-group-item">
-          <div class="speciality">
-            {{name}} ({{ abbreviation }}) <span class="badge">{{op.length}}</span>
-          </div>                    
-          <div class="hidden operations">            
-            {{# each op}}
-              <div class="operation">
-                <a href="info/{{ slug }}" class="div-full">{{title}}</a>
-              </div>              
-            {{/each}}            
-          </div>
-        </li>
-      {{/each}}       
-    </ul>  
+
+  <ul class="list-group">
+    {{# each specialities}}
+      <li class="list-group-item">
+        <div class="speciality">
+          {{name}} ({{ abbreviation }}) <span class="badge">{{op.length}}</span>
+        </div>
+        <div class="hidden operations">
+          {{# each op}}
+            <div class="operation">
+              <a href="info/{{ slug }}" class="div-full">{{title}}</a>
+            </div>
+          {{/each}}
+        </div>
+      </li>
+    {{/each}}
+  </ul>
 </div>
 
 

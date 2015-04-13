@@ -20,7 +20,10 @@ Eftersom denna del av projektet endast innehåller checkande av checklistor så 
 Huvuddelen i implementeringen av checklistan är kommunikationen med Socket.IO. Information om Socket.IO finns på webbplatsen: \textit{http://socket.io/}
  
 \subsection{Metod}
-Jag började med att fundera på hur kommunikationen ska se ut på för sätt. Jag kom fram till att när en användare går in på en operationsförberedelse så kommer denne in i ett rum. Varje gång en person sedan checkar en checkbox så skickas ett Socket.IO meddelande till servern som innehåller information om vilken checkruta som ska checkas samt vilket rum checkboxen ska checkas i. Servern skickar sedan ett meddelande till det givna rummet vilken checkruta som ska checkas och alla klienter som är anslutna till det rummet checkar den givna checkrutan.
+Jag började med att fundera på hur kommunikationen ska se ut på för sätt. Jag kom fram till att när en användare går in på en operationsförberedelse så kommer denne in i ett rum. Varje gång en person sedan checkar en checkbox så skickas ett Socket.IO meddelande till servern som innehåller information om vilken checkruta som ska checkas samt vilket rum checkboxen ska checkas i. Servern skickar sedan ett meddelande till det givna rummet vilken checkruta som ska checkas och alla klienter som är anslutna till det rummet checkar den givna checkrutan. \\
+
+Figuren nedan visar detta flöde i ett sekvens liknande box-and-line-diagram.
+
 
 \subsection{Resultat}
 \subsection{Diskussion}
