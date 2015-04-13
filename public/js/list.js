@@ -1,5 +1,6 @@
 var initializeSpecialitetSelect = function () {
   $(".specialitet-select").select2({
+    placeholder: "Välj Specialitet",
     ajax: {
       type: 'GET',
       url: '/api/search/Specialitet/',
@@ -31,6 +32,9 @@ var initializeSpecialitetSelect = function () {
 
 $(document).ready(function () {
   initializeSpecialitetSelect();
+  $('.state-select').select2({
+    placeholder: "Välj Tillstånd"
+  });
 
   $('.specialitet-select').change(function() {
     window.location.href = window.location.href.split('?')[0] + "?specialty=" + $(this).children().last().html();  
