@@ -338,13 +338,6 @@ module.exports = function() {
     }
     return out;
   };
-
-  _helpers.ifNotString = function(v1, v2, options) {
-    if(v1 != v2) {
-      return options.fn(this);
-    }
-    return options.inverse(this);
-  };
   
   _helpers.exists = function(variable, options) {
     if (typeof variable !== 'undefined') {
