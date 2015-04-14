@@ -90,10 +90,9 @@ exports = module.exports = function(req, res) {
           console.log(err);
           return;
         }
-        //console.log(articleData);
+        
         //articleData.sort(compare);
-        console.log(articleData);
-        //articleData.sort(compare);
+        
         locals.articles = articleData;
         next(err);
       });
@@ -109,9 +108,7 @@ exports = module.exports = function(req, res) {
           console.log(err);
           return;
         }
-        //console.log(processData);
         locals.processes = processData;
-        //console.log(locals.processes);
         next(err);
       });
   });
@@ -128,7 +125,6 @@ exports = module.exports = function(req, res) {
               console.log(err);
               return;
             }
-            //console.log(contentData);
             e.contents = contentData;
             next(err);
           });

@@ -326,10 +326,6 @@ var navClick = function () {
   var $this = $(this).addClass('active');
   $(".process-content").hide();
   $("#content" + $this.attr('data-id')).show();
-  console.log($this.attr('data-id'));
-  console.log($("#content" + $this.attr('data-id')));
-  
-  console.log(this);
 };
 
 var changeName = function (e) {
@@ -629,7 +625,6 @@ var removeArticle = function() {
       url: '/api/artikels/' + slug
     })
       .done(function( msg ) {
-        console.log(msg);
         var row = $('#'+checkArticleID);
         row.remove();
       })
