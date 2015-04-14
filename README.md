@@ -49,7 +49,7 @@ $.ajax({
     text: 'söksträng'
   }
 }).done(function( msg ) {
-    console.log(JSON.parse(msg));
+    console.log(msg);
   })
   .fail(function(err, status){
     console.log('Någonting gick fel!');
@@ -65,7 +65,7 @@ $.ajax({
   url: '/api/operations/' + slug,
 })
   .done(function( msg ) {
-    console.log(JSON.parse(msg));
+    console.log(msg);
   })
   .fail(function(err, status){
     console.log('Någonting gick fel!');
@@ -86,7 +86,7 @@ $.ajax({
   }
 })
   .done(function( msg ) {
-    console.log(JSON.parse(msg)); //Innehåller den skapade modellen
+    console.log(msg); //Innehåller den skapade modellen
   })
   .fail(function(err, status){
     console.log('Någonting gick fel!');
@@ -106,7 +106,7 @@ $.ajax({
   }
 })
   .done(function( msg ) {
-    console.log(JSON.parse(msg));
+    console.log(msg);
   })
   .fail(function(err, status){
     console.log('Någonting gick fel!');
@@ -122,7 +122,7 @@ $.ajax({
   url: '/api/operations/' + slug,
 })
   .done(function( msg ) {
-    console.log(JSON.parse(msg));
+    console.log(msg);
   })
   .fail(function(err, status){
     console.log('Någonting gick fel!');

@@ -21,6 +21,20 @@ User.schema.virtual('canAccessKeystone').get(function() {
 	return this.isAdmin;
 });
 
+User.schema.statics.createUser = function (firstname, lastname, email, password, isAdmin, callback) {
+  var UserModel = this.model('User');
+  
+  new UserModel({
+    name: {
+      first: firstname,
+      last: lastname
+    },
+    email: email,
+    password: password,
+    isAdmin: typeof isAdmin === 'undefined' ? false : isAdmin
+  }).save(callback);
+};
+
 
 /**
  * Registration

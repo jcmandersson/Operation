@@ -37,19 +37,21 @@ exports = module.exports = function(app) {
 	// Views
   app.get('/', routes.views.start);
   app.get('/create', routes.views.create);
-  app.all('/new', middleware.requireUser, routes.views.new);
-  //app.all('/edit', routes.views.edit);
-  app.all('/edit/:slug', middleware.requireUser, routes.views.edit);
   app.get('/kartotek', routes.views.kartotek);
   app.get('/db', routes.views.dbExamples);
-  //app.get('/info', routes.views.info);
   app.get('/info/:slug', routes.views.info);
   app.get('/specialiteter', routes.views.specialiteter);
   app.all('/login', routes.views.login);
   app.get('/list', routes.views.list);
-
   app.get('/index', routes.views.index);
-
+  
+  // ADMIN
+  app.all('/new', middleware.requireUser, routes.views.new);
+  app.all('/edit/:slug', middleware.requireUser, routes.views.edit);
+  app.all('/user/create', middleware.requireUser, routes.views.editUser);
+  app.all('/user/edit/:_id', middleware.requireUser, routes.views.editUser);
+  
+  // API
   app.get('/api/print/:slug', routes.views.apiPrint);
   app.get('/api/search/:model', routes.views.apiSearch);
   app.get('/api/update/:model/:slug', routes.views.apiUpdate);
