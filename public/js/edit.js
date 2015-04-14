@@ -522,7 +522,21 @@ $(document).ready(function () {
   var compiledResults = $('#kartotekResults-template').html();
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
 
-  $('#article-search').keyup(findArticles.bind(undefined, kartotekResultsTemplate));
+  //$('#article-search').keyup(findArticles.bind(undefined, kartotekResultsTemplate));
+
+
+  $('#article-search').keyup( function() {
+    if( this.value.length == 0){
+      $('#kartotekResults').empty();
+      return;
+    }
+    else if( this.value.length < 3 ){
+      return;
+    }
+    findArticles(kartotekResultsTemplate);
+  });
+  
+  
   $('.articleTable tbody').on("click", '.article-remove', removeArticle);
   $('.articleTable tbody').on("click", '.amount', addAmountClick);
 
