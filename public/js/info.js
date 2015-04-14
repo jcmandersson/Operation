@@ -63,6 +63,7 @@ $(document).ready(function() {
       });
     
   });
+  
 });
   
 var findArticles = function (resultsTemplate) {

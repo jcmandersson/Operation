@@ -29,8 +29,9 @@ $(function() {
   
   $('.articleTable tbody').on("click", '.article-remove', removeArticle);
   
-  $('.articleTable tbody').on("click", '.amount', addAmountClick);
-  
+  if($('#opName').attr('data-template') == "false") {
+    $('.articleTable tbody').on("click", '.amount', addAmountClick);
+  }
   $('#btn-done').click( btnDone);
   
   socket.on('saveComment', saveCommentSocket);
@@ -98,7 +99,6 @@ var checkjs = function(e) {  //When a checkable row is clicked, check the row an
 };
   
 var saveComment = function() { //Save the comment locally and emit to back-end to save in database.
-  console.log($(this));
   var id = $(this).data('id');
   var checkComment = $('#checkComment' + id);
   var commentButton = $('#commentButton' + id);

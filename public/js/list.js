@@ -1,32 +1,34 @@
 var initializeSpecialitetSelect = function () {
-  $(".specialitet-select").select2({
-      ajax: {
-      type: 'GET',
-      url: '/api/search/Specialitet/',
-      dataType: 'json',
-      delay: 250,
-      data: function (params) {
+  $.ajax({
+    type: 'GET',
+    url: '/api/search/Specialitet/',
+    data: {
+      all: 1
+    }
+  }).done(function( msg ) {
+      console.log(msg);
+      var formated = $.map(msg, function (item) {
         return {
-          text: params.term, // search term
-          all: 1
-        };
-      },
-      processResults: function (data) {
-        return {
-          results: $.map(data, function (item) {
-            return {
-              text: item.name, id: item.name
-            }
-          })
-        };
-      },
-      cache: true
-    },
-    escapeMarkup: function (markup) {
-      return markup;
-    }, // let our custom formatter work
-    minimumInputLength: 0
-  });
+          text: item.name, id: item.name
+        }
+      });
+      console.log(formated);
+      var data = [{id: 'Alla specialiteter', text: 'Alla specialiteter'}];
+      data = data.concat(formated);
+      console.log(data);
+
+      $(".specialitet-select").select2({
+          data: data,
+          minimumInputLength: 0
+        });
+
+    })
+    .fail(function(err, status){
+      console.log('Någonting gick fel!');
+      console.log(err);
+      console.log(status);
+    });
+
 };
 
 $(document).ready(function () {
@@ -34,7 +36,12 @@ $(document).ready(function () {
   $('.state-select').select2();
 
   $('.specialitet-select').change(function() {
-    window.location.href = window.location.href.split('?')[0] + "?specialty=" + $(this).val();  
+    var newSpecialty = $(this).val();
+    if(newSpecialty !== "Alla specialiteter") {
+      window.location.href = window.location.href.split('?')[0] + "?specialty=" + newSpecialty;  
+    } else {
+      window.location.href = window.location.href.split('?')[0];
+    }
   });
 
   $('.state-select').change(function() {
