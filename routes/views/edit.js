@@ -107,8 +107,7 @@ exports = module.exports = function (req, res) {
     });
     next(null);
   });
-
-
+  
   view.on('init', function (next) {
     if (typeof locals.processes === 'undefined') locals.processes = [];
     /*locals.processes.push({
