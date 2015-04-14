@@ -40,4 +40,8 @@ $(document).ready(function () {
     window.location.href = window.location.href.split('?')[0] + "?specialty=" + $(this).children().last().html();  
   });
 
+  $('.state-select').change(function() {
+    window.location.href = window.location.href.split('?')[0] + "?state=" + $(this).children().last().html();  
+  });
+
 });
