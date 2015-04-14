@@ -54,23 +54,8 @@ $(document).ready(function(){
     }
   });
   
-});
-
-$('.removeOperations').click(function() {
-  console.log("hej");
-  console.log($(this).parent().parent());
-  var slug = $(this).parent().parent().attr('data-slug');
-  $.ajax({
-    type: 'DELETE',
-    url: '/api/operations/' + slug
-  })
-    .done(function( msg ) {
-      console.log(JSON.parse(msg));
-    })
-    .fail(function(err, status){
-      console.log('Error');
-      console.log(err);
-      console.log(status);
-    });
-  $(this).parent().remove();
+  socket.on('updateOverview', function(){
+    window.location.reload();
+  });
+  
 });

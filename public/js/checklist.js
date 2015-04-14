@@ -93,7 +93,6 @@ var checkjs = function(e) {  //When a checkable row is clicked, check the row an
         }
       });
       socket.emit('markAsDone', { operation: operationId, isDone: done});
-      
     }
   }
 };
@@ -109,13 +108,16 @@ var saveComment = function() { //Save the comment locally and emit to back-end t
   }
 
   var commentObject = {operation: operationId, id: id, comment: checkComment.val()};
+
+  //var commentObject = {operation: operationId, id: 666, comment: checkComment.val()};
+
   socket.emit('saveComment', commentObject);
   changeCommentButton(checkComment, commentButton);
 
   checkComment.attr('disabled', true);
   $(this).attr('disabled', true);
   saved = true;
-}
+};
 
 var showComment = function(){ //Hide the "Saved" text, enable the comment field and save the old text if the user presses cancel.
   console.log($(this));
@@ -170,12 +172,9 @@ var editAmountDone = function (e, tag) {
     var input = $('<b class="amount">' + val + '</b>');
     input.val(val);
     $(tag).replaceWith(input);
-    addAmountClick(input);
-
     var checkArticleID = $(input).parent().parent().attr('id');
     var operationID = $(input).parent().parent().attr('data-operationId');
     socket.emit('amountChange', checkArticleID, operationID, val);
-
     return false;
   }
 };
@@ -204,14 +203,12 @@ var saveCommentSocket = function(commentObject) {
   var commentButton = $('#commentButton' + commentObject.id);
   comment.val(commentObject.comment);
   changeCommentButton(comment, commentButton);
-}
+};
 
 var removeCheckArticleUpdate = function(checkArticleID){
   var row = $('#'+checkArticleID);
   row.remove();
-}
-
-
+};
 
 var getCheckboxes = function(checkboxesAndTemplate){
   var checkboxes = checkboxesAndTemplate.checkboxes;
@@ -224,8 +221,6 @@ var getCheckboxes = function(checkboxesAndTemplate){
     updateTableRow(tableRow, isChecked, isTemplate);
   }
 };
-
-
 
 var changeButtonColor = function(data) {
   if (data.isDone){
@@ -240,11 +235,6 @@ var newArticleUpdate = function(checkArticle, kartotekArticle, operationID){
   var articleTemplate = Handlebars.compile(compiledArticle);
   var compiledComment = $('#comment-template').html();
   var commentTemplate = Handlebars.compile(compiledComment);
-  $(articleTemplate({ kartotekid: kartotekArticle._id, operation: operationID, _id: checkArticle._id,
-    amount: 1, kartotekname: kartotekArticle.name, kartotekstorage : kartotekArticle.storage, kartoteksection: kartotekArticle.section,
-    kartotekshelf: kartotekArticle.shelf, kartotektray: kartotekArticle.tray  })).appendTo('.articleTable');
-  $(commentTemplate({ kartotekname: kartotekArticle.name, _id: checkArticle._id, comment: '' })).appendTo('.articleTable');
+  $(articleTemplate({ kartotek : kartotekArticle, operation: operationID, _id : checkArticle._id, amount : 1 })).appendTo('.articleTable');
+  $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
 };
-
-
-

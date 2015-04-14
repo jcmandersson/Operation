@@ -148,7 +148,7 @@ var articles = {
     var compiledTemplate = Handlebars.compile(templateHTML);
     var newHTML          = compiledTemplate({ articles: this.essentials() });
     $(this.data.id).html(newHTML);
-
+    
     this.attachAddArticleListener();
     this.attachModifyEntryListeners();
     this.attachModifyEntryFinishedListener();
@@ -178,7 +178,7 @@ var articles = {
   attachAddArticleListener: function() {
     var self = this;
 
-    $(this.data.add).click(function() {
+    $('[data-admin="true"]').find(this.data.add).click(function() {
       var newArticle = new Article();
       var rowWhichContainsCreate = $(self.getRowWhichContainsCreate());
       newArticle.fillFromInput(rowWhichContainsCreate);
@@ -192,7 +192,7 @@ var articles = {
     this.render();
   },
   attachModifyEntryListeners: function() {
-    var elems = $(this.data.id).find('.modifyable-article-column');
+    var elems = $('[data-admin="true"]').find(this.data.id).find('.modifyable-article-column');
     for (var i = 0; i < elems.length; i++) {
       var self = this;
       $(elems[i]).click(function(e) {
@@ -203,7 +203,7 @@ var articles = {
     }
   },
   attachRemoveArticleListeners: function() {
-    var elems = $(this.data.id).find('tr');
+    var elems = $('[data-admin="true"]').find(this.data.id).find('tr');
     for (var i = 0; i < elems.length; i++) {
       $(elems[i]).find('.article-remove').click(this.removeArticleListener);
     }
@@ -253,6 +253,8 @@ var articles = {
     var self = this;
 
     $('#search-article').keyup(function() {
+      var value = $(this).val();
+      if(value.length < 3) return;
       $.ajax({
         type: 'GET',
         url:  '/api/search/Kartotekartikel/?all',

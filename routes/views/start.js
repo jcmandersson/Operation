@@ -11,7 +11,8 @@ exports = module.exports = function (req, res) {
   locals.section = 'oversikt';
 
   locals.scripts = [
-    'oversikt.js'
+    'oversikt.js',
+    'removePreparation.js'
   ];
 
   locals.css = [
