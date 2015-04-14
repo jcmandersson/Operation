@@ -41,9 +41,9 @@
             <a href="{{ href }}">{{ label }}</a>
           </li>
         {{/each}}
-        <li class="open-admin-nav">
-          <a>Admin</a>
-          <ul class="admin-navigation">
+        <li class="dropdown open">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Admin <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
             {{# each navAdmin}}
               <li {{#ifeq ../section key}}class="active"{{else}}{{/ifeq}}>
                 <a href="{{ href }}">{{ label }}</a>
