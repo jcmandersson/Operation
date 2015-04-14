@@ -39,7 +39,6 @@ $(document).ready(function() {
     }
     findArticles(kartotekResultsTemplate);
   });
-  
 });
 
 var findArticles = function(resultsTemplate) {
