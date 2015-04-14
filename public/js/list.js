@@ -32,16 +32,14 @@ var initializeSpecialitetSelect = function () {
 
 $(document).ready(function () {
   initializeSpecialitetSelect();
-  $('.state-select').select2({
-    placeholder: "Välj Tillstånd"
-  });
+  $('.state-select').select2();
 
   $('.specialitet-select').change(function() {
     window.location.href = window.location.href.split('?')[0] + "?specialty=" + $(this).children().last().html();  
   });
 
   $('.state-select').change(function() {
-    window.location.href = window.location.href.split('?')[0] + "?state=" + $(this).children().last().html();  
+    window.location.href = window.location.href.split('?')[0] + "?state=" + $(this).select2('val');  
   });
 
 });
