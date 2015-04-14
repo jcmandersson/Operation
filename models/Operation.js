@@ -122,7 +122,6 @@ Operation.schema.methods.calculateProgress = function calculateProgress(cb) {
           checked: articleProgress.checked + contentProgress.checked
         }
       };
-      console.log(data);
       cb(data);
     });
   });
