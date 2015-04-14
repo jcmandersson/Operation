@@ -39,7 +39,12 @@ $(document).ready(function () {
   });
 
   $('.state-select').change(function() {
-    window.location.href = window.location.href.split('?')[0] + "?state=" + $(this).select2('val');  
+    var newState = $(this).select2('val');
+    if(newState !== "Alla tillstånd") {
+      window.location.href = window.location.href.split('?')[0] + "?state=" + newState;  
+    } else {
+      window.location.href = window.location.href.split('?')[0];
+    }
   });
 
 });
