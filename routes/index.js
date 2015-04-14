@@ -50,6 +50,7 @@ exports = module.exports = function(app) {
   app.all('/edit/:slug', middleware.requireUser, routes.views.edit);
   app.all('/user/create', middleware.requireUser, routes.views.editUser);
   app.all('/user/edit/:_id', middleware.requireUser, routes.views.editUser);
+  app.get('/user/list', middleware.requireUser, routes.views.listUser);
   
   // API
   app.get('/api/print', routes.views.apiPrint);
