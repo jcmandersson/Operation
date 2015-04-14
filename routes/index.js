@@ -35,7 +35,7 @@ var routes = {
 exports = module.exports = function(app) {
 
 	// Views
-  app.get('/', routes.views.start);
+  app.get('/', routes.views.overview);
   app.get('/create', routes.views.create);
   app.get('/kartotek', routes.views.kartotek);
   app.get('/db', routes.views.dbExamples);
