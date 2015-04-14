@@ -4,36 +4,40 @@
   <h2>Pågående operationsförberedelser</h2>
 
   {{#if specialties.length}}
-    
+
     {{#each specialties}}
       <div class="operationSpecialties" data-specialty="{{this.0.specialty._id}}">
-      <h3>{{this.0.specialty.name}} <span class="badge">{{this.length}}</span></h3>
-    {{#groupedEach 2 this}}
-      <div class="row">
-        {{#each this }}
-          {{>removePreparation}}
-        
-          <div class="col-md-6 operation" data-id="{{ _id }}" data-slug="{{ slug }}">
-            <div class="operation-card">
-              <a href="/info/{{ slug }}"></a>
+        {{#if this.length}}
+          <h3>{{this.0.specialty.name}} <span class="badge">{{this.length}}</span></h3>
+        {{/if}}
+        {{#groupedEach 2 this}}
+          <div class="row">
+            {{#each this }}
+              {{>removePreparation}}
 
-              <div class="title">{{ title }}</div>
-              <button type="button" class="close removeOperations" data-toggle="modal" aria-label="Close" data-target="#alertRemovePreparation">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <div class="lindaID">{{ linda_id }}&nbsp;
-                <span id="comment-icon{{ _id }}" class="comment-icon glyphicon glyphicon-comment {{#unless comment}} hidden {{/unless}}"></span>
-              </div>
-              <div class="tags">{{ tags }}&nbsp;</div>
-              <div class="progressbar {{#if isDone}} isDone {{/if}}" data-total="{{ progress.all.total }}"
-                   data-checked="{{ progress.all.checked }}" data-percent="{{ progress.all.percent }}">
+              <div class="col-md-6 operation" data-id="{{ _id }}" data-slug="{{ slug }}">
+                <div class="operation-card">
+                  <a href="/info/{{ slug }}"></a>
 
+                  <div class="title">{{ title }}</div>
+                  <button type="button" class="close removeOperations" data-toggle="modal" aria-label="Close"
+                          data-target="#alertRemovePreparation">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <div class="lindaID">{{ linda_id }}&nbsp;
+                    <span id="comment-icon{{ _id }}"
+                          class="comment-icon glyphicon glyphicon-comment {{#unless comment}} hidden {{/unless}}"></span>
+                  </div>
+                  <div class="tags">{{ tags }}&nbsp;</div>
+                  <div class="progressbar {{#if isDone}} isDone {{/if}}" data-total="{{ progress.all.total }}"
+                       data-checked="{{ progress.all.checked }}" data-percent="{{ progress.all.percent }}">
+
+                  </div>
+                </div>
               </div>
-            </div>
+            {{/each}}
           </div>
-        {{/each}}
-      </div>
-    {{/groupedEach}}
+        {{/groupedEach}}
       </div>
     {{/each}}
   {{ else }}
