@@ -8,7 +8,7 @@ exports = module.exports = function (req, res) {
 
   // locals.section is used to set the currently selected
   // item in the header navigation.
-  locals.section = 'create';
+  locals.section = typeof req.query.state === 'undefined' ? 'list' : req.query.state;
 
   locals.scripts = [
     'list.js'

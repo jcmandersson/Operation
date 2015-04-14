@@ -11,24 +11,6 @@ tabClick = function(elem) {
   }
 };
 
-$("#btn-removePreparation").click(function() {
-  var slug = $('#opName').attr('data-operationSlug');
-  
-  $.ajax({
-    type: 'DELETE',
-    url: '/api/operations/' + slug
-  })
-    .done(function( msg ) {
-      console.log(JSON.parse(msg));
-    })
-    .fail(function(err, status){
-      console.log('Error');
-      console.log(err);
-      console.log(status);
-    });
-  window.location="/";
-});
-
 $(document).ready(function() {
   var hash = window.location.hash.substring(1);
   if (!hash || hash === 'all'){

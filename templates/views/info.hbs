@@ -51,7 +51,7 @@
                 <td class="centered">Sektion</td>
                 <td class="centered">Hylla</td>
                 <td class="centered">Fack</td>
-                <td class="centered comment-header"></td>
+                <td class="centered"></td>
                 <td class="centered"></td>
             </tr>
       {{#if articles}}
@@ -72,8 +72,20 @@
     {{/unless}}
   </div>
 
-{{#if data.template}}
-  {{#ifNotString data.state 'Granskning'}}
+  {{#if data.template}}
+
+    {{#ifeq data.state 'Utkast'}}
+      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+      <div id='btn-removePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
+    {{/ifeq}}
+
+    {{#ifeq data.state 'Granskning'}}
+      <a href="/edit/{{data.slug}}" class="btn btn-primary">Publicera</a>
+      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+      <div id='btn-removePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
+    {{/ifeq}}
+  
+    {{#ifeq data.state 'Publicerad'}}
       <form method="get" id="createOperationInstanceButton">
         <input type="hidden" name="operation" value="create">
         <input type="hidden" name="operationId" value="{{data._id}}">
@@ -92,20 +104,19 @@
                 <input type="text" id="lindaID" name="linda" class="form-control"/>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
+                <button type="button" class="btn btn-primary pop-up-window" data-dismiss="modal">Stäng</button>
+                <button type="submit" class="btn btn-primary pop-up-window">Påbörja förberedelse</button>
               </div>
             </div>
           </div>
         </div>
       </form>
-  {{/ifNotString}}
-    <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
-  </div>
-{{else}}
-  <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
-  <div id='btn-removePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort operation</div>
-{{/if}}
+      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+    {{/ifeq}}
+    {{else}}
+    <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
+    <div id='btn-removePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
+  {{/if}}
 </div>
 
 <script id="kartotekResults-template" type="text/x-handlebars-template">

@@ -14,7 +14,14 @@ KartotekArticle.add({
   shelf: { label: 'Hylla', type: String, required: true, initial: true },
   tray: { label: 'Fack', type: String, required: true, initial: true },
   price: { label: 'Pris', type: Types.Money, required: false, initial: true }, //TODO Ändra till required när det är implementerat.
-  articleNumber: { type: String, required: false, initial: true }
+  articleNumber: { type: String, required: false, initial: true },
+  supplierArticleNumber: {type: String, required: false, initial: true },
+  clinic: {type: String, required: false, initial: true },
+  supplier: {type: String, required: false, initial: true },
+  orderItem: {type: String, required: false, initial: true },
+  amount: {type: Types.Number, required: false, initial: true },
+  unit: {type: String, required: false, initial: true },
+  peoe: {type: Types.Number, requred: false, initial: true}
 });
 
 /**

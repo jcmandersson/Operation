@@ -24,16 +24,31 @@ exports.initLocals = function(req, res, next) {
 	var locals = res.locals;
 	
 	locals.navLinks = [
-		{ label: 'Översikt',      key: 'oversikt',  href: '/'         },
-    { label: 'Skapa Handbok', key: 'new',       href: '/new'      },
+		{ label: 'Översikt',      key: 'oversikt',  href: '/' },
+    { label: 'Handböcker',    key: 'list',      href: '/list' },
     { label: 'Kartotek',      key: 'kartotek',  href: '/kartotek' }
 	];
-
   if (typeof req.user === 'undefined') {
     locals.navLinks.push({
       label: 'Logga in',
       key: 'login',
       href: '/login'
+    });
+  }else{
+    locals.navLinks.push({
+      label: 'Skapa Handbok',
+      key: 'new',
+      href: '/new'
+    });
+    locals.navLinks.push({
+      label: 'Granska',
+      key: 'Granskning',
+      href: '/list?state=Granskning'
+    });
+    locals.navLinks.push({
+      label: 'Logga ut',
+      key: 'login',
+      href: '/login?logout'
     });
   }
 	
@@ -48,20 +63,15 @@ exports.initLocals = function(req, res, next) {
 */
 
 exports.flashMessages = function(req, res, next) {
-	
 	var flashMessages = {
 		info: req.flash('info'),
 		success: req.flash('success'),
 		warning: req.flash('warning'),
 		error: req.flash('error')
 	};
-	
-  console.log(flashMessages);
-  console.log(flashMessages.info.length + flashMessages.success.length + flashMessages.warning.length + flashMessages.error.length);
 	res.locals.messages = flashMessages.info.length + flashMessages.success.length + flashMessages.warning.length + flashMessages.error.length > 0 ? flashMessages : false;
-	
+  
 	next();
-	
 };
 
 
@@ -72,8 +82,8 @@ exports.flashMessages = function(req, res, next) {
 exports.requireUser = function(req, res, next) {
 	
 	if (!req.user) {
-		req.flash('error', 'Please sign in to access this page.');
-		res.redirect('/keystone/signin');
+		req.flash('error', 'Du måste logga in för att nå denna sida.');
+		res.redirect('/login?redirect='+encodeURIComponent(req.route.path));
 	} else {
 		next();
 	}
