@@ -99,7 +99,6 @@ var checkjs = function(e) {  //When a checkable row is clicked, check the row an
 };
   
 var saveComment = function() { //Save the comment locally and emit to back-end to save in database.
-  console.log($(this));
   var id = $(this).data('id');
   var checkComment = $('#checkComment' + id);
   var commentButton = $('#commentButton' + id);
