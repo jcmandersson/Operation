@@ -5,13 +5,7 @@ var keystone = require('keystone');
 var pdfCreate = require('./../../lib/pdfCreate.js');
 var operation = keystone.list('Operation');
 
-
-
-exports = module.exports = function (req, res) {
-  
-  
-  
-  
+exports = module.exports = function (req, res) {  
   operation.model.findOne({
     _id: req.query.id
   }).populate('-updatedAt specialty').exec(function(err, data) {
@@ -21,13 +15,7 @@ exports = module.exports = function (req, res) {
       pdfCreate(data);
     }
     res.send('saved to pdf');
-  });
-
-  
-
-    
-    
-  
+  });  
 };
 
 
