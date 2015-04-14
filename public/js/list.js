@@ -1,7 +1,6 @@
 var initializeSpecialitetSelect = function () {
   $(".specialitet-select").select2({
-    placeholder: "Välj Specialitet",
-    ajax: {
+      ajax: {
       type: 'GET',
       url: '/api/search/Specialitet/',
       dataType: 'json',

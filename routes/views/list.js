@@ -38,6 +38,9 @@ exports = module.exports = function (req, res) {
   var state = typeof req.query.state !== 'undefined' ? req.query.state : 'Alla tillstånd';
   locals.state = state;
 
+  var spec = typeof req.query.specialty !== 'undefined' ? req.query.specialty : 'Alla specialiteter';
+  locals.spec = spec;
+
   view.on('init', function (next) {
     if (typeof req.query.state !== 'undefined') {
       searchObject.state = req.query.state;
