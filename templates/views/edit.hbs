@@ -119,17 +119,7 @@
           </tr>
         
         {{# each articles }}
-          <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-slug="{{slug}}" class="check-js" id={{_id}}>
-            <td class="centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
-            <td class="centered">{{ kartotek.name }}</td>
-            <td class="centered">{{ kartotek.storage }}</td>
-            <td class="centered">{{ kartotek.section }}</td>
-            <td class="centered">{{ kartotek.shelf }}</td>
-            <td class="centered">{{ kartotek.tray }}</td>
-            <td class="centered-remove">
-              <a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a>
-            </td>
-          </tr>
+          {{> article }}
         {{/each}}
         </table>
         
@@ -163,17 +153,6 @@
   </table>
 </script>
 
-<!--Just nu duplicerad kod-->
 <script id="article-template" type="text/x-handlebars-template">
-  <tr data-kartotekID="\{{kartotek._id}}" data-operationId="\{{operation}}" data-slug="\{{slug}}" class="check-js" id=\{{_id}}>
-    <td class="centered" id="amount\{{kartotek._id}}"><b class="amount">\{{ amount }}</b></td>
-    <td class="centered">\{{ kartotek.name }}</td>
-    <td class="centered">\{{ kartotek.storage }}</td>
-    <td class="centered">\{{ kartotek.section }}</td>
-    <td class="centered">\{{ kartotek.shelf }}</td>
-    <td class="centered">\{{ kartotek.tray }}</td>
-    <td class="centered-remove">
-      <a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a>
-    </td>
-  </tr>
+  {{renderPartial 'article'}}
 </script>
