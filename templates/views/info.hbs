@@ -1,20 +1,20 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
-  <div id="opName" data-operationId="{{data._id}}" data-operationSlug="{{data.slug}}">
+  <div id="opName" data-operationId="{{data._id}}" data-operationSlug="{{data.slug}}" data-template="{{data.template}}">
     {{data.title}}
   </div>
 
-{{#if data.specialty.name}}
-  <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
-{{/if}}
+  {{#if data.specialty.name}}
+    <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
+  {{/if}}
 
-{{#if data.tags}}
+  {{#if data.tags}}
     <div id ="synonyms">Synonymer: {{data.tags}}</div>
-{{/if}}
+  {{/if}}
 
-{{#unless data.template}}
+  {{#unless data.template}}
     <div id="lindaid">Linda-ID: {{data.linda_id}}</div>
-{{/unless}}
+  {{/unless}}
 
 
   <!--nav nav-pills-->
@@ -27,7 +27,7 @@
     <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
   </ul>
 
-{{#each processes}}
+  {{#each processes}}
     <div class="process-content" id="content{{@index}}">
       {{#each contents}}
         <div class="process-content-item check-js" data-operationId="{{../operation}}" data-preparation="true" id="{{_id}}">
@@ -39,26 +39,34 @@
         </div>
       {{/each}}
     </div>
-{{/each}}
+  {{/each}}
 
   <div class="process-content" id="contentchecklist">
 
-        <table class="table articleTable">
-            <tr class="table-headerstriped">
-                <td></td>
-                <td class="centered">Antal</td>
-                <td class="centered">Namn</td>
-                <td class="centered">Förråd</td>
-                <td class="centered">Sektion</td>
-                <td class="centered">Hylla</td>
-                <td class="centered">Fack</td>
-                <td class="centered"></td>
-                <td class="centered"></td>
-            </tr>
+    <table class="table articleTable">
+      <tr class="table-headerstriped">
+        {{#unless data.template}}
+          <td></td>
+        {{/unless}}
+        <td class="centered">Antal</td>
+        <td class="centered">Namn</td>
+        <td class="centered">Förråd</td>
+        <td class="centered">Sektion</td>
+        <td class="centered">Hylla</td>
+        <td class="centered">Fack</td>
+        {{#unless data.template}}
+          <td class="centered"></td>
+          <td class="centered"></td>
+        {{/unless}}
+      </tr>
       {{#if articles}}
+
         {{# each articles }}
+
           {{> comment }}
-          {{> checkArticle }}
+          {{#include parent=..}}
+            {{> checkArticle}}
+          {{/include}}
         {{/each}}
       {{/if}}
     </table>

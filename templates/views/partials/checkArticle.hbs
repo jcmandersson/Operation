@@ -1,17 +1,23 @@
 <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false" class="check-js" id={{_id}}>
+{{#unless parent.data.template}}
     <td class="centered"><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
-    <td class="centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
+{{/unless}}
+  <td class="centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
     <td class="centered">{{ kartotek.name }}</td>
     <td class="centered">{{ kartotek.storage }}</td>
     <td class="centered">{{ kartotek.section }}</td>
     <td class="centered">{{ kartotek.shelf }}</td>
     <td class="centered">{{ kartotek.tray }}</td>
-    <td class="centered-comment">
-        <button id="commentButton{{_id}}" data-id="{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
+  {{#unless parent.data.template}}
+  <td class="centered-comment">
+
+      <button id="commentButton{{_id}}" data-id="{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
             <p class="glyphicon glyphicon-comment"></p>
         </button>
     </td>
-    <td class="centered-remove">
+
+  <td class="centered-remove">
         <a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a>
     </td>
+  {{/unless}}
 </tr>
