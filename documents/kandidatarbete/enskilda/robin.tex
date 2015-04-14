@@ -1,6 +1,6 @@
 \section{Checkning av checklistor - Robin Andersson}
 \subsection{Inledning}
-Vårat system ska innehålla olika typer av checklistor på olika webbsidor. Om flera användare är inne på samma sida samtidigt och en person checkar en checkruta så ska den checkrutan bli checkad för alla användare som är inne på den sidan.\\
+Vårt system ska innehålla olika typer av checklistor på olika webbsidor. Om flera användare är inne på samma sida samtidigt och en person checkar en checkruta så ska den checkrutan bli checkad för alla användare som är inne på den sidan.\\
 
 Detta kommer att implementeras med hjälp av html, javascript och jquery samt Socket.IO för att checkrutor ska kunna uppdateras utan att webbsidan behöver uppdateras.
 
@@ -17,16 +17,24 @@ Syftet med denna del av projektet är att flera sjuksköterskor samtidigt ska ku
 Eftersom denna del av projektet endast innehåller checkande av checklistor så saknas etiska aspekter.
 
 \subsection{Teori}
-Huvuddelen i implementeringen av checklistan är kommunikationen med Socket.IO. Information om Socket.IO finns på webbplatsen: \textit{http://socket.io/}
+Huvuddelen i implementeringen av checklistan är kommunikationen med Socket.IO som använder sig av websockets för att kommunicera mellan front-end och back-end. Information om Socket.IO finns på webbplatsen: \textit{http://socket.io/}
  
 \subsection{Metod}
-Jag började med att fundera på hur kommunikationen ska se ut på för sätt. Jag kom fram till att när en användare går in på en operationsförberedelse så kommer denne in i ett rum. Varje gång en person sedan checkar en checkbox så skickas ett Socket.IO meddelande till servern som innehåller information om vilken checkruta som ska checkas samt vilket rum checkboxen ska checkas i. Servern skickar sedan ett meddelande till det givna rummet vilken checkruta som ska checkas och alla klienter som är anslutna till det rummet checkar den givna checkrutan. \\
+Jag började med att fundera på hur kommunikationen skulle fungera på för sätt. Jag skissade ner olika förslag på ett papper och kom på det sättet fram till hur jag skulle implementera kommunikationen. Sedan implementerade jag den och fick den att fungera och efter det refaktoriserade jag koden för att få den kortare och mer lättläst.
+
+\subsection{Resultat}
+Jag kom fram till att när en användare går in på en operationsförberedelse så kommer denne in i ett rum. Varje gång en person sedan checkar en checkbox så skickas ett Socket.IO meddelande till servern som innehåller information om vilken checkruta som ska checkas samt vilket rum checkboxen ska checkas i. Servern skickar sedan ett meddelande till det givna rummet vilken checkruta som ska checkas och alla klienter som är anslutna till det rummet checkar den givna checkrutan. \\
 
 Figuren nedan visar detta flöde i ett sekvens liknande box-and-line-diagram.
 
+När två klienter går in på en operation och en klient checkar en checkruta för första gången tar det strax under en sekund innan checkrutan checkas för den andra klienten. Därefter när någon klient checkar en checkruta så kan jag inte se någon fördröjning alls från det att en klient checkar en checkruta och en annan klient får den checkrutan checkad.
 
-\subsection{Resultat}
 \subsection{Diskussion}
 \subsubsection{Resultat}
+Eftersom jag endast skickar data om vilken checkruta som ska checkas till de klienter som är inne på den operation som checkrutan blev checkad på så uppdateras checkningar snabbare än att göra den enkla lösningen att bara skicka datat till alla anslutna klienter. Att det tar nästan en sekund för en checkning att uppdateras på andra klienter för första gången är långsammare än förväntat. Men att det sedan går nästan helt utan fördröjning var mycket snabbare än förväntat. 
+
 \subsubsection{Metod}
+Den metod jag använde mig av fungerade bra, men jag tror att jag skulle kunnat komma fram till samma resultat snabbare genom att göra kortare funktioner och vettigare namn redan från början istället för att göra något som funkar så snabbt som möjligt och sedan refaktorisera eftersom det blev väldigt förvirrande kod från början och jag var tvungen att sitta och tänka på vad kod jag skrivit gjorde. Men att skissa olika förslag på ett papper först tror jag var en väldigt bra idé.
+
 \subsection{Slutsatser}
+Den knappa sekundens fördröjning som är då en första checkruta checkas skulle kunna vara tillräckligt mycket för att ge en viss förvirring men eftersom det bara är en gång per operation så kommer detta antagligen inte vara ett praktiskt problem för sjuksköterskorna som ska använda systemet. 
