@@ -326,6 +326,10 @@ var navClick = function () {
   var $this = $(this).addClass('active');
   $(".process-content").hide();
   $("#content" + $this.attr('data-id')).show();
+  console.log($this.attr('data-id'));
+  console.log($("#content" + $this.attr('data-id')));
+  
+  console.log(this);
 };
 
 var changeName = function (e) {
@@ -514,4 +518,145 @@ var initAll = function () {
 $(document).ready(function () {
   initOnce();
   initAll();
+
+  var compiledResults = $('#kartotekResults-template').html();
+  var kartotekResultsTemplate = Handlebars.compile(compiledResults);
+
+  $('#article-search').keyup(findArticles.bind(undefined, kartotekResultsTemplate));
+  $('.articleTable tbody').on("click", '.article-remove', removeArticle);
+  $('.articleTable tbody').on("click", '.amount', addAmountClick);
+
 });
+
+var findArticles = function(resultsTemplate) {
+  var articleName = $('#article-search').val();
+  var url = '/api/search/Kartotekartikel?text=' + articleName;
+  $.get(url).done(function(results) {
+    $('#kartotekResults').html(resultsTemplate({ results: results }));
+
+    if (results.length != 0) {
+      $('#article-search').addClass('has-results');
+    }
+    else {
+      $('#article-search').removeClass('has-results');
+    }
+
+    $('.add-column').click(function() {
+
+      //add here
+      var id = $(this).attr('data-kartotekid');
+      var articleObject = jQuery.grep(results, function(e){ return e._id == id; });
+
+      var operationID = $('#operation').val();
+  
+      $('#article-search').val('').removeClass('has-results');
+      $('#kartotekResults').empty();
+      
+      $.ajax({
+        type: 'POST',
+        url: '/api/artikels',
+        data: {
+          name: articleObject[0].name,
+          kartotek: articleObject[0]._id,
+          operation: operationID,
+          amount : 1
+        }
+      })
+        .done(function (msg) {
+          console.log(msg); //Contains the created Article-model
+          var compiledArticle = $('#article-template').html();
+          var articleTemplate = Handlebars.compile(compiledArticle);
+          $(articleTemplate({ kartotek : articleObject[0], operation: operationID, _id : msg._id, amount : 1 , slug : msg.slug})).appendTo('.articleTable');
+
+        })
+        .fail(function (err, status) {
+          console.log('Någonting gick fel!');
+          console.log(err);
+          console.log(status);
+        });
+      
+    });
+  });
+  
+};
+
+var removeArticle = function() {
+  var checkArticleID = $(this).parent().parent().attr('id');
+  var slug = $(this).parent().parent().attr('data-slug');
+  
+  var confirmed = confirm("Är du säker på att du vill ta bort artikeln?");
+  if (confirmed) {
+    
+    $.ajax({
+      type: 'DELETE',
+      url: '/api/artikels/' + slug
+    })
+      .done(function( msg ) {
+        console.log(msg);
+        var row = $('#'+checkArticleID);
+        row.remove();
+      })
+      .fail(function(err, status){
+        console.log('Någonting gick fel!');
+        console.log(err);
+        console.log(status);
+      });
+    
+  }
+  else {
+    return false;
+  }
+};
+
+var addAmountClick = function(){
+  var val = $(this).text();
+  var input = $('<input type="text" min="1" class="amount form-control" id="editAmount"/>');
+  input.val(val);
+  $(this).replaceWith(input);
+  $(input).focus();
+
+  $(input).keypress(function(e){
+    editAmountDone(e, $(input));
+  });
+
+  setTimeout(function(){
+    $('body').click(function(e){
+      if(e.target.id == "editAmount") {
+        return;
+      }
+      editAmountDone(e, $(input));
+    });
+  },0);
+
+};
+
+var editAmountDone = function (e, tag) {
+  var newAmount = $(tag).val();
+  if (e.which == 13 || e.type === 'click') {
+    var slug = $(tag).parent().parent().attr('data-slug');
+
+    $('body').unbind();
+    var input = $('<b class="amount">' + newAmount + '</b>');
+    input.val(newAmount);
+    $(tag).replaceWith(input);
+    var checkArticleID = $(input).parent().parent().attr('id');
+    
+    $.ajax({
+      type: 'GET',
+      url: '/api/update/artikels/' + slug,
+      data: {
+        amount: newAmount
+      }
+    })
+      .done(function( msg ) {
+        $('#amount'+checkArticleID).children().text(newAmount);
+      })
+      .fail(function(err, status){
+        console.log('Någonting gick fel!');
+        console.log(err);
+        console.log(status);
+      });
+    
+    return false;
+  }
+};

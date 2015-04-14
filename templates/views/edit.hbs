@@ -10,7 +10,7 @@
       </span>
     </div>
     {{#if data._id }}
-      <input type="text" name="_id" value="{{data._id}}" class="hidden"/>
+      <input type="text" id="operation" name="_id" value="{{data._id}}" class="hidden"/>
     {{/if}}
     {{#if data.slug }}
       <input type="text" name="operationSlug" value="{{data.slug}}" class="hidden"/>
@@ -85,7 +85,7 @@
         <i class="glyphicon glyphicon-plus form-control-feedback"></i>
       </li>
       <li>
-        <button type="button" class="btn-checklist btn btn-default navbar-btn" id="checklist">Plocklista</button>
+        <button type="button" class="btn-checklist btn btn-default navbar-btn" data-id="checklist" id="checklist">Plocklista</button>
       </li>
     </ul>
 
@@ -105,37 +105,75 @@
         {{> process-content-item extraClass='init'}}
       </div>
     {{/each}}
-
-
-    {{#if articles}}
+    
       <div class="process-content" id="contentchecklist" style="display: none;">
-        <table class="table">
+        <table class="table articleTable">
           <tr class="table-headerstriped">
-            <td></td>
-            <td>Namn</td>
-            <td>Antal</td>
-            <td>Förråd</td>
-            <td>Sektion</td>
-            <td>Hylla</td>
-            <td>Fack</td>
+            <td class="centered">Antal</td>
+            <td class="centered">Namn</td>
+            <td class="centered">Förråd</td>
+            <td class="centered">Sektion</td>
+            <td class="centered">Hylla</td>
+            <td class="centered">Fack</td>
+            <td class="centered"></td>
           </tr>
-          {{# each articles }}
-            <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" class="check-js"
-                id={{_id}}>
-              <td><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
-              <td>{{ kartotek.name }}</td>
-              <td>{{ amount }}</td>
-              <td>{{ kartotek.storage }}</td>
-              <td>{{ kartotek.section }}</td>
-              <td>{{ kartotek.shelf }}</td>
-              <td>{{ kartotek.tray }}</td>
-            </tr>
-          {{/each}}
+        
+        {{# each articles }}
+          <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-slug="{{slug}}" class="check-js" id={{_id}}>
+            <td class="centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
+            <td class="centered">{{ kartotek.name }}</td>
+            <td class="centered">{{ kartotek.storage }}</td>
+            <td class="centered">{{ kartotek.section }}</td>
+            <td class="centered">{{ kartotek.shelf }}</td>
+            <td class="centered">{{ kartotek.tray }}</td>
+            <td class="centered-remove">
+              <a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a>
+            </td>
+          </tr>
+        {{/each}}
         </table>
+        
+        <div id="editChecklist">
+          <div class="search-box articleSearch">
+            <input type="search" id="article-search" class="form-control article-search" placeholder="Sök ny artikel" />
+          </div>
+          <div id="kartotekResults"></div>
+        </div>
       </div>
-    {{/if}}
 
     <a href="/info/{{data.slug}}" target="_blank" class="btn btn-primary">Förhandstitt</a>
     <a href="" class="btn btn-primary toReview">Skicka till granskning</a>
   </form>
 </div>
+
+<script id="kartotekResults-template" type="text/x-handlebars-template">
+  <table class="table table-striped table-bordered table-hover" id="result-table">
+    \{{a}}
+    \{{#each results}}
+    <tr class="add-article-info">
+      <td>
+        <div>\{{ name }}</div>
+        <div class="tags">\{{ tags }}</div>
+      </td>
+      <td class="add-column" data-name="\{{ name }}" data-kartotekid="\{{ _id }}">
+        <span class="add-icons glyphicon glyphicon-plus"></span>
+      </td>
+    </tr>
+    \{{/each}}
+  </table>
+</script>
+
+<!--Just nu duplicerad kod-->
+<script id="article-template" type="text/x-handlebars-template">
+  <tr data-kartotekID="\{{kartotek._id}}" data-operationId="\{{operation}}" data-slug="\{{slug}}" class="check-js" id=\{{_id}}>
+    <td class="centered" id="amount\{{kartotek._id}}"><b class="amount">\{{ amount }}</b></td>
+    <td class="centered">\{{ kartotek.name }}</td>
+    <td class="centered">\{{ kartotek.storage }}</td>
+    <td class="centered">\{{ kartotek.section }}</td>
+    <td class="centered">\{{ kartotek.shelf }}</td>
+    <td class="centered">\{{ kartotek.tray }}</td>
+    <td class="centered-remove">
+      <a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a>
+    </td>
+  </tr>
+</script>
