@@ -10,12 +10,10 @@
     <td class="centered">{{ kartotek.tray }}</td>
   {{#unless parent.data.template}}
   <td class="centered-comment">
-
       <button id="commentButton{{_id}}" data-id="{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
             <p class="glyphicon glyphicon-comment"></p>
         </button>
     </td>
-
   <td class="centered-remove">
         <a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a>
     </td>
