@@ -9,6 +9,10 @@
   height: @navHeight;
   overflow: visible;
 }
+ul.nav {
+  height: @navHeight;
+}
+
 .navbar-static-top {
   border: none;
 }
@@ -107,6 +111,30 @@ input[type="search"] {
 
 .operationSearch.navbar-form .has-feedback .form-control-feedback {
   /*top: 14px !important;*/
+}
+
+ul.admin-navigation {
+  background: rgb(0, 74, 130);
+  list-style-type: none;
+  padding: 0;
+  display: none;
+}
+
+ul.admin-navigation li {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+ul.admin-navigation li a {
+  display: block;
+  padding: 10px 10px;
+  line-height: 100%;
+  width: 100%;
+}
+
+ul.admin-navigation li:hover {
+  background-color: @lightblue !important;
 }
 
 @media screen and (max-width: 1200px) {

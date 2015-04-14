@@ -1,86 +1,108 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Operation</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Operation</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
-    <link href="/js/lib/select2/css/select2.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/js/jquery.tagsinput.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/js/lib/jquery-ui-1.11.3.custom/jquery-ui.min.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/js/lib/jQuery-TE_v.1.4.0/jquery-te-1.4.0.css" media="screen" />
-    <!--<link href="/styles/site.min.css" rel="stylesheet">-->
-      <link href="/styles/site.min.css" rel="stylesheet">
-    {{#each css}}
-      <link href="/styles/{{this}}" rel="stylesheet">
-    {{/each}}
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"/>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"/>
-    <![endif]-->
-  </head>
-  <body data-admin="{{#if user.isAdmin}}true{{else}}false{{/if}}">
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="header-container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/"><img src="/images/logo_region.png"/></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
-          <ul class="nav navbar-nav">
-            {{# each navLinks}}
+  <link href="/js/lib/select2/css/select2.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/js/jquery.tagsinput.css" media="screen"/>
+  <link rel="stylesheet" type="text/css" href="/js/lib/jquery-ui-1.11.3.custom/jquery-ui.min.css" media="screen"/>
+  <link rel="stylesheet" type="text/css" href="/js/lib/jQuery-TE_v.1.4.0/jquery-te-1.4.0.css" media="screen"/>
+  <!--<link href="/styles/site.min.css" rel="stylesheet">-->
+  <link href="/styles/site.min.css" rel="stylesheet">
+  {{#each css}}
+    <link href="/styles/{{this}}" rel="stylesheet">
+  {{/each}}
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"/>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"/>
+  <![endif]-->
+</head>
+<body data-admin="{{#if user.isAdmin}}true{{else}}false{{/if}}">
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="header-container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+              aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"><img src="/images/logo_region.png"/></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+      <ul class="nav navbar-nav">
+        {{# each navLinks}}
+          <li {{#ifeq ../section key}}class="active"{{else}}{{/ifeq}}>
+            <a href="{{ href }}">{{ label }}</a>
+          </li>
+        {{/each}}
+        <li class="open-admin-nav">
+          <a>Admin</a>
+          <ul class="admin-navigation">
+            {{# each navAdmin}}
               <li {{#ifeq ../section key}}class="active"{{else}}{{/ifeq}}>
-              <a href="{{ href }}">{{ label }}</a>
+                <a href="{{ href }}">{{ label }}</a>
               </li>
             {{/each}}
           </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-      <form class="navbar-form operationSearch" role="search">
-        <div class="form-group has-feedback">
-          <input type="search" id="search" class="form-control" autocomplete="off" placeholder="Sök handbok..." />
-          <i class="glyphicon glyphicon-search form-control-feedback"></i>
-          <div id="results"></div>
-          <script id="results-template" type="text/x-handlebars-template">
-            <table class="table table-striped table-bordered table-hover result-table operationResults">
-              \{{a}}
-              \{{#each results}}
-                <tr>
-                  <td>
-                    <a href="/info/\{{ slug }}">
-                      <div>\{{ title }}</div>
-                      <div class="abbreviation">\{{ specialty.name }}</div>
-                      <div class="tags">\{{ tags }}</div>
-                    </a>
-                  </td>
-                </tr>
-              \{{/each}}
-            </table>
-          </script>
-        </div>
-      </form>
-    </nav>
-
-    <div id="body">
-      {{{body}}}
+        </li>
+      </ul>
     </div>
+    <!--/.nav-collapse -->
+  </div>
+  <form class="navbar-form operationSearch" role="search">
+    <div class="form-group has-feedback">
+      <input type="search" id="search" class="form-control" autocomplete="off" placeholder="Sök handbok..."/>
+      <i class="glyphicon glyphicon-search form-control-feedback"></i>
 
-    <script src="/js/lib/jquery/jquery-2.1.1.min.js"></script>
-    <script src="/js/lib/jquery-ui-1.11.3.custom/jquery-ui.min.js"></script>
-    <script src="/js/lib/bootstrap/bootstrap-3.2.0.min.js"></script>
-    <script src="/js/lib/handlebars/handlebars-v3.0.0.js"></script>
-    <script src="/js/lib/select2/js/select2.min.js"></script>
-    <script src="/js/lib/socket.io.js"></script>
-    <script src="/js/search.js"></script>
-    {{#each scripts}}
-      <script src="/js/{{this}}"></script>
-    {{/each}}
-  </body>
+      <div id="results"></div>
+      <script id="results-template" type="text/x-handlebars-template">
+        <table class="table table-striped table-bordered table-hover result-table operationResults">
+          \{{a}}
+          \{{#each results}}
+          <tr>
+            <td>
+              <a href="/info/\{{ slug }}">
+                <div>\{{ title }}</div>
+                <div class="abbreviation">\{{ specialty.name }}</div>
+                <div class="tags">\{{ tags }}</div>
+              </a>
+            </td>
+          </tr>
+          \{{/each}}
+        </table>
+      </script>
+    </div>
+  </form>
+</nav>
+
+<div id="body">
+  {{{body}}}
+</div>
+
+<script src="/js/lib/jquery/jquery-2.1.1.min.js"></script>
+<script src="/js/lib/jquery-ui-1.11.3.custom/jquery-ui.min.js"></script>
+<script src="/js/lib/bootstrap/bootstrap-3.2.0.min.js"></script>
+<script src="/js/lib/handlebars/handlebars-v3.0.0.js"></script>
+<script src="/js/lib/select2/js/select2.min.js"></script>
+<script src="/js/lib/socket.io.js"></script>
+<script src="/js/search.js"></script>
+<script>
+  $(document).ready(function(){
+    $('.open-admin-nav').hover(function(){
+      $('.admin-navigation').show();
+    }, function(){
+      $('.admin-navigation').hide();
+    });
+  });
+</script>
+{{#each scripts}}
+  <script src="/js/{{this}}"></script>
+{{/each}}
+</body>
 </html>
