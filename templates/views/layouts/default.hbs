@@ -92,15 +92,6 @@
 <script src="/js/lib/select2/js/select2.min.js"></script>
 <script src="/js/lib/socket.io.js"></script>
 <script src="/js/search.js"></script>
-<script>
-  $(document).ready(function(){
-    $('.open-admin-nav').hover(function(){
-      $('.admin-navigation').show();
-    }, function(){
-      $('.admin-navigation').hide();
-    });
-  });
-</script>
 {{#each scripts}}
   <script src="/js/{{this}}"></script>
 {{/each}}
