@@ -39,6 +39,7 @@ data/*
 *.sw*
 */styles/*.css
 */styles/site/*.css
+/public/styles/site.css
 
 */uploads/*
 
