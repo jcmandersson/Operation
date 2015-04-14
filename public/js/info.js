@@ -22,7 +22,6 @@ $(document).ready(function() {
   }
 
   
-
   $(".nav-pills > .navbar-btn").click(function() {
     tabClick(this);
   });
