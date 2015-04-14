@@ -13,7 +13,7 @@ tabClick = function(elem) {
 
 $(document).ready(function() {
   var hash = window.location.hash.substring(1);
-  if (!hash || hash === 'all'){
+  if (!hash || hash === 'all') {
     $("#all").addClass('active');
   } else {
     $('#' + hash).addClass('active').siblings().removeClass('active');
@@ -39,12 +39,36 @@ $(document).ready(function() {
     }
     findArticles(kartotekResultsTemplate);
   });
-});
+  
+  $('#article-search').keyup(findArticles.bind(undefined, kartotekResultsTemplate));
+  
 
-var findArticles = function(resultsTemplate) {
+  $(".publicera").click(function () {
+    var slug = $("#opName").attr('data-operationSlug');
+
+    $.ajax({
+      type: 'GET',
+      url: '/api/update/operations/' + slug,
+      data: {
+        state: 'Publicerad'
+      }
+    })
+      .done(function (msg) {
+        location.reload();
+      })
+      .fail(function (err, status) {
+        console.log('Någonting gick fel!');
+        console.log(err);
+        console.log(status);
+      });
+    
+  });
+});
+  
+var findArticles = function (resultsTemplate) {
   var articleName = $('#article-search').val();
   var url = '/api/search/Kartotekartikel?text=' + articleName;
-  $.get(url).done(function(results) {
+  $.get(url).done(function (results) {
     $('#kartotekResults').html(resultsTemplate({ results: results }));
 
     if (results.length != 0) {
@@ -54,7 +78,7 @@ var findArticles = function(resultsTemplate) {
       $('#article-search').removeClass('has-results');
     }
 
-    $('.add-column').click(function() {
+    $('.add-column').click(function () {
 
       //add here
       var id = $(this).attr('data-kartotekid');

@@ -16,7 +16,7 @@ var initializeSpecialitetSelect = function () {
         return {
           results: $.map(data, function (item) {
             return {
-              text: item.name, id: item._id
+              text: item.name, id: item.name
             }
           })
         };
@@ -35,11 +35,16 @@ $(document).ready(function () {
   $('.state-select').select2();
 
   $('.specialitet-select').change(function() {
-    window.location.href = window.location.href.split('?')[0] + "?specialty=" + $(this).children().last().html();  
+    window.location.href = window.location.href.split('?')[0] + "?specialty=" + $(this).val();  
   });
 
   $('.state-select').change(function() {
-    window.location.href = window.location.href.split('?')[0] + "?state=" + $(this).select2('val');  
+    var newState = $(this).val();
+    if(newState !== "Alla tillstånd") {
+      window.location.href = window.location.href.split('?')[0] + "?state=" + newState;  
+    } else {
+      window.location.href = window.location.href.split('?')[0];
+    }
   });
 
 });
