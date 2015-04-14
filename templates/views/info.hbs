@@ -5,7 +5,7 @@
   </div>
 
 {{#if data.specialty.name}}
-    <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
+  <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
 {{/if}}
 
 {{#if data.tags}}
@@ -15,6 +15,7 @@
 {{#unless data.template}}
     <div id="lindaid">Linda-ID: {{data.linda_id}}</div>
 {{/unless}}
+
 
   <!--nav nav-pills-->
   <!--btn btn-default navbar-btn-->
@@ -75,16 +76,16 @@
   {{#if data.template}}
 
     {{#ifeq data.state 'Utkast'}}
+      {{>removePreparation _id=data._id slug=data.slug}}
       <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
       <div id='btn-removePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
     {{/ifeq}}
 
     {{#ifeq data.state 'Granskning'}}
-      <a href="/edit/{{data.slug}}" class="btn btn-primary">Publicera</a>
+      <button class="btn btn-primary publicera">Publicera</button>
       <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
-      <div id='btn-removePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
     {{/ifeq}}
-  
+
     {{#ifeq data.state 'Publicerad'}}
       <form method="get" id="createOperationInstanceButton">
         <input type="hidden" name="operation" value="create">
@@ -113,9 +114,10 @@
       </form>
       <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
     {{/ifeq}}
-    {{else}}
+  {{else}}
+    {{>removePreparation _id=data._id slug=data.slug}}
     <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
-    <div id='btn-removePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
+    <div data-toggle='modal' data-target='#alertRemovePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
   {{/if}}
 </div>
 

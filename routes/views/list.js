@@ -35,6 +35,9 @@ exports = module.exports = function (req, res) {
   var sort = typeof req.query.sort !== 'undefined' ? req.query.sort : 'title';
   locals.sort = sort;  
 
+  var state = typeof req.query.state !== 'undefined' ? req.query.state : 'Alla tillstånd';
+  locals.state = state;
+
   view.on('init', function (next) {
     if (typeof req.query.state !== 'undefined') {
       searchObject.state = req.query.state;

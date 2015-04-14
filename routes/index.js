@@ -52,7 +52,7 @@ exports = module.exports = function(app) {
   app.all('/user/edit/:_id', middleware.requireUser, routes.views.editUser);
   
   // API
-  app.get('/api/print/:slug', routes.views.apiPrint);
+  app.get('/api/print', routes.views.apiPrint);
   app.get('/api/search/:model', routes.views.apiSearch);
   app.get('/api/update/:model/:slug', routes.views.apiUpdate);
   app.get('/api/mongoose/id', routes.views.apiMongoose);
