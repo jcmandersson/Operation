@@ -1,0 +1,56 @@
+{{!< default}}
+<script id="user-template" type="text/x-handlebars-template">
+\{{#each this}}
+  <tr onclick="document.location = '/user/edit/\{{_id}}';">
+    <td>\{{math @index "+" 1}}</td>
+    <td>\{{name.first}} \{{name.last}}</td>
+    <td>\{{email}}</td>
+    <td class="date">\{{ createdAt }}</td>
+  </tr>
+\{{/each}}
+</script>
+
+<div class="container">
+
+  <div class="form-group has-feedback search-user">
+    <input type="search" id="search-user" class="form-control" autocomplete="off" placeholder="Sök användare..."/>
+    <i class="glyphicon glyphicon-search form-control-feedback"></i>
+  </div>
+
+  <table class="table table-striped table-hover table-condensed table-responsive">
+    <tr>
+      <th>#</th>
+      <th><a href="?{{currentQuery}}sort={{#ifeq sort 'name'}}-{{/ifeq}}name">Namn</a></th>
+      <th><a href="?{{currentQuery}}sort={{#ifeq sort 'email'}}-{{/ifeq}}email">E-post</a></th>
+      <th><a href="?{{currentQuery}}sort={{#ifeq sort 'createdAt'}}-{{/ifeq}}createdAt">Skapad</a></th>
+    </tr>
+    {{#each users}}
+      <tr onclick="document.location = '/user/edit/{{_id}}';">
+        <td>{{math @index "+" ../addToIndex}}</td>
+        <td>{{fullname}}</td>
+        <td>{{email}}</td>
+        <td class="date">{{#splitDate createdAt}}
+          {{dayOfMonth}}/{{month}} {{year}} {{hour}}:{{minute}}
+        {{/splitDate}}</td>
+      </tr>
+    {{/each}}
+  </table>
+
+
+  {{#if pagination.pageCount}}
+    <nav>
+      <ul class="pagination">
+        {{#paginate pagination type="previous"}}
+          <li {{#if disabled}}class="disabled"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}" >&laquo;</a></li>
+        {{/paginate}}
+        {{#paginate pagination type="middle" limit="7"}}
+          <li {{#if active}}class="active"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}">{{n}}</a></li>
+        {{/paginate}}
+        {{#paginate pagination type="next"}}
+          <li {{#if disabled}}class="disabled"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}">&raquo;</a></li>
+        {{/paginate}}
+        <li>
+      </ul>
+    </nav>
+  {{/if}}
+</div>
