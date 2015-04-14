@@ -42,7 +42,7 @@ exports.initLocals = function(req, res, next) {
     });
     locals.navLinks.push({
       label: 'Granska',
-      key: 'list',
+      key: 'Granskning',
       href: '/list?state=Granskning'
     });
     locals.navLinks.push({
