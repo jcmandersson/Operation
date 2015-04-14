@@ -523,8 +523,7 @@ $(document).ready(function () {
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
 
   //$('#article-search').keyup(findArticles.bind(undefined, kartotekResultsTemplate));
-
-
+  
   $('#article-search').keyup( function() {
     if( this.value.length == 0){
       $('#kartotekResults').empty();
@@ -535,7 +534,6 @@ $(document).ready(function () {
     }
     findArticles(kartotekResultsTemplate);
   });
-  
   
   $('.articleTable tbody').on("click", '.article-remove', removeArticle);
   $('.articleTable tbody').on("click", '.amount', addAmountClick);
