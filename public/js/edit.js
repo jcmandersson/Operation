@@ -517,8 +517,6 @@ $(document).ready(function () {
 
   var compiledResults = $('#kartotekResults-template').html();
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
-
-  //$('#article-search').keyup(findArticles.bind(undefined, kartotekResultsTemplate));
   
   $('#article-search').keyup( function() {
     if( this.value.length == 0){
