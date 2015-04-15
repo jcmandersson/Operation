@@ -80,7 +80,7 @@ var cancelComment = function(){ //Throw away texted comment if cancel button is 
 
 var checkjs = function(e) {  //When a checkable row is clicked, check the row and emit to socket.io
   var targetClassName = e.target.className.split(" ")[0];
-  if(!(e.target.tagName == 'P' || e.target.tagName == 'BUTTON'
+  if(!(e.target.tagName == 'P' || e.target.tagName == 'BUTTON' || e.target.tagName == 'IMG'
     || targetClassName == 'amount' || targetClassName == 'article-remove' || targetClassName == 'cross'))  {
     if (!$(this).prop('disabled')) {
       var checkbox = $(this).find('input')[0];

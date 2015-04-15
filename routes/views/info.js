@@ -102,6 +102,7 @@ exports = module.exports = function(req, res) {
     process.model.find({
       operation: locals.data._id
     })
+      .sort('order')
       .exec(function (err, processData) {
         if (err) {
           console.log('DB error');
