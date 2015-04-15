@@ -123,6 +123,12 @@ var articles = {
     }
     this.render();
   },
+  addFromDB: function(dbRes) {
+    for (var i = 0; i < dbRes.length; i++) {
+      this.data.articles.push(new Article(dbRes[i]));
+    }
+    this.render();
+  },
   findArticle: function(slugName) {
     for (var i = 0; i < this.data.articles.length; i++) {
       if (slugName === this.data.articles[i].data.slug) {
@@ -265,13 +271,38 @@ var articles = {
         url:  '/api/search/Kartotekartikel/',
         data: {
           all: true,
-          limit: 25,
+          limit: 50,
+          sort: 'name',
           text: value
         }
       }).done(self.fillFromDB.bind(self));
     };
 
     $('#search-article').keyup(search);
+  },
+  attachScrollBottomListener: function() {
+    var self = this;
+    $(window).scroll(function() {
+      if($(window).scrollTop() + $(window).height() < $(document).height() - 100) {
+        self.scrollEvent = false;
+        return;
+      }
+      if(typeof self.scrollEvent !== 'undefined' && self.scrollEvent) return;
+      self.scrollEvent = true;
+      var value = $('#search-article').val();
+      console.log('SCROLLED');
+      $.ajax({
+        type: 'GET',
+        url:  '/api/search/Kartotekartikel/',
+        data: {
+          all: true,
+          limit: 50,
+          skip: $('#articles .check-js').length,
+          sort: 'name',
+          text: value
+        }
+      }).done(self.addFromDB.bind(self));
+    });
   }
 };
 
@@ -289,4 +320,5 @@ $(function() {
   window.articles.fillFromElement();
   window.articles.attachAddArticleListener();
   window.articles.attachSearchArticleListener();
+  window.articles.attachScrollBottomListener();
 });
