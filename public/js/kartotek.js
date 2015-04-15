@@ -1,3 +1,5 @@
+var socket = io();
+
 var Article = function(data) {
   if (typeof data !== 'undefined') this.data = data;
   else this.data = {};
@@ -14,7 +16,15 @@ Article.prototype.createInDatabase = function(callback) {
       section: this.data.section,
       shelf:   this.data.shelf,
       tray:    this.data.tray,
-      price:   this.data.price
+      price:   this.data.price,
+      articleNumber: this.articleNumber,
+      supplier: this.supplier,
+      supplierArticleNumber: this.supplierArticleNumber,
+      orderItem: this.orderItem,
+      clinic: this.clinic,
+      amount: this.amount,
+      unit: this.unit,
+      peoe: this.peoe
     }
   }).done(function(newArticle) {
     self.data.slug = newArticle.slug;
@@ -33,11 +43,23 @@ Article.prototype.modifyInDatabase = function(callback) {
       section: this.data.section,
       shelf:   this.data.shelf,
       tray:    this.data.tray,
-      price:   this.data.price
+      price:   this.data.price,
+      articleNumber: this.articleNumber,
+      supplier: this.supplier,
+      supplierArticleNumber: this.supplierArticleNumber,
+      orderItem: this.orderItem,
+      clinic: this.clinic,
+      amount: this.amount,
+      unit: this.unit,
+      peoe: this.peoe
     }
   }).done(function(newArticle) {
     self.data.slug = newArticle.slug;
     if (typeof callback !== 'undefined') callback();
+    
+    //Send through socket.io to live update preparations.
+    socket.emit('kartotekUpdate', {name: newArticle.name, storage: newArticle.storage, section: newArticle.section,
+                                   shelf: newArticle.shelf, tray: newArticle.tray, price: newArticle.price, id: newArticle._id})
   });
 };
 
@@ -50,26 +72,42 @@ Article.prototype.removeFromDatabase = function(callback) {
 
 // This takes a single `td` element, and fills itself (i.e. this.data) with the columns.
 Article.prototype.fillFromElement = function(elem) {
-  this.data.name    = $(elem).find('[data-name="name"]').text();
-  this.data.storage = $(elem).find('[data-name="storage"]').text();
-  this.data.section = $(elem).find('[data-name="section"]').text();
-  this.data.shelf   = $(elem).find('[data-name="shelf"]').text();
-  this.data.tray    = $(elem).find('[data-name="shelf"]').text();
-  this.data.price   = $(elem).find('[data-name="price"]').text();
-  this.data.slug    = $(elem).find('[data-name="slug"]').text();
+  this.data.name             = $(elem).find('[data-name="name"]').text();
+  this.data.storage          = $(elem).find('[data-name="storage"]').text();
+  this.data.section          = $(elem).find('[data-name="section"]').text();
+  this.data.shelf            = $(elem).find('[data-name="shelf"]').text();
+  this.data.tray             = $(elem).find('[data-name="shelf"]').text();
+  this.data.price            = $(elem).find('[data-name="price"]').text();
+  this.articleNumber         = $(elem).find('[data-name="articleNumber"]').text();
+  this.supplier              = $(elem).find('[data-name="supplier"]').text();
+  this.supplierArticleNumber = $(elem).find('[data-name="supplierArticleNumber"]').text();
+  this.orderItem             = $(elem).find('[data-name="orderItem"]').text();
+  this.clinic                = $(elem).find('[data-name="clinic"]').text();
+  this.amount                = $(elem).find('[data-name="amount"]').text();
+  this.unit                  = $(elem).find('[data-name="unit"]').text();
+  this.peoe                  = $(elem).find('[data-name="peoe"]').text();
+  this.data.slug             = $(elem).find('[data-name="slug"]').text();
 };
 
 // This takes a single `td` element, and fills itself (i.e. this.data) with the columns.
 // The difference between this and .fillFromElement is that this takes
 // data from `input` elements, whereas .fillFromElement takes data from `td` elements.
 Article.prototype.fillFromInput = function(elem) {
-  this.data.name    = $(elem).find('[data-name="name"]').val();
-  this.data.storage = $(elem).find('[data-name="storage"]').val();
-  this.data.section = $(elem).find('[data-name="section"]').val();
-  this.data.shelf   = $(elem).find('[data-name="shelf"]').val();
-  this.data.tray    = $(elem).find('[data-name="shelf"]').val();
-  this.data.price   = $(elem).find('[data-name="price"]').val();
-  this.data.slug    = $(elem).find('[data-name="slug"]').val();
+  this.data.name             = $(elem).find('[data-name="name"]').val();
+  this.data.storage          = $(elem).find('[data-name="storage"]').val();
+  this.data.section          = $(elem).find('[data-name="section"]').val();
+  this.data.shelf            = $(elem).find('[data-name="shelf"]').val();
+  this.data.tray             = $(elem).find('[data-name="shelf"]').val();
+  this.data.price            = $(elem).find('[data-name="price"]').val();
+  this.articleNumber         = $(elem).find('[data-name="articleNumber"]').text();
+  this.supplier              = $(elem).find('[data-name="supplier"]').text();
+  this.supplierArticleNumber = $(elem).find('[data-name="supplierArticleNumber"]').text();
+  this.orderItem             = $(elem).find('[data-name="orderItem"]').text();
+  this.clinic                = $(elem).find('[data-name="clinic"]').text();
+  this.amount                = $(elem).find('[data-name="amount"]').text();
+  this.unit                  = $(elem).find('[data-name="unit"]').text();
+  this.peoe                  = $(elem).find('[data-name="peoe"]').text();  
+  this.data.slug             = $(elem).find('[data-name="slug"]').val();
 };
 
 // Extract essentials (e.g. only name, storage, section, shelf, no functions(?), etc).
@@ -117,6 +155,12 @@ var articles = {
     }
     this.render();
   },
+  addFromDB: function(dbRes) {
+    for (var i = 0; i < dbRes.length; i++) {
+      this.data.articles.push(new Article(dbRes[i]));
+    }
+    this.render();
+  },
   findArticle: function(slugName) {
     for (var i = 0; i < this.data.articles.length; i++) {
       if (slugName === this.data.articles[i].data.slug) {
@@ -148,7 +192,7 @@ var articles = {
     var compiledTemplate = Handlebars.compile(templateHTML);
     var newHTML          = compiledTemplate({ articles: this.essentials() });
     $(this.data.id).html(newHTML);
-
+    
     this.attachAddArticleListener();
     this.attachModifyEntryListeners();
     this.attachModifyEntryFinishedListener();
@@ -178,7 +222,7 @@ var articles = {
   attachAddArticleListener: function() {
     var self = this;
 
-    $(this.data.add).click(function() {
+    $('[data-admin="true"]').find(this.data.add).click(function() {
       var newArticle = new Article();
       var rowWhichContainsCreate = $(self.getRowWhichContainsCreate());
       newArticle.fillFromInput(rowWhichContainsCreate);
@@ -192,7 +236,7 @@ var articles = {
     this.render();
   },
   attachModifyEntryListeners: function() {
-    var elems = $(this.data.id).find('.modifyable-article-column');
+    var elems = $('[data-admin="true"]').find(this.data.id).find('.modifyable-article-column');
     for (var i = 0; i < elems.length; i++) {
       var self = this;
       $(elems[i]).click(function(e) {
@@ -203,7 +247,7 @@ var articles = {
     }
   },
   attachRemoveArticleListeners: function() {
-    var elems = $(this.data.id).find('tr');
+    var elems = $('[data-admin="true"]').find(this.data.id).find('tr');
     for (var i = 0; i < elems.length; i++) {
       $(elems[i]).find('.article-remove').click(this.removeArticleListener);
     }
@@ -251,18 +295,52 @@ var articles = {
   },
   attachSearchArticleListener: function() {
     var self = this;
-
-    $('#search-article').keyup(function() {
+    var timeout = null;
+    var search = function(e, $element) {
+      var value = $(this).val();
       $.ajax({
         type: 'GET',
-        url:  '/api/search/Kartotekartikel/?all',
+        url:  '/api/search/Kartotekartikel/',
         data: {
-          text: $(this).val()
+          all: true,
+          limit: 50,
+          sort: 'name',
+          text: value
         }
       }).done(self.fillFromDB.bind(self));
+    };
+
+    $('#search-article').keyup(search);
+  },
+  attachScrollBottomListener: function() {
+    var self = this;
+    $(window).scroll(function() {
+      if($(window).scrollTop() + $(window).height() < $(document).height() - 100) {
+        self.scrollEvent = false;
+        return;
+      }
+      if(typeof self.scrollEvent !== 'undefined' && self.scrollEvent) return;
+      self.scrollEvent = true;
+      var value = $('#search-article').val();
+      console.log('SCROLLED');
+      $.ajax({
+        type: 'GET',
+        url:  '/api/search/Kartotekartikel/',
+        data: {
+          all: true,
+          limit: 50,
+          skip: $('#articles .check-js').length,
+          sort: 'name',
+          text: value
+        }
+      }).done(self.addFromDB.bind(self));
     });
   }
 };
+
+$('#toggle-fields').click(function() {
+  $('.toggable').toggleClass('hidden');
+});
 
 $(function() {
   // This is ugly, and this compilation should really be inside the helper below, but we
@@ -278,4 +356,5 @@ $(function() {
   window.articles.fillFromElement();
   window.articles.attachAddArticleListener();
   window.articles.attachSearchArticleListener();
+  window.articles.attachScrollBottomListener();
 });

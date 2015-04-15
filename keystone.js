@@ -2,6 +2,8 @@
 // customising the .env file in your project's root folder.
 require('dotenv').load();
 
+
+
 // Require keystone
 var keystone = require('keystone'),
   	handlebars = require('express-handlebars'),
@@ -82,9 +84,13 @@ keystone.set('nav', {
 keystone.start({
   onHttpServerCreated: function() {
     var checklist = require('./lib/checklist.js'); // Load socket.io for checklists.
+    var backup = require('./lib/mongodbBackup.js');
+    var pdfUpdate = require('./lib/pdfCreate.js');
     checklist(keystone);
   }
 });
 
 // Init Rest API
 rest.registerRoutes(keystone.app);
+
+

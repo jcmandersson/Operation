@@ -338,13 +338,6 @@ module.exports = function() {
     }
     return out;
   };
-
-  _helpers.ifNotString = function(v1, v2, options) {
-    if(v1 != v2) {
-      return options.fn(this);
-    }
-    return options.inverse(this);
-  };
   
   _helpers.exists = function(variable, options) {
     if (typeof variable !== 'undefined') {
@@ -454,20 +447,6 @@ module.exports = function() {
     var path = require('path');
     var partialsDir = path.join(__dirname, '../..', '/views/partials');
     
-    /*var filenames = fs.readdirSync(partialsDir);
-
-    filenames.forEach(function (filename) {
-      var matches = /^([^.]+).hbs$/.exec(filename);
-      if (!matches) {
-        return;
-      }
-      var name = matches[1];
-      var template = fs.readFileSync(partialsDir + '/' + filename, 'utf8');
-      console.log(name);
-      console.log(template);
-      hbs.registerPartial(name, template);
-    });*/
-
     var matches = /^([^.]+).hbs$/.exec(partialName+'.hbs');
     var name = matches[1];
     var template = fs.readFileSync(partialsDir + '/' + partialName+'.hbs', 'utf8');
@@ -481,5 +460,16 @@ module.exports = function() {
     }
     return new hbs.SafeString( partial );
   };
+  
+  _helpers.include = function(options) {
+    var context = {},
+      mergeContext = function(obj) {
+        for(var k in obj)context[k]=obj[k];
+      };
+    mergeContext(this);
+    mergeContext(options.hash);
+    return options.fn(context);
+  };
+  
 	return _helpers;
 };

@@ -16,7 +16,8 @@ exports = module.exports = function(req, res) {
     'checklist.js',
     'checkEffect.js',
     'lib/featherlight/featherlight.min.js',
-    'lightbox.js'
+    'lightbox.js',
+    'removePreparation.js'
   ];
 
   locals.css = [
@@ -36,6 +37,7 @@ exports = module.exports = function(req, res) {
         }
         data.linda_id = req.query.linda;
         data.save(); 
+        keystone.io.emit('updateOverview')
       });
 
       res.redirect("/info/" + newOperation.slug);
@@ -88,8 +90,9 @@ exports = module.exports = function(req, res) {
           console.log(err);
           return;
         }
-        console.log(articleData);
-        articleData.sort(compare);
+        
+        //articleData.sort(compare);
+        
         locals.articles = articleData;
         next(err);
       });
@@ -99,15 +102,14 @@ exports = module.exports = function(req, res) {
     process.model.find({
       operation: locals.data._id
     })
+      .sort('order')
       .exec(function (err, processData) {
         if (err) {
           console.log('DB error');
           console.log(err);
           return;
         }
-        //console.log(processData);
         locals.processes = processData;
-        //console.log(locals.processes);
         next(err);
       });
   });
@@ -118,13 +120,13 @@ exports = module.exports = function(req, res) {
         content.model.find({
           process: e._id
         })
+          .sort('order')
           .exec(function (err, contentData) {
             if (err) {
               console.log('DB error');
               console.log(err);
               return;
             }
-            //console.log(contentData);
             e.contents = contentData;
             next(err);
           });

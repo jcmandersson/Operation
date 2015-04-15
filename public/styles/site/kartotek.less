@@ -1,3 +1,6 @@
+@import "variables.less";
+@import "functions.less";
+
 #currently-modifying {
   border-radius: 3px;
   transition: none;
@@ -24,6 +27,19 @@ span.glyphicon-remove {
   
 }
 
+.whole-table {
+  overflow-x: auto;
+}
+.flipped, .whole-table {
+  transform:rotateX(180deg);
+  -moz-transform:rotateX(180deg); /* Mozilla */
+  -webkit-transform:rotateX(180deg); /* Safari and Chrome */
+  -ms-transform:rotateX(180deg); /* IE 9+ */
+  -o-transform:rotateX(180deg); /* Opera */
+}
+td {
+  min-width: 150px;
+}
 .search-article {
   position: relative;
   width: 40%;
@@ -42,4 +58,18 @@ span.glyphicon-remove {
   height: 34px;
   line-height: 34px;
   text-align: center;
+}
+
+.modifyable-article-column {
+  vertical-align: middle !important;
+  padding-left: 5px !important;
+}
+
+.column-kartotek span {
+  padding-left: 13px !important;
+  display: inline-block !important;
+}
+
+.amount {
+  width: 70px;
 }

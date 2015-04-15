@@ -1,20 +1,44 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
-  <div id="opName" data-operationId="{{data._id}}" data-operationSlug="{{data.slug}}">
+
+    <h2>
+    {{#ifeq data.state 'Publicerad'}}
+      {{#if data.template}}
+        Publicerad Handbok
+      {{else}}
+        Operationsförberedelse
+      {{/if}}
+    {{/ifeq}}
+
+    {{#ifeq data.state 'Granskning'}}
+      Granskning
+    {{/ifeq}}
+    {{#ifeq data.state 'Utkast'}}
+      Förhandstitt
+    {{/ifeq}}
+    </h2>
+  
+  <div id="opName" data-operationId="{{data._id}}" data-operationSlug="{{data.slug}}" data-template="{{data.template}}">
+    {{#unless data.template}}
+      <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">
+        <span class="glyphicon glyphicon-ok"></span>
+      </div>
+    {{/unless}}
     {{data.title}}
   </div>
 
-{{#if data.specialty.name}}
+  {{#if data.specialty.name}}
     <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
-{{/if}}
+  {{/if}}
 
-{{#if data.tags}}
+  {{#if data.tags}}
     <div id ="synonyms">Synonymer: {{data.tags}}</div>
-{{/if}}
+  {{/if}}
 
-{{#unless data.template}}
+  {{#unless data.template}}
     <div id="lindaid">Linda-ID: {{data.linda_id}}</div>
-{{/unless}}
+  {{/unless}}
+
 
   <!--nav nav-pills-->
   <!--btn btn-default navbar-btn-->
@@ -26,7 +50,7 @@
     <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
   </ul>
 
-{{#each processes}}
+  {{#each processes}}
     <div class="process-content" id="content{{@index}}">
       {{#each contents}}
         <div class="process-content-item check-js" data-operationId="{{../operation}}" data-preparation="true" id="{{_id}}">
@@ -38,26 +62,32 @@
         </div>
       {{/each}}
     </div>
-{{/each}}
+  {{/each}}
 
   <div class="process-content" id="contentchecklist">
 
     <table class="table articleTable">
       <tr class="table-headerstriped">
-        <td></td>
+        {{#unless data.template}}
+          <td></td>
+        {{/unless}}
         <td class="centered">Antal</td>
         <td class="centered">Namn</td>
         <td class="centered">Förråd</td>
         <td class="centered">Sektion</td>
         <td class="centered">Hylla</td>
         <td class="centered">Fack</td>
-        <td class="centered comment-header">Kommentar</td>
-        <td class="centered"></td>
+        {{#unless data.template}}
+          <td class="centered"></td>
+          <td class="centered"></td>
+        {{/unless}}
       </tr>
       {{#if articles}}
         {{# each articles }}
           {{> comment }}
-          {{> checkArticle }}
+          {{#include parent=..}}
+            {{> checkArticle}}
+          {{/include}}
         {{/each}}
       {{/if}}
     </table>
@@ -72,8 +102,18 @@
     {{/unless}}
   </div>
 
-{{#if data.template}}
-  {{#ifNotString data.state 'Granskning'}}
+  {{#if data.template}}
+
+    {{#ifeq data.state 'Utkast'}}
+      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+    {{/ifeq}}
+
+    {{#ifeq data.state 'Granskning'}}
+      <button class="btn btn-primary publicera">Publicera</button>
+      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+    {{/ifeq}}
+
+    {{#ifeq data.state 'Publicerad'}}
       <form method="get" id="createOperationInstanceButton">
         <input type="hidden" name="operation" value="create">
         <input type="hidden" name="operationId" value="{{data._id}}">
@@ -89,23 +129,36 @@
               </div>
               <div class="modal-body">
                 <label>LindaID:</label>
-                <input type="text" id="lindaID" name="linda" class="form-control"/>
+                <input type="text" id="lindaID" name="linda" class="form-control" autocomplete="off" />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
+                <button type="button" class="btn btn-primary pop-up-window" data-dismiss="modal">Stäng</button>
+                <button type="submit" class="btn btn-primary pop-up-window">Påbörja förberedelse</button>
               </div>
             </div>
           </div>
         </div>
       </form>
-  {{/ifNotString}}
-    <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
-  </div>
-{{else}}
-  <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
-  <div id='btn-removePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort operation</div>
-{{/if}}
+      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+    {{/ifeq}}
+  {{else}}
+    {{>removePreparation _id=data._id slug=data.slug}}
+    <!--
+    <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">
+    -->
+
+      <!-- Det här är en variant-->
+      <!-- Färdig -->
+      
+      <!-- Det här en annan -->
+      <!--
+      <span class="glyphicon glyphicon-ok"></span>
+
+    </div>
+    -->
+  
+    <div data-toggle='modal' data-target='#alertRemovePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
+  {{/if}}
 </div>
 
 <script id="kartotekResults-template" type="text/x-handlebars-template">

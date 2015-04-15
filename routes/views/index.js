@@ -13,7 +13,7 @@ exports = module.exports = function(req, res) {
   ];
 
   locals.css = [
-    'site.css'
+    
   ];
 
   kartotek.model.find()

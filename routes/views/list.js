@@ -8,7 +8,7 @@ exports = module.exports = function (req, res) {
 
   // locals.section is used to set the currently selected
   // item in the header navigation.
-  locals.section = 'create';
+  locals.section = typeof req.query.state === 'undefined' ? 'list' : req.query.state;
 
   locals.scripts = [
     'list.js'
@@ -19,8 +19,10 @@ exports = module.exports = function (req, res) {
   ];
 
   var searchObject = {
-    slug: {$ne: 'mall'}
+    slug: {$ne: 'mall'},
+    template: true
   };
+  if (!locals.user) searchObject['state'] = 'Publicerad';
   
   var currentPage = typeof req.query.page !== 'undefined' ? req.query.page - 1 : 0;
   var limit = typeof req.query.limit !== 'undefined' ? req.query.limit : 25;
@@ -34,6 +36,12 @@ exports = module.exports = function (req, res) {
   
   var sort = typeof req.query.sort !== 'undefined' ? req.query.sort : 'title';
   locals.sort = sort;  
+
+  var state = typeof req.query.state !== 'undefined' ? req.query.state : 'Alla tillstånd';
+  locals.state = state;
+
+  var spec = typeof req.query.specialty !== 'undefined' ? req.query.specialty : 'Alla specialiteter';
+  locals.spec = spec;
 
   view.on('init', function (next) {
     if (typeof req.query.state !== 'undefined') {
@@ -57,6 +65,21 @@ exports = module.exports = function (req, res) {
     } else {
       next();
     }
+  });
+
+  view.on('init', function(next) {
+    operation.model.find({
+      state: 'Publicerad',
+      template: true
+    })
+      .exec(function (err, operations) {
+        if(err) {
+          console.log('DB error');
+          return;
+        }
+        locals.nrOfPublicManuals = operations.length;
+        next(err);
+      });
   });
   
   view.on('init', function(next){
