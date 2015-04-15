@@ -14,7 +14,7 @@ exports = module.exports = function (req, res) {
   ];
 
   locals.css = [
-    'site.css'
+    'site/specialiteter.css'
   ];
 
   // locals.section is used to set the currently selected

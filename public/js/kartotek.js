@@ -1,3 +1,5 @@
+var socket = io();
+
 var Article = function(data) {
   if (typeof data !== 'undefined') this.data = data;
   else this.data = {};
@@ -54,6 +56,10 @@ Article.prototype.modifyInDatabase = function(callback) {
   }).done(function(newArticle) {
     self.data.slug = newArticle.slug;
     if (typeof callback !== 'undefined') callback();
+    
+    //Send through socket.io to live update preparations.
+    socket.emit('kartotekUpdate', {name: newArticle.name, storage: newArticle.storage, section: newArticle.section,
+                                   shelf: newArticle.shelf, tray: newArticle.tray, price: newArticle.price, id: newArticle._id})
   });
 };
 
@@ -144,6 +150,12 @@ var articles = {
   },
   fillFromDB: function(dbRes) {
     this.data.articles = [];
+    for (var i = 0; i < dbRes.length; i++) {
+      this.data.articles.push(new Article(dbRes[i]));
+    }
+    this.render();
+  },
+  addFromDB: function(dbRes) {
     for (var i = 0; i < dbRes.length; i++) {
       this.data.articles.push(new Article(dbRes[i]));
     }
@@ -283,17 +295,45 @@ var articles = {
   },
   attachSearchArticleListener: function() {
     var self = this;
-
-    $('#search-article').keyup(function() {
+    var timeout = null;
+    var search = function(e, $element) {
       var value = $(this).val();
-      if(value.length < 3) return;
       $.ajax({
         type: 'GET',
-        url:  '/api/search/Kartotekartikel/?all',
+        url:  '/api/search/Kartotekartikel/',
         data: {
-          text: $(this).val()
+          all: true,
+          limit: 50,
+          sort: 'name',
+          text: value
         }
       }).done(self.fillFromDB.bind(self));
+    };
+
+    $('#search-article').keyup(search);
+  },
+  attachScrollBottomListener: function() {
+    var self = this;
+    $(window).scroll(function() {
+      if($(window).scrollTop() + $(window).height() < $(document).height() - 100) {
+        self.scrollEvent = false;
+        return;
+      }
+      if(typeof self.scrollEvent !== 'undefined' && self.scrollEvent) return;
+      self.scrollEvent = true;
+      var value = $('#search-article').val();
+      console.log('SCROLLED');
+      $.ajax({
+        type: 'GET',
+        url:  '/api/search/Kartotekartikel/',
+        data: {
+          all: true,
+          limit: 50,
+          skip: $('#articles .check-js').length,
+          sort: 'name',
+          text: value
+        }
+      }).done(self.addFromDB.bind(self));
     });
   }
 };
@@ -316,4 +356,5 @@ $(function() {
   window.articles.fillFromElement();
   window.articles.attachAddArticleListener();
   window.articles.attachSearchArticleListener();
+  window.articles.attachScrollBottomListener();
 });

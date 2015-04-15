@@ -1,3 +1,6 @@
+@import "variables.less";
+@import "functions.less";
+
 .operation {
   position: relative;
   min-height: 50px;
@@ -28,9 +31,15 @@
   bottom: 0;
   display: block;
 }
+
+.tags,
+.lindaID,
 .operation-card .title {
   width: 80%;
+  padding-left: 5px;
+  margin-bottom: 3px;
 }
+
 .operation-card .specialty {
   position: absolute;
   right: 16px;
@@ -55,9 +64,6 @@
   background: @verylightblue;
 }
 
-.comment-icon {
-  //right: 16px;
-}
 
 .progressbar-done {
   background-color: @lightgreen;
