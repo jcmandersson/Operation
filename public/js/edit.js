@@ -642,13 +642,13 @@ var removeArticle = function() {
 
 var addAmountClick = function(){
   var val = $(this).text();
-  var input = $('<input type="text" min="1" class="amount form-control" id="editAmount"/>');
+  var input = $('<input type="text" class="editAmount form-control" id="editAmount"/>');
   input.val(val);
   $(this).replaceWith(input);
   $(input).focus();
-
+  
   $(input).keypress(function(e){
-    editAmountDone(e, $(input));
+    editAmountDone(e, $(input), val);
   });
 
   setTimeout(function(){
@@ -656,39 +656,50 @@ var addAmountClick = function(){
       if(e.target.id == "editAmount") {
         return;
       }
-      editAmountDone(e, $(input));
+      editAmountDone(e, $(input), val);
     });
   },0);
 
 };
 
-var editAmountDone = function (e, tag) {
+function isPosInt(value) {
+  return !isNaN(value) &&
+    parseInt(Number(value)) == value &&
+    !isNaN(parseInt(value, 10)) && value > 0;
+}
+
+var editAmountDone = function (e, tag, val) {
   var newAmount = $(tag).val();
+  var oldAmount = val;
   if (e.which == 13 || e.type === 'click') {
-    var slug = $(tag).parent().parent().attr('data-slug');
 
     $('body').unbind();
-    var input = $('<b class="amount">' + newAmount + '</b>');
-    input.val(newAmount);
-    $(tag).replaceWith(input);
-    var checkArticleID = $(input).parent().parent().attr('id');
-    
-    $.ajax({
-      type: 'GET',
-      url: '/api/update/artikels/' + slug,
-      data: {
-        amount: newAmount
-      }
-    })
-      .done(function( msg ) {
-        $('#amount'+checkArticleID).children().text(newAmount);
+    if(!isPosInt(newAmount)){
+      var input = $('<b class="amount">' + oldAmount + '</b>');
+      $(tag).replaceWith(input);
+    }
+    else {
+
+      var slug = $(tag).parent().parent().attr('data-slug');
+      
+      $.ajax({
+        type: 'GET',
+        url: '/api/update/artikels/' + slug,
+        data: {
+          amount: newAmount
+        }
       })
-      .fail(function(err, status){
-        console.log('Någonting gick fel!');
-        console.log(err);
-        console.log(status);
-      });
-    
+        .done(function (msg) {
+          var input = $('<b class="amount">' + newAmount + '</b>');
+          input.val(newAmount);
+          $(tag).replaceWith(input);
+        })
+        .fail(function (err, status) {
+          console.log('Någonting gick fel!');
+          console.log(err);
+          console.log(status);
+        });
+    }
     return false;
   }
 };

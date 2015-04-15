@@ -145,6 +145,7 @@ var removeArticle = function() {
 
 var addAmountClick = function(){
   var val = $(this).text();
+  console.log(val);
   var input = $('<input type="text" min="1" class="amount form-control" id="editAmount"/>');
   input.val(val);
   $(this).replaceWith(input);
