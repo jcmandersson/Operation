@@ -34,7 +34,7 @@ var initializeSpecialitetSelect = function () {
 var splitOnce = function (str, split) {
   var index = str.indexOf(split);
   if(index === -1) {
-    index = str.length - 1;    
+    return [str, ''];
   }
   return [str.slice(0,index), str.slice(index + 1)];
 };
@@ -47,8 +47,7 @@ var addAnd = function (str) {
   return str;
 };
 
-var addToUrl = function (type, value) {
-  var url = window.location.href;
+var addToUrl = function (url, type, value) {
 
   if(url.indexOf('?') === -1) {
     url = url + '?';    
@@ -69,8 +68,7 @@ var addToUrl = function (type, value) {
   return url;
 };
 
-var removeFromUrl = function (type) {
-  var url = window.location.href;
+var removeFromUrl = function (url, type) {
 
   if(url.indexOf(type + '=') !== -1) {
     var before = url.split(type + '=')[0];
@@ -98,18 +96,18 @@ $(document).ready(function () {
   $('.specialitet-select').change(function() {
     var newSpecialty = $(this).val();
     if(newSpecialty !== "Alla specialiteter") {
-      window.location.href = addToUrl("specialty", newSpecialty);
+      window.location.href = addToUrl(window.location.href, "specialty", newSpecialty);
     } else {
-      window.location.href = removeFromUrl("specialty");
+      window.location.href = removeFromUrl(window.location.href, "specialty");
     }
   });
 
   $('.state-select').change(function() {
     var newState = $(this).val();
     if(newState !== "Alla tillstånd") {
-      window.location.href = addToUrl("state", newState);
+      window.location.href = addToUrl(window.location.href, "state", newState);
     } else {
-      window.location.href = removeFromUrl("state");
+      window.location.href = removeFromUrl(window.location.href, "state");
     }
   });
 
