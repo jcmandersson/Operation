@@ -116,5 +116,4 @@ $(document).ready(function () {
   $('.state-select').change(function() {
     changeState($(this).val());
   });
-
 });

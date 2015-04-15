@@ -66,6 +66,21 @@ exports = module.exports = function (req, res) {
       next();
     }
   });
+
+  view.on('init', function(next) {
+    operation.model.find({
+      state: 'Publicerad',
+      template: true
+    })
+      .exec(function (err, operations) {
+        if(err) {
+          console.log('DB error');
+          return;
+        }
+        locals.nrOfPublicManuals = operations.length;
+        next(err);
+      });
+  });
   
   view.on('init', function(next){
     operation.model.count(searchObject, function(err, c){
