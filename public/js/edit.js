@@ -12,6 +12,10 @@ var onProgress = function (e) {
 
 var abstractUpdate = function (url, data, preKey, callback) {
   var slug = $('.data ' + preKey + 'slug"]').val();
+  if(typeof slug === 'undefined'){
+    callback('Error: Cant find slug', 'No slug');
+    return false;
+  }
 
   $.ajax({
     type: 'GET',
@@ -39,6 +43,8 @@ var abstractUpdate = function (url, data, preKey, callback) {
       if (err) alert(err);
       callback(err, status);
     });
+  
+  return true;
 };
 
 var abstractRest = function (type, url, preKey, callback) {
@@ -504,7 +510,16 @@ var initAll = function () {
   console.log('InitAll');
 
   $(".process-content").sortable({
-    cancel: 'input,.mce-tinymce'
+    cancel: 'input,.mce-tinymce',
+    stop: function(e, ui){
+      var $this = $(this);
+      var order = 0;
+      var $loop = $this.find('[data-parent][data-id]');
+      $loop.each(function(i, e){
+        var $e = $(e);
+        updateProcessContent($e.attr('data-parent'), $e.attr('data-id'), {order: $('.process-content [data-parent][data-id]').index(e)}, function(err, msg){});
+      });
+    }
   });
 
   initWysiwyg();
