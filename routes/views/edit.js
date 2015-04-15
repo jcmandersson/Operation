@@ -93,6 +93,7 @@ exports = module.exports = function (req, res) {
         content.model.find({
           process: e._id
         })
+          .sort('order')
           .exec(function (err, contentData) {
             if (err) {
               console.log('DB error');
