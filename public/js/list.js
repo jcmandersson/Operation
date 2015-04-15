@@ -6,16 +6,13 @@ var initializeSpecialitetSelect = function () {
       all: 1
     }
   }).done(function( msg ) {
-      console.log(msg);
       var formated = $.map(msg, function (item) {
         return {
           text: item.name, id: item.name
         }
       });
-      console.log(formated);
       var data = [{id: 'Alla specialiteter', text: 'Alla specialiteter'}];
       data = data.concat(formated);
-      console.log(data);
 
       $(".specialitet-select").select2({
           data: data,
@@ -116,4 +113,14 @@ $(document).ready(function () {
   $('.state-select').change(function() {
     changeState($(this).val());
   });
+ 
+  $('.per-page').click(function() {
+    var newLimit = $(this).val();
+    if(newLimit !== "25") {
+      window.location.href = addToUrl(window.location.href, "limit", newLimit);
+    } else {
+      window.location.href = removeFromUrl(window.location.href, "limit");
+    }
+  });
+
 });
