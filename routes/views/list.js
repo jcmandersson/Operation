@@ -19,8 +19,10 @@ exports = module.exports = function (req, res) {
   ];
 
   var searchObject = {
-    slug: {$ne: 'mall'}
+    slug: {$ne: 'mall'},
+    template: true
   };
+  if (!locals.user) searchObject['state'] = 'Publicerad';
   
   var currentPage = typeof req.query.page !== 'undefined' ? req.query.page - 1 : 0;
   var limit = typeof req.query.limit !== 'undefined' ? req.query.limit : 25;

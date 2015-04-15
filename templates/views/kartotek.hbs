@@ -17,7 +17,15 @@
     <td>Hylla</td>
     <td>Fack</td>
     {{#if user.isAdmin}}
-      <td>Pris</td>
+      <td class="hidden toggable">Pris</td>
+      <td class="hidden toggable">Artikelnummer</td>
+      <td class="hidden toggable">Återförsäljare</td>
+      <td class="hidden toggable">Återförsäljare artikelnummer</td>
+      <td class="hidden toggable">Beställningsnummer</td>
+      <td class="hidden toggable">Klinik</td>
+      <td class="hidden toggable">Mängd</td>
+      <td class="hidden toggable">Enhet</td>
+      <td class="hidden toggable">peoe</td>
       <td></td>
     {{/if}}
   </tr>
@@ -30,7 +38,15 @@
       <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
       <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
       {{#if user.isAdmin}}
-        <td><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
+        <td class="hidden toggable"><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
+        <td class="hidden toggable"><input data-name="articleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (sjukhuset)..."/></td>
+        <td class="hidden toggable"><input data-name="supplier" type="text" class="form-control modify-input" placeholder="Återförsäljare..."/></td>
+        <td class="hidden toggable"><input data-name="supplierArticleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (återförsäljare)..."/></td>
+        <td class="hidden toggable"><input data-name="orderItem" type="text" class="form-control modify-input" placeholder="Beställningsnummer..."/></td>
+        <td class="hidden toggable"><input data-name="clinic" type="text" class="form-control modify-input" placeholder="Klinik..."/></td>
+        <td class="hidden toggable"><input data-name="amount" type="text" class="form-control modify-input" placeholder="Mängd..."/></td>
+        <td class="hidden toggable"><input data-name="unit" type="text" class="form-control modify-input" placeholder="Enhet..."/></td>
+        <td class="hidden toggable"><input data-name="peoe" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
       {{/if}}
       <td><a class="btn btn-success" id="article-add" href="#" role="button"><span
         class="glyphicon glyphicon-plus"></span></a></td>
@@ -49,7 +65,15 @@
     <td class="modifyable-article-column column-kartotek" data-name="shelf">\{{#modifyable slug 'shelf' shelf}}\{{/modifyable}}</td>
     <td class="modifyable-article-column column-kartotek" data-name="tray">\{{#modifyable slug 'tray' tray}}\{{/modifyable}}</td>
     {{#if user.isAdmin}}
-      <td class="modifyable-article-column column-kartotek" data-name="price">\{{#modifyable slug 'price' price}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'price' price}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'articleNumber' articleNumber}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'supplierArticleNumber' supplierArticleNumber}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'clinic' clinic}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'supplier' supplier}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'orderItem' orderItem}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'amount' amount}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'unit' unit}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'peoe' peoe}}\{{/modifyable}}</td>
     {{/if}}
     <td class="modifyable-article-column hidden column-kartotek" data-name="slug">\{{ slug }}</td>
     <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
@@ -68,10 +92,13 @@
       <input type="search" id="search-article" class="form-control" autocomplete="off" placeholder="Sök artikel..."/>
       <i class="glyphicon glyphicon-search form-control-feedback"></i>
     </div>
-
+    {{#if user.isAdmin}}
+    <input type="checkbox" id="toggle-fields"/>&nbsp;Visa alla
+    {{/if}}
   </div>
 
-  <div class="row">
+  <div class="row whole-table">
+    <div class="flipped">
     <div class="input-box">
       <table class="table table-striped">
         <tbody id="articles">
@@ -82,7 +109,15 @@
           <td>Hylla</td>
           <td>Fack</td>
           {{#if user.isAdmin}}
-            <td>Pris</td>
+            <td class="hidden toggable">Pris</td>
+            <td class="hidden toggable">Artikelnummer (sjukhuset)</td>
+            <td class="hidden toggable">Återförsäljare</td>
+            <td class="hidden toggable">Artikelnummer (återförsäljare) </td>
+            <td class="hidden toggable">Beställningsnummer</td>
+            <td class="hidden toggable">Klinik</td>
+            <td class="hidden toggable">Mängd</td>
+            <td class="hidden toggable">Enhet</td>
+            <td class="hidden toggable">peoe</td>
             <td></td>
           {{/if}}
         </tr>
@@ -94,9 +129,17 @@
             <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
             <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
             {{#if user.isAdmin}}
-              <td><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
+              <td class="hidden toggable"><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
+              <td class="hidden toggable"><input data-name="articleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer..."/></td>
+              <td class="hidden toggable"><input data-name="supplier" type="text" class="form-control modify-input" placeholder="Återförsäljare..."/></td>
+              <td class="hidden toggable"><input data-name="supplierArticleNumber" type="text" class="form-control modify-input" placeholder="Återförsäljare..."/></td>
+              <td class="hidden toggable"><input data-name="orderItem" type="text" class="form-control modify-input" placeholder="Beställningsnummer..."/></td>
+              <td class="hidden toggable"><input data-name="clinic" type="text" class="form-control modify-input" placeholder="Klinik..."/></td>
+              <td class="hidden toggable"><input data-name="amount" type="text" class="form-control modify-input" placeholder="Mängd..."/></td>
+              <td class="hidden toggable"><input data-name="unit" type="text" class="form-control modify-input" placeholder="Enhet..."/></td>
+              <td class="hidden toggable"><input data-name="peoe" type="text" class="form-control modify-input" placeholder="Peoe..."/></td>
             {{/if}}
-            <td><a class="btn btn-success" id="article-add" href="#" role="button"><span
+            <td class="centered"><a class="btn btn-success" id="article-add" href="#" role="button"><span
               class="glyphicon glyphicon-plus"></span></a></td>
           </tr>
         {{/if}}
@@ -111,13 +154,21 @@
             <td class="modifyable-article-column column-kartotek" data-name="shelf"><span>{{ shelf }}</span></td>
             <td class="modifyable-article-column column-kartotek" data-name="tray"><span>{{ tray }}</span></td>
             {{#if ../user.isAdmin}}
-              <td class="modifyable-article-column column-kartotek" data-name="price"><span>{{ price }}</span></td>
+              <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price"><span>{{ price }}</span></td>
+              <td class="modifyable-article-column hidden toggable column-kartotek" data-name="articleNumber"><span>{{ articleNumber }}</span></td>
+              <td class="modifyable-article-column hidden toggable column-kartotek" data-name="supplier"><span>{{ supplier }}</span></td>
+              <td class="modifyable-article-column hidden toggable column-kartotek" data-name="supplierArticleNumber"><span>{{ supplierArticleNumber }}</span></td>
+              <td class="modifyable-article-column hidden toggable column-kartotek" data-name="orderItem"><span>{{ orderItem }}</span></td>
+              <td class="modifyable-article-column hidden toggable column-kartotek" data-name="clinic"><span>{{ clinic }}</span></td>
+              <td class="modifyable-article-column hidden toggable column-kartotek" data-name="amount"><span>{{ amount }}</span></td>
+              <td class="modifyable-article-column hidden toggable column-kartotek" data-name="unit"><span>{{ unit }}</span></td>
+              <td class="modifyable-article-column hidden toggable column-kartotek" data-name="peoe"><span>{{ peoe }}</span></td>
             {{/if}}
             <td class="modifyable-article-column hidden" data-name="slug">{{ slug }}</td>
             <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
               with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
             {{#if ../user.isAdmin}}
-              <td><a class="btn btn-danger article-remove" href="#" role="button"><span
+              <td class="centered"><a class="btn btn-danger article-remove" href="#" role="button"><span
                 class="glyphicon glyphicon-remove"></span></a></td>
             {{/if}}
           </tr>
@@ -126,4 +177,6 @@
       </table>
     </div>
   </div>
+  </div>
 </div>
+
