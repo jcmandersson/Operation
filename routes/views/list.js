@@ -20,7 +20,10 @@ exports = module.exports = function (req, res) {
 
   var searchObject = {
     slug: {$ne: 'mall'}
+    
   };
+  if (!locals.user) searchObject['state'] = 'Publicerad';
+  
   
   var currentPage = typeof req.query.page !== 'undefined' ? req.query.page - 1 : 0;
   var limit = typeof req.query.limit !== 'undefined' ? req.query.limit : 25;
@@ -66,6 +69,7 @@ exports = module.exports = function (req, res) {
   });
   
   view.on('init', function(next){
+    console.log(locals.user);
     operation.model.count(searchObject, function(err, c){
       locals.pagination = {
         page: currentPage + 1,
