@@ -59,10 +59,10 @@
 
     <div class="col-sm-3">
       <div class="btn-group" role="group" aria-label="...">
-        <button type="button" class="btn btn-default per-page" value="25">25</button>
-        <button type="button" class="btn btn-default per-page" value="50">50</button>
-        <button type="button" class="btn btn-default per-page" value="100">100</button>
-        <button type="button" class="btn btn-default per-page" value="200">200</button>
+        <button type="button" class="btn btn-default per-page {{#ifeq limit '25'}}selected{{/ifeq}}" value="25">25</button>
+        <button type="button" class="btn btn-default per-page {{#ifeq limit '50'}}selected{{/ifeq}}" value="50">50</button>
+        <button type="button" class="btn btn-default per-page {{#ifeq limit '100'}}selected{{/ifeq}}" value="100">100</button>
+        <button type="button" class="btn btn-default per-page {{#ifeq limit '200'}}selected{{/ifeq}}" value="200">200</button>
       </div>
     </div>
   </div>

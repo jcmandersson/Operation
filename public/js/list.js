@@ -102,6 +102,14 @@ var changeState = function (newState) {
   }
 }
 
+var changeLimit = function (newLimit) {
+  if(newLimit !== "25") {
+    window.location.href = addToUrl(window.location.href, "limit", newLimit);
+  } else {
+    window.location.href = removeFromUrl(window.location.href, "limit");
+  }
+}
+
 $(document).ready(function () {
   initializeSpecialitetSelect();
   $('.state-select').select2();
@@ -115,12 +123,7 @@ $(document).ready(function () {
   });
  
   $('.per-page').click(function() {
-    var newLimit = $(this).val();
-    if(newLimit !== "25") {
-      window.location.href = addToUrl(window.location.href, "limit", newLimit);
-    } else {
-      window.location.href = removeFromUrl(window.location.href, "limit");
-    }
+    changeLimit($(this).val());
   });
 
 });
