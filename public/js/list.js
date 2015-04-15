@@ -30,14 +30,14 @@ var initializeSpecialitetSelect = function () {
 
 var splitOnce = function (str, split) {
   var index = str.indexOf(split);
-  if(index === -1) {
+  if (index === -1) {
     return [str, ''];
   }
   return [str.slice(0,index), str.slice(index + 1)];
 };
 
 var addAnd = function (str) {
-  if(str[str.length - 1] !== '?') {
+  if (str[str.length - 1] !== '?') {
     str = str + '&'; 
   }
   
@@ -46,11 +46,11 @@ var addAnd = function (str) {
 
 var addToUrl = function (url, type, value) {
 
-  if(url.indexOf('?') === -1) {
+  if (url.indexOf('?') === -1) {
     url = url + '?';    
   }
 
-  if(url.indexOf(type + '=') !== -1) {
+  if (url.indexOf(type + '=') !== -1) {
     var before = url.split(type + '=')[0];
     var after = url.split(type + '=')[1];
     url =  before + type + '=' + value;
@@ -67,17 +67,17 @@ var addToUrl = function (url, type, value) {
 
 var removeFromUrl = function (url, type) {
 
-  if(url.indexOf(type + '=') !== -1) {
+  if (url.indexOf(type + '=') !== -1) {
     var before = url.split(type + '=')[0];
     var after = url.split(type + '=')[1];
 
-    if(before[before.length - 1] === '?') {
+    if (before[before.length - 1] === '?') {
       url = before;
     } else {
       url =  before.slice(0, before.length - 1);
     }
 
-    if(after.indexOf('&') !== -1) {
+    if (after.indexOf('&') !== -1) {
       url = addAnd(url);
       url = url + splitOnce(after, '&')[1]; 
     }
@@ -87,7 +87,7 @@ var removeFromUrl = function (url, type) {
 };
 
 var changeSpecialty = function (newSpecialty) {
-  if(newSpecialty !== "Alla specialiteter") {
+  if (newSpecialty !== "Alla specialiteter") {
     window.location.href = addToUrl(window.location.href, "specialty", newSpecialty);
   } else {
     window.location.href = removeFromUrl(window.location.href, "specialty");
@@ -95,7 +95,7 @@ var changeSpecialty = function (newSpecialty) {
 }
 
 var changeState = function (newState) {
-  if(newState !== "Alla tillstånd") {
+  if (newState !== "Alla tillstånd") {
     window.location.href = addToUrl(window.location.href, "state", newState);
   } else {
     window.location.href = removeFromUrl(window.location.href, "state");
@@ -103,7 +103,7 @@ var changeState = function (newState) {
 }
 
 var changeLimit = function (newLimit) {
-  if(newLimit !== "25") {
+  if (newLimit !== "25") {
     window.location.href = addToUrl(window.location.href, "limit", newLimit);
   } else {
     window.location.href = removeFromUrl(window.location.href, "limit");
