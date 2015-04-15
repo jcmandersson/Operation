@@ -14,7 +14,8 @@ Process.add({
     ref: 'Operation',
     required: true,
     initial: true
-  }
+  },
+  order: {type: Number, required: true, default: 0}
 });
 
 /**
