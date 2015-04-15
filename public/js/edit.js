@@ -224,7 +224,6 @@ var addProcess = function (data, callback) {
     });
 };
 
-
 var addProcessContent = function (processIndex, data, callback) {
   var nextIndex = 0;
   var $lastElement = $('.data [data-process-index="' + processIndex + '"] [data-content-index]');
