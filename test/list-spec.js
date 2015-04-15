@@ -62,5 +62,17 @@ describe("The list page", function() {
     expect(window.location.href).toBe(url.split('?')[0] + "?");
   });
 
+  it("function changeState can change the state from an emty query", function() {
+    var url = window.location.href;
+    changeState("Utkast");
+    expect(window.location.href).toBe(url + "state=Utkast");
+  });
+
+ it("function changeState can change the state to Alla tillstånd", function() {
+    var url = window.location.href;
+    changeState("Alla tillstånd");
+    expect(window.location.href).toBe(url.split('?')[0] + "?");
+  });
+
 });
 
