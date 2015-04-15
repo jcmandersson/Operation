@@ -50,5 +50,17 @@ describe("The list page", function() {
     expect(url).toBe("http://hej.com/list?");
   });
 
+  it("function changeSpecialty can change the specialty from an emty query", function() {
+    var url = window.location.href;
+    changeSpecialty("Urologi");
+    expect(window.location.href).toBe(url + "?specialty=Urologi");
+  });
+
+ it("function changeSpecialty can change the specialty to Alla specialiteter", function() {
+    var url = window.location.href;
+    changeSpecialty("Alla specialiteter");
+    expect(window.location.href).toBe(url.split('?')[0] + "?");
+  });
+
 });
 

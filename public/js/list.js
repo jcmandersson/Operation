@@ -89,26 +89,32 @@ var removeFromUrl = function (url, type) {
   return url;
 };
 
+var changeSpecialty = function (newSpecialty) {
+  if(newSpecialty !== "Alla specialiteter") {
+    window.location.href = addToUrl(window.location.href, "specialty", newSpecialty);
+  } else {
+    window.location.href = removeFromUrl(window.location.href, "specialty");
+  }
+}
+
+var changeState = function (newState) {
+  if(newState !== "Alla tillstånd") {
+    window.location.href = addToUrl(window.location.href, "state", newState);
+  } else {
+    window.location.href = removeFromUrl(window.location.href, "state");
+  }
+}
+
 $(document).ready(function () {
   initializeSpecialitetSelect();
   $('.state-select').select2();
 
   $('.specialitet-select').change(function() {
-    var newSpecialty = $(this).val();
-    if(newSpecialty !== "Alla specialiteter") {
-      window.location.href = addToUrl(window.location.href, "specialty", newSpecialty);
-    } else {
-      window.location.href = removeFromUrl(window.location.href, "specialty");
-    }
+    changeSpecialty($(this).val());
   });
 
   $('.state-select').change(function() {
-    var newState = $(this).val();
-    if(newState !== "Alla tillstånd") {
-      window.location.href = addToUrl(window.location.href, "state", newState);
-    } else {
-      window.location.href = removeFromUrl(window.location.href, "state");
-    }
+    changeState($(this).val());
   });
 
 });
