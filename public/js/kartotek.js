@@ -28,6 +28,7 @@ Article.prototype.modifyInDatabase = function(callback) {
     if (typeof callback !== 'undefined') callback();
 
     // Send through socket.io to live update preparations.
+    // TODO: Shouldn't be hard-coded like this. What if we add new columns? Just use newArticle.data
     socket.emit('kartotekUpdate', {
       name: newArticle.name,
       storage: newArticle.storage,
@@ -76,14 +77,14 @@ Article.prototype.fillFromInput = function(elem) {
   this.data.shelf                 = $(elem).find('[data-name="shelf"]').val();
   this.data.tray                  = $(elem).find('[data-name="shelf"]').val();
   this.data.price                 = $(elem).find('[data-name="price"]').val();
-  this.data.articleNumber         = $(elem).find('[data-name="articleNumber"]').text();
-  this.data.supplier              = $(elem).find('[data-name="supplier"]').text();
-  this.data.supplierArticleNumber = $(elem).find('[data-name="supplierArticleNumber"]').text();
-  this.data.orderItem             = $(elem).find('[data-name="orderItem"]').text();
-  this.data.clinic                = $(elem).find('[data-name="clinic"]').text();
-  this.data.amount                = $(elem).find('[data-name="amount"]').text();
-  this.data.unit                  = $(elem).find('[data-name="unit"]').text();
-  this.data.peoe                  = $(elem).find('[data-name="peoe"]').text();
+  this.data.articleNumber         = $(elem).find('[data-name="articleNumber"]').val();
+  this.data.supplier              = $(elem).find('[data-name="supplier"]').val();
+  this.data.supplierArticleNumber = $(elem).find('[data-name="supplierArticleNumber"]').val();
+  this.data.orderItem             = $(elem).find('[data-name="orderItem"]').val();
+  this.data.clinic                = $(elem).find('[data-name="clinic"]').val();
+  this.data.amount                = $(elem).find('[data-name="amount"]').val();
+  this.data.unit                  = $(elem).find('[data-name="unit"]').val();
+  this.data.peoe                  = $(elem).find('[data-name="peoe"]').val();
   this.data.slug                  = $(elem).find('[data-name="slug"]').val();
 };
 
@@ -99,8 +100,10 @@ var articles = {
     id: '#articles',
     template: '#articles-template',
     add: '#article-add',
+    toggleNumVisibleColumns: '#toggle-fields',
     currentlyModifyingArticle: undefined,
     currentlyModifyingColumn: undefined,
+    showAllColumns: false,
     articles: []
   },
   // Fills itself (this.data.articles) with
@@ -124,13 +127,6 @@ var articles = {
     // This is not a bottleneck. (E.g. the internet is a much larger bottleneck.)
     this.attachModifyEntryListeners();
     this.attachRemoveArticleListeners();
-  },
-  fillFromDB: function(dbRes) {
-    this.data.articles = [];
-    for (var i = 0; i < dbRes.length; i++) {
-      this.data.articles.push(new Article(dbRes[i]));
-    }
-    this.render();
   },
   addFromDB: function(dbRes) {
     for (var i = 0; i < dbRes.length; i++) {
@@ -167,7 +163,10 @@ var articles = {
   render: function() {
     var templateHTML     = $(this.data.template).html();
     var compiledTemplate = Handlebars.compile(templateHTML);
-    var newHTML          = compiledTemplate({ articles: this.essentials() });
+    var newHTML          = compiledTemplate({
+      showAllColumns: this.data.showAllColumns,
+      articles: this.essentials()
+    });
     $(this.data.id).html(newHTML);
 
     this.attachAddArticleListener();
@@ -284,7 +283,10 @@ var articles = {
           sort: 'name',
           text: value
         }
-      }).done(self.fillFromDB.bind(self));
+      }).done(function() {
+        self.articles.data = [];
+        self.addFromDB.bind(self)
+      });
     };
 
     $('#search-article').keyup(search);
@@ -312,12 +314,15 @@ var articles = {
         }
       }).done(self.addFromDB.bind(self));
     });
+  },
+  attachToggleNumColumnsVisibleListener: function() {
+    var self = this;
+    $(this.data.toggleNumVisibleColumns).click(function(e) {
+      self.data.showAllColumns = e.target.checked;
+      self.render();
+    });
   }
 };
-
-$('#toggle-fields').click(function() {
-  $('.toggable').toggleClass('hidden');
-});
 
 $(function() {
   // This is ugly, and this compilation should really be inside the helper below, but we
@@ -326,6 +331,7 @@ $(function() {
   var modifiedTemplate = Handlebars.compile(compiledModified);
 
   Handlebars.registerHelper('modifyable', function(slugName, type, currentValue) {
+    //if (currentValue == '') { console.log('hi') }
     var isModifyable = articles.isEntryThatIsCurrentlyBeingModified(slugName, type);
     return modifiedTemplate({ isModifyable: isModifyable, value: currentValue });
   });
@@ -334,4 +340,6 @@ $(function() {
   window.articles.attachAddArticleListener();
   window.articles.attachSearchArticleListener();
   window.articles.attachScrollBottomListener();
+  window.articles.attachToggleNumColumnsVisibleListener();
+  console.log(window.articles.data)
 });
