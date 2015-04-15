@@ -39,9 +39,9 @@
       <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
       {{#if user.isAdmin}}
         <td class="hidden toggable"><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
-        <td class="hidden toggable"><input data-name="articleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer..."/></td>
+        <td class="hidden toggable"><input data-name="articleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (sjukhuset)..."/></td>
         <td class="hidden toggable"><input data-name="supplier" type="text" class="form-control modify-input" placeholder="Återförsäljare..."/></td>
-        <td class="hidden toggable"><input data-name="supplierArticleNumber" type="text" class="form-control modify-input" placeholder="Återförsäljare..."/></td>
+        <td class="hidden toggable"><input data-name="supplierArticleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (återförsäljare)..."/></td>
         <td class="hidden toggable"><input data-name="orderItem" type="text" class="form-control modify-input" placeholder="Beställningsnummer..."/></td>
         <td class="hidden toggable"><input data-name="clinic" type="text" class="form-control modify-input" placeholder="Klinik..."/></td>
         <td class="hidden toggable"><input data-name="amount" type="text" class="form-control modify-input" placeholder="Mängd..."/></td>
@@ -110,9 +110,9 @@
           <td>Fack</td>
           {{#if user.isAdmin}}
             <td class="hidden toggable">Pris</td>
-            <td class="hidden toggable">Artikelnummer</td>
+            <td class="hidden toggable">Artikelnummer (sjukhuset)</td>
             <td class="hidden toggable">Återförsäljare</td>
-            <td class="hidden toggable">Återförsäljare artikelnummer</td>
+            <td class="hidden toggable">Artikelnummer (återförsäljare) </td>
             <td class="hidden toggable">Beställningsnummer</td>
             <td class="hidden toggable">Klinik</td>
             <td class="hidden toggable">Mängd</td>
@@ -137,7 +137,7 @@
               <td class="hidden toggable"><input data-name="clinic" type="text" class="form-control modify-input" placeholder="Klinik..."/></td>
               <td class="hidden toggable"><input data-name="amount" type="text" class="form-control modify-input" placeholder="Mängd..."/></td>
               <td class="hidden toggable"><input data-name="unit" type="text" class="form-control modify-input" placeholder="Enhet..."/></td>
-              <td class="hidden toggable"><input data-name="peoe" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
+              <td class="hidden toggable"><input data-name="peoe" type="text" class="form-control modify-input" placeholder="Peoe..."/></td>
             {{/if}}
             <td class="centered"><a class="btn btn-success" id="article-add" href="#" role="button"><span
               class="glyphicon glyphicon-plus"></span></a></td>

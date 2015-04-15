@@ -3,11 +3,11 @@ tabClick = function(elem) {
   if(elem.id == "all") {
     $(".process-content").show();
     $("#contentchecklist").hide();
-    window.location.hash = '#all';
+    window.location.replace('#all');
   } else {
     $(".process-content").hide();
     $("#content"+elem.id).show();
-    window.location.hash = '#' + elem.id;
+    window.location.replace('#' + elem.id);
   }
 };
 
