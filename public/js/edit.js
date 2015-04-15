@@ -12,7 +12,7 @@ var onProgress = function (e) {
 
 var abstractUpdate = function (url, data, preKey, callback) {
   var slug = $('.data ' + preKey + 'slug"]').val();
-  if(typeof slug === 'undefined'){
+  if (typeof slug === 'undefined') {
     callback('Error: Cant find slug', 'No slug');
     return false;
   }
@@ -43,7 +43,7 @@ var abstractUpdate = function (url, data, preKey, callback) {
       if (err) alert(err);
       callback(err, status);
     });
-  
+
   return true;
 };
 
@@ -286,11 +286,17 @@ var newProcess = function (e) {
 
   addProcess({title: value}, function (err, msg) {
     var $last = $('.process-item').last();
+    $('.process-item input').each(function(i, e){
+      var nr = parseInt($(e).attr('data-id'));
+      if(nr > parseInt($last.find('input').attr('data-id'))){
+        $last = $(e).parent();
+      }
+    });
     var $clone = $last.clone().removeClass('hidden');
     var $input = $clone.find('.process');
     var newIndex = parseInt($input.attr('data-id')) + 1;
     $input.attr('data-id', newIndex).attr('name', 'process' + newIndex).val(value);
-    $clone.insertAfter($last);
+    $clone.insertAfter($('.process-item').last());
 
     var $contentClones = $('.process-content.mall').clone().removeClass('mall hidden').insertAfter($('.process-content').last());
     $contentClones.attr('data-id', newIndex).attr('id', 'content' + newIndex)
@@ -511,13 +517,24 @@ var initAll = function () {
 
   $(".process-content").sortable({
     cancel: 'input,.mce-tinymce',
-    stop: function(e, ui){
+    stop: function (e, ui) {
       var $this = $(this);
-      var order = 0;
-      var $loop = $this.find('[data-parent][data-id]');
-      $loop.each(function(i, e){
+      $this.find('[data-parent][data-id]').each(function (i, e) {
         var $e = $(e);
-        updateProcessContent($e.attr('data-parent'), $e.attr('data-id'), {order: $('.process-content [data-parent][data-id]').index(e)}, function(err, msg){});
+        updateProcessContent($e.attr('data-parent'), $e.attr('data-id'), {order: $('.process-content [data-parent][data-id]').index(e)}, function (err, msg) {
+        });
+      });
+    }
+  });
+
+  $('.nav-pills').sortable({
+    cancel: '.newProcess',
+    stop: function (e, ui) {
+      var $this = $(this);
+      $this.find('.process-item').each(function (i, e) {
+        var $e = $(e);
+        var index = $e.find('input').attr('data-id');
+        updateProcess(index, {order: $('.nav-pills .process-item').index(e)}, function (err, msg) {});
       });
     }
   });
@@ -532,28 +549,28 @@ $(document).ready(function () {
 
   var compiledResults = $('#kartotekResults-template').html();
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
-  
-  $('#article-search').keyup( function() {
-    if( this.value.length == 0){
+
+  $('#article-search').keyup(function () {
+    if (this.value.length == 0) {
       $('#kartotekResults').empty();
       return;
     }
-    else if( this.value.length < 3 ){
+    else if (this.value.length < 3) {
       return;
     }
     findArticles(kartotekResultsTemplate);
   });
-  
+
   $('.articleTable tbody').on("click", '.article-remove', removeArticle);
   $('.articleTable tbody').on("click", '.amount', addAmountClick);
 
 });
 
-var findArticles = function(resultsTemplate) {
+var findArticles = function (resultsTemplate) {
   var articleName = $('#article-search').val();
   var url = '/api/search/Kartotekartikel?text=' + articleName;
-  $.get(url).done(function(results) {
-    $('#kartotekResults').html(resultsTemplate({ results: results }));
+  $.get(url).done(function (results) {
+    $('#kartotekResults').html(resultsTemplate({results: results}));
 
     if (results.length != 0) {
       $('#article-search').addClass('has-results');
@@ -562,7 +579,7 @@ var findArticles = function(resultsTemplate) {
       $('#article-search').removeClass('has-results');
     }
 
-    $('.add-column').click(function() {
+    $('.add-column').click(function () {
 
 
       $('#article-search').val('').removeClass('has-results');
@@ -570,14 +587,16 @@ var findArticles = function(resultsTemplate) {
       //add here
 
       var id = $(this).attr('data-kartotekid');
-      var articleObject = jQuery.grep(results, function(e){ return e._id == id; });
+      var articleObject = jQuery.grep(results, function (e) {
+        return e._id == id;
+      });
       var operationID = $('#operation').val();
       var found = false;
-      
-      $('.articleTable > tbody > tr').each(function(index) {
-        if($(this).attr("data-kartotekID") == id) {
+
+      $('.articleTable > tbody > tr').each(function (index) {
+        if ($(this).attr("data-kartotekID") == id) {
           var slug = $(this).attr("data-slug");
-          var newAmount = parseInt($('#amount'+articleObject[0]._id).children().text())+1;
+          var newAmount = parseInt($('#amount' + articleObject[0]._id).children().text()) + 1;
           $.ajax({
             type: 'GET',
             url: '/api/update/artikels/' + slug,
@@ -585,15 +604,15 @@ var findArticles = function(resultsTemplate) {
               amount: newAmount
             }
           })
-            .done(function( msg ) {
-              $('#amount'+articleObject[0]._id).children().text(newAmount);
+            .done(function (msg) {
+              $('#amount' + articleObject[0]._id).children().text(newAmount);
             })
-            .fail(function(err, status){
+            .fail(function (err, status) {
               console.log('Någonting gick fel!');
               console.log(err);
               console.log(status);
             });
-          found=true;
+          found = true;
         }
       });
 
@@ -606,13 +625,19 @@ var findArticles = function(resultsTemplate) {
             name: articleObject[0].name,
             kartotek: articleObject[0]._id,
             operation: operationID,
-            amount : 1
+            amount: 1
           }
         })
           .done(function (msg) {
             var compiledArticle = $('#article-template').html();
             var articleTemplate = Handlebars.compile(compiledArticle);
-            $(articleTemplate({ kartotek : articleObject[0], operation: operationID, _id : msg._id, amount : 1 , slug : msg.slug})).appendTo('.articleTable');
+            $(articleTemplate({
+              kartotek: articleObject[0],
+              operation: operationID,
+              _id: msg._id,
+              amount: 1,
+              slug: msg.slug
+            })).appendTo('.articleTable');
 
           })
           .fail(function (err, status) {
@@ -623,62 +648,61 @@ var findArticles = function(resultsTemplate) {
       }
     });
   });
-  
+
 };
 
-var removeArticle = function() {
+var removeArticle = function () {
   var checkArticleID = $(this).parent().parent().attr('id');
   var slug = $(this).parent().parent().attr('data-slug');
-  
+
   var confirmed = confirm("Är du säker på att du vill ta bort artikeln?");
   if (confirmed) {
-    
+
     $.ajax({
       type: 'DELETE',
       url: '/api/artikels/' + slug
     })
-      .done(function( msg ) {
-        var row = $('#'+checkArticleID);
+      .done(function (msg) {
+        var row = $('#' + checkArticleID);
         row.remove();
       })
-      .fail(function(err, status){
+      .fail(function (err, status) {
         console.log('Någonting gick fel!');
         console.log(err);
         console.log(status);
       });
-    
+
   }
   else {
     return false;
   }
 };
 
-var addAmountClick = function(){
+var addAmountClick = function () {
   var val = $(this).text();
   var input = $('<input type="text" class="editAmount form-control" id="editAmount"/>');
   input.val(val);
   $(this).replaceWith(input);
   $(input).focus();
-  
-  $(input).keypress(function(e){
+
+  $(input).keypress(function (e) {
     editAmountDone(e, $(input), val);
   });
 
-  setTimeout(function(){
-    $('body').click(function(e){
-      if(e.target.id == "editAmount") {
+  setTimeout(function () {
+    $('body').click(function (e) {
+      if (e.target.id == "editAmount") {
         return;
       }
       editAmountDone(e, $(input), val);
     });
-  },0);
+  }, 0);
 
 };
 
 function isPosInt(value) {
   return !isNaN(value) &&
-    parseInt(Number(value)) == value &&
-    !isNaN(parseInt(value, 10)) && value > 0;
+    parseInt(Number(value)) == value && !isNaN(parseInt(value, 10)) && value > 0;
 }
 
 var editAmountDone = function (e, tag, val) {
@@ -687,14 +711,14 @@ var editAmountDone = function (e, tag, val) {
   if (e.which == 13 || e.type === 'click') {
 
     $('body').unbind();
-    if(!isPosInt(newAmount)){
+    if (!isPosInt(newAmount)) {
       var input = $('<b class="amount">' + oldAmount + '</b>');
       $(tag).replaceWith(input);
     }
     else {
 
       var slug = $(tag).parent().parent().attr('data-slug');
-      
+
       $.ajax({
         type: 'GET',
         url: '/api/update/artikels/' + slug,
