@@ -19,16 +19,6 @@ exports = module.exports = function (req, res) {
     'editUser.css'
   ];
   
-  /*
-   User.add({
-   name: { label: 'Namn', type: Types.Name, required: true, index: true },
-   email: { label: 'E-post', type: Types.Email, initial: true, required: true, index: true },
-   password: { label: 'Lösenord', type: Types.Password, initial: true, required: true }
-   }, 'Permissions', {
-   isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }
-   });
-   */
-  
   view.on('init', function(next){
     if(typeof req.params._id !== 'undefined'){
       locals.editing = true;
