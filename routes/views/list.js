@@ -19,7 +19,8 @@ exports = module.exports = function (req, res) {
   ];
 
   var searchObject = {
-    slug: {$ne: 'mall'}
+    slug: {$ne: 'mall'},
+    template: true
   };
   
   var currentPage = typeof req.query.page !== 'undefined' ? req.query.page - 1 : 0;
