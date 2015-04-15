@@ -257,18 +257,21 @@ var articles = {
   },
   attachSearchArticleListener: function() {
     var self = this;
-
-    $('#search-article').keyup(function() {
+    var timeout = null;
+    var search = function(e, $element) {
       var value = $(this).val();
-      if(value.length < 3) return;
       $.ajax({
         type: 'GET',
-        url:  '/api/search/Kartotekartikel/?all',
+        url:  '/api/search/Kartotekartikel/',
         data: {
-          text: $(this).val()
+          all: true,
+          limit: 25,
+          text: value
         }
       }).done(self.fillFromDB.bind(self));
-    });
+    };
+
+    $('#search-article').keyup(search);
   }
 };
 
