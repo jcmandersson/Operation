@@ -20,7 +20,6 @@ $(document).ready(function() {
     $(".process-content").hide();
     $("#content" + hash).show();
   }
-
   
   $(".nav-pills > .navbar-btn").click(function() {
     tabClick(this);
