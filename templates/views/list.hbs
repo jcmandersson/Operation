@@ -37,29 +37,33 @@
     {{/each}}
   </table>
 
+  <div id="page-menu">
+    <div class="col-sm-9">
+      {{#if pagination.pageCount}}
+        <nav>
+          <ul class="pagination">
+            {{#paginate pagination type="previous"}}
+              <li {{#if disabled}}class="disabled"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}" >&laquo;</a></li>
+            {{/paginate}}
+            {{#paginate pagination type="middle" limit="7"}}
+              <li {{#if active}}class="active"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}">{{n}}</a></li>
+            {{/paginate}}
+            {{#paginate pagination type="next"}}
+              <li {{#if disabled}}class="disabled"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}">&raquo;</a></li>
+            {{/paginate}}
+            <li>
+          </ul>
+        </nav>
+      {{/if}}
+    </div>  
 
-  {{#if pagination.pageCount}}
-    <nav>
-      <ul class="pagination">
-        {{#paginate pagination type="previous"}}
-          <li {{#if disabled}}class="disabled"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}" >&laquo;</a></li>
-        {{/paginate}}
-        {{#paginate pagination type="middle" limit="7"}}
-          <li {{#if active}}class="active"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}">{{n}}</a></li>
-        {{/paginate}}
-        {{#paginate pagination type="next"}}
-          <li {{#if disabled}}class="disabled"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}">&raquo;</a></li>
-        {{/paginate}}
-        <li>
-      </ul>
-    </nav>
-  {{/if}}
-
-  <div class="btn-group" role="group" aria-label="...">
-    <button type="button" class="btn btn-default">20</button>
-    <button type="button" class="btn btn-default">50</button>
-    <button type="button" class="btn btn-default">100</button>
-    <button type="button" selected="selected" class="btn btn-default">Alla</button>
+    <div class="col-sm-3">
+      <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-default">20</button>
+        <button type="button" class="btn btn-default">50</button>
+        <button type="button" class="btn btn-default">100</button>
+        <button type="button" selected="selected" class="btn btn-default">Alla</button>
+      </div>
+    </div>
   </div>
-
 </div>
