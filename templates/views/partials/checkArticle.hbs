@@ -2,8 +2,8 @@
 {{#unless parent.data.template}}
     <td class="centered"><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
 {{/unless}}
-    <td class="centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
-    <td class="centered name">{{ name }}</td>
+    <td class="amountColumn centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
+    <td class="centered name">{{ kartotek.name }}</td>
     <td class="centered storage">{{ kartotek.storage }}</td>
     <td class="centered section">{{ kartotek.section }}</td>
     <td class="centered shelf">{{ kartotek.shelf }}</td>

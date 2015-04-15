@@ -40,9 +40,6 @@ $(document).ready(function() {
     findArticles(kartotekResultsTemplate);
   });
   
-  $('#article-search').keyup(findArticles.bind(undefined, kartotekResultsTemplate));
-  
-
   $(".publicera").click(function () {
     var slug = $("#opName").attr('data-operationSlug');
 

@@ -125,7 +125,6 @@ var saveComment = function() { //Save the comment locally and emit to back-end t
 };
 
 var showComment = function(){ //Hide the "Saved" text, enable the comment field and save the old text if the user presses cancel.
-  console.log($(this));
   var id = $(this).data('id');
   var checkComment = $("#checkComment" + id);
 
@@ -150,7 +149,7 @@ var removeArticle = function() {
 
 var addAmountClick = function(){
   var val = $(this).text();
-  var input = $('<input type="text" class="editAmount form-control" id="editAmount"/>');
+  var input = $('<input type="text" class="editInfoAmount form-control" id="editAmount"/>');
   input.val(val);
   $(this).replaceWith(input);
   $(input).focus();
