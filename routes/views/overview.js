@@ -17,7 +17,7 @@ exports = module.exports = function (req, res) {
   ];
 
   locals.css = [
-    'site.css'
+    'site/overview.css'
   ];
 
   locals.specialties = [];

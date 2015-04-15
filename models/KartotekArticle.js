@@ -9,10 +9,10 @@ var KartotekArticle = new keystone.List('Kartotekartikel', {
 KartotekArticle.add({
   name: { type: String, required: true, initial: true },
   tags: { type: String, initial: true },
-  storage: { label: 'Förråd', type: String, required: true, initial: true },
-  section: { label: 'Sektion', type: String, required: true, initial: true },
-  shelf: { label: 'Hylla', type: String, required: true, initial: true },
-  tray: { label: 'Fack', type: String, required: true, initial: true },
+  storage: { label: 'Förråd', type: String, required: false, initial: true },
+  section: { label: 'Sektion', type: String, required: false, initial: true },
+  shelf: { label: 'Hylla', type: String, required: false, initial: true },
+  tray: { label: 'Fack', type: String, required: false, initial: true },
   price: { label: 'Pris', type: Types.Money, required: false, initial: true }, //TODO Ändra till required när det är implementerat.
   articleNumber: { type: String, required: false, initial: true },
   supplierArticleNumber: {type: String, required: false, initial: true },

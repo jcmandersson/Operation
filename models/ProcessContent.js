@@ -28,6 +28,14 @@ ProcessContent.schema.statics.calculateProgress = function calculateProgress(ope
   }, function(err, docs){
     if(err) console.log(err);
 
+    if(!docs.length){
+      callback({
+        total: 0,
+        checked: 0
+      });
+      return;
+    }
+    
     var $or = [];
     for(var i = 0; i < docs.length; ++i){
       $or.push({

@@ -125,7 +125,6 @@ var saveComment = function() { //Save the comment locally and emit to back-end t
 };
 
 var showComment = function(){ //Hide the "Saved" text, enable the comment field and save the old text if the user presses cancel.
-  console.log($(this));
   var id = $(this).data('id');
   var checkComment = $("#checkComment" + id);
 
@@ -150,13 +149,13 @@ var removeArticle = function() {
 
 var addAmountClick = function(){
   var val = $(this).text();
-  var input = $('<input type="text" min="1" class="amount form-control" id="editAmount"/>');
+  var input = $('<input type="text" class="editInfoAmount form-control" id="editAmount"/>');
   input.val(val);
   $(this).replaceWith(input);
   $(input).focus();
 
   $(input).keypress(function(e){
-    editAmountDone(e, $(input));
+    editAmountDone(e, $(input), val);
   });
 
   setTimeout(function(){
@@ -164,22 +163,36 @@ var addAmountClick = function(){
       if(e.target.id == "editAmount") {
         return;
       }
-      editAmountDone(e, $(input));
+      editAmountDone(e, $(input), val);
     });
   },0);
 
 };
 
-var editAmountDone = function (e, tag) {
-  var val = $(tag).val();
+function isPosInt(value) {
+  return !isNaN(value) &&
+    parseInt(Number(value)) == value &&
+    !isNaN(parseInt(value, 10)) && value > 0;
+}
+
+var editAmountDone = function (e, tag, val) {
+  var newAmount = $(tag).val();
+  var oldAmount = val;
   if (e.which == 13 || e.type === 'click') {
+    
     $('body').unbind();
-    var input = $('<b class="amount">' + val + '</b>');
-    input.val(val);
-    $(tag).replaceWith(input);
-    var checkArticleID = $(input).parent().parent().attr('id');
-    var operationID = $(input).parent().parent().attr('data-operationId');
-    socket.emit('amountChange', checkArticleID, operationID, val);
+    if(!isPosInt(newAmount)){
+      var input = $('<b class="amount">' + oldAmount + '</b>');
+      $(tag).replaceWith(input);
+    }
+    else {
+      var input = $('<b class="amount">' + newAmount + '</b>');
+      input.val(newAmount);
+      $(tag).replaceWith(input);
+      var checkArticleID = $(input).parent().parent().attr('id');
+      var operationID = $(input).parent().parent().attr('data-operationId');
+      socket.emit('amountChange', checkArticleID, operationID, newAmount);
+    }
     return false;
   }
 };
