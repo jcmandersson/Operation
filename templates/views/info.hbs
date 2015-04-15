@@ -1,8 +1,23 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
 
+    <h2>
+    {{#ifeq data.state 'Publicerad'}}
+      {{#if data.template}}
+        Publicerad Handbok
+      {{else}}
+        Operationsförberedelse
+      {{/if}}
+    {{/ifeq}}
 
-
+    {{#ifeq data.state 'Granskning'}}
+      Granskning
+    {{/ifeq}}
+    {{#ifeq data.state 'Utkast'}}
+      Förhandstitt
+    {{/ifeq}}
+    </h2>
+  
   <div id="opName" data-operationId="{{data._id}}" data-operationSlug="{{data.slug}}" data-template="{{data.template}}">
     {{#unless data.template}}
       <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">
@@ -90,9 +105,7 @@
   {{#if data.template}}
 
     {{#ifeq data.state 'Utkast'}}
-      {{>removePreparation _id=data._id slug=data.slug}}
       <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
-      <div id='btn-removePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
     {{/ifeq}}
 
     {{#ifeq data.state 'Granskning'}}
