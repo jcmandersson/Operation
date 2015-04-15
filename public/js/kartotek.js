@@ -1,3 +1,5 @@
+var socket = io();
+
 var Article = function(data) {
   if (typeof data !== 'undefined') this.data = data;
   else this.data = {};
@@ -38,6 +40,10 @@ Article.prototype.modifyInDatabase = function(callback) {
   }).done(function(newArticle) {
     self.data.slug = newArticle.slug;
     if (typeof callback !== 'undefined') callback();
+    
+    //Send through socket.io to live update preparations.
+    socket.emit('kartotekUpdate', {name: newArticle.name, storage: newArticle.storage, section: newArticle.section,
+                                   shelf: newArticle.shelf, tray: newArticle.tray, price: newArticle.price, id: newArticle._id})
   });
 };
 
@@ -251,18 +257,21 @@ var articles = {
   },
   attachSearchArticleListener: function() {
     var self = this;
-
-    $('#search-article').keyup(function() {
+    var timeout = null;
+    var search = function(e, $element) {
       var value = $(this).val();
-      if(value.length < 3) return;
       $.ajax({
         type: 'GET',
-        url:  '/api/search/Kartotekartikel/?all',
+        url:  '/api/search/Kartotekartikel/',
         data: {
-          text: $(this).val()
+          all: true,
+          limit: 25,
+          text: value
         }
       }).done(self.fillFromDB.bind(self));
-    });
+    };
+
+    $('#search-article').keyup(search);
   }
 };
 

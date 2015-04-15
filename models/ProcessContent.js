@@ -19,6 +19,55 @@ ProcessContent.add({
   checked: {type: Types.Boolean, required: false, default: false}
 });
 
+ProcessContent.schema.statics.calculateProgress = function calculateProgress(operationId, callback) {
+  var model = this.model('Processinnehall');
+  var processModel = this.model('Processteg');
+  
+  processModel.find({
+    operation: operationId
+  }, function(err, docs){
+    if(err) console.log(err);
+
+    if(!docs.length){
+      callback({
+        total: 0,
+        checked: 0
+      });
+      return;
+    }
+    
+    var $or = [];
+    for(var i = 0; i < docs.length; ++i){
+      $or.push({
+        process: docs[i]._id
+      });
+    }
+    
+    model.find({
+      $or: $or,
+      checkAble: true
+    }).exec(function(err, data){
+      if(err) console.log(err);
+
+      var totalCheckboxes = data.length;
+
+      model.find({
+        $or: $or,
+        checkAble: true,
+        checked: true
+      }).exec(function(err, checkedData){
+        if(err) console.log(err);
+
+        var checkedBoxes = checkedData.length;
+        callback({
+          total: totalCheckboxes,
+          checked: checkedBoxes
+        });
+      });
+    });
+  });
+};
+
 ProcessContent.schema.statics.cloneToProcess = function cloneToProcess(processId, newProcessId, callback) {
   var thisDoc = this;
   

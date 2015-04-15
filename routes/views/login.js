@@ -13,7 +13,6 @@ exports = module.exports = function (req, res) {
   ];
 
   locals.css = [
-    'site.css',
     'login.css'
   ];
 

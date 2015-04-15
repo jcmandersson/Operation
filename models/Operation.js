@@ -112,18 +112,18 @@ Operation.schema.statics.fromTemplate = function fromTemplate(slug, callback) {
 Operation.schema.methods.calculateProgress = function calculateProgress(cb) {
   var thisOp = this;
 
-  thisOp.model('Artikel').calculateProgress(thisOp, function (articleProgress) {
-    //thisOp.model('Förberedelse').calculateProgress(thisOp, function (prepareProgress) {
+  thisOp.model('Artikel').calculateProgress(thisOp._id, function (articleProgress) {
+    thisOp.model('Processinnehall').calculateProgress(thisOp._id, function (contentProgress) {
       var data = {
         article: articleProgress,
+        content: contentProgress,
         all: {
-          total: articleProgress.total,
-          checked: articleProgress.checked
+          total: articleProgress.total + contentProgress.total,
+          checked: articleProgress.checked + contentProgress.checked
         }
       };
-
       cb(data);
-    //});
+    });
   });
 };
 

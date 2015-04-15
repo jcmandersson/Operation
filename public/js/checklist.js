@@ -60,6 +60,11 @@ $(function() {
     var tableRow = $('#' + checkObject.id);
     updateTableRow(tableRow, checkObject.isChecked, false);
   });
+  
+  socket.on('kartotekUpdate', function(checkObject) {
+    var tableRow = $('#' + checkObject.id);
+    updateTextInTableRow(tableRow, checkObject);
+  });
 
 });
 
@@ -197,11 +202,21 @@ var updateTableRow = function(tableRow, isChecked, isTemplate){ //set checked st
   var checkbox = tableRow.find('input');
   checkbox.prop('checked', isChecked);
   var preparation = tableRow.hasClass("process-content-item") ? true : false;
-  if(isTemplate){
+  if (isTemplate) {
     checkbox.prop('disabled', true);
     tableRow.prop('disabled', true);
   }
   changeTableGraphics(tableRow, isChecked, preparation); //Function in checkEffect.js
+};
+
+var updateTextInTableRow = function(tableRow, checkObject) {
+  var kartotekArticle = checkObject.kartotekArticle;
+  
+  tableRow.find('.name').eq(0).html(kartotekArticle.name);
+  tableRow.find('.storage').eq(0).html(kartotekArticle.storage);
+  tableRow.find('.section').eq(0).html(kartotekArticle.section);
+  tableRow.find('.shelf').eq(0).html(kartotekArticle.shelf);
+  tableRow.find('.tray').eq(0).html(kartotekArticle.tray);
 };
 
 var btnDone = function() {

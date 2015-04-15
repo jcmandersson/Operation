@@ -16,6 +16,8 @@ exports = module.exports = function(req, res) {
   ];
 
   kartotek.model.find()
+    .sort('name')
+    .limit(50)
     .exec(function(err, data) {
     if (err) {
       console.log('DB error');
