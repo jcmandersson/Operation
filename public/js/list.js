@@ -31,6 +31,22 @@ var initializeSpecialitetSelect = function () {
 
 };
 
+var splitOnce = function (str, split) {
+  var index = str.indexOf(split);
+  if(index === -1) {
+    index = str.length - 1;    
+  }
+  return [str.slice(0,index), str.slice(index + 1)];
+};
+
+var addAnd = function (str) {
+  if(str[str.length - 1] !== '?') {
+    str = str + '&'; 
+  }
+  
+  return str;
+};
+
 var addToUrl = function (type, value) {
   var url = window.location.href;
 
@@ -38,18 +54,16 @@ var addToUrl = function (type, value) {
     url = url + '?';    
   }
 
-  if(url.indexOf(type) !== -1) {
-    var before = url.split(type)[0];
-    var after = url.split(type)[1];
-    url =  before + type + "=" + value;
+  if(url.indexOf(type + '=') !== -1) {
+    var before = url.split(type + '=')[0];
+    var after = url.split(type + '=')[1];
+    url =  before + type + '=' + value;
     if(after.indexOf('&') !== -1) {
-      url = url + '&' + after.split('&')[1]; 
+      url = url + '&' + splitOnce(after, '&')[1]; 
     }
   } else {
-    if(url[url.length - 1] !== '?') {
-      url = url + "&"; 
-    }
-    url = url + type + "=" + value; 
+    url = addAnd(url);
+    url = url + type + '=' + value; 
   }
 
   return url;
@@ -58,21 +72,19 @@ var addToUrl = function (type, value) {
 var removeFromUrl = function (type) {
   var url = window.location.href;
 
-  if(url.indexOf(type) !== -1) {
-    var before = url.split(type)[0];
-    var after = url.split(type)[1];
+  if(url.indexOf(type + '=') !== -1) {
+    var before = url.split(type + '=')[0];
+    var after = url.split(type + '=')[1];
 
     if(before[before.length - 1] === '?') {
       url = before;
     } else {
-      url =  before.substring(0, before.length - 1);
+      url =  before.slice(0, before.length - 1);
     }
 
     if(after.indexOf('&') !== -1) {
-      if(url[url.length - 1] !== '?') {
-        url = url + "&"; 
-      }
-      url = url + after.split('&')[1]; 
+      url = addAnd(url);
+      url = url + splitOnce(after, '&')[1]; 
     }
   }
 
@@ -95,7 +107,6 @@ $(document).ready(function () {
   $('.state-select').change(function() {
     var newState = $(this).val();
     if(newState !== "Alla tillstånd") {
-      console.log("Hej".indexOf('e'));
       window.location.href = addToUrl("state", newState);
     } else {
       window.location.href = removeFromUrl("state");
