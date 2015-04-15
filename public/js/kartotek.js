@@ -11,20 +11,20 @@ Article.prototype.createInDatabase = function(callback) {
     type: 'POST',
     url: '/api/kartotekartikels',
     data: {
-      name:    this.data.name,
-      storage: this.data.storage,
-      section: this.data.section,
-      shelf:   this.data.shelf,
-      tray:    this.data.tray,
-      price:   this.data.price,
-      articleNumber: this.articleNumber,
-      supplier: this.supplier,
-      supplierArticleNumber: this.supplierArticleNumber,
-      orderItem: this.orderItem,
-      clinic: this.clinic,
-      amount: this.amount,
-      unit: this.unit,
-      peoe: this.peoe
+      name:                  this.data.name,
+      storage:               this.data.storage,
+      section:               this.data.section,
+      shelf:                 this.data.shelf,
+      tray:                  this.data.tray,
+      price:                 this.data.price,
+      articleNumber:         this.data.articleNumber,
+      supplier:              this.data.supplier,
+      supplierArticleNumber: this.data.supplierArticleNumber,
+      orderItem:             this.data.orderItem,
+      clinic:                this.data.clinic,
+      amount:                this.data.amount,
+      unit:                  this.data.unit,
+      peoe:                  this.data.peoe
     }
   }).done(function(newArticle) {
     self.data.slug = newArticle.slug;
@@ -38,20 +38,20 @@ Article.prototype.modifyInDatabase = function(callback) {
     type: 'GET',
     url: '/api/update/Kartotekartikel/' + this.data.slug,
     data: {
-      name:    this.data.name,
-      storage: this.data.storage,
-      section: this.data.section,
-      shelf:   this.data.shelf,
-      tray:    this.data.tray,
-      price:   this.data.price,
-      articleNumber: this.articleNumber,
-      supplier: this.supplier,
-      supplierArticleNumber: this.supplierArticleNumber,
-      orderItem: this.orderItem,
-      clinic: this.clinic,
-      amount: this.amount,
-      unit: this.unit,
-      peoe: this.peoe
+      name:                  this.data.name,
+      storage:               this.data.storage,
+      section:               this.data.section,
+      shelf:                 this.data.shelf,
+      tray:                  this.data.tray,
+      price:                 this.data.price,
+      articleNumber:         this.data.articleNumber,
+      supplier:              this.data.supplier,
+      supplierArticleNumber: this.data.supplierArticleNumber,
+      orderItem:             this.data.orderItem,
+      clinic:                this.data.clinic,
+      amount:                this.data.amount,
+      unit:                  this.data.unit,
+      peoe:                  this.data.peoe
     }
   }).done(function(newArticle) {
     self.data.slug = newArticle.slug;
@@ -72,42 +72,42 @@ Article.prototype.removeFromDatabase = function(callback) {
 
 // This takes a single `td` element, and fills itself (i.e. this.data) with the columns.
 Article.prototype.fillFromElement = function(elem) {
-  this.data.name             = $(elem).find('[data-name="name"]').text();
-  this.data.storage          = $(elem).find('[data-name="storage"]').text();
-  this.data.section          = $(elem).find('[data-name="section"]').text();
-  this.data.shelf            = $(elem).find('[data-name="shelf"]').text();
-  this.data.tray             = $(elem).find('[data-name="shelf"]').text();
-  this.data.price            = $(elem).find('[data-name="price"]').text();
-  this.articleNumber         = $(elem).find('[data-name="articleNumber"]').text();
-  this.supplier              = $(elem).find('[data-name="supplier"]').text();
-  this.supplierArticleNumber = $(elem).find('[data-name="supplierArticleNumber"]').text();
-  this.orderItem             = $(elem).find('[data-name="orderItem"]').text();
-  this.clinic                = $(elem).find('[data-name="clinic"]').text();
-  this.amount                = $(elem).find('[data-name="amount"]').text();
-  this.unit                  = $(elem).find('[data-name="unit"]').text();
-  this.peoe                  = $(elem).find('[data-name="peoe"]').text();
-  this.data.slug             = $(elem).find('[data-name="slug"]').text();
+  this.data.name                  = $(elem).find('[data-name="name"]').text();
+  this.data.storage               = $(elem).find('[data-name="storage"]').text();
+  this.data.section               = $(elem).find('[data-name="section"]').text();
+  this.data.shelf                 = $(elem).find('[data-name="shelf"]').text();
+  this.data.tray                  = $(elem).find('[data-name="shelf"]').text();
+  this.data.price                 = $(elem).find('[data-name="price"]').text();
+  this.data.articleNumber         = $(elem).find('[data-name="articleNumber"]').text();
+  this.data.supplier              = $(elem).find('[data-name="supplier"]').text();
+  this.data.supplierArticleNumber = $(elem).find('[data-name="supplierArticleNumber"]').text();
+  this.data.orderItem             = $(elem).find('[data-name="orderItem"]').text();
+  this.data.clinic                = $(elem).find('[data-name="clinic"]').text();
+  this.data.amount                = $(elem).find('[data-name="amount"]').text();
+  this.data.unit                  = $(elem).find('[data-name="unit"]').text();
+  this.data.peoe                  = $(elem).find('[data-name="peoe"]').text();
+  this.data.slug                  = $(elem).find('[data-name="slug"]').text();
 };
 
 // This takes a single `td` element, and fills itself (i.e. this.data) with the columns.
 // The difference between this and .fillFromElement is that this takes
 // data from `input` elements, whereas .fillFromElement takes data from `td` elements.
 Article.prototype.fillFromInput = function(elem) {
-  this.data.name             = $(elem).find('[data-name="name"]').val();
-  this.data.storage          = $(elem).find('[data-name="storage"]').val();
-  this.data.section          = $(elem).find('[data-name="section"]').val();
-  this.data.shelf            = $(elem).find('[data-name="shelf"]').val();
-  this.data.tray             = $(elem).find('[data-name="shelf"]').val();
-  this.data.price            = $(elem).find('[data-name="price"]').val();
-  this.articleNumber         = $(elem).find('[data-name="articleNumber"]').text();
-  this.supplier              = $(elem).find('[data-name="supplier"]').text();
-  this.supplierArticleNumber = $(elem).find('[data-name="supplierArticleNumber"]').text();
-  this.orderItem             = $(elem).find('[data-name="orderItem"]').text();
-  this.clinic                = $(elem).find('[data-name="clinic"]').text();
-  this.amount                = $(elem).find('[data-name="amount"]').text();
-  this.unit                  = $(elem).find('[data-name="unit"]').text();
-  this.peoe                  = $(elem).find('[data-name="peoe"]').text();  
-  this.data.slug             = $(elem).find('[data-name="slug"]').val();
+  this.data.name                  = $(elem).find('[data-name="name"]').val();
+  this.data.storage               = $(elem).find('[data-name="storage"]').val();
+  this.data.section               = $(elem).find('[data-name="section"]').val();
+  this.data.shelf                 = $(elem).find('[data-name="shelf"]').val();
+  this.data.tray                  = $(elem).find('[data-name="shelf"]').val();
+  this.data.price                 = $(elem).find('[data-name="price"]').val();
+  this.data.articleNumber         = $(elem).find('[data-name="articleNumber"]').text();
+  this.data.supplier              = $(elem).find('[data-name="supplier"]').text();
+  this.data.supplierArticleNumber = $(elem).find('[data-name="supplierArticleNumber"]').text();
+  this.data.orderItem             = $(elem).find('[data-name="orderItem"]').text();
+  this.data.clinic                = $(elem).find('[data-name="clinic"]').text();
+  this.data.amount                = $(elem).find('[data-name="amount"]').text();
+  this.data.unit                  = $(elem).find('[data-name="unit"]').text();
+  this.data.peoe                  = $(elem).find('[data-name="peoe"]').text();  
+  this.data.slug                  = $(elem).find('[data-name="slug"]').val();
 };
 
 // Extract essentials (e.g. only name, storage, section, shelf, no functions(?), etc).
