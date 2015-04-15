@@ -74,5 +74,17 @@ describe("The list page", function() {
     expect(window.location.href).toBe(url.split('?')[0] + "?");
   });
 
+  it("function changeLimit can change the limit from an emty query", function() {
+    var url = window.location.href;
+    changeLimit("100");
+    expect(window.location.href).toBe(url + "limit=100");
+  });
+
+ it("function changeLimit can change the limit to the default", function() {
+    var url = window.location.href;
+    changeLimit("25");
+    expect(window.location.href).toBe(url.split('?')[0] + "?");
+  });
+
 });
 
