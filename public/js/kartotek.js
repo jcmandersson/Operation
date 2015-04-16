@@ -285,9 +285,10 @@ var articles = {
           sort: 'name',
           text: value
         }
-      }).done(function() {
-        self.articles.data = [];
-        self.addFromDB.bind(self)
+      }).done(function(msg) {
+        self.data.articles = [];
+        var done = self.addFromDB.bind(self);
+        done(msg);
       });
     };
 
