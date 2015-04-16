@@ -99,6 +99,8 @@ $("#editChecklistButton").click(function(){
     $('.minus-field').show();
     $('.plus-field').show();
     $('.uneditable-amount').hide();
+    $('.uneditable-amount').hide();
+    $('.checkbox-js').hide();
   }
   else {
     $('#editChecklistButton').text('Redigera plocklista');
@@ -108,5 +110,6 @@ $("#editChecklistButton").click(function(){
     $('.minus-field').hide();
     $('.plus-field').hide();
     $('.uneditable-amount').show();
+    $('.checkbox-js').show();
   }
 });

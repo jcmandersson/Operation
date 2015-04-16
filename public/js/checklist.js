@@ -302,5 +302,6 @@ var newArticleUpdate = function(checkArticle, kartotekArticle, operationID){
     $('.minus-field').show();
     $('.plus-field').show();
     $('.uneditable-amount').hide();
+    $('.checkbox-js').hide();
   }
 };
