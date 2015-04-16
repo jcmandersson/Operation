@@ -54,7 +54,7 @@ Article.prototype.fillFromElement = function(elem) {
   this.data.storage               = $(elem).find('[data-name="storage"]').text();
   this.data.section               = $(elem).find('[data-name="section"]').text();
   this.data.shelf                 = $(elem).find('[data-name="shelf"]').text();
-  this.data.tray                  = $(elem).find('[data-name="shelf"]').text();
+  this.data.tray                  = $(elem).find('[data-name="tray"]').text();
   this.data.price                 = $(elem).find('[data-name="price"]').text();
   this.data.articleNumber         = $(elem).find('[data-name="articleNumber"]').text();
   this.data.supplier              = $(elem).find('[data-name="supplier"]').text();
@@ -75,7 +75,7 @@ Article.prototype.fillFromInput = function(elem) {
   this.data.storage               = $(elem).find('[data-name="storage"]').val();
   this.data.section               = $(elem).find('[data-name="section"]').val();
   this.data.shelf                 = $(elem).find('[data-name="shelf"]').val();
-  this.data.tray                  = $(elem).find('[data-name="shelf"]').val();
+  this.data.tray                  = $(elem).find('[data-name="tray"]').val();
   this.data.price                 = $(elem).find('[data-name="price"]').val();
   this.data.articleNumber         = $(elem).find('[data-name="articleNumber"]').val();
   this.data.supplier              = $(elem).find('[data-name="supplier"]').val();
