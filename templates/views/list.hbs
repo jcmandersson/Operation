@@ -1,5 +1,8 @@
 {{!< default}}
 <div class="container">
+  {{#if nrOfPublicManuals}}
+    <p>Antal publicerade handböcker: {{nrOfPublicManuals}}</p>
+  {{/if}}
   <div id="list-menu">
     <div class="col-sm-6" id="specialty">Specialitet: <select required="true" name="specialty" class="specialitet-select">
       <option value="{{spec}}" selected="selected">{{spec}}</option>
@@ -12,7 +15,7 @@
       <option {{#ifeq state 'Publicerad'}}selected="selected"{{/ifeq}}>Publicerad</option>
       <option {{#ifeq state 'Redigering'}}selected="selected"{{/ifeq}}>Redigering</option>
     </select></div>
-    {{/if}}
+    {{/if}}  
   </div> 
 
   <table class="table table-striped table-hover table-condensed table-responsive">
@@ -33,8 +36,8 @@
         <td>{{tags}}</td>
         <td><a href="?specialty={{specialty.name}}">{{specialty.name}}</a></td>
         {{#if ../user}}
-          <td><a href="?state={{state}}">{{state}}</a></td>
-        {{/if}}    
+        <td><a href="?state={{state}}">{{state}}</a></td>
+        {{/if}}
         <td class="date">{{#splitDate updatedAt}}
           {{dayOfMonth}}/{{month}} {{year}} {{hour}}:{{minute}}
         {{/splitDate}}</td>
@@ -42,21 +45,33 @@
     {{/each}}
   </table>
 
+  <div id="page-menu">
+    <div class="col-sm-9">
+      {{#if pagination.pageCount}}
+        <nav>
+          <ul class="pagination">
+            {{#paginate pagination type="previous"}}
+              <li {{#if disabled}}class="disabled"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}" >&laquo;</a></li>
+            {{/paginate}}
+            {{#paginate pagination type="middle" limit="7"}}
+              <li {{#if active}}class="active"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}">{{n}}</a></li>
+            {{/paginate}}
+            {{#paginate pagination type="next"}}
+              <li {{#if disabled}}class="disabled"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}">&raquo;</a></li>
+            {{/paginate}}
+            <li>
+          </ul>
+        </nav>
+      {{/if}}
+    </div>  
 
-  {{#if pagination.pageCount}}
-    <nav>
-      <ul class="pagination">
-        {{#paginate pagination type="previous"}}
-          <li {{#if disabled}}class="disabled"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}" >&laquo;</a></li>
-        {{/paginate}}
-        {{#paginate pagination type="middle" limit="7"}}
-          <li {{#if active}}class="active"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}">{{n}}</a></li>
-        {{/paginate}}
-        {{#paginate pagination type="next"}}
-          <li {{#if disabled}}class="disabled"{{/if}}><a href="?{{../currentQuery}}sort={{../sort}}&limit={{../limit}}&page={{n}}">&raquo;</a></li>
-        {{/paginate}}
-        <li>
-      </ul>
-    </nav>
-  {{/if}}
+    <div class="col-sm-3">
+      <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-default per-page {{#ifeq limit '25'}}selected{{/ifeq}}" value="25">25</button>
+        <button type="button" class="btn btn-default per-page {{#ifeq limit '50'}}selected{{/ifeq}}" value="50">50</button>
+        <button type="button" class="btn btn-default per-page {{#ifeq limit '100'}}selected{{/ifeq}}" value="100">100</button>
+        <button type="button" class="btn btn-default per-page {{#ifeq limit '200'}}selected{{/ifeq}}" value="200">200</button>
+      </div>
+    </div>
+  </div>
 </div>
