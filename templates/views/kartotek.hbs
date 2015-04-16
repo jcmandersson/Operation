@@ -21,7 +21,7 @@
       <td class="hidden toggable">Artikelnummer</td>
       <td class="hidden toggable">Återförsäljare</td>
       <td class="hidden toggable">Återförsäljare artikelnummer</td>
-      <td class="hidden toggable">Beställningsnummer</td>
+      <td class="hidden toggable">Beställningspunkt</td>
       <td class="hidden toggable">Klinik</td>
       <td class="hidden toggable">Mängd</td>
       <td class="hidden toggable">Enhet</td>
@@ -42,7 +42,7 @@
         <td class="hidden toggable"><input data-name="articleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (sjukhuset)..."/></td>
         <td class="hidden toggable"><input data-name="supplier" type="text" class="form-control modify-input" placeholder="Återförsäljare..."/></td>
         <td class="hidden toggable"><input data-name="supplierArticleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (återförsäljare)..."/></td>
-        <td class="hidden toggable"><input data-name="orderItem" type="text" class="form-control modify-input" placeholder="Beställningsnummer..."/></td>
+        <td class="hidden toggable"><input data-name="orderItem" type="text" class="form-control modify-input" placeholder="Beställningspunkt..."/></td>
         <td class="hidden toggable"><input data-name="clinic" type="text" class="form-control modify-input" placeholder="Klinik..."/></td>
         <td class="hidden toggable"><input data-name="amount" type="text" class="form-control modify-input" placeholder="Mängd..."/></td>
         <td class="hidden toggable"><input data-name="unit" type="text" class="form-control modify-input" placeholder="Enhet..."/></td>
@@ -66,14 +66,14 @@
     <td class="modifyable-article-column column-kartotek" data-name="tray">\{{#modifyable slug 'tray' tray}}\{{/modifyable}}</td>
     {{#if user.isAdmin}}
       <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'price' price}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'articleNumber' articleNumber}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'supplierArticleNumber' supplierArticleNumber}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'clinic' clinic}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'supplier' supplier}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'orderItem' orderItem}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'amount' amount}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'unit' unit}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price">\{{#modifyable slug 'peoe' peoe}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="articleNumber">\{{#modifyable slug 'articleNumber' articleNumber}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="supplierArticleNumber">\{{#modifyable slug 'supplierArticleNumber' supplierArticleNumber}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="clinic">\{{#modifyable slug 'clinic' clinic}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="supplier">\{{#modifyable slug 'supplier' supplier}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="orderItem">\{{#modifyable slug 'orderItem' orderItem}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="amount">\{{#modifyable slug 'amount' amount}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="enhet">\{{#modifyable slug 'unit' unit}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column hidden toggable column-kartotek" data-name="peoe">\{{#modifyable slug 'peoe' peoe}}\{{/modifyable}}</td>
     {{/if}}
     <td class="modifyable-article-column hidden column-kartotek" data-name="slug">\{{ slug }}</td>
     <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
