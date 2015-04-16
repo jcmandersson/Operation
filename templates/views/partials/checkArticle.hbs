@@ -1,21 +1,30 @@
 <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false" class="check-js" id={{_id}}>
-{{#unless parent.data.template}}
+  {{#unless parent.data.template}}
     <td class="centered"><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
-{{/unless}}
-    <td class="amountColumn centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
-    <td class="centered name">{{ kartotek.name }}</td>
-    <td class="centered storage">{{ kartotek.storage }}</td>
-    <td class="centered section">{{ kartotek.section }}</td>
-    <td class="centered shelf">{{ kartotek.shelf }}</td>
-    <td class="centered tray">{{ kartotek.tray }}</td>
-{{#unless parent.data.template}}
+  {{/unless}}
+  <td class="amountColumn centered" id="amount{{kartotek._id}}">
+    <div class="minus-field" style="display:none" id="minus{{kartotek._id}}">
+      <div class="glyphicon glyphicon-minus minus-icon"></div>
+    </div>
+    <div class="amount-field" style="display:none" id="top{{kartotek._id}}">{{amount}}</div>
+    <b class="uneditable-amount">{{ amount }}</b>
+    <div class="plus-field" style="display:none" id="plus{{kartotek._id}}">
+      <div class="glyphicon glyphicon-plus plus-icon"></div>
+    </div>
+  </td>
+  <td class="centered name">{{ kartotek.name }}</td>
+  <td class="centered storage">{{ kartotek.storage }}</td>
+  <td class="centered section">{{ kartotek.section }}</td>
+  <td class="centered shelf">{{ kartotek.shelf }}</td>
+  <td class="centered tray">{{ kartotek.tray }}</td>
+  {{#unless parent.data.template}}
     <td class="centered-comment">
-        <button id="commentButton{{_id}}" data-id="{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
-            <p class="glyphicon glyphicon-comment"></p>
-        </button>
+      <button id="commentButton{{_id}}" data-id="{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
+        <p class="glyphicon glyphicon-comment"></p>
+      </button>
     </td>
-  <td class="centered-remove">
-        <a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a>
+    <td class="centered-remove" style="display:none">
+      <a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a>
     </td>
   {{/unless}}
 </tr>

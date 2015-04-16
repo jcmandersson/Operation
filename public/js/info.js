@@ -89,3 +89,24 @@ var findArticles = function (resultsTemplate) {
     });
   });
 };
+
+$("#editChecklistButton").click(function(){
+  if ($('#editChecklistButton').text() == 'Redigera plocklista') {
+    $('#editChecklistButton').text('Klar');
+    $('#editChecklist').show();
+    $('.centered-remove').show();
+    $('.amount-field').show();
+    $('.minus-field').show();
+    $('.plus-field').show();
+    $('.uneditable-amount').hide();
+  }
+  else {
+    $('#editChecklistButton').text('Redigera plocklista');
+    $('#editChecklist').hide();
+    $('.centered-remove').hide();
+    $('.amount-field').hide();
+    $('.minus-field').hide();
+    $('.plus-field').hide();
+    $('.uneditable-amount').show();
+  }
+});
