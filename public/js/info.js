@@ -3,16 +3,16 @@ tabClick = function(elem) {
   if(elem.id == "all") {
     $(".process-content").show();
     $("#contentchecklist").hide();
-    window.location.replace('#all');
+    window.location.replace('#tab_all');
   } else {
     $(".process-content").hide();
     $("#content"+elem.id).show();
-    window.location.replace('#' + elem.id);
+    window.location.replace('#tab_' + elem.id);
   }
 };
 
 $(document).ready(function() {
-  var hash = window.location.hash.substring(1);
+  var hash = window.location.hash.substring(5);
   if (!hash || hash === 'all') {
     $("#all").addClass('active');
   } else {
@@ -21,7 +21,8 @@ $(document).ready(function() {
     $("#content" + hash).show();
   }
   
-  $(".nav-pills > .navbar-btn").click(function() {
+  $(".nav-pills > .navbar-btn").click(function(e) {
+    e.preventDefault();
     tabClick(this);
   });
 
