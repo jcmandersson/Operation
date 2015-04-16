@@ -42,9 +42,10 @@ exports.initLocals = function (req, res, next) {
       {label: 'Granska', key: 'Granskning', href: '/list?state=Granskning'},
       {label: 'Användare', key: 'listUser', href: '/user/list'},
       {label: 'Skapa användare', key: 'editUser', href: '/user/create'},
+      {label: 'Redigera mall', key: 'edit', href: '/edit/mall'},
       {label: 'Logga ut', key: 'login', href: '/login?logout'}
     ];
-  }else {
+  } else {
     locals.navAdmin = [
       {label: 'Skapa Handbok', key: 'new', href: '/new'},
       {label: 'Granska', key: 'Granskning', href: '/list?state=Granskning'},
@@ -53,9 +54,9 @@ exports.initLocals = function (req, res, next) {
     ];
   }
 
-locals.user = req.user;
+  locals.user = req.user;
 
-next();
+  next();
 }
 ;
 
