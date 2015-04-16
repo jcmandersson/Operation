@@ -3,10 +3,11 @@ var keystone = require('keystone');
 exports = module.exports = function (req, res) {
   try {
   var model = keystone.list(req.params.model);
-  model.model.findOne({slug: req.params.slug})
+    
+  model.model.findOne({slug: req.params.slug})  
     .exec(function (err, data) {
       if(!data || typeof data === 'undefined'){
-        err = 'Ingen operation med slug: '+req.params.slug;
+        err = 'Ingen operation med slug: ' + req.params.slug;
       }
       if (err) {
         res.status(500).send(err);
@@ -18,6 +19,7 @@ exports = module.exports = function (req, res) {
         }
       }
       data.save(function(err, data){
+        if(err) console.log(err);
         res.send(data);
       });
     });
