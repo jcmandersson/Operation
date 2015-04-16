@@ -142,9 +142,7 @@ var saveComment = function() { //Save the comment locally and emit to back-end t
   }
 
   var commentObject = {operation: operationId, id: id, comment: checkComment.val()};
-
-  //var commentObject = {operation: operationId, id: 666, comment: checkComment.val()};
-
+  
   socket.emit('saveComment', commentObject);
   changeCommentButton(checkComment, commentButton);
 
