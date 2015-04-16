@@ -2,7 +2,16 @@
   {{#unless parent.data.template}}
     <td class="centered"><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
   {{/unless}}
-  <td class="amountColumn centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
+  <td class="amountColumn centered" id="amount{{kartotek._id}}">
+    <div class="minus-field" style="display:none" id="minus{{kartotek._id}}">
+      <div class="glyphicon glyphicon-minus minus-icon"></div>
+    </div>
+    <div class="amount-field" style="display:none" id="top{{kartotek._id}}">{{amount}}</div>
+    <b class="uneditable-amount">{{ amount }}</b>
+    <div class="plus-field" style="display:none" id="plus{{kartotek._id}}">
+      <div class="glyphicon glyphicon-plus plus-icon"></div>
+    </div>
+  </td>
   <td class="centered name">{{ kartotek.name }}</td>
   <td class="centered storage">{{ kartotek.storage }}</td>
   <td class="centered section">{{ kartotek.section }}</td>
