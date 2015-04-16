@@ -28,6 +28,9 @@ $(function() {
   $('.process-content').on("click", '.showComment', showComment);
   
   $('.articleTable tbody').on("click", '.article-remove', removeArticle);
+
+  $('.articleTable tbody').on("click", '.minus-field', minusOne);
+  $('.articleTable tbody').on("click", '.plus-field', plusOne);
   
   if($('#opName').attr('data-template') == "false") {
     $('.articleTable tbody').on("click", '.amount', addAmountClick);
@@ -45,7 +48,9 @@ $(function() {
   socket.on('newArticleUpdate', newArticleUpdate);
   
   socket.on('articleAmountUpdate', function(amount, articleID){
-    $('#amount'+articleID).children().text(amount);
+    $('#amount'+articleID).find('.amount-field').text(amount);
+    $('#amount'+articleID).find('.uneditable-amount').text(amount);
+
   });
 
   socket.on('saved', function(id){ //Show saved text when the database has successfully stored the comment.
@@ -68,6 +73,30 @@ $(function() {
 
 });
 
+var minusOne = function(){
+  var operationID = $(this).parent().parent().attr("data-operationId");
+  var checkArticleID = $(this).parent().parent().attr('id');
+  var amountField = $(this).parent().find('.amount-field');
+  var oldAmount = parseInt(amountField.text());
+  var newAmount = oldAmount-1;
+  if(newAmount > 0) {
+    $(amountField).text(newAmount);
+    socket.emit('amountChange', checkArticleID, operationID, newAmount);
+  }
+};
+
+var plusOne = function(){
+  var operationID = $(this).parent().parent().attr("data-operationId");
+  var checkArticleID = $(this).parent().parent().attr('id');
+  var amountField = $(this).parent().find('.amount-field');
+  var oldAmount = parseInt(amountField.text());
+  var newAmount = oldAmount+1;
+  if(newAmount > 0) {
+    $(amountField).text(newAmount);
+    socket.emit('amountChange', checkArticleID, operationID, newAmount);
+  }
+};
+
 var cancelComment = function(){ //Throw away texted comment if cancel button is clicked.
   if(!saved) {
     var id = $(this).data('id');
@@ -81,7 +110,7 @@ var cancelComment = function(){ //Throw away texted comment if cancel button is 
 var checkjs = function(e) {  //When a checkable row is clicked, check the row and emit to socket.io
   var targetClassName = e.target.className.split(" ")[0];
   if(!(e.target.tagName == 'P' || e.target.tagName == 'BUTTON' || e.target.tagName == 'IMG'
-    || targetClassName == 'amount' || targetClassName == 'article-remove' || targetClassName == 'cross'))  {
+    || targetClassName == 'amount' || targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible")))  {
     if (!$(this).prop('disabled')) {
       var checkbox = $(this).find('input')[0];
       var preparation = $(this).hasClass("process-content-item") ? true : false;
@@ -265,4 +294,13 @@ var newArticleUpdate = function(checkArticle, kartotekArticle, operationID){
   var commentTemplate = Handlebars.compile(compiledComment);
   $(articleTemplate({ kartotek : kartotekArticle, operation: operationID, _id : checkArticle._id, amount : 1 })).appendTo('.articleTable');
   $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
+  
+  //refactor this later because ugly
+  if($('#editChecklistButton').text()=="Klar") {
+    $('.centered-remove').show();
+    $('.amount-field').show();
+    $('.minus-field').show();
+    $('.plus-field').show();
+    $('.uneditable-amount').hide();
+  }
 };
