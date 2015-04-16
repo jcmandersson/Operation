@@ -303,7 +303,6 @@ var articles = {
       if (typeof self.scrollEvent !== 'undefined' && self.scrollEvent) return;
       self.scrollEvent = true;
       var value = $('#search-article').val();
-      console.log('SCROLLED');
       $.ajax({
         type: 'GET',
         url:  '/api/search/Kartotekartikel/',

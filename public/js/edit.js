@@ -562,8 +562,59 @@ $(document).ready(function () {
 
   $('.articleTable tbody').on("click", '.article-remove', removeArticle);
   $('.articleTable tbody').on("click", '.amount', addAmountClick);
+  $('.articleTable tbody').on("click", '.minus-field', minusOne);
+  $('.articleTable tbody').on("click", '.plus-field', plusOne);
+
 
 });
+
+var minusOne = function(){
+  var slug = $(this).parent().parent().attr('data-slug');
+  var amountField = $(this).parent().find('.amount-field');
+  var oldAmount = parseInt(amountField.text());
+  var newAmount = oldAmount-1;
+  if(newAmount > 0) {
+    $.ajax({
+      type: 'GET',
+      url: '/api/update/artikels/' + slug,
+      data: {
+        amount: newAmount
+      }
+    })
+      .done(function (msg) {
+        $(amountField).text(newAmount);
+      })
+      .fail(function (err, status) {
+        console.log('Någonting gick fel!');
+        console.log(err);
+        console.log(status);
+      });
+  }
+};
+
+var plusOne = function(){
+  var slug = $(this).parent().parent().attr('data-slug');
+  var amountField = $(this).parent().find('.amount-field');
+  var oldAmount = parseInt(amountField.text());
+  var newAmount = oldAmount+1;
+  if(newAmount > 0) {
+    $.ajax({
+      type: 'GET',
+      url: '/api/update/artikels/' + slug,
+      data: {
+        amount: newAmount
+      }
+    })
+      .done(function (msg) {
+        $(amountField).text(newAmount);
+      })
+      .fail(function (err, status) {
+        console.log('Någonting gick fel!');
+        console.log(err);
+        console.log(status);
+      });
+  }
+};
 
 var findArticles = function (resultsTemplate) {
   var articleName = $('#article-search').val();
