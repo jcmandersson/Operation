@@ -21,6 +21,28 @@ table tr th:not(:first-child), table tr td:not(:first-child) {
   width: 100%;
 }
 
+.pagination > .active > a,
+.selected {
+  background-color: @lightblue;
+  color: #ffffff;
+}
+
+.pagination > .active > a:hover,
+.selected:hover {
+  background-color: @blue;
+  color: #ffffff;
+}
+
+.pagination > li > a,
+.pagination > li > a:hover {
+  color: #000000;
+}
+
+.pagination {
+  margin-top: 0px; 
+  margin-bottom: 20px; 
+}
+
 #list-menu {
   margin-bottom: 10px; 
 } 

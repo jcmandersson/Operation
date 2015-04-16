@@ -43,4 +43,6 @@ data/*
 
 */uploads/*
 
-
+# LaTex
+*.toc
+*.aux

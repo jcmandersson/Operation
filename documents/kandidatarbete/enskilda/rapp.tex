@@ -1,16 +1,40 @@
-\section{Daniel Rapp}
+\section{Kartoteket - Daniel Rapp}
 \subsection{Inledning}
-Idag, när Region Östergötland tar hand om en patient i behov av en operation, så använder de sig av pappersbaserade handböcker och checklistor för att
-förbereda operationen och ta fram rätt operationsutrustning.
+Idag är information om Region Östergötlands operationsartiklar, så som priserna och
+placeringen i lagret på tandborstar, tandkräm, handskar och annan
+medicinsk utrustning, hanterat av ett internt system.
+Detta system kallas ett "\textit{kartotek}".
+
 
 \subsubsection{Syfte}
-Syftet med projektet är att bygga en web-baserad, mobilanpassad, prototyp som ersätter, och förbättrar, det pappersbaserade systemet.
+Det största problemet med det nuvarande kartoteket är
+att det inte är integrerat med systemet för att hantera handböcker.
+
+I dagsläget, om en artikel slutas säljas eller Region Östergötland
+väljer att inte köpa in en viss artikel längre så tar de bort artikeln
+från kartoteket. Problemet som då uppstår är att detta inte reflekteras
+i handböckerna. Så om t.ex. en "\textit{Oral-B Pro 600 CrossAction}"\ tandborste används i
+en "\textit{Laparoskopisk sigmoideumresektion}", och tandborsten slutas säljas
+så tas den bort från kartoteket, men eftersom handboken för operationen inte är
+kopplad till kartoteket så uppdateras det inte att denna artikel inte längre finns
+i lagret.
+
+Syftet med denna del av systemet är att lösa detta problem genom att
+integrera systemet som hanterar handböcker tillsammans med ett nytt kartotek,
+allesammans byggt på webben. När en artikel ändras eller tas bort i kartoteket
+så ändras den även i alla handböcker för operationer som kräver denna artikel.
+
+
+%Syftet med denna del av projektet är att..
+
+%Syftet med projektet är att bygga en web-baserad, mobilanpassad, prototyp som ersätter, och förbättrar, det pappersbaserade systemet.
 
 
 \subsubsection{Frågeställning}
 Frågeställningar:
 \begin{itemize}
   \item Kan man implementera ett kartotekssystem som uppfyller kundens önskemål?
+  %\item Går det att implementera ett kartotekssystem som 
 \end{itemize}
 
 
