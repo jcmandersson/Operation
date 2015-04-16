@@ -80,6 +80,7 @@ var minusOne = function(){
   var oldAmount = parseInt(amountField.text());
   var newAmount = oldAmount-1;
   if(newAmount > 0) {
+    $(amountField).text(newAmount);
     socket.emit('amountChange', checkArticleID, operationID, newAmount);
   }
 };
@@ -91,6 +92,7 @@ var plusOne = function(){
   var oldAmount = parseInt(amountField.text());
   var newAmount = oldAmount+1;
   if(newAmount > 0) {
+    $(amountField).text(newAmount);
     socket.emit('amountChange', checkArticleID, operationID, newAmount);
   }
 };
