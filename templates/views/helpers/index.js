@@ -423,8 +423,8 @@ module.exports = function() {
         break;
       case 'next':
         newContext = {};
-        if (page === pageCount) {
-          newContext = { disabled: true, n: pageCount }
+        if (page >= pageCount) {
+          newContext = { disabled: true, n: page}
         }
         else {
           newContext = { n: page + 1 }
