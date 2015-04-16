@@ -168,6 +168,7 @@ var articles = {
       articles: this.essentials()
     });
     $(this.data.id).html(newHTML);
+    console.log(this.essentials());
 
     this.attachAddArticleListener();
     this.attachModifyEntryListeners();
@@ -270,6 +271,7 @@ var articles = {
     });
   },
   attachSearchArticleListener: function() {
+    console.log('this: ' + this);
     var self = this;
     var timeout = null;
     var search = function(e, $element) {
