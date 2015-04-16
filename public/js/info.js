@@ -88,3 +88,16 @@ var findArticles = function (resultsTemplate) {
     });
   });
 };
+
+$("#editChecklistButton").click(function(){
+  if ($('#editChecklistButton').text() == 'Redigera plocklista') {
+    $('#editChecklistButton').text('Klar');
+    $('#editChecklist').show();
+    $('.centered-remove').show();
+  }
+  else {
+    $('#editChecklistButton').text('Redigera plocklista');
+    $('#editChecklist').hide();
+    $('.centered-remove').hide();
+  }
+});
