@@ -7,16 +7,20 @@
       <div class="glyphicon glyphicon-minus minus-icon"></div>
     </div>
     <div class="amount-field" style="display:none" id="top{{kartotek._id}}">{{amount}}</div>
-    <b class="uneditable-amount">{{ amount }}</b>
+    <p><b class="uneditable-amount">{{ amount }}</b></p>
     <div class="plus-field" style="display:none" id="plus{{kartotek._id}}">
       <div class="glyphicon glyphicon-plus plus-icon"></div>
     </div>
   </td>
-  <td class="centered name">{{ kartotek.name }}</td>
-  <td class="centered storage">{{ kartotek.storage }}</td>
-  <td class="centered section">{{ kartotek.section }}</td>
-  <td class="centered shelf">{{ kartotek.shelf }}</td>
-  <td class="centered tray">{{ kartotek.tray }}</td>
+  <td class="centered name"><p>{{ name }}</p></td>
+  {{#if kartotek.storage}}
+    <td class="centered storage"><p>{{ kartotek.storage }}</p></td>
+  {{else}}
+    <td class="centered storage"><p class='errorText'>Utgått</p></td>
+  {{/if}}
+  <td class="centered section"><p>{{ kartotek.section }}</p></td>
+  <td class="centered shelf"><p>{{ kartotek.shelf }}</p></td>
+  <td class="centered tray"><p>{{ kartotek.tray }}</p></td>
   {{#unless parent.data.template}}
     <td class="centered-comment">
       <button id="commentButton{{_id}}" data-id="{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal{{_id}}">

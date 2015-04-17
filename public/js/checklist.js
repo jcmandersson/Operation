@@ -238,7 +238,7 @@ var updateTableRow = function(tableRow, isChecked, isTemplate){ //set checked st
 var updateTextInTableRow = function(tableRow, checkObject) {
   var kartotekArticle = checkObject.kartotekArticle;
   
-  tableRow.find('.name').eq(0).html(kartotekArticle.name);
+  tableRow.find('.name').eq(0).html('<p>'+checkObject.name+'</p>');
   tableRow.find('.storage').eq(0).html(kartotekArticle.storage);
   tableRow.find('.section').eq(0).html(kartotekArticle.section);
   tableRow.find('.shelf').eq(0).html(kartotekArticle.shelf);
