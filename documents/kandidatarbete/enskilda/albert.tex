@@ -1,21 +1,27 @@
 \section{Albert Karlsson}
 \subsection{Inledning}
-
+Denna del i rapporten behandlar vad som ska utredas och varför.
 \subsubsection{Syfte}
-Syftet med denna enskilda utredningen är att undersöka olika kvalitetsaspekter då ett mindre projekt utförs av en liten grupp utvecklare.
+Syftet med denna enskilda utredningen är att underlätta för fortsatt utveckling av webbapplikationen som projektgruppen har skapat. Alla delar i applikationen får inte användas i Region Östergötlands intranät, vilket leder till att en del måste bytas ut.
 \subsubsection{Frågeställning}
 \begin{itemize}
-\item Finns det några kvalitetshöjande processer som enkelt kan implementeras utan mycket resurser och kunskap?
-\item Behövs en kvalitetssamordnare i små grupper? Kan inte alla andra dela på detta arbetet?
+\item Vad används Keystone till i applikationen?
+\item Vad behövs för att ersätta Keystone?
+\item Vad behöver ändras för att byta ut databasen från MongoDB till MSSQL?
+\item Vilka moduler eller bibliotek i applikationen kräver en licens för kommersiell användning?
 
 \end{itemize}
 \subsubsection{Avgränsningar}
-Rapporten har sin utgångspunkt i hur kvalitetsarbetet har gått till i detta projekt och ska inte ses som ett allmänt tillvägagångsätt. 
+Denna rapport gäller endast för vidareutveckling för användning av Region Östergötland. Andra användare kan ha andra krav på applikationen som leder till att denna rapport är ofullständig eller felaktig. 
 \subsection{Bakgrund}
-I små projektgrupper blir kvalité ofta något som får stå åt sidan för andra saker som gruppen anser vara mer viktiga, så som implementering av nya funktioner. Det är ofta svårt att motivera utvecklare till att jobba med kvalitet eftersom arbete med kvalité sällan visar direkta resultat. 
+Region Östergötland ska ta över arbetet med utvecklingen av webbapplikationen efter att projektgruppen slutfört sitt arbete. För att applikationen ska kunna tas i bruk på riktigt så måste databasen bytas ut till MSSQL då Region Östergötland inte tillåter MongoDB på sina servrar. Då utvecklingen av applikationen har fortgått har Keystone fått en mindre och mindre roll i applikationen. En av Keystones största fördelar är dess enkla och smidiga administratörssystem. Detta används inte alls i applikationen längre och då databsen ska bytas till en annan typ försvinner också en annan stor del av Keystone. Detta ledde till tankar om att Keystone kanske skulle kunna bytas ut mot egenskriven kod eller mindre och mer lättförståliga moduler utan jättemycket arbete.
 \subsection{Teori}
+En beskrivning och förklaring för många av modulerna som kommer tas upp finns att läsa i avsnitt 3.
+\subsubsection{Keystone}
+
+
 \subsection{Metod}
-Mycket information kommer hämtas från andras erfarenheter inom kvalitetsarbete i små grupper. En sammanställning kommer sedan göras och det som många anser vara viktigt kommer sedan testas i projektgruppen.    
+För att få en bättre förståelse för Keystones roll i applikationen så kommer först och främst Keystones tekniska dokumentation läsas. Sedan   
 \subsection{Resultat}
 \subsection{Diskussion}
 \subsubsection{Resultat}
