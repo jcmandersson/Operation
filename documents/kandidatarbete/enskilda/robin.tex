@@ -18,9 +18,10 @@ Eftersom denna del av projektet endast innehåller checkande av checklistor så 
 
 \subsection{Teori}
 Huvuddelen i implementeringen av checklistan är kommunikationen med Socket.IO som använder sig av websockets för att kommunicera mellan front-end och back-end. Information om Socket.IO finns på webbplatsen: \textit{http://socket.io/}
+
  
 \subsection{Metod}
-Jag började med att fundera på hur kommunikationen skulle fungera på för sätt. Jag skissade ner olika förslag på ett papper och kom på det sättet fram till hur jag skulle implementera kommunikationen. Sedan implementerade jag den och fick den att fungera och efter det refaktoriserade jag koden för att få den kortare och mer lättläst.
+Jag började med att fundera på hur kommunikationen skulle fungera på för sätt. Jag skissade ner olika förslag på ett papper och kom på det sättet fram till hur jag skulle implementera kommunikationen. Sedan implementerade jag den och fick den att fungera. Därefter så refaktoriserade jag koden för att få den kortare och mer lättläst.
 
 \subsection{Resultat}
 Jag kom fram till att när en användare går in på en operationsförberedelse så kommer denne in i ett rum. Varje gång en person sedan checkar en checkbox så skickas ett Socket.IO meddelande till servern som innehåller information om vilken checkruta som ska checkas samt vilket rum checkboxen ska checkas i. Servern skickar sedan ett meddelande till det givna rummet vilken checkruta som ska checkas och alla klienter som är anslutna till det rummet checkar den givna checkrutan. \\
