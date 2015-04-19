@@ -4,11 +4,12 @@
 @searchWidth: 350px;
 @navHeight: 60px;
 
-nav {
+.navbar {
   background-color: @blue !important;
   height: @navHeight;
   overflow: visible;
 }
+
 .navbar-static-top {
   border: none;
 }
@@ -72,11 +73,9 @@ input[type="search"] {
 }
 
 .operationSearch {
-  height: @navHeight;
-  line-height: @navHeight;
   position: absolute;
   right: 0;
-  top: 0;
+  top: @navHeight/2 - 17px;
   margin: 0;
 }
 
@@ -95,7 +94,6 @@ input[type="search"] {
 }
 #results {
   position: absolute;
-  top: @navHeight/2 + 17px;
   width: @searchWidth;
 }
 
@@ -108,17 +106,41 @@ input[type="search"] {
 }
 
 .operationSearch.navbar-form .has-feedback .form-control-feedback {
-  top: 14px !important;
+  /*top: 14px !important;*/
 }
 
-@media screen and (max-width: 900px) {
+ul.dropdown-menu {
+  background: @blue;
+  list-style-type: none;
+  padding: 0;
+  display: none;
+}
+
+ul.dropdown-menu li {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+ul.dropdown-menu li a {
+  display: block;
+  padding: 10px 10px;
+  line-height: 100%;
+  width: 100%;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+  background: @lightblue !important;
+}
+
+@media screen and (max-width: 1000px) {
   .navbar {
-    margin-bottom: @navHeight;
+    height: @navHeight*2;
   }
 
   .operationSearch {
     position: absolute;
-    top: @navHeight;
+    top: @navHeight + 10px;
     left: 0;
     right: 0;
     text-align: center;
@@ -145,9 +167,9 @@ input[type="search"] {
     line-height: @navHeight;
   }
 
-  /*.navbar-collapse form {
-    display: none;
-  }*/
+  .navbar {
+    height: @navHeight*2 + 10px;
+  }
 
   .navbar-collapse {
     position: relative;
@@ -160,10 +182,6 @@ input[type="search"] {
 
   .operationSearch .form-group {
     width: 100%;
-  }
-  
-  #results {
-    top: 33px;
   }
 }
 

@@ -1,3 +1,5 @@
+var socket = io();
+
 var Article = function(data) {
   if (typeof data !== 'undefined') this.data = data;
   else this.data = {};
@@ -8,14 +10,7 @@ Article.prototype.createInDatabase = function(callback) {
   $.ajax({
     type: 'POST',
     url: '/api/kartotekartikels',
-    data: {
-      name:    this.data.name,
-      storage: this.data.storage,
-      section: this.data.section,
-      shelf:   this.data.shelf,
-      tray:    this.data.tray,
-      price:   this.data.price
-    }
+    data: this.data
   }).done(function(newArticle) {
     self.data.slug = newArticle.slug;
     callback();
@@ -27,21 +22,27 @@ Article.prototype.modifyInDatabase = function(callback) {
   $.ajax({
     type: 'GET',
     url: '/api/update/Kartotekartikel/' + this.data.slug,
-    data: {
-      name:    this.data.name,
-      storage: this.data.storage,
-      section: this.data.section,
-      shelf:   this.data.shelf,
-      tray:    this.data.tray,
-      price:   this.data.price
-    }
+    data: this.data
   }).done(function(newArticle) {
     self.data.slug = newArticle.slug;
     if (typeof callback !== 'undefined') callback();
+
+    // Send through socket.io to live update preparations.
+    // TODO: Shouldn't be hard-coded like this. What if we add new columns? Just use newArticle.data
+    socket.emit('kartotekUpdate', {
+      name: newArticle.name,
+      storage: newArticle.storage,
+      section: newArticle.section,
+      shelf: newArticle.shelf,
+      tray: newArticle.tray,
+      price: newArticle.price,
+      id: newArticle._id
+    })
   });
 };
 
 Article.prototype.removeFromDatabase = function(callback) {
+  socket.emit("removeKartotekArticle", this.data.slug);
   $.ajax({
     type: 'DELETE',
     url:  '/api/kartotekartikels/' + this.data.slug
@@ -50,26 +51,42 @@ Article.prototype.removeFromDatabase = function(callback) {
 
 // This takes a single `td` element, and fills itself (i.e. this.data) with the columns.
 Article.prototype.fillFromElement = function(elem) {
-  this.data.name    = $(elem).find('[data-name="name"]').text();
-  this.data.storage = $(elem).find('[data-name="storage"]').text();
-  this.data.section = $(elem).find('[data-name="section"]').text();
-  this.data.shelf   = $(elem).find('[data-name="shelf"]').text();
-  this.data.tray    = $(elem).find('[data-name="shelf"]').text();
-  this.data.price   = $(elem).find('[data-name="price"]').text();
-  this.data.slug    = $(elem).find('[data-name="slug"]').text();
+  this.data.name                  = $(elem).find('[data-name="name"]').text();
+  this.data.storage               = $(elem).find('[data-name="storage"]').text();
+  this.data.section               = $(elem).find('[data-name="section"]').text();
+  this.data.shelf                 = $(elem).find('[data-name="shelf"]').text();
+  this.data.tray                  = $(elem).find('[data-name="tray"]').text();
+  this.data.price                 = $(elem).find('[data-name="price"]').text();
+  this.data.articleNumber         = $(elem).find('[data-name="articleNumber"]').text();
+  this.data.supplier              = $(elem).find('[data-name="supplier"]').text();
+  this.data.supplierArticleNumber = $(elem).find('[data-name="supplierArticleNumber"]').text();
+  this.data.orderItem             = $(elem).find('[data-name="orderItem"]').text();
+  this.data.clinic                = $(elem).find('[data-name="clinic"]').text();
+  this.data.amount                = $(elem).find('[data-name="amount"]').text();
+  this.data.unit                  = $(elem).find('[data-name="unit"]').text();
+  this.data.peoe                  = $(elem).find('[data-name="peoe"]').text();
+  this.data.slug                  = $(elem).find('[data-name="slug"]').text();
 };
 
 // This takes a single `td` element, and fills itself (i.e. this.data) with the columns.
 // The difference between this and .fillFromElement is that this takes
 // data from `input` elements, whereas .fillFromElement takes data from `td` elements.
 Article.prototype.fillFromInput = function(elem) {
-  this.data.name    = $(elem).find('[data-name="name"]').val();
-  this.data.storage = $(elem).find('[data-name="storage"]').val();
-  this.data.section = $(elem).find('[data-name="section"]').val();
-  this.data.shelf   = $(elem).find('[data-name="shelf"]').val();
-  this.data.tray    = $(elem).find('[data-name="shelf"]').val();
-  this.data.price   = $(elem).find('[data-name="price"]').val();
-  this.data.slug    = $(elem).find('[data-name="slug"]').val();
+  this.data.name                  = $(elem).find('[data-name="name"]').val();
+  this.data.storage               = $(elem).find('[data-name="storage"]').val();
+  this.data.section               = $(elem).find('[data-name="section"]').val();
+  this.data.shelf                 = $(elem).find('[data-name="shelf"]').val();
+  this.data.tray                  = $(elem).find('[data-name="tray"]').val();
+  this.data.price                 = $(elem).find('[data-name="price"]').val();
+  this.data.articleNumber         = $(elem).find('[data-name="articleNumber"]').val();
+  this.data.supplier              = $(elem).find('[data-name="supplier"]').val();
+  this.data.supplierArticleNumber = $(elem).find('[data-name="supplierArticleNumber"]').val();
+  this.data.orderItem             = $(elem).find('[data-name="orderItem"]').val();
+  this.data.clinic                = $(elem).find('[data-name="clinic"]').val();
+  this.data.amount                = $(elem).find('[data-name="amount"]').val();
+  this.data.unit                  = $(elem).find('[data-name="unit"]').val();
+  this.data.peoe                  = $(elem).find('[data-name="peoe"]').val();
+  this.data.slug                  = $(elem).find('[data-name="slug"]').val();
 };
 
 // Extract essentials (e.g. only name, storage, section, shelf, no functions(?), etc).
@@ -84,8 +101,10 @@ var articles = {
     id: '#articles',
     template: '#articles-template',
     add: '#article-add',
+    toggleNumVisibleColumns: '#toggle-fields',
     currentlyModifyingArticle: undefined,
     currentlyModifyingColumn: undefined,
+    showAllColumns: false,
     articles: []
   },
   // Fills itself (this.data.articles) with
@@ -110,8 +129,7 @@ var articles = {
     this.attachModifyEntryListeners();
     this.attachRemoveArticleListeners();
   },
-  fillFromDB: function(dbRes) {
-    this.data.articles = [];
+  addFromDB: function(dbRes) {
     for (var i = 0; i < dbRes.length; i++) {
       this.data.articles.push(new Article(dbRes[i]));
     }
@@ -146,8 +164,12 @@ var articles = {
   render: function() {
     var templateHTML     = $(this.data.template).html();
     var compiledTemplate = Handlebars.compile(templateHTML);
-    var newHTML          = compiledTemplate({ articles: this.essentials() });
+    var newHTML          = compiledTemplate({
+      showAllColumns: this.data.showAllColumns,
+      articles: this.essentials()
+    });
     $(this.data.id).html(newHTML);
+    console.log(this.essentials());
 
     this.attachAddArticleListener();
     this.attachModifyEntryListeners();
@@ -178,7 +200,7 @@ var articles = {
   attachAddArticleListener: function() {
     var self = this;
 
-    $(this.data.add).click(function() {
+    $('[data-admin="true"]').find(this.data.add).click(function() {
       var newArticle = new Article();
       var rowWhichContainsCreate = $(self.getRowWhichContainsCreate());
       newArticle.fillFromInput(rowWhichContainsCreate);
@@ -192,7 +214,7 @@ var articles = {
     this.render();
   },
   attachModifyEntryListeners: function() {
-    var elems = $(this.data.id).find('.modifyable-article-column');
+    var elems = $('[data-admin="true"]').find(this.data.id).find('.modifyable-article-column');
     for (var i = 0; i < elems.length; i++) {
       var self = this;
       $(elems[i]).click(function(e) {
@@ -203,7 +225,7 @@ var articles = {
     }
   },
   attachRemoveArticleListeners: function() {
-    var elems = $(this.data.id).find('tr');
+    var elems = $('[data-admin="true"]').find(this.data.id).find('tr');
     for (var i = 0; i < elems.length; i++) {
       $(elems[i]).find('.article-remove').click(this.removeArticleListener);
     }
@@ -250,16 +272,57 @@ var articles = {
     });
   },
   attachSearchArticleListener: function() {
+    console.log('this: ' + this);
     var self = this;
-
-    $('#search-article').keyup(function() {
+    var timeout = null;
+    var search = function(e, $element) {
+      var value = $(this).val();
       $.ajax({
         type: 'GET',
-        url:  '/api/search/Kartotekartikel/?all',
+        url:  '/api/search/Kartotekartikel/',
         data: {
-          text: $(this).val()
+          all: true,
+          limit: 50,
+          sort: 'name',
+          text: value
         }
-      }).done(self.fillFromDB.bind(self));
+      }).done(function(msg) {
+        self.data.articles = [];
+        var done = self.addFromDB.bind(self);
+        done(msg);
+      });
+    };
+
+    $('#search-article').keyup(search);
+  },
+  attachScrollBottomListener: function() {
+    var self = this;
+    $(window).scroll(function() {
+      if ($(window).scrollTop() + $(window).height() < $(document).height() - 100) {
+        self.scrollEvent = false;
+        return;
+      }
+      if (typeof self.scrollEvent !== 'undefined' && self.scrollEvent) return;
+      self.scrollEvent = true;
+      var value = $('#search-article').val();
+      $.ajax({
+        type: 'GET',
+        url:  '/api/search/Kartotekartikel/',
+        data: {
+          all: true,
+          limit: 50,
+          skip: $('#articles .check-js').length,
+          sort: 'name',
+          text: value
+        }
+      }).done(self.addFromDB.bind(self));
+    });
+  },
+  attachToggleNumColumnsVisibleListener: function() {
+    var self = this;
+    $(this.data.toggleNumVisibleColumns).click(function(e) {
+      self.data.showAllColumns = e.target.checked;
+      self.render();
     });
   }
 };
@@ -271,6 +334,7 @@ $(function() {
   var modifiedTemplate = Handlebars.compile(compiledModified);
 
   Handlebars.registerHelper('modifyable', function(slugName, type, currentValue) {
+    //if (currentValue == '') { console.log('hi') }
     var isModifyable = articles.isEntryThatIsCurrentlyBeingModified(slugName, type);
     return modifiedTemplate({ isModifyable: isModifyable, value: currentValue });
   });
@@ -278,4 +342,7 @@ $(function() {
   window.articles.fillFromElement();
   window.articles.attachAddArticleListener();
   window.articles.attachSearchArticleListener();
+  window.articles.attachScrollBottomListener();
+  window.articles.attachToggleNumColumnsVisibleListener();
+  console.log(window.articles.data)
 });

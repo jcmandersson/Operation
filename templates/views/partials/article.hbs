@@ -1,0 +1,19 @@
+<tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-slug="{{slug}}" class="check-js" id={{_id}}>
+  <td class="amountColumn centered" id="amount{{kartotek._id}}">
+      <div class="minus-field" id="minus{{kartotek._id}}">
+        <div class="glyphicon glyphicon-minus minus-icon"></div>
+      </div>
+      <div class="amount-field" id="top{{kartotek._id}}">{{amount}}</div>
+      <div class="plus-field" id="plus{{kartotek._id}}">
+        <div class="glyphicon glyphicon-plus plus-icon"></div>
+      </div>
+  </td>
+  <td class="centered">{{ kartotek.name }}</td>
+  <td class="centered">{{ kartotek.storage }}</td>
+  <td class="centered">{{ kartotek.section }}</td>
+  <td class="centered">{{ kartotek.shelf }}</td>
+  <td class="centered">{{ kartotek.tray }}</td>
+  <td class="centered-remove">
+    <a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a>
+  </td>
+</tr>

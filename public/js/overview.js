@@ -1,12 +1,12 @@
-function calculateProgress(d){
+function calculateProgress(d) {
   if(!d.total || !d.checked) return 1;
   console.log(d.checked/ d.total);
   return Math.round(100*d.checked/ d.total);
 }
 
-$(document).ready(function(){
+$(document).ready(function () {
   
-  $('.progressbar').each(function(i, e){
+  $('.progressbar').each(function (i, e) {
     
     var percentage = parseInt($(e).attr('data-percent'));
     
@@ -23,7 +23,7 @@ $(document).ready(function(){
   });
 
   var socket = io();
-  socket.on('connect', function() {
+  socket.on('connect', function () {
     socket.emit('overviewOpen');
   });
   
@@ -33,11 +33,11 @@ $(document).ready(function(){
     var percent = calculateProgress(progress.all);
     var $progress = $('[data-id="'+progress.operation+'"] .progressbar').progressbar("value", percent);
     console.log($progress);
-    if(percent === 1) percent--;
+    if (percent === 1) percent--;
     $progress.find('.ui-progressbar-value').html('&nbsp;&nbsp;&nbsp;'+percent+'% ('+progress.all.checked+'/'+progress.all.total+')');
   });
   
-  socket.on('markAsDone', function(data) {    
+  socket.on('markAsDone', function (data) {    
     var $progress = $('[data-id="' + data.operation + '"] .progressbar');    
     if (data.isDone) {
       $progress.find('.ui-progressbar-value').addClass('progressbar-done');
@@ -54,23 +54,8 @@ $(document).ready(function(){
     }
   });
   
-});
-
-$('.removeOperations').click(function() {
-  console.log("hej");
-  console.log($(this).parent().parent());
-  var slug = $(this).parent().parent().attr('data-slug');
-  $.ajax({
-    type: 'DELETE',
-    url: '/api/operations/' + slug
-  })
-    .done(function( msg ) {
-      console.log(JSON.parse(msg));
-    })
-    .fail(function(err, status){
-      console.log('Error');
-      console.log(err);
-      console.log(status);
-    });
-  $(this).parent().remove();
+  socket.on('updateOverview', function () {
+    window.location.reload();
+  });
+  
 });

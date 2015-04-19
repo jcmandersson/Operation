@@ -1,0 +1,19 @@
+<div class="modal fade" id="checkCommentModal{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Kommentar för: {{kartotek.name}}</h4>
+            </div>
+            <div class="modal-body">
+                <textarea id="checkComment{{_id}}" rows="8" cols="60">{{ comment }}</textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-id="{{_id}}" class="btn btn-default cancelComment" data-dismiss="modal">Stäng</button>
+                <button id="saveComment{{_id}}" data-message="" data-id="{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
+                <p></p>
+                <p id="commentSaved{{_id}}">Sparad!</p>
+            </div>
+        </div>
+    </div>
+</div>

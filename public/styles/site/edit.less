@@ -82,3 +82,76 @@
 ul.nav li {
   box-sizing: content-box;
 }
+
+.editAmount {
+  text-align:center;
+  width: 50px !important;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing: border-box;
+}
+
+.amountColumn {
+  width: 110px;
+  padding: 4px !important;
+  padding-top: 5px !important;
+}
+
+
+.plus-icon,
+.minus-icon {
+  color: rgba(0, 0, 0, 0.5);
+};
+
+
+.minus-field:hover,
+.plus-field:hover {
+  cursor: pointer;
+  background-image: linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.12));
+};
+
+.plus-field {
+  background-image: linear-gradient(#fcfcfc, #eee);
+  border-right: 1px solid rgb(204, 204, 204);
+  border-top: 1px solid rgb(204, 204, 204);
+  border-bottom: 1px solid rgb(204, 204, 204);
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 30px;
+  width: 31px;
+  padding-top: 4%;
+  display: inline-block;
+  float: right;
+};
+
+.amount-field {
+  border: 1px solid rgb(204, 204, 204);
+  height: 30px;
+  width: 40px;
+  padding-top: 3%;
+  display: inline-block;
+  float: left;
+  font-weight: bold;
+};
+
+.minus-field {
+  background-image: linear-gradient(#fcfcfc, #eee);
+  border-left: 1px solid rgb(204, 204, 204);
+  border-right: none;
+  border-bottom: 1px solid rgb(204, 204, 204);
+  border-top: 1px solid rgb(204, 204, 204);
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  height: 30px;
+  width: 31px;
+  padding-left: 0.5%;
+  padding-top: 4%;
+  display: inline-block;
+  float: left;
+};
+
+.process-content-item.ui-sortable-handle:last-child .glyphicon-remove {
+  display: none;
+}

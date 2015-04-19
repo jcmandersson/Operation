@@ -72,7 +72,6 @@ CheckArticle.schema.statics.calculateProgress = function calculateProgress(opera
       
     });
   });
-  
 };
 
 CheckArticle.defaultColumns = 'operation|20%, name, createdBy|20%, createdAt|20%';

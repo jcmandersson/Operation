@@ -4,7 +4,7 @@ var session = keystone.session;
 
 exports = module.exports = function (req, res) {
   var view = new keystone.View(req, res),
-      locals = res.locals;
+    locals = res.locals;
 
   locals.section = 'login';
 
@@ -13,45 +13,41 @@ exports = module.exports = function (req, res) {
   ];
 
   locals.css = [
-    'site.css',
     'login.css'
   ];
 
-  var renderView = function() {
-    view.render('login');
-  };
-
-  if (req.method === 'GET') {
-    if (!keystone.security.csrf.validate(req)) {
-      req.flash('error', 'There was an error with your request, please try again.');
-      return renderView();
+  view.on('init', function (next) {
+    if (typeof req.query.logout === 'undefined') {
+      next();
+      return;
     }
+    session.signout(req, res, function () {
+      res.redirect('/login');
+    });
+  });
+
+  view.on('post', {login: ''}, function (next) {
 
     if (!req.body.email || !req.body.password) {
-      req.flash('error', 'Please enter your email address and password.');
-      return renderView();
+      req.flash('error', 'Skriv in ett giltigt användarnamn och lösenord.');
+      return next();
     }
-    var onSuccess = function(user) {
-      if (req.query.from && req.query.from.match(/^(?!http|\/\/|javascript).+/)) {
-        res.redirect(req.query.from);
-      } else if ('string' === typeof keystone.get('login redirect')) {
-        res.redirect(keystone.get('login redirect'));
-      } else if ('function' === typeof keystone.get('login redirect')) {
-        keystone.get('login redirect')(user, req, res);
+    var onSuccess = function (user) {
+      if (req.query.redirect){
+        res.redirect(req.query.redirect);
       } else {
         res.redirect('/');
       }
     };
 
-    var onFail = function() {
-      req.flash('error', 'Sorry, that email and password combo are not valid.');
-      renderView();
+    var onFail = function () {
+      req.flash('error', 'Felaktigt användarnamn eller lösenord.');
+      return next();
     };
 
     session.signin(req.body, req, res, onSuccess, onFail);
-  }
-  else {
-    renderView();
-  }
+  });
+
+  view.render('login');
 
 };

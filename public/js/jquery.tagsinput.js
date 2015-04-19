@@ -11,11 +11,11 @@
  ben@xoxco.com
  */
 
-(function($) {
+(function ($) {
 
   var delimiter = new Array();
   var tags_callbacks = new Array();
-  $.fn.doAutosize = function(o){
+  $.fn.doAutosize = function (o) {
     var minWidth = $(this).data('minwidth'),
       maxWidth = $(this).data('maxwidth'),
       val = '',
@@ -41,7 +41,7 @@
 
 
   };
-  $.fn.resetAutosize = function(options){
+  $.fn.resetAutosize = function (options) {
     // alert(JSON.stringify(options));
     var minWidth =  $(this).data('minwidth') || options.minInputWidth || $(this).width(),
       maxWidth = $(this).data('maxwidth') || options.maxInputWidth || ($(this).closest('.tagsinput').width() - options.inputPadding),
@@ -59,7 +59,7 @@
         whiteSpace: 'nowrap'
       }),
       testerId = $(this).attr('id')+'_autosize_tester';
-    if(! $('#'+testerId).length > 0){
+    if (! $('#'+testerId).length > 0) {
       testSubject.attr('id', testerId);
       testSubject.appendTo('body');
     }
@@ -70,7 +70,7 @@
     input.css('width', minWidth);
   };
 
-  $.fn.addTag = function(value,options) {
+  $.fn.addTag = function (value,options) {
     options = jQuery.extend({focus:false,callback:true},options);
     this.each(function() {
       var id = $(this).attr('id');
@@ -84,7 +84,7 @@
 
       if (options.unique) {
         var skipTag = $(this).tagExist(value);
-        if(skipTag == true) {
+        if (skipTag == true) {
           //Marks fake input as not_valid to let styling it
           $('#'+id+'_tag').addClass('not_valid');
         }
@@ -119,8 +119,7 @@
           var f = tags_callbacks[id]['onAddTag'];
           f.call(this, value);
         }
-        if(tags_callbacks[id] && tags_callbacks[id]['onChange'])
-        {
+        if (tags_callbacks[id] && tags_callbacks[id]['onChange']) {
           var i = tagslist.length;
           var f = tags_callbacks[id]['onChange'];
           f.call(this, $(this), tagslist[i-1]);
@@ -132,9 +131,9 @@
     return false;
   };
 
-  $.fn.removeTag = function(value) {
+  $.fn.removeTag = function (value) {
     value = unescape(value);
-    this.each(function() {
+    this.each(function () {
       var id = $(this).attr('id');
 
       var old = $(this).val().split(delimiter[id]);
@@ -158,20 +157,20 @@
     return false;
   };
 
-  $.fn.tagExist = function(val) {
+  $.fn.tagExist = function (val) {
     var id = $(this).attr('id');
     var tagslist = $(this).val().split(delimiter[id]);
     return (jQuery.inArray(val, tagslist) >= 0); //true when tag exists, false when not
   };
 
   // clear all existing tags and import new ones from a string
-  $.fn.importTags = function(str) {
+  $.fn.importTags = function (str) {
     id = $(this).attr('id');
     $('#'+id+'_tagsinput .tag').remove();
     $.fn.tagsInput.importTags(this,str);
   }
 
-  $.fn.tagsInput = function(options) {
+  $.fn.tagsInput = function (options) {
     var settings = jQuery.extend({
       interactive:true,
       defaultText:'add a tag',
@@ -300,9 +299,8 @@
           }
         });
         //Delete last tag on backspace
-        data.removeWithBackspace && $(data.fake_input).bind('keydown', function(event)
-        {
-          if(event.keyCode == 8 && $(this).val() == '')
+        data.removeWithBackspace && $(data.fake_input).bind('keydown', function(event) {
+          if (event.keyCode == 8 && $(this).val() == '')
           {
             event.preventDefault();
             var last_tag = $(this).closest('.tagsinput').find('.tag:last').text();
@@ -316,8 +314,8 @@
 
         //Removes the not_valid class when user changes the value of the fake input
         if(data.unique) {
-          $(data.fake_input).keydown(function(event){
-            if(event.keyCode == 8 || String.fromCharCode(event.which).match(/\w+|[áéíóúÁÉÍÓÚñÑ,/]+/)) {
+          $(data.fake_input).keydown(function (event) {
+            if (event.keyCode == 8 || String.fromCharCode(event.which).match(/\w+|[áéíóúÁÉÍÓÚñÑ,/]+/)) {
               $(this).removeClass('not_valid');
             }
           });
@@ -329,12 +327,12 @@
 
   };
 
-  $.fn.tagsInput.updateTagsField = function(obj,tagslist) {
+  $.fn.tagsInput.updateTagsField = function (obj,tagslist) {
     var id = $(obj).attr('id');
     $(obj).val(tagslist.join(delimiter[id]));
   };
 
-  $.fn.tagsInput.importTags = function(obj,val) {
+  $.fn.tagsInput.importTags = function (obj,val) {
     $(obj).val('');
     var id = $(obj).attr('id');
     var tags = val.split(delimiter[id]);

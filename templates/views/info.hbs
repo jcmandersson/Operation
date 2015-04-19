@@ -1,20 +1,44 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
-  <div id="opName" data-operationId="{{data._id}}" data-operationSlug="{{data.slug}}">
+
+    <h2>
+    {{#ifeq data.state 'Publicerad'}}
+      {{#if data.template}}
+        Publicerad Handbok
+      {{else}}
+        Operationsförberedelse
+      {{/if}}
+    {{/ifeq}}
+
+    {{#ifeq data.state 'Granskning'}}
+      Granskning
+    {{/ifeq}}
+    {{#ifeq data.state 'Utkast'}}
+      Förhandstitt
+    {{/ifeq}}
+    </h2>
+  
+  <div id="opName" data-operationId="{{data._id}}" data-operationSlug="{{data.slug}}" data-template="{{data.template}}">
+    {{#unless data.template}}
+      <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">
+        <span class="glyphicon glyphicon-ok"></span>
+      </div>
+    {{/unless}}
     {{data.title}}
   </div>
 
-{{#if data.specialty.name}}
+  {{#if data.specialty.name}}
     <div id ="specialty">Specialitet: {{data.specialty.name}}</div>
-{{/if}}
+  {{/if}}
 
-{{#if data.tags}}
+  {{#if data.tags}}
     <div id ="synonyms">Synonymer: {{data.tags}}</div>
-{{/if}}
+  {{/if}}
 
-{{#unless data.template}}
+  {{#unless data.template}}
     <div id="lindaid">Linda-ID: {{data.linda_id}}</div>
-{{/unless}}
+  {{/unless}}
+
 
   <!--nav nav-pills-->
   <!--btn btn-default navbar-btn-->
@@ -26,7 +50,7 @@
     <button type="button" class="btn btn-default navbar-btn" id="checklist">Plocklista</button>
   </ul>
 
-{{#each processes}}
+  {{#each processes}}
     <div class="process-content" id="content{{@index}}">
       {{#each contents}}
         <div class="process-content-item check-js" data-operationId="{{../operation}}" data-preparation="true" id="{{_id}}">
@@ -38,79 +62,59 @@
         </div>
       {{/each}}
     </div>
-{{/each}}
+  {{/each}}
 
   <div class="process-content" id="contentchecklist">
+
     <table class="table articleTable">
       <tr class="table-headerstriped">
-        <td></td>
+        {{#unless data.template}}
+          <td></td>
+        {{/unless}}
         <td class="centered">Antal</td>
         <td class="centered">Namn</td>
         <td class="centered">Förråd</td>
         <td class="centered">Sektion</td>
         <td class="centered">Hylla</td>
         <td class="centered">Fack</td>
-        <td class="centered comment-header">Kommentar</td>
-        <td class="centered"></td>
+        {{#unless data.template}}
+          <td class="centered"></td>
+          <td class="centered-remove" style="display:none">
+        {{/unless}}
       </tr>
       {{#if articles}}
+        {{# each articles }}
+          {{> comment }}
+          {{#include parent=..}}
+            {{> checkArticle}}
+          {{/include}}
+        {{/each}}
+      {{/if}}
+    </table>
 
-            {{# each articles }}
-                <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false" class="check-js" id={{_id}}>
-                    <td class="centered"><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
-                    <td class="centered" id="amount{{kartotek._id}}"><b class="amount">{{ amount }}</b></td>
-                    <td class="centered">{{ kartotek.name }}</td>
-                    <td class="centered">{{ kartotek.storage }}</td>
-                    <td class="centered">{{ kartotek.section }}</td>
-                    <td class="centered">{{ kartotek.shelf }}</td>
-                    <td class="centered">{{ kartotek.tray }}</td>
-                    <td class="centered-comment">
-                        <button id="commentButton{{_id}}" data-id="{{_id}}" type="button" class="btn btn-primary showComment" data-toggle="modal" data-target="#checkCommentModal{{_id}}">
-                            <p class="glyphicon glyphicon-comment"></p>
-                        </button>
-                    </td>
-                    <td class="centered-remove">
-                      <a class="article-remove btn btn-danger" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a>
-                    </td>
-                  
-                    <!--this is loaded under process-content-->
-                    <div class="modal fade" id="checkCommentModal{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Kommentar för: {{kartotek.name}}</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <textarea id="checkComment{{_id}}" rows="8" cols="60">{{ comment }}</textarea>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" data-id="{{_id}}" class="btn btn-default cancelComment" data-dismiss="modal">Stäng</button>
-                                    <button id="saveComment{{_id}}" data-message="" data-id="{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
-                                    <p></p>
-                                    <p id="commentSaved{{_id}}">Sparad!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </tr>
-            {{/each}}
-          {{/if}}
+    {{#unless data.template}}
+      <div style="display:none" id="editChecklist">
+        <div class="search-box articleSearch">
+          <input type="search" id="article-search" class="form-control article-search" placeholder="Sök ny artikel" />
+        </div>
+        <div id="kartotekResults"></div>
+      </div>
+      <button type="button" id="editChecklistButton" class="btn btn-primary">Redigera plocklista</button>
+    {{/unless}}
+  </div>
 
-        </table>
+  {{#if data.template}}
 
-      {{#unless data.template}}
-          <div id="editChecklist">
-              <div class="search-box articleSearch">
-                  <input type="search" id="article-search" class="form-control article-search" placeholder="Sök ny artikel" />
-              </div>
-              <div id="kartotekResults"></div>
-          </div>
-      {{/unless}}
-    </div>
+    {{#ifeq data.state 'Utkast'}}
+      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+    {{/ifeq}}
 
-{{#if data.template}}
-  {{#ifNotString data.state 'Granskning'}}
+    {{#ifeq data.state 'Granskning'}}
+      <button class="btn btn-primary publicera">Publicera</button>
+      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+    {{/ifeq}}
+
+    {{#ifeq data.state 'Publicerad'}}
       <form method="get" id="createOperationInstanceButton">
         <input type="hidden" name="operation" value="create">
         <input type="hidden" name="operationId" value="{{data._id}}">
@@ -126,77 +130,59 @@
               </div>
               <div class="modal-body">
                 <label>LindaID:</label>
-                <input type="text" id="lindaID" name="linda" class="form-control"/>
+                <input type="text" id="lindaID" name="linda" class="form-control" autocomplete="off" />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                <button type="submit" class="btn btn-primary">Påbörja förberedelse</button>
+                <button type="button" class="btn btn-primary pop-up-window" data-dismiss="modal">Stäng</button>
+                <button type="submit" class="btn btn-primary pop-up-window">Påbörja förberedelse</button>
               </div>
             </div>
           </div>
         </div>
       </form>
-  {{/ifNotString}}
-    <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
-  </div>
-{{else}}
-  <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">Färdig</div>
-  <div id='btn-removePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort operation</div>
-{{/if}}
+      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+    {{/ifeq}}
+  {{else}}
+    {{>removePreparation _id=data._id slug=data.slug}}
+    <!--
+    <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">
+    -->
+
+      <!-- Det här är en variant-->
+      <!-- Färdig -->
+      
+      <!-- Det här en annan -->
+      <!--
+      <span class="glyphicon glyphicon-ok"></span>
+
+    </div>
+    -->
+  
+    <div data-toggle='modal' data-target='#alertRemovePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
+  {{/if}}
+</div>
 
 <script id="kartotekResults-template" type="text/x-handlebars-template">
-    <table class="table table-striped table-bordered table-hover" id="result-table">
-      \{{a}}
-      \{{#each results}}
-        <tr>
-            <td>
-                <div>\{{ name }}</div>
-                <div class="tags">\{{ tags }}</div>
-            </td>
-            <td class="add-column" data-name="\{{ name }}" data-kartotekid="\{{ _id }}">
-                <span class="add-icons glyphicon glyphicon-plus"></span>
-            </td>
-        </tr>
-      \{{/each}}
-    </table>
+  <table class="table table-striped table-bordered table-hover" id="result-table">
+    \{{a}}
+    \{{#each results}}
+    <tr class="add-article-info">
+      <td>
+        <div>\{{ name }}</div>
+        <div class="tags">\{{ tags }}</div>
+      </td>
+      <td class="add-column" data-name="\{{ name }}" data-kartotekid="\{{ _id }}">
+        <span class="add-icons glyphicon glyphicon-plus"></span>
+      </td>
+    </tr>
+    \{{/each}}
+  </table>
 </script>
 
 <script id="article-template" type="text/x-handlebars-template">
-    <tr data-kartotekID="\{{kartotekid}}" data-operationId="\{{operation}}" class="check-js" id=\{{_id}}>
-        <td><input type="checkbox" class="checkbox-js" id="\{{_id}}"></td>
-        <td class="centered" id="amount\{{kartotekid}}"><b class="amount">\{{ amount }}</b></td>
-        <td class="centered" id="lol">\{{ kartotekname }}</td>
-        <td class="centered">\{{ kartotekstorage }}</td>
-        <td class="centered">\{{ kartoteksection }}</td>
-        <td class="centered">\{{ kartotekshelf }}</td>
-        <td class="centered">\{{ kartotektray }}</td>
-        <td class="centered">
-            <button id="commentButton\{{_id}}" data-id="\{{_id}}" type="button" class="btn btn-primary btn-lg showComment" data-toggle="modal" data-target="#checkCommentModal\{{_id}}">
-                <p class="glyphicon glyphicon-comment"></p>
-            </button>
-        </td>
-        <td><a class="article-remove btn btn-danger btn-lg" href="#" role="button"><span class="cross glyphicon glyphicon-remove"></span></a></td>
-    </tr>
+  {{renderPartial 'checkArticle'}}
 </script>
 
 <script id="comment-template" type="text/x-handlebars-template">
-    <div class="modal fade" id="checkCommentModal\{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Kommentar för: \{{kartotekname}}</h4>
-                </div>
-                <div class="modal-body">
-                    <textarea id="checkComment\{{_id}}" rows="8" cols="60">\{{ comment }}</textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-id="\{{_id}}" class="btn btn-default cancelComment" data-dismiss="modal">Stäng</button>
-                    <button id="saveComment\{{_id}}" data-message="" data-id="\{{_id}}" type="button" class="btn btn-primary saveComment">Spara</button>
-                    <p></p>
-                    <p id="commentSaved\{{_id}}">Sparad!</p>
-                </div>
-            </div>
-        </div>
-    </div>
+  {{renderPartial 'comment'}}
 </script>
