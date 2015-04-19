@@ -1,63 +1,82 @@
-\section{Erik Malmberg}
+\section{Automatiserade tester med Travis CI - Erik Malmberg}
 \subsection{Inledning}
 Den här enskilda utredningen är en del av kandidatrapporten i kursen TDDD77 vid Linköpings universitet.
 Utredningen behandlar en del av utvecklingen av ett webb-baserat system för att underlätta förberedelser
-inför en operation. Systemet utvecklades på uppdrag av Region Östergötland.
+inför operationer på sjukhusen i Östergötland. Systemet utvecklades på uppdrag av Region Östergötland.
 
 \subsubsection{Syfte}
 Syftet med den här enskilda delen av kandidatarbetet är att ge insikt i hur kontinuerlig integration och 
 automatiserade tester kan användas för att effektivisera testandet i ett projekt som använder en agil 
-utvecklingsmetod. Speciellt ska det undersökas hur väl det går att använda Travis CI tillsammans med MongoDB.
+utvecklingsmetod. Speciellt ska det undersökas hur väl det går att använda Travis CI tillsammans med 
+ramverket Jasmine.
 
 \subsubsection{Frågeställning}
-De frågeställningar som ska besvaras i den här enskilda delen av rapporten är:\\
-Hur lång tid tar det för Travis CI att sätta upp en testversion av en MongoDB-databas?\\
-Hur många tester hinner Travis CI köra på en minut?\\
-Vilka typer av tester är svåra att utföra?\\
+De frågeställningar som ska besvaras i den här enskilda delen av rapporten är:
 
-I svaren på frågeställningarna ska testversionen av MongoDB-databasen och testerna specifieras noggrant 
-så att svaren inte blir tvetydiga.
+\begin{itemize}
+\item Hur kan man använda Travis CI tillsammans med Jasmine för att testa en webbapplikation byggd på javascript och node.js.
+\item Hur många tester hinner Travis CI köra på en sekund?
+\item Vilka typer av tester är svåra att utföra?
+\end{itemize}
+
+I svaret på den andra frågeställningen ska testfallen specifieras noggrant 
+så att svaret inte blir tvetydigt.
 
 \subsubsection{Avgränsningar}
 Inga undersökningar kommer att utföras om hur andra lösningar än Travis CI kan användas för kontinuerlig 
-integration. De databaser som kommer användas kommer uteslutande att vara av typen MongoDB.
+integration. De testfall som kommer användas kommer uteslutande att vara skrivna med ramverket Jasmine.
 
-\subsection{Bakgrund}
 \subsection{Teori}
+Här beskrivs den teori som är nödvöndig för att förstå rapporten.
+
+\subsubsection{Vattenfallsmodellen}
 I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. 
 Om ett problem då identifieras under integrationen så är det krångligt att gå tillbaka och åtgärda problemet. 
-Det kan leda till förseningar av projektet.\\
+Det kan leda till förseningar av projektet.
 
-Kontinuerlig integration och automatiserade tester kan leda till att problemen identifieras tidigare i 
-utvecklingsprocessen. Problemen blir då lättare att åtgärda.\\
+\subsubsection{Kontinuerlig integration och automatiserade tester}
+Kontinuerlig integration kan leda till att problemen identifieras tidigare i 
+utvecklingsprocessen. Problemen blir då lättare att åtgärda. Enligt Karlsson (2014, 43) kan automatiserade tester effektivisera 
+testprocessen och det finns många tillgöngliga lösningar för att köra automatiserade tester. 
+Några av de vanligaste är Travis CI, Codeship och Drone.
 
-Det finns många lösningar för att köra automatiserade tester. Några av de vanligaste är Travis CI, Codeship och Drone.\\
-
+\subsubsection{Travis CI}
 Travis CI är en webb-baserad tjänst för att köra automatiserade enhetstester och integrationstester
-på projekt som finns på GitHub. Travis CI är byggd på öppen källkod och är gratis att använda. 
+på projekt som finns på GitHub. Travis CI är byggt på öppen källkod och är gratis att använda. 
 Tjänsten har stöd för många olika programmeringsspråk, men det som är relevant för innehållet i den här rapporten
-är JavaScript med Node.js. För att konfigurera Travis CI används filen .travis.yml som placeras i det aktuella
-projektets repository på GitHub.\\
+är Javascript med Node.js. För att konfigurera Travis CI används filen .travis.yml som placeras i det aktuella
+projektets repository på GitHub.
 
+\subsubsection{Javascript}
 Javascript är ett programmeringsspråk som i första hand används på klientsidan på webbsidor.
-Javascript exekveras av webbläsaren och arbetar mot ett gränssnitt som heter Document Object Model.\\
+Javascript exekveras av webbläsaren och arbetar mot ett gränssnitt som heter Document Object Model.
 
+\subsubsection{Node.js}
 Node.js är en runtime environment för internetapplikationer. Det kan till exempel användas för att skapa webbservrar.
 Node.js är baserat på öppen källkod och det är enkelt att lägga till nya moduler för att anpassa det system man vill
-använda. För att lägga till nya moduler används node package manager (npm).\\
+använda. För att lägga till nya moduler används node package manager (npm).
 
-Jasmine är ett ramverk för testning av JavaScript. 
-Den node modul som används är grunt-contrib-jasmine som använder task runnern Grunt 
+\subsubsection{Jasmine}
+Jasmine är ett ramverk för testning av Javascript. 
+Den node-modul som används är grunt-contrib-jasmine som använder task runnern Grunt 
 för att köra testfall som skrivits med Jasmine.
-Grunt kunfigureras med filen Gruntfile.js.\\
+Grunt kunfigureras med filen Gruntfile.js.
 
-MongoDB är en dokument-orienterad databas som skiljer sig från traditionella relationsdatabaser.
-MongoDB är tillgänglig för användning under licensen GNU Affero General Public License.\\
 \subsection{Metod}
-Travis CI kommer att kopplas till en repository på GitHub.
+Arbetet inleddes genom att Travis CI kopplades till projektets repository på GitHub. Kopplingen utfördes
+genom att administratören för repositoryn loggade in på travis-ci.org med sitt GitHub-konto och aktiverade
+en webhook för repositoryn.\\
+
+De nödvändiga node-modulerna installerades med hjälp av node package manager (npm). Grunt installerades
+med kommandot: \emph{npm install -g grunt-cli}. Grunt-contrib-jasmine installerades med kommandot: 
+\emph{npm install grunt-contrib-jasmine}.
+
 
 \subsection{Resultat}
 \subsection{Diskussion}
 \subsubsection{Resultat}
 \subsubsection{Metod}
 \subsection{Slutsatser}
+\subsection{Referenser}
+Karlsson, Oskar. 2014. \textit{Automatiserad testning av webbapplikationer}. Linköpings universitet.
+http://www.diva-portal.org/smash/get/diva2:727654/FULLTEXT01.pdf (Hämtad 15-04-19)

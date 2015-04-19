@@ -42,6 +42,7 @@ Article.prototype.modifyInDatabase = function(callback) {
 };
 
 Article.prototype.removeFromDatabase = function(callback) {
+  socket.emit("removeKartotekArticle", this.data.slug);
   $.ajax({
     type: 'DELETE',
     url:  '/api/kartotekartikels/' + this.data.slug
@@ -54,7 +55,7 @@ Article.prototype.fillFromElement = function(elem) {
   this.data.storage               = $(elem).find('[data-name="storage"]').text();
   this.data.section               = $(elem).find('[data-name="section"]').text();
   this.data.shelf                 = $(elem).find('[data-name="shelf"]').text();
-  this.data.tray                  = $(elem).find('[data-name="shelf"]').text();
+  this.data.tray                  = $(elem).find('[data-name="tray"]').text();
   this.data.price                 = $(elem).find('[data-name="price"]').text();
   this.data.articleNumber         = $(elem).find('[data-name="articleNumber"]').text();
   this.data.supplier              = $(elem).find('[data-name="supplier"]').text();
@@ -75,7 +76,7 @@ Article.prototype.fillFromInput = function(elem) {
   this.data.storage               = $(elem).find('[data-name="storage"]').val();
   this.data.section               = $(elem).find('[data-name="section"]').val();
   this.data.shelf                 = $(elem).find('[data-name="shelf"]').val();
-  this.data.tray                  = $(elem).find('[data-name="shelf"]').val();
+  this.data.tray                  = $(elem).find('[data-name="tray"]').val();
   this.data.price                 = $(elem).find('[data-name="price"]').val();
   this.data.articleNumber         = $(elem).find('[data-name="articleNumber"]').val();
   this.data.supplier              = $(elem).find('[data-name="supplier"]').val();
@@ -168,6 +169,7 @@ var articles = {
       articles: this.essentials()
     });
     $(this.data.id).html(newHTML);
+    console.log(this.essentials());
 
     this.attachAddArticleListener();
     this.attachModifyEntryListeners();
@@ -270,6 +272,7 @@ var articles = {
     });
   },
   attachSearchArticleListener: function() {
+    console.log('this: ' + this);
     var self = this;
     var timeout = null;
     var search = function(e, $element) {
@@ -283,9 +286,10 @@ var articles = {
           sort: 'name',
           text: value
         }
-      }).done(function() {
-        self.articles.data = [];
-        self.addFromDB.bind(self)
+      }).done(function(msg) {
+        self.data.articles = [];
+        var done = self.addFromDB.bind(self);
+        done(msg);
       });
     };
 
@@ -301,7 +305,6 @@ var articles = {
       if (typeof self.scrollEvent !== 'undefined' && self.scrollEvent) return;
       self.scrollEvent = true;
       var value = $('#search-article').val();
-      console.log('SCROLLED');
       $.ajax({
         type: 'GET',
         url:  '/api/search/Kartotekartikel/',

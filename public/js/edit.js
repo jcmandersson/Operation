@@ -85,7 +85,7 @@ var updateProcess = function (index, data, callback) {
   );
 };
 var removeProcess = function (index, callback) {
-  return abstractRest('DELETE',
+  return abstractRest ('DELETE',
     '/api/Processtegs/',
     '[data-process-index="' + index + '"] [data-process="',
     function (err, msg) {
@@ -99,19 +99,19 @@ var removeProcess = function (index, callback) {
 };
 
 var removeProcessContent = function (processIndex, index, callback) {
-  return abstractRest('DELETE',
+  return abstractRest ('DELETE',
     '/api/Processinnehalls/',
     '[data-process-index="' + processIndex + '"] [data-content-index="' + index + '"] [data-process-content="',
     function (err, msg) {
       if (!err) {
         $('.data [data-process-index="' + processIndex + '"] [data-content-index="' + index + '"]').remove();
       }
-      callback(err, msg);
+      callback (err, msg);
     });
 };
 
 var updateProcessContent = function (processIndex, index, data, callback) {
-  return abstractUpdate(
+  return abstractUpdate (
     '/api/update/Processinnehall/',
     data,
     '[data-process-index="' + processIndex + '"] [data-content-index="' + index + '"] [data-process-content="',
@@ -285,9 +285,9 @@ var newProcess = function (e) {
 
   addProcess({title: value}, function (err, msg) {
     var $last = $('.process-item').last();
-    $('.process-item input').each(function(i, e){
+    $('.process-item input').each(function (i, e) {
       var nr = parseInt($(e).attr('data-id'));
-      if(nr > parseInt($last.find('input').attr('data-id'))){
+      if (nr > parseInt($last.find('input').attr('data-id'))) {
         $last = $(e).parent();
       }
     });
@@ -562,8 +562,59 @@ $(document).ready(function () {
 
   $('.articleTable tbody').on("click", '.article-remove', removeArticle);
   $('.articleTable tbody').on("click", '.amount', addAmountClick);
+  $('.articleTable tbody').on("click", '.minus-field', minusOne);
+  $('.articleTable tbody').on("click", '.plus-field', plusOne);
+
 
 });
+
+var minusOne = function () {
+  var slug = $(this).parent().parent().attr('data-slug');
+  var amountField = $(this).parent().find('.amount-field');
+  var oldAmount = parseInt(amountField.text());
+  var newAmount = oldAmount-1;
+  if (newAmount > 0) {
+    $.ajax({
+      type: 'GET',
+      url: '/api/update/artikels/' + slug,
+      data: {
+        amount: newAmount
+      }
+    })
+      .done(function (msg) {
+        $(amountField).text(newAmount);
+      })
+      .fail(function (err, status) {
+        console.log('Någonting gick fel!');
+        console.log(err);
+        console.log(status);
+      });
+  }
+};
+
+var plusOne = function () {
+  var slug = $(this).parent().parent().attr('data-slug');
+  var amountField = $(this).parent().find('.amount-field');
+  var oldAmount = parseInt(amountField.text());
+  var newAmount = oldAmount+1;
+  if (newAmount > 0) {
+    $.ajax({
+      type: 'GET',
+      url: '/api/update/artikels/' + slug,
+      data: {
+        amount: newAmount
+      }
+    })
+      .done(function (msg) {
+        $(amountField).text(newAmount);
+      })
+      .fail(function (err, status) {
+        console.log('Någonting gick fel!');
+        console.log(err);
+        console.log(status);
+      });
+  }
+};
 
 var findArticles = function (resultsTemplate) {
   var articleName = $('#article-search').val();
@@ -699,7 +750,7 @@ var addAmountClick = function () {
 
 };
 
-function isPosInt(value) {
+function isPosInt (value) {
   return !isNaN(value) &&
     parseInt(Number(value)) == value && !isNaN(parseInt(value, 10)) && value > 0;
 }

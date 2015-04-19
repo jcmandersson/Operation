@@ -1,5 +1,5 @@
 var initializeSpecialitetSelect = function () {
-  $(".specialitet-select").select2({
+  $(".specialitet-select").select2( {
     ajax: {
       type: 'GET',
       url: '/api/search/Specialitet/',

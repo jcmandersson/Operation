@@ -79,7 +79,7 @@
         <td class="centered">Fack</td>
         {{#unless data.template}}
           <td class="centered"></td>
-          <td class="centered"></td>
+          <td class="centered-remove" style="display:none">
         {{/unless}}
       </tr>
       {{#if articles}}
@@ -93,12 +93,13 @@
     </table>
 
     {{#unless data.template}}
-      <div id="editChecklist">
+      <div style="display:none" id="editChecklist">
         <div class="search-box articleSearch">
           <input type="search" id="article-search" class="form-control article-search" placeholder="Sök ny artikel" />
         </div>
         <div id="kartotekResults"></div>
       </div>
+      <button type="button" id="editChecklistButton" class="btn btn-primary">Redigera plocklista</button>
     {{/unless}}
   </div>
 

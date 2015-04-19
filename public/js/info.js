@@ -3,16 +3,16 @@ tabClick = function(elem) {
   if(elem.id == "all") {
     $(".process-content").show();
     $("#contentchecklist").hide();
-    window.location.replace('#all');
+    window.location.replace('#tab_all');
   } else {
     $(".process-content").hide();
     $("#content"+elem.id).show();
-    window.location.replace('#' + elem.id);
+    window.location.replace('#tab_' + elem.id);
   }
 };
 
-$(document).ready(function() {
-  var hash = window.location.hash.substring(1);
+$(document).ready(function () {
+  var hash = window.location.hash.substring(5);
   if (!hash || hash === 'all') {
     $("#all").addClass('active');
   } else {
@@ -21,7 +21,8 @@ $(document).ready(function() {
     $("#content" + hash).show();
   }
   
-  $(".nav-pills > .navbar-btn").click(function() {
+  $(".nav-pills > .navbar-btn").click(function(e) {
+    e.preventDefault();
     tabClick(this);
   });
 
@@ -29,11 +30,11 @@ $(document).ready(function() {
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
 
   $('#article-search').keyup( function() {
-    if( this.value.length == 0){
+    if ( this.value.length == 0) {
       $('#kartotekResults').empty();
       return;
     }
-    else if( this.value.length < 3 ){
+    else if ( this.value.length < 3 ) {
       return;
     }
     findArticles(kartotekResultsTemplate);
@@ -88,3 +89,27 @@ var findArticles = function (resultsTemplate) {
     });
   });
 };
+
+$("#editChecklistButton").click(function () {
+  if ($('#editChecklistButton').text() == 'Redigera plocklista') {
+    $('#editChecklistButton').text('Klar');
+    $('#editChecklist').show();
+    $('.centered-remove').show();
+    $('.amount-field').show();
+    $('.minus-field').show();
+    $('.plus-field').show();
+    $('.uneditable-amount').hide();
+    $('.uneditable-amount').hide();
+    $('.checkbox-js').hide();
+  }
+  else {
+    $('#editChecklistButton').text('Redigera plocklista');
+    $('#editChecklist').hide();
+    $('.centered-remove').hide();
+    $('.amount-field').hide();
+    $('.minus-field').hide();
+    $('.plus-field').hide();
+    $('.uneditable-amount').show();
+    $('.checkbox-js').show();
+  }
+});
