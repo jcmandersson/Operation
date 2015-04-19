@@ -14,13 +14,13 @@ var initializeSpecialitetSelect = function () {
       var data = [{id: 'Alla specialiteter', text: 'Alla specialiteter'}];
       data = data.concat(formated);
 
-      $(".specialitet-select").select2({
+      $(".specialitet-select").select2( {
           data: data,
           minimumInputLength: 0
         });
 
     })
-    .fail(function(err, status){
+    .fail(function(err, status) {
       console.log('Någonting gick fel!');
       console.log(err);
       console.log(status);

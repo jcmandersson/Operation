@@ -3,7 +3,7 @@ var changeTableGraphics = function(tablerow, isChecked, preparation){//Changes t
     tablerow.css('background-color', 'rgba(76, 169, 34, 0.2)');
   }
   else {
-    if(preparation){
+    if( preparation) {
       tablerow.css('background-color', '');
     }
     else {
@@ -13,21 +13,21 @@ var changeTableGraphics = function(tablerow, isChecked, preparation){//Changes t
 };
 
 var changeCommentButton = function (comment, commentButton) {
-  if(comment.val() == "-") comment.val("");
-  if(comment.val() != ""){
+  if (comment.val() == "-") comment.val("");
+  if (comment.val() != "") {
     commentButton.css('background-color','#D9534F');
     commentButton.css('border-color','#D9534F');
-    commentButton.hover(function(){
+    commentButton.hover(function () {
       commentButton.css('background-color', '#C9302C');
-    }, function(){
+    }, function () {
       commentButton.css('background-color', '#D9534F');
     });
     
   }
-  else{
-    commentButton.hover(function(){
+  else {
+    commentButton.hover(function () {
       commentButton.css('background-color', '');
-    }, function(){
+    }, function () {
       commentButton.css('background-color', '')
     });
     commentButton.css('border-color','');
