@@ -1,6 +1,7 @@
 {{!< default}}
 
 <div class="container">
+  <div id="currentModal"></div>
   <h2>Pågående operationsförberedelser</h2>
 
   {{#if specialties.length}}
@@ -25,8 +26,7 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                   <div class="lindaID">{{ linda_id }}&nbsp;
-                    <span id="comment-icon{{ _id }}"
-                          class="comment-icon glyphicon glyphicon-comment {{#unless comment}} hidden {{/unless}}"></span>
+                    <p data-operation="{{_id}}" class="commentGlyphicon glyphicon glyphicon-comment showOperationCommentsButton {{#unless comment}} hidden {{/unless}}"></p>
                   </div>
                   <div class="tags">{{ tags }}&nbsp;</div>
                   <div class="progressbar {{#if isDone}} isDone {{/if}}" data-total="{{ progress.all.total }}"
@@ -46,3 +46,28 @@
     </p>
   {{/if}}
 </div>
+
+<!--Show comments for operations -->
+<script id="operationComments-template" type="text/x-handlebars-template">
+  <div class="modal fade" id="operationComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title">Artiklar med kommentarer</h3>
+        </div>
+        <div class="modal-body">
+          \{{# each checkArticles }}
+            \{{#if comment}}
+              <h4>\{{name}}</h4>
+              <p>Kommentar: \{{comment}}</p>
+            \{{/if}}
+          \{{/each}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default cancelComment" data-dismiss="modal">Stäng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
