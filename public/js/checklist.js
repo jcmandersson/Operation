@@ -294,7 +294,7 @@ var newArticleUpdate = function(checkArticle, kartotekArticle, operationID){
   $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
   
   //refactor this later because ugly
-  if($('#editChecklistButton').text()=="Klar") {
+  if ($('#editChecklistButton').text()=="Klar") {
     $('.centered-remove').show();
     $('.amount-field').show();
     $('.minus-field').show();
@@ -303,3 +303,4 @@ var newArticleUpdate = function(checkArticle, kartotekArticle, operationID){
     $('.checkbox-js').hide();
   }
 };
+
