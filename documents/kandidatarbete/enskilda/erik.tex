@@ -27,7 +27,7 @@ Inga undersökningar kommer att utföras om hur andra lösningar än Travis CI k
 integration. De testfall som kommer användas kommer uteslutande att vara skrivna med ramverket Jasmine.
 
 \subsection{Teori}
-Här beskrivs den teori som är nödvöndig för att förstå rapporten.
+Här beskrivs den teori som är nödvändig för att förstå rapporten.
 
 \subsubsection{Vattenfallsmodellen}
 I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. 
@@ -36,20 +36,21 @@ Det kan leda till förseningar av projektet.
 
 \subsubsection{Kontinuerlig integration och automatiserade tester}
 Kontinuerlig integration kan leda till att problemen identifieras tidigare i 
-utvecklingsprocessen. Problemen blir då lättare att åtgärda. Enligt Karlsson (2014, 43) kan automatiserade tester effektivisera 
-testprocessen och det finns många tillgöngliga lösningar för att köra automatiserade tester. 
+utvecklingsprocessen. Problemen blir då lättare att åtgärda. Automatiserade tester kan effektivisera 
+testprocessen och det finns många tillgängliga lösningar för att köra automatiserade
+tester.\footnote{Karlsson. \textit{Automatiserd testning av webbapplikationer}, 43.} 
 Några av de vanligaste är Travis CI, Codeship och Drone.
 
 \subsubsection{Travis CI}
 Travis CI är en webb-baserad tjänst för att köra automatiserade enhetstester och integrationstester
 på projekt som finns på GitHub. Travis CI är byggt på öppen källkod och är gratis att använda. 
 Tjänsten har stöd för många olika programmeringsspråk, men det som är relevant för innehållet i den här rapporten
-är Javascript med Node.js. För att konfigurera Travis CI används filen .travis.yml som placeras i det aktuella
+är javascript med node.js. För att konfigurera Travis CI används filen .travis.yml som placeras i det aktuella
 projektets repository på GitHub.
 
 \subsubsection{Javascript}
 Javascript är ett programmeringsspråk som i första hand används på klientsidan på webbsidor.
-Javascript exekveras av webbläsaren och arbetar mot ett gränssnitt som heter Document Object Model.
+Javascript exekveras av webbläsaren och arbetar mot ett gränssnitt som heter Document Object Model (DOM).
 
 \subsubsection{Node.js}
 Node.js är en runtime environment för internetapplikationer. Det kan till exempel användas för att skapa webbservrar.
@@ -67,10 +68,18 @@ Arbetet inleddes genom att Travis CI kopplades till projektets repository på Gi
 genom att administratören för repositoryn loggade in på travis-ci.org med sitt GitHub-konto och aktiverade
 en webhook för repositoryn.\\
 
+Inställningarna för Travis CI konfigurerades med filen .travis.yml i projektets repository. Språket valdes till
+javascript med node.js med inställningen: \emph{language: node\textunderscore js}. Versionen av node.js valdes till version 0.10
+med inställningen: \emph{node\textunderscore js: "0.10"}.\\
+
 De nödvändiga node-modulerna installerades med hjälp av node package manager (npm). Grunt installerades
 med kommandot: \emph{npm install -g grunt-cli}. Grunt-contrib-jasmine installerades med kommandot: 
-\emph{npm install grunt-contrib-jasmine}.
+\emph{npm install grunt-contrib-jasmine}.\\
 
+Task runnern Grunt konfigurerades med filen Gruntfile.js i projektets repository. En task för Jasmine skapades med
+inställningen: \emph{grunt.loadNpmTasks('grunt-contrib-jasmine');}. Eftersom Travis CI använder npm för att starta 
+testerna så definierades testskriptet för npm med raden \emph{''test'': ''grunt jasmine --verbose''} i filen package.json 
+i projektets repository.
 
 \subsection{Resultat}
 \subsection{Diskussion}
@@ -78,5 +87,5 @@ med kommandot: \emph{npm install -g grunt-cli}. Grunt-contrib-jasmine installera
 \subsubsection{Metod}
 \subsection{Slutsatser}
 \subsection{Referenser}
-Karlsson, Oskar. 2014. \textit{Automatiserad testning av webbapplikationer}. Linköpings universitet.
+Karlsson, Oskar. \textit{Automatiserad testning av webbapplikationer}. Linköpings universitet, 2014.
 http://www.diva-portal.org/smash/get/diva2:727654/FULLTEXT01.pdf (Hämtad 15-04-19)
