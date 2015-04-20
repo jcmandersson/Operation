@@ -35,6 +35,7 @@ $(function () {
   if( $('#opName').attr('data-template') == "false") {
     $('.articleTable tbody').on("click", '.amount', addAmountClick);
   }
+  
   $('#btn-done').click(btnDone);
   
   socket.on ('saveComment', saveCommentSocket);
@@ -109,7 +110,7 @@ var cancelComment = function () { //Throw away texted comment if cancel button i
 
 var checkjs = function (e) {  //When a checkable row is clicked, check the row and emit to socket.io
   var targetClassName = e.target.className.split(" ")[0];
-  if (!(e.target.tagName == 'P' || e.target.tagName == 'BUTTON' || e.target.tagName == 'IMG'
+  if (!(e.target.tagName == 'BUTTON' || e.target.tagName == 'IMG'
     || targetClassName == 'amount' || targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
     if (!$(this).prop('disabled')) {
       var checkbox = $(this).find('input')[0];

@@ -620,6 +620,7 @@ var findArticles = function (resultsTemplate) {
   var articleName = $('#article-search').val();
   var url = '/api/search/Kartotekartikel?text=' + articleName;
   $.get(url).done(function (results) {
+    
     $('#kartotekResults').html(resultsTemplate({results: results}));
 
     if (results.length != 0) {
