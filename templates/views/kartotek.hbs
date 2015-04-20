@@ -12,6 +12,7 @@
 <script id="articles-template" type="text/x-handlebars-template">
   <tr class="table-headerstriped">
     <td>Namn</td>
+    <td>Synonymer</td>
     <td>Förråd</td>
     <td>Sektion</td>
     <td>Hylla</td>
@@ -32,11 +33,12 @@
 
   {{#if user.isAdmin}}
     <tr class="\{{#unless showAllColumns}}hidden \{{/unless}}" id="\{{_id}}">
-      <td><input data-name="name" type="text" class="form-control modify-input" placeholder="Namn..."/></td>
+      <td><input data-name="name"    type="text" class="form-control modify-input" placeholder="Namn..."/></td>
+      <td><input data-name="tags"    type="text" class="form-control modify-input" placeholder="Synonymer..."/></td>
       <td><input data-name="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
       <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
-      <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
-      <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
+      <td><input data-name="shelf"   type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
+      <td><input data-name="tray"    type="text" class="form-control modify-input" placeholder="Fack..."/></td>
       {{#if user.isAdmin}}
         <td class="toggable"><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
         <td class="toggable"><input data-name="articleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (sjukhuset)..."/></td>
@@ -57,6 +59,7 @@
     <!-- The reason for the additional <span> is so that we can attach an event listener
       to it, should then dissapear/not activate anymore when we replace it with an input. -->
     <td class="modifyable-article-column column-kartotek" data-name="name">\{{#modifyable slug 'name' name}}\{{/modifyable}}</td>
+    <td class="modifyable-article-column column-kartotek" data-name="tags">\{{#modifyable slug 'tags' tags}}\{{/modifyable}}</td>
     <td class="modifyable-article-column column-kartotek" data-name="storage">\{{#modifyable slug 'storage' storage}}\{{/modifyable}}</td>
     <td class="modifyable-article-column column-kartotek" data-name="section">\{{#modifyable slug 'section' section}}\{{/modifyable}}</td>
     <td class="modifyable-article-column column-kartotek" data-name="shelf">\{{#modifyable slug 'shelf' shelf}}\{{/modifyable}}</td>
@@ -97,6 +100,7 @@
           <tbody id="articles">
           <tr class="table-headerstriped">
             <td>Namn</td>
+            <td>Synonymer</td>
             <td>Förråd</td>
             <td>Sektion</td>
             <td>Hylla</td>
@@ -116,11 +120,12 @@
           </tr>
           {{#if user.isAdmin}}
             <tr class="hidden" id="{{_id}}">
-              <td><input data-name="name" type="text" class="form-control form-name modify-input" placeholder="Namn..."/></td>
+              <td><input data-name="name"    type="text" class="form-control form-name modify-input" placeholder="Namn..."/></td>
+              <td><input data-name="tags"    type="text" class="form-control modify-input" placeholder="Synonymer..."/></td>
               <td><input data-name="storage" type="text" class="form-control modify-input" placeholder="Förråd..."/></td>
               <td><input data-name="section" type="text" class="form-control modify-input" placeholder="Sektion..."/></td>
-              <td><input data-name="shelf" type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
-              <td><input data-name="tray" type="text" class="form-control modify-input" placeholder="Fack..."/></td>
+              <td><input data-name="shelf"   type="text" class="form-control modify-input" placeholder="Hylla..."/></td>
+              <td><input data-name="tray"    type="text" class="form-control modify-input" placeholder="Fack..."/></td>
               {{#if user.isAdmin}}
                 <td class="hidden toggable"><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
                 <td class="hidden toggable"><input data-name="articleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer..."/></td>
@@ -141,6 +146,7 @@
               <!-- The reason for the additional <span> is so that we can attach an event listener
                 to it, should then dissapear/not activate anymore when we replace it with an input. -->
               <td class="modifyable-article-column column-kartotek" data-name="name"><span>{{ name }}</span></td>
+              <td class="modifyable-article-column column-kartotek" data-name="tags"><span>{{ tags }}</span></td>
               <td class="modifyable-article-column column-kartotek" data-name="storage"><span>{{ storage }}</span></td>
               <td class="modifyable-article-column column-kartotek" data-name="section"><span>{{ section }}</span></td>
               <td class="modifyable-article-column column-kartotek" data-name="shelf"><span>{{ shelf }}</span></td>
