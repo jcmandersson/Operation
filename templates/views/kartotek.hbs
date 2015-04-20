@@ -48,8 +48,7 @@
         <td class="toggable"><input data-name="unit" type="text" class="form-control modify-input" placeholder="Enhet..."/></td>
         <td class="toggable"><input data-name="peoe" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
       {{/if}}
-      <td><a class="btn btn-success" id="article-add" href="#" role="button"><span
-        class="glyphicon glyphicon-plus"></span></a></td>
+      <td class="centered"><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
     </tr>
   {{/if}}
 
@@ -72,6 +71,8 @@
       <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="amount">\{{#modifyable slug 'amount' amount}}\{{/modifyable}}</td>
       <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="enhet">\{{#modifyable slug 'unit' unit}}\{{/modifyable}}</td>
       <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="peoe">\{{#modifyable slug 'peoe' peoe}}\{{/modifyable}}</td>
+
+      <td class="centered"><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
     {{/if}}
     <td class="modifyable-article-column hidden column-kartotek" data-name="slug">\{{ slug }}</td>
   </tr>
@@ -131,8 +132,7 @@
                 <td class="hidden toggable"><input data-name="unit" type="text" class="form-control modify-input" placeholder="Enhet..."/></td>
                 <td class="hidden toggable"><input data-name="peoe" type="text" class="form-control modify-input" placeholder="Peoe..."/></td>
               {{/if}}
-              <td class="centered"><a class="btn btn-success" id="article-add" href="#" role="button"><span
-                class="glyphicon glyphicon-plus"></span></a></td>
+              <td class="centered"><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
             </tr>
           {{/if}}
 
@@ -155,13 +155,10 @@
                 <td class="modifyable-article-column hidden toggable column-kartotek" data-name="amount"><span>{{ amount }}</span></td>
                 <td class="modifyable-article-column hidden toggable column-kartotek" data-name="unit"><span>{{ unit }}</span></td>
                 <td class="modifyable-article-column hidden toggable column-kartotek" data-name="peoe"><span>{{ peoe }}</span></td>
-              {{/if}}
-              <td class="modifyable-article-column hidden" data-name="slug">{{ slug }}</td>
-              <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
-                with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
-              {{#if ../user.isAdmin}}
-                <td class="centered"><a class="btn btn-danger article-remove" href="#" role="button"><span
-                  class="glyphicon glyphicon-remove"></span></a></td>
+
+                <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
+                  with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
+                <td class="centered"><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
               {{/if}}
               <td class="hidden modifyable-article-column" data-name="slug">{{ slug }}</td>
             </tr>
