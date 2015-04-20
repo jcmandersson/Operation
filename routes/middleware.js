@@ -40,6 +40,7 @@ exports.initLocals = function (req, res, next) {
     locals.navAdmin = [
       {label: 'Skapa Handbok', key: 'new', href: '/new'},
       {label: 'Granska', key: 'Granskning', href: '/list?state=Granskning'},
+      {label: 'Utkast', key: 'Utkast', href: '/list?state=Utkast'},
       {label: 'Användare', key: 'listUser', href: '/user/list'},
       {label: 'Skapa användare', key: 'editUser', href: '/user/create'},
       {label: 'Redigera mall', key: 'edit', href: '/edit/mall'},

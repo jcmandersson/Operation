@@ -36,8 +36,6 @@ $(function () {
     $('.articleTable tbody').on("click", '.amount', addAmountClick);
   }
   
-  $('#btn-done').click(btnDone);
-  
   socket.on ('saveComment', saveCommentSocket);
   
   socket.on ('removeCheckArticleUpdate', removeCheckArticleUpdate);

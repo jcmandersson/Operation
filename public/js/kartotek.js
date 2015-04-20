@@ -31,6 +31,7 @@ Article.prototype.modifyInDatabase = function(callback) {
     // TODO: Shouldn't be hard-coded like this. What if we add new columns? Just use newArticle.data
     socket.emit('kartotekUpdate', {
       name: newArticle.name,
+      tags: newArticle.tags,
       storage: newArticle.storage,
       section: newArticle.section,
       shelf: newArticle.shelf,
@@ -53,6 +54,7 @@ Article.prototype.removeFromDatabase = function(callback) {
 // This takes a single `td` element, and fills itself (i.e. this.data) with the columns.
 Article.prototype.fillFromElement = function(elem) {
   this.data.name                  = $(elem).find('[data-name="name"]').text();
+  this.data.tags                  = $(elem).find('[data-name="tags"]').text();
   this.data.storage               = $(elem).find('[data-name="storage"]').text();
   this.data.section               = $(elem).find('[data-name="section"]').text();
   this.data.shelf                 = $(elem).find('[data-name="shelf"]').text();
@@ -74,6 +76,7 @@ Article.prototype.fillFromElement = function(elem) {
 // data from `input` elements, whereas .fillFromElement takes data from `td` elements.
 Article.prototype.fillFromInput = function(elem) {
   this.data.name                  = $(elem).find('[data-name="name"]').val();
+  this.data.tags                  = $(elem).find('[data-name="tags"]').val();
   this.data.storage               = $(elem).find('[data-name="storage"]').val();
   this.data.section               = $(elem).find('[data-name="section"]').val();
   this.data.shelf                 = $(elem).find('[data-name="shelf"]').val();
@@ -170,7 +173,6 @@ var articles = {
       articles: this.essentials()
     });
     $(this.data.id).html(newHTML);
-    console.log(this.essentials());
 
     this.attachAddArticleListener();
     this.attachModifyEntryListeners();
@@ -263,7 +265,12 @@ var articles = {
   attachModifyEntryFinishedListener: function() {
     var self = this;
 
-    $('#currently-modifying').focus();
+    var focusOnEndOfText = function(el) {
+      el.focus();
+      el.val(el.val());
+    };
+
+    focusOnEndOfText($('#currently-modifying'));
     $('#currently-modifying').keyup(function(e) {
       var ENTER_KEYCODE = 13;
       if (e.keyCode == ENTER_KEYCODE) {

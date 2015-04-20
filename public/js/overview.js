@@ -4,6 +4,30 @@ function calculateProgress(d) {
   return Math.round(100*d.checked/ d.total);
 }
 
+var getComments = function(operation, template) {
+  $.ajax({
+      type: 'GET',
+      url: '/api/artikels/',
+      data: {
+        operation: operation
+      }
+  }).done(function( checkArticles ) {
+    var operationArticles = [];
+    for(var i in checkArticles){
+      if(checkArticles[i].operation == operation){
+        operationArticles.push(checkArticles[i]);
+      }
+    }
+    $('#currentModal').html(template({checkArticles: operationArticles}));
+    $('#operationComments').modal({show: true});
+  })
+    .fail(function(err, status) {
+      console.log('Någonting gick fel!');
+      console.log(err);
+      console.log(status);
+    });
+};
+
 $(document).ready(function () {
   
   $('.progressbar').each(function (i, e) {
@@ -20,6 +44,13 @@ $(document).ready(function () {
     if ($(e).hasClass('isDone')) {
       $(e).children('.ui-progressbar-value').addClass('progressbar-done');
     }
+  });
+  
+  var unCompiledOperationCommentsTemplate = $('#operationComments-template').html();
+  var compiledOperationCommentsTemplate = Handlebars.compile(unCompiledOperationCommentsTemplate);
+  $('.showOperationCommentsButton').click(function(){
+    var operation = $(this).attr('data-operation');
+    getComments(operation, compiledOperationCommentsTemplate)
   });
 
   var socket = io();
