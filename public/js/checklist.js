@@ -35,7 +35,6 @@ $(function () {
   if( $('#opName').attr('data-template') == "false") {
     $('.articleTable tbody').on("click", '.amount', addAmountClick);
   }
-  $('#btn-done').click(btnDone);
   
   socket.on ('saveComment', saveCommentSocket);
   
