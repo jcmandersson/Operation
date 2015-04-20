@@ -262,7 +262,12 @@ var articles = {
   attachModifyEntryFinishedListener: function() {
     var self = this;
 
-    $('#currently-modifying').focus();
+    var focusOnEndOfText = function(el) {
+      el.focus();
+      el.val(el.val());
+    };
+
+    focusOnEndOfText($('#currently-modifying'));
     $('#currently-modifying').keyup(function(e) {
       var ENTER_KEYCODE = 13;
       if (e.keyCode == ENTER_KEYCODE) {
