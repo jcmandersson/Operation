@@ -109,13 +109,15 @@
       <div class="process-content" id="contentchecklist" style="display: none;">
         <table class="table articleTable">
           <tr class="table-headerstriped">
-            <td class="centered">Antal</td>
-            <td class="centered">Namn</td>
-            <td class="centered">Förråd</td>
-            <td class="centered">Sektion</td>
-            <td class="centered">Hylla</td>
-            <td class="centered">Fack</td>
-            <td class="centered"></td>
+            <th class="centered">Antal</th>
+            <th class="centered">Namn</th>
+            <th class="centered">Artikelnummer</th>
+            <th class="centered">Klinik</th>
+            <th class="centered">Förråd</th>
+            <th class="centered">Sektion</th>
+            <th class="centered">Hylla</th>
+            <th class="centered">Fack</th>
+            <th class="centered"></th>
           </tr>
         
         {{# each articles }}
@@ -138,18 +140,37 @@
 
 <script id="kartotekResults-template" type="text/x-handlebars-template">
   <table class="table table-striped table-bordered table-hover" id="result-table">
-    \{{a}}
+    <thead>
+    <tr>
+      <th>Namn</th>
+      <th class="centered">Artikelnummer</th>
+      <th class="centered">Klinik</th>
+      <th class="centered">Förråd</th>
+      <th class="centered">Sektion</th>
+      <th class="centered">Hylla</th>
+      <th class="centered">Fack</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
     \{{#each results}}
-    <tr class="add-article-info">
+    <tr class="add-article-info" data-name="\{{ name }}" data-kartotekid="\{{ _id }}">
       <td>
         <div>\{{ name }}</div>
         <div class="tags">\{{ tags }}</div>
       </td>
-      <td class="add-column" data-name="\{{ name }}" data-kartotekid="\{{ _id }}">
+      <td class="centered">Artikelnummer</td>
+      <td class="centered">Klinik</td>
+      <td class="centered">\{{storage}}</td>
+      <td class="centered">\{{section}}</td>
+      <td class="centered">\{{shelf}}</td>
+      <td class="centered">\{{tray}}</td>
+      <td class="add-column">
         <span class="add-icons glyphicon glyphicon-plus"></span>
       </td>
     </tr>
     \{{/each}}
+    </tbody>
   </table>
 </script>
 

@@ -43,6 +43,7 @@ Article.prototype.modifyInDatabase = function(callback) {
 };
 
 Article.prototype.removeFromDatabase = function(callback) {
+  console.log(this.data.slug);
   socket.emit("removeKartotekArticle", this.data.slug);
   $.ajax({
     type: 'DELETE',
