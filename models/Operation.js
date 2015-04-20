@@ -93,7 +93,7 @@ Operation.schema.statics.fromTemplate = function fromTemplate(slug, callback) {
     delete newObject._id;
     delete newObject.slug;
     newObject.template = false;
-    
+
     var newDoc = new Operation.model(newObject);
     newDoc.save(function (err, savedDoc) {
       if (err) console.log(err);

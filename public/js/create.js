@@ -52,7 +52,7 @@ function add(data, index, operation, addedProccesstegs) {
           console.log(status);
         });
     }
-    else{
+    else {
       $.ajax({
         type: 'POST',
         url: '/api/processinnehalls',
@@ -89,8 +89,7 @@ var createNewOperation = function() {
     console.log('Fix Error here');
     alert("välj specialitet!")
   }
-  else
-  {
+  else {
     $.ajax({
       type: 'POST',
       url: '/api/operations',
@@ -129,7 +128,7 @@ var createNewOperation = function() {
             });
         });
         //adding underrubrik/processteg(recursive)
-        $(function() {
+        $(function () {
           var index = 0;
           add($('#underrubriker').children()[index], index, msg._id, {});
         });
@@ -145,17 +144,17 @@ var createNewOperation = function() {
   }
 };
 
-var removeArticle = function(element) {
+var removeArticle = function (element) {
   var parent = $(element).parent();
   $(parent).remove(); 
 };
 
-var addArticle = function(articleTemplate, results) {
+var addArticle = function (articleTemplate, results) {
   var name = $(this).data('name');
   var kartotekID = $(this).data('kartotekid');
   var found = false;
 
-  $('.article').each(function(index) {
+  $('.article').each(function (index) {
     if($(this).attr("data-kartotekID") == kartotekID) {
       found = true;
       }
@@ -180,10 +179,10 @@ var addArticle = function(articleTemplate, results) {
   }
 };
 
-var findArticles = function(resultsTemplate, articleTemplate) {
+var findArticles = function (resultsTemplate, articleTemplate) {
   var articleName = $('#article-search').val();
   var url = '/api/search/Kartotekartikel?text=' + articleName;
-  $.get(url).done(function(results) {
+  $.get(url).done(function (results) {
     $('#kartotekResults').html(resultsTemplate({ results: results }));
 
     if (results.length != 0) {
@@ -201,12 +200,12 @@ var findArticles = function(resultsTemplate, articleTemplate) {
   });
 };
 
-var addSynonym = function() {
+var addSynonym = function () {
   var name = $('#synonym-input').val();
   $('#synonyms').append(synonymTemplate({ name: name }));
 };
 
-var initializeSpecialitetSelect = function() {
+var initializeSpecialitetSelect = function () {
   $(".specialitet-select").select2({
 
     ajax: {
@@ -240,7 +239,7 @@ var initializeSpecialitetSelect = function() {
   });
 };
 
-var addUnderrubrik = function(underrubrikTemplate){
+var addUnderrubrik = function (underrubrikTemplate) {
   var name = $('#underrubrik-name').val();
   var text = $('#underrubrik-text').val();
   var checkbar = $('#checkbar').prop('checked');
@@ -264,7 +263,7 @@ var addUnderrubrik = function(underrubrikTemplate){
 };
 
 // TODO keyCode == 13
-$(function() {
+$(function () {
   var compiledSynonym = $('#synonym-template').html();
   var synonymTemplate = Handlebars.compile(compiledSynonym);
 
@@ -295,7 +294,7 @@ $(function() {
   });
   
   //Helper to get selected processteg when creating underrubrik client-side
-  Handlebars.registerHelper('if_selected', function(a, opts) {
+  Handlebars.registerHelper('if_selected', function (a, opts) {
     if (a == $('.select-processteg').val()) {
       return opts.fn(this);
     }

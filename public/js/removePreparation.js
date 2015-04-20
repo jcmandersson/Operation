@@ -8,7 +8,7 @@ $('.confirmRemovePreparation').click(function() {
   })
     .done(function( msg ) {
     })
-    .fail(function(err, status){
+    .fail(function(err, status) {
       console.log('Error');
       console.log(err);
       console.log(status);

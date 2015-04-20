@@ -11,7 +11,7 @@ tabClick = function(elem) {
   }
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
   var hash = window.location.hash.substring(5);
   if (!hash || hash === 'all') {
     $("#all").addClass('active');
@@ -30,11 +30,11 @@ $(document).ready(function() {
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
 
   $('#article-search').keyup( function() {
-    if( this.value.length == 0){
+    if ( this.value.length == 0) {
       $('#kartotekResults').empty();
       return;
     }
-    else if( this.value.length < 3 ){
+    else if ( this.value.length < 3 ) {
       return;
     }
     findArticles(kartotekResultsTemplate);
@@ -90,7 +90,7 @@ var findArticles = function (resultsTemplate) {
   });
 };
 
-$("#editChecklistButton").click(function(){
+$("#editChecklistButton").click(function () {
   if ($('#editChecklistButton').text() == 'Redigera plocklista') {
     $('#editChecklistButton').text('Klar');
     $('#editChecklist').show();

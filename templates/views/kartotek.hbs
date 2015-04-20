@@ -58,10 +58,8 @@
     <!-- The reason for the additional <span> is so that we can attach an event listener
       to it, should then dissapear/not activate anymore when we replace it with an input. -->
     <td class="modifyable-article-column column-kartotek" data-name="name">\{{#modifyable slug 'name' name}}\{{/modifyable}}</td>
-    <td class="modifyable-article-column column-kartotek" data-name="storage">\{{#modifyable slug 'storage' storage}}\{{/modifyable}}
-    </td>
-    <td class="modifyable-article-column column-kartotek" data-name="section">\{{#modifyable slug 'section' section}}\{{/modifyable}}
-    </td>
+    <td class="modifyable-article-column column-kartotek" data-name="storage">\{{#modifyable slug 'storage' storage}}\{{/modifyable}}</td>
+    <td class="modifyable-article-column column-kartotek" data-name="section">\{{#modifyable slug 'section' section}}\{{/modifyable}}</td>
     <td class="modifyable-article-column column-kartotek" data-name="shelf">\{{#modifyable slug 'shelf' shelf}}\{{/modifyable}}</td>
     <td class="modifyable-article-column column-kartotek" data-name="tray">\{{#modifyable slug 'tray' tray}}\{{/modifyable}}</td>
     {{#if user.isAdmin}}
@@ -76,12 +74,6 @@
       <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="peoe">\{{#modifyable slug 'peoe' peoe}}\{{/modifyable}}</td>
     {{/if}}
     <td class="modifyable-article-column hidden column-kartotek" data-name="slug">\{{ slug }}</td>
-    <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
-      with 'remove-article' from the /create style. We should really split up that file into multiple ones. -->
-    {{#if user.isAdmin}}
-      <td><a class="btn btn-danger article-remove" href="#" role="button"><span
-        class="glyphicon glyphicon-remove"></span></a></td>
-    {{/if}}
   </tr>
   \{{/each}}
 </script>
@@ -93,7 +85,7 @@
       <i class="glyphicon glyphicon-search form-control-feedback"></i>
     </div>
     {{#if user.isAdmin}}
-    <input type="checkbox" id="toggle-fields"/>&nbsp;Visa alla
+      <input type="checkbox" id="toggle-fields"/>&nbsp;Visa alla
     {{/if}}
   </div>
 
@@ -109,15 +101,15 @@
             <td>Hylla</td>
             <td>Fack</td>
             {{#if user.isAdmin}}
-              <td class="hidden toggable">Pris</td>
-              <td class="hidden toggable">Artikelnummer (sjukhuset)</td>
-              <td class="hidden toggable">Återförsäljare</td>
-              <td class="hidden toggable">Artikelnummer (återförsäljare) </td>
-              <td class="hidden toggable">Beställningsnummer</td>
-              <td class="hidden toggable">Klinik</td>
-              <td class="hidden toggable">Mängd</td>
-              <td class="hidden toggable">Enhet</td>
-              <td class="hidden toggable">peoe</td>
+              <td class="hidden">Pris</td>
+              <td class="hidden">Artikelnummer (sjukhuset)</td>
+              <td class="hidden">Återförsäljare</td>
+              <td class="hidden">Artikelnummer (återförsäljare)</td>
+              <td class="hidden">Beställningsnummer</td>
+              <td class="hidden">Klinik</td>
+              <td class="hidden">Mängd</td>
+              <td class="hidden">Enhet</td>
+              <td class="hidden">peoe</td>
               <td></td>
             {{/if}}
           </tr>
@@ -143,26 +135,26 @@
                 class="glyphicon glyphicon-plus"></span></a></td>
             </tr>
           {{/if}}
-  
+
           {{#each articles}}
             <tr class="check-js" id="{{_id}}" data-slug="{{slug}}">
               <!-- The reason for the additional <span> is so that we can attach an event listener
                 to it, should then dissapear/not activate anymore when we replace it with an input. -->
-              <td class="modifyable-article-column column-kartotek" data-name="name"><span>{{#if name}}{{ name }}{{else}}#{{/if}}</span></td>
-              <td class="modifyable-article-column column-kartotek" data-name="storage"><span>{{#if storage}}{{ storage }}{{else}}#{{/if}}</span></td>
-              <td class="modifyable-article-column column-kartotek" data-name="section"><span>{{#if section}}{{ section }}{{else}}#{{/if}}</span></td>
-              <td class="modifyable-article-column column-kartotek" data-name="shelf"><span>{{#if shelf}}{{ shelf }}{{else}}#{{/if}}</span></td>
-              <td class="modifyable-article-column column-kartotek" data-name="tray"><span>{{#if tray}}{{ tray }}{{else}}#{{/if}}</span></td>
+              <td class="modifyable-article-column column-kartotek" data-name="name"><span>{{ name }}</span></td>
+              <td class="modifyable-article-column column-kartotek" data-name="storage"><span>{{ storage }}</span></td>
+              <td class="modifyable-article-column column-kartotek" data-name="section"><span>{{ section }}</span></td>
+              <td class="modifyable-article-column column-kartotek" data-name="shelf"><span>{{ shelf }}</span></td>
+              <td class="modifyable-article-column column-kartotek" data-name="tray"><span>{{ tray }}</span></td>
               {{#if ../user.isAdmin}}
-                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price"><span>{{#if price}}{{ price }}{{else}}#{{/if}}</span></td>
-                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="articleNumber"><span>{{#if articleNumber}}{{ articleNumber }}{{else}}#{{/if}}</span></td>
-                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="supplier"><span>{{#if supplier}}{{ supplier }}{{else}}#{{/if}}</span></td>
-                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="supplierArticleNumber"><span>{{#if supplierArticleNumber}}{{ supplierArticleNumber }}{{else}}#{{/if}}</span></td>
-                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="orderItem"><span>{{#if orderItem}}{{ orderItem }}{{else}}#{{/if}}</span></td>
-                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="clinic"><span>{{#if clinic}}{{ clinic }}{{else}}#{{/if}}</span></td>
-                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="amount"><span>{{#if amount}}{{ amount }}{{else}}#{{/if}}</span></td>
-                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="unit"><span>{{#if unit}}{{ unit }}{{else}}#{{/if}}</span></td>
-                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="peoe"><span>{{#if peoe}}{{ peoe }}{{else}}#{{/if}}</span></td>
+                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price"><span>{{ price }}</span></td>
+                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="articleNumber"><span>{{ articleNumber }}</span></td>
+                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="supplier"><span>{{ supplier }}</span></td>
+                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="supplierArticleNumber"><span>{{ supplierArticleNumber }}</span></td>
+                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="orderItem"><span>{{ orderItem }}</span></td>
+                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="clinic"><span>{{ clinic }}</span></td>
+                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="amount"><span>{{ amount }}</span></td>
+                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="unit"><span>{{ unit }}</span></td>
+                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="peoe"><span>{{ peoe }}</span></td>
               {{/if}}
               <td class="modifyable-article-column hidden" data-name="slug">{{ slug }}</td>
               <!-- The reason this is called 'article-remove' and not 'remove-article' is because there's a conflict
@@ -171,6 +163,7 @@
                 <td class="centered"><a class="btn btn-danger article-remove" href="#" role="button"><span
                   class="glyphicon glyphicon-remove"></span></a></td>
               {{/if}}
+              <td class="hidden modifyable-article-column" data-name="slug">{{ slug }}</td>
             </tr>
           {{/each}}
           </tbody>
