@@ -113,7 +113,6 @@ var addArticle = function (results, tag) {
   });
 
   if (!found) {
-    //add new article
     $.ajax({
       type: 'POST',
       url: '/api/artikels',
