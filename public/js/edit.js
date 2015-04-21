@@ -96,7 +96,8 @@ var initializeSpecialitetSelect = function() {
       delay: 250,
       data: function(params) {
         return {
-          text: params.term, // search term
+          // search term
+          text: params.term,
           all: 1
         };
       },
@@ -113,7 +114,9 @@ var initializeSpecialitetSelect = function() {
     },
     escapeMarkup: function(markup) {
       return markup;
-    }, // let our custom formatter work
+    },
+
+    // let our custom formatter work
     minimumInputLength: 0
   });
 };

@@ -11,7 +11,9 @@ $(document).ready(function() {
   // Load comments
   operationId = $('#opName').attr('data-operationId');
   var rows = $('.check-js');
-  rows.each(function(index, row) { // Set the color of the comment button depending on if there is a comment.
+
+  // Set the color of the comment button depending on if there is a comment.
+  rows.each(function(index, row) {
     var comment = $('#checkComment' + row.id);
     var commentButton = $('#commentButton' + row.id);
     changeCommentButton(comment, commentButton);
@@ -65,12 +67,14 @@ $(document).ready(function() {
     amountHtml.find('.amount-field').text(amount);
     amountHtml.find('.uneditable-amount').text(amount);
   });
-  
-  socket.on('saved', function(id) { // Show saved text when the database has successfully stored the comment.
+
+  // Show saved text when the database has successfully stored the comment.
+  socket.on('saved', function(id) {
     $('#commentSaved' + id).show();
   });
-  
-  socket.on('connect', function() { // Runs after socket has been started. Get all checkbox statuses from db.
+
+  // Runs after socket has been started. Get all checkbox statuses from db.
+  socket.on('connect', function() {
     socket.emit('operationOpen', operationId);
   });
 
@@ -135,7 +139,9 @@ var checkjs = function(e) {
       var preparation = $(this).hasClass("process-content-item") ? true : false;
 
       checkbox.checked = !checkbox.checked;
-      changeTableGraphics($(this), checkbox.checked, preparation); // Function in checkEffect.js
+
+      // Function in checkEffect.js
+      changeTableGraphics($(this), checkbox.checked, preparation);
       var checkObject = {
         preparation: $(this).data('preparation'), 
         operation: operationId, id: $(this).attr('id'),
@@ -156,8 +162,9 @@ var checkjs = function(e) {
     }
   }
 };
-  
-var saveComment = function() { // Save the comment locally and emit to back-end to save in database.
+
+// Save the comment locally and emit to back-end to save in database.
+var saveComment = function() { 
   var id = $(this).data('id');
   var checkComment = $('#checkComment' + id);
   var commentButton = $('#commentButton' + id);
@@ -176,7 +183,8 @@ var saveComment = function() { // Save the comment locally and emit to back-end 
   saved = true;
 };
 
-var showComment = function() { // Hide the "Saved" text, enable the comment field and save the old text if the user presses cancel.
+// Hide the "Saved" text, enable the comment field and save the old text if the user presses cancel.
+var showComment = function() { 
   var id = $(this).data('id');
   var checkComment = $("#checkComment" + id);
 
@@ -198,7 +206,8 @@ var removeArticle = function() {
   }
 };
 
-var updateTableRow = function(tableRow, isChecked, isTemplate) { // set checked status and update row color.
+// set checked status and update row color.
+var updateTableRow = function(tableRow, isChecked, isTemplate) {
   var checkbox = tableRow.find('input');
   checkbox.prop('checked', isChecked);
   var preparation = tableRow.hasClass("process-content-item") ? true : false;
@@ -206,7 +215,9 @@ var updateTableRow = function(tableRow, isChecked, isTemplate) { // set checked 
     checkbox.prop('disabled', true);
     tableRow.prop('disabled', true);
   }
-  changeTableGraphics(tableRow, isChecked, preparation); // Function in checkEffect.js
+
+  // Function in checkEffect.js
+  changeTableGraphics(tableRow, isChecked, preparation);
 };
 
 var updateTextInTableRow = function(tableRow, checkObject) {
@@ -246,6 +257,7 @@ var getCheckboxes = function(checkboxesAndTemplate) {
     var checkbox = checkboxes[index];
     var tableRow = $('#' + checkbox._id);
     var isChecked = checkbox.checked;
+    
     // var isDisabled = checkbox.attr("disabled");
     updateTableRow(tableRow, isChecked, isTemplate);
   }
