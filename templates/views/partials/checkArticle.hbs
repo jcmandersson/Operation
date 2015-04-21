@@ -12,10 +12,10 @@
       <div class="glyphicon glyphicon-plus plus-icon"></div>
     </div>
   </td>
-  <td class="name"><p>{{ kartotek.name }}</p></td>
+  <td class="name"><p>{{ name }}</p></td>
   <td class="centered articleNumber"><p>Artikelnummer</p></td>
   <td class="centered clinic"><p>Klinik</p></td>
-  {{#if kartotek.storage}}
+  {{#if kartotek}}
     <td class="centered storage"><p>{{ kartotek.storage }}</p></td>
   {{else}}
     <td class="centered storage"><p class='errorText'>Utgått</p></td>

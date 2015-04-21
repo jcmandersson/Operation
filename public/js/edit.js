@@ -1,8 +1,8 @@
-var setLastSaved = function (date) {
+var setLastSaved = function(date) {
   $('.lastSave .time').text(new Date(date).format());
 };
 
-var onProgress = function (e) {
+var onProgress = function(e) {
   if (e.lengthComputable) {
     console.log(e.loaded / e.total * 100 + '%');
   } else {
@@ -10,7 +10,7 @@ var onProgress = function (e) {
   }
 };
 
-var abstractUpdate = function (url, data, preKey, callback) {
+var abstractUpdate = function(url, data, preKey, callback) {
   var slug = $('.data ' + preKey + 'slug"]').val();
   if (typeof slug === 'undefined') {
     callback('Error: Cant find slug', 'No slug');
@@ -25,7 +25,7 @@ var abstractUpdate = function (url, data, preKey, callback) {
       onprogress: onProgress
     }
   })
-    .done(function (msg) {
+    .done(function(msg) {
 
       for (var key in msg) {
         var $e = $('.data [data-operation="' + key + '"]');
@@ -57,17 +57,17 @@ var abstractRest = function (type, url, preKey, callback) {
       onprogress: onProgress
     }
   })
-    .done(function (msg) {
+    .done(function(msg) {
       setLastSaved(new Date());
       callback(null, msg);
     })
-    .fail(function (err, status) {
+    .fail(function(err, status) {
       if (err) alert(err);
       callback(err, status);
     });
 };
 
-var updateOperation = function (data, callback) {
+var updateOperation = function(data, callback) {
   return abstractUpdate(
     '/api/update/operations/',
     data,
@@ -76,7 +76,7 @@ var updateOperation = function (data, callback) {
   );
 };
 
-var updateProcess = function (index, data, callback) {
+var updateProcess = function(index, data, callback) {
   return abstractUpdate(
     '/api/update/Processteg/',
     data,
@@ -84,13 +84,13 @@ var updateProcess = function (index, data, callback) {
     callback
   );
 };
-var removeProcess = function (index, callback) {
+var removeProcess = function(index, callback) {
   return abstractRest ('DELETE',
     '/api/Processtegs/',
     '[data-process-index="' + index + '"] [data-process="',
-    function (err, msg) {
+    function(err, msg) {
       if (!err) {
-        removeAllProcessContent(index, function (err, msg) {
+        removeAllProcessContent(index, function(err, msg) {
           if (!err) $('.data [data-process-index="' + index + '"]').remove();
         });
       }
@@ -98,7 +98,7 @@ var removeProcess = function (index, callback) {
     });
 };
 
-var removeProcessContent = function (processIndex, index, callback) {
+var removeProcessContent = function(processIndex, index, callback) {
   return abstractRest ('DELETE',
     '/api/Processinnehalls/',
     '[data-process-index="' + processIndex + '"] [data-content-index="' + index + '"] [data-process-content="',

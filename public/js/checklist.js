@@ -6,7 +6,7 @@ var operationId;
 var oldText;
 var saved = false;
 
-$(function () {
+$(function() {
   operationId = $('#opName').attr('data-operationId');
   var rows = $('.check-js');
   rows.each(function(index, row){ //Set the color of the comment button depending on if there is a comment.
@@ -32,47 +32,47 @@ $(function () {
   $('.articleTable tbody').on("click", '.minus-field', minusOne);
   $('.articleTable tbody').on("click", '.plus-field', plusOne);
   
-  if( $('#opName').attr('data-template') == "false") {
+  if ($('#opName').attr('data-template') == "false") {
     $('.articleTable tbody').on("click", '.amount', addAmountClick);
   }
   
-  socket.on ('saveComment', saveCommentSocket);
+  socket.on('saveComment', saveCommentSocket);
   
-  socket.on ('removeCheckArticleUpdate', removeCheckArticleUpdate);
+  socket.on('removeCheckArticleUpdate', removeCheckArticleUpdate);
   
-  socket.on ('getCheckboxes', getCheckboxes);
+  socket.on('getCheckboxes', getCheckboxes);
   
-  socket.on ('markAsDone', changeButtonColor);
+  socket.on('markAsDone', changeButtonColor);
   
-  socket.on ('newArticleUpdate', newArticleUpdate);
+  socket.on('newArticleUpdate', newArticleUpdate);
   
-  socket.on ('articleAmountUpdate', function(amount, articleID) {
+  socket.on('articleAmountUpdate', function(amount, articleID) {
     $('#amount'+articleID).find('.amount-field').text(amount);
     $('#amount'+articleID).find('.uneditable-amount').text(amount);
 
   });
 
-  socket.on ('saved', function(id) { //Show saved text when the database has successfully stored the comment.
+  socket.on('saved', function(id) { //Show saved text when the database has successfully stored the comment.
     $('#commentSaved' + id).show();
   });
 
-  socket.on ('connect', function() { //Runs after socket has been started. Get all checkbox statuses from db.
+  socket.on('connect', function() { //Runs after socket has been started. Get all checkbox statuses from db.
     socket.emit('operationOpen', operationId);
   });
 
-  socket.on ('checkboxClick', function(checkObject) {
+  socket.on('checkboxClick', function(checkObject) {
     var tableRow = $('#' + checkObject.id);
     updateTableRow(tableRow, checkObject.isChecked, false);
   });
   
-  socket.on ('kartotekUpdate', function(checkObject) {
+  socket.on('kartotekUpdate', function(checkObject) {
     var tableRow = $('#' + checkObject.id);
     updateTextInTableRow(tableRow, checkObject);
   });
 
 });
 
-var minusOne = function () {
+var minusOne = function() {
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
   var amountField = $(this).parent().find('.amount-field');
@@ -84,7 +84,7 @@ var minusOne = function () {
   }
 };
 
-var plusOne = function () {
+var plusOne = function() {
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
   var amountField = $(this).parent().find('.amount-field');
@@ -96,8 +96,8 @@ var plusOne = function () {
   }
 };
 
-var cancelComment = function () { //Throw away texted comment if cancel button is clicked.
-  if(!saved) {
+var cancelComment = function() { //Throw away texted comment if cancel button is clicked.
+  if (!saved) {
     var id = $(this).data('id');
     var checkComment = $('#checkComment' + id);
     checkComment.val(oldText);
@@ -106,21 +106,24 @@ var cancelComment = function () { //Throw away texted comment if cancel button i
   }
 };
 
-var checkjs = function (e) {  //When a checkable row is clicked, check the row and emit to socket.io
+var checkjs = function(e) {  //When a checkable row is clicked, check the row and emit to socket.io
   var targetClassName = e.target.className.split(" ")[0];
   if (!(e.target.tagName == 'BUTTON' || e.target.tagName == 'IMG'
-    || targetClassName == 'amount' || targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
+    || targetClassName == 'amount' || targetClassName == 'article-remove' 
+    || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
     if (!$(this).prop('disabled')) {
       var checkbox = $(this).find('input')[0];
       var preparation = $(this).hasClass("process-content-item") ? true : false;
 
       checkbox.checked = !checkbox.checked;
       changeTableGraphics($(this), checkbox.checked, preparation); //Function in checkEffect.js
-      var checkObject = {preparation: $(this).data('preparation'), operation: operationId, id: $(this).attr('id'), check: checkbox.checked};
+      var checkObject = {preparation: $(this).data('preparation'), 
+        operation: operationId, id: $(this).attr('id'), check: checkbox.checked};
+      
       socket.emit('checkboxClick', checkObject);
 
       var done = true;
-      $('.checkbox-js').each( function(i, box) {
+      $('.checkbox-js').each(function(i, box) {
         if (!box.checked) {
           done = false;
           return false;
@@ -131,7 +134,7 @@ var checkjs = function (e) {  //When a checkable row is clicked, check the row a
   }
 };
   
-var saveComment = function () { //Save the comment locally and emit to back-end to save in database.
+var saveComment = function() { //Save the comment locally and emit to back-end to save in database.
   var id = $(this).data('id');
   var checkComment = $('#checkComment' + id);
   var commentButton = $('#commentButton' + id);
@@ -150,7 +153,7 @@ var saveComment = function () { //Save the comment locally and emit to back-end 
   saved = true;
 };
 
-var showComment = function () { //Hide the "Saved" text, enable the comment field and save the old text if the user presses cancel.
+var showComment = function() { //Hide the "Saved" text, enable the comment field and save the old text if the user presses cancel.
   var id = $(this).data('id');
   var checkComment = $("#checkComment" + id);
 
@@ -160,7 +163,7 @@ var showComment = function () { //Hide the "Saved" text, enable the comment fiel
   $('#saveComment' + id).attr('disabled', false);
 };
 
-var removeArticle = function () {
+var removeArticle = function() {
   var checkArticleID = $(this).parent().parent().attr('id');
   var operationID = $(this).parent().parent().attr("data-operationId");
 
@@ -173,19 +176,19 @@ var removeArticle = function () {
   }
 };
 
-var addAmountClick = function () {
+var addAmountClick = function() {
   var val = $(this).text();
   var input = $('<input type="text" class="editInfoAmount form-control" id="editAmount"/>');
   input.val(val);
   $(this).replaceWith(input);
   $(input).focus();
 
-  $(input).keypress(function(e){
+  $(input).keypress(function(e) {
     editAmountDone(e, $(input), val);
   });
 
-  setTimeout(function () {
-    $('body').click(function (e) {
+  setTimeout(function() {
+    $('body').click(function(e) {
       if (e.target.id == "editAmount") {
         return;
       }
@@ -195,13 +198,13 @@ var addAmountClick = function () {
 
 };
 
-function isPosInt (value) {
+function isPosInt(value) {
   return !isNaN(value) &&
     parseInt(Number(value)) == value &&
     !isNaN(parseInt(value, 10)) && value > 0;
 }
 
-var editAmountDone = function (e, tag, val) {
+var editAmountDone = function(e, tag, val) {
   var newAmount = $(tag).val();
   var oldAmount = val;
   if (e.which == 13 || e.type === 'click') {
@@ -210,8 +213,7 @@ var editAmountDone = function (e, tag, val) {
     if (!isPosInt(newAmount)) {
       var input = $('<b class="amount">' + oldAmount + '</b>');
       $(tag).replaceWith(input);
-    }
-    else {
+    } else {
       var input = $('<b class="amount">' + newAmount + '</b>');
       input.val(newAmount);
       $(tag).replaceWith(input);
@@ -223,7 +225,7 @@ var editAmountDone = function (e, tag, val) {
   }
 };
 
-var updateTableRow = function (tableRow, isChecked, isTemplate) { //set checked status and update row color.
+var updateTableRow = function(tableRow, isChecked, isTemplate) { //set checked status and update row color.
   var checkbox = tableRow.find('input');
   checkbox.prop('checked', isChecked);
   var preparation = tableRow.hasClass("process-content-item") ? true : false;
@@ -234,7 +236,7 @@ var updateTableRow = function (tableRow, isChecked, isTemplate) { //set checked 
   changeTableGraphics(tableRow, isChecked, preparation); //Function in checkEffect.js
 };
 
-var updateTextInTableRow = function (tableRow, checkObject) {
+var updateTextInTableRow = function(tableRow, checkObject) {
   var kartotekArticle = checkObject.kartotekArticle;
   
   tableRow.find('.name').eq(0).html('<p>'+checkObject.name+'</p>');
@@ -244,7 +246,7 @@ var updateTextInTableRow = function (tableRow, checkObject) {
   tableRow.find('.tray').eq(0).html(kartotekArticle.tray);
 };
 
-var btnDone = function () {
+var btnDone = function() {
   if ($('#btn-done').hasClass('btn-done')) {
     socket.emit('markAsDone', { operation: operationId, isDone: false});
   } else {
@@ -259,12 +261,12 @@ var saveCommentSocket = function (commentObject) {
   changeCommentButton(comment, commentButton);
 };
 
-var removeCheckArticleUpdate = function (checkArticleID){
+var removeCheckArticleUpdate = function(checkArticleID) {
   var row = $('#'+checkArticleID);
   row.remove();
 };
 
-var getCheckboxes = function (checkboxesAndTemplate){
+var getCheckboxes = function(checkboxesAndTemplate) {
   var checkboxes = checkboxesAndTemplate.checkboxes;
   var isTemplate = checkboxesAndTemplate.template;
   for (var index in checkboxes) {
@@ -276,7 +278,7 @@ var getCheckboxes = function (checkboxesAndTemplate){
   }
 };
 
-var changeButtonColor = function (data) {
+var changeButtonColor = function(data) {
   if (data.isDone) {
     $('#btn-done').addClass('btn-done');
   } else {
@@ -284,7 +286,7 @@ var changeButtonColor = function (data) {
   }
 };
 
-var newArticleUpdate = function (checkArticle, kartotekArticle, operationID){
+var newArticleUpdate = function(checkArticle, kartotekArticle, operationID) {
   var compiledArticle = $('#article-template').html();
   var articleTemplate = Handlebars.compile(compiledArticle);
   var compiledComment = $('#comment-template').html();

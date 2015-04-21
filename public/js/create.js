@@ -20,7 +20,7 @@ function add(data, index, operation, addedProccesstegs) {
           template : true
         }
       })
-        .done(function (msg) {
+        .done(function(msg) {
           console.log(msg);
           addedProccesstegs[processteg] = [true, msg._id];
           $.ajax({
@@ -34,19 +34,19 @@ function add(data, index, operation, addedProccesstegs) {
               process: msg._id
             }
           })
-            .done(function (msg) {
+            .done(function(msg) {
               console.log(msg);
-              $(function () {
+              $(function() {
                 add($('#underrubriker').children()[index + 1], index + 1, operation, addedProccesstegs);
               });
             })
-            .fail(function (err, status) {
+            .fail(function(err, status) {
               console.log('Någonting gick fel!');
               console.log(err);
               console.log(status);
             });
         })
-        .fail(function (err, status) {
+        .fail(function(err, status) {
           console.log('Någonting gick fel!');
           console.log(err);
           console.log(status);
@@ -64,13 +64,13 @@ function add(data, index, operation, addedProccesstegs) {
           process: addedProccesstegs[processteg][1]
         }
       })
-        .done(function (msg) {
+        .done(function(msg) {
           console.log(msg);
-          $(function () {
+          $(function() {
             add($('#underrubriker').children()[index + 1], index + 1, operation, addedProccesstegs);
           });
         })
-        .fail(function (err, status) {
+        .fail(function(err, status) {
           console.log('Någonting gick fel!');
           console.log(err);
           console.log(status);
@@ -100,10 +100,10 @@ var createNewOperation = function() {
         template: true
       }
     })
-      .done(function (msg) {
+      .done(function(msg) {
         console.log(msg);
         //adding articles here
-        $('.article').each(function (index) {
+        $('.article').each(function(index) {
           var name = $(this).text();
           var kartotek = $(this).attr("data-kartotekID");
           var operation = msg._id;
@@ -118,17 +118,17 @@ var createNewOperation = function() {
               amount : amount
             }
           })
-            .done(function (msg) {
+            .done(function(msg) {
               console.log(msg); //Contains the created Article-model
             })
-            .fail(function (err, status) {
+            .fail(function(err, status) {
               console.log('Någonting gick fel!');
               console.log(err);
               console.log(status);
             });
         });
         //adding underrubrik/processteg(recursive)
-        $(function () {
+        $(function() {
           var index = 0;
           add($('#underrubriker').children()[index], index, msg._id, {});
         });
@@ -136,7 +136,7 @@ var createNewOperation = function() {
         //Show the created handbook
         document.location.href = '/info/'+msg.slug;
       })
-      .fail(function (err, status) {
+      .fail(function(err, status) {
         console.log('Någonting gick fel!');
         console.log(err);
         console.log(status);
@@ -144,17 +144,17 @@ var createNewOperation = function() {
   }
 };
 
-var removeArticle = function (element) {
+var removeArticle = function(element) {
   var parent = $(element).parent();
   $(parent).remove(); 
 };
 
-var addArticle = function (articleTemplate, results) {
+var addArticle = function(articleTemplate, results) {
   var name = $(this).data('name');
   var kartotekID = $(this).data('kartotekid');
   var found = false;
 
-  $('.article').each(function (index) {
+  $('.article').each(function(index) {
     if($(this).attr("data-kartotekID") == kartotekID) {
       found = true;
       }
@@ -179,10 +179,10 @@ var addArticle = function (articleTemplate, results) {
   }
 };
 
-var findArticles = function (resultsTemplate, articleTemplate) {
+var findArticles = function(resultsTemplate, articleTemplate) {
   var articleName = $('#article-search').val();
   var url = '/api/search/Kartotekartikel?text=' + articleName;
-  $.get(url).done(function (results) {
+  $.get(url).done(function(results) {
     $('#kartotekResults').html(resultsTemplate({ results: results }));
 
     if (results.length != 0) {
@@ -200,12 +200,12 @@ var findArticles = function (resultsTemplate, articleTemplate) {
   });
 };
 
-var addSynonym = function () {
+var addSynonym = function() {
   var name = $('#synonym-input').val();
   $('#synonyms').append(synonymTemplate({ name: name }));
 };
 
-var initializeSpecialitetSelect = function () {
+var initializeSpecialitetSelect = function() {
   $(".specialitet-select").select2({
 
     ajax: {
@@ -213,18 +213,18 @@ var initializeSpecialitetSelect = function () {
       url: '/api/search/Specialitet/',
       dataType: 'json',
       delay: 250,
-      data: function (params) {
+      data: function(params) {
         return {
 
           text: params.term, // search term
           all: 1
         };
       },
-      processResults: function (data) {
+      processResults: function(data) {
         console.log(data);
 
         return {
-          results: $.map(data, function (item) {
+          results: $.map(data, function(item) {
             return {
               text: item.name, id: item._id
             }
@@ -233,13 +233,13 @@ var initializeSpecialitetSelect = function () {
       },
       cache: true
     },
-    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+    escapeMarkup: function(markup) { return markup; }, // let our custom formatter work
     minimumInputLength: 0
 
   });
 };
 
-var addUnderrubrik = function (underrubrikTemplate) {
+var addUnderrubrik = function(underrubrikTemplate) {
   var name = $('#underrubrik-name').val();
   var text = $('#underrubrik-text').val();
   var checkbar = $('#checkbar').prop('checked');
@@ -263,7 +263,7 @@ var addUnderrubrik = function (underrubrikTemplate) {
 };
 
 // TODO keyCode == 13
-$(function () {
+$(function() {
   var compiledSynonym = $('#synonym-template').html();
   var synonymTemplate = Handlebars.compile(compiledSynonym);
 
