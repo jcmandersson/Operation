@@ -561,7 +561,6 @@ $(document).ready(function () {
   });
 
   $('.articleTable tbody').on("click", '.article-remove', removeArticle);
-  $('.articleTable tbody').on("click", '.amount', addAmountClick);
   $('.articleTable tbody').on("click", '.minus-field', minusOne);
   $('.articleTable tbody').on("click", '.plus-field', plusOne);
 
@@ -630,15 +629,12 @@ var findArticles = function (resultsTemplate) {
       $('#article-search').removeClass('has-results');
     }
 
-    $('.add-column').click(function () {
-
-
-      $('#article-search').val('').removeClass('has-results');
-      $('#kartotekResults').empty();
+    $('.add-article-info').click(function () {
+      
       //add here
 
       var id = $(this).attr('data-kartotekid');
-      var articleObject = jQuery.grep(results, function (e) {
+      var kartotekArticle = jQuery.grep(results, function (e) {
         return e._id == id;
       });
       var operationID = $('#operation').val();
@@ -647,7 +643,7 @@ var findArticles = function (resultsTemplate) {
       $('.articleTable > tbody > tr').each(function (index) {
         if ($(this).attr("data-kartotekID") == id) {
           var slug = $(this).attr("data-slug");
-          var newAmount = parseInt($('#amount' + articleObject[0]._id).children().text()) + 1;
+          var newAmount = parseInt($('#amount' + kartotekArticle[0]._id).children().text()) + 1;
           $.ajax({
             type: 'GET',
             url: '/api/update/artikels/' + slug,
@@ -656,7 +652,8 @@ var findArticles = function (resultsTemplate) {
             }
           })
             .done(function (msg) {
-              $('#amount' + articleObject[0]._id).children().text(newAmount);
+              $('#amount'+kartotekArticle[0]._id).find('.amount-field').text(newAmount);
+
             })
             .fail(function (err, status) {
               console.log('Någonting gick fel!');
@@ -673,21 +670,22 @@ var findArticles = function (resultsTemplate) {
           type: 'POST',
           url: '/api/artikels',
           data: {
-            name: articleObject[0].name,
-            kartotek: articleObject[0]._id,
+            name: kartotekArticle[0].name,
+            kartotek: kartotekArticle[0]._id,
             operation: operationID,
             amount: 1
           }
         })
-          .done(function (msg) {
+          .done(function (checkArticle) {
             var compiledArticle = $('#article-template').html();
             var articleTemplate = Handlebars.compile(compiledArticle);
             $(articleTemplate({
-              kartotek: articleObject[0],
+              kartotek: kartotekArticle[0],
+              name: checkArticle.name,
               operation: operationID,
-              _id: msg._id,
+              _id: checkArticle._id,
               amount: 1,
-              slug: msg.slug
+              slug: checkArticle.slug
             })).appendTo('.articleTable');
 
           })
@@ -699,7 +697,6 @@ var findArticles = function (resultsTemplate) {
       }
     });
   });
-
 };
 
 var removeArticle = function () {
@@ -722,72 +719,8 @@ var removeArticle = function () {
         console.log(err);
         console.log(status);
       });
-
   }
   else {
-    return false;
-  }
-};
-
-var addAmountClick = function () {
-  var val = $(this).text();
-  var input = $('<input type="text" class="editAmount form-control" id="editAmount"/>');
-  input.val(val);
-  $(this).replaceWith(input);
-  $(input).focus();
-
-  $(input).keypress(function (e) {
-    editAmountDone(e, $(input), val);
-  });
-
-  setTimeout(function () {
-    $('body').click(function (e) {
-      if (e.target.id == "editAmount") {
-        return;
-      }
-      editAmountDone(e, $(input), val);
-    });
-  }, 0);
-
-};
-
-function isPosInt (value) {
-  return !isNaN(value) &&
-    parseInt(Number(value)) == value && !isNaN(parseInt(value, 10)) && value > 0;
-}
-
-var editAmountDone = function (e, tag, val) {
-  var newAmount = $(tag).val();
-  var oldAmount = val;
-  if (e.which == 13 || e.type === 'click') {
-
-    $('body').unbind();
-    if (!isPosInt(newAmount)) {
-      var input = $('<b class="amount">' + oldAmount + '</b>');
-      $(tag).replaceWith(input);
-    }
-    else {
-
-      var slug = $(tag).parent().parent().attr('data-slug');
-
-      $.ajax({
-        type: 'GET',
-        url: '/api/update/artikels/' + slug,
-        data: {
-          amount: newAmount
-        }
-      })
-        .done(function (msg) {
-          var input = $('<b class="amount">' + newAmount + '</b>');
-          input.val(newAmount);
-          $(tag).replaceWith(input);
-        })
-        .fail(function (err, status) {
-          console.log('Någonting gick fel!');
-          console.log(err);
-          console.log(status);
-        });
-    }
     return false;
   }
 };

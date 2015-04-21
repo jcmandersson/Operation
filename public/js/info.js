@@ -80,25 +80,22 @@ var findArticles = function (resultsTemplate) {
 
       //add here
       var id = $(this).attr('data-kartotekid');
-      var articleObject = jQuery.grep(results, function(e){ return e._id == id; });
+      var kartotekArticle = jQuery.grep(results, function(e){ return e._id == id; });
 
       var operationID = $('#opName').attr("data-operationId");
-      socket.emit('articleAdd', articleObject, operationID);
-      //$('#article-search').val('').removeClass('has-results');
-      //$('#kartotekResults').empty();
+      socket.emit('articleAdd', kartotekArticle, operationID);
     });
   });
 };
 
 $("#editChecklistButton").click(function () {
-  if ($('#editChecklistButton').text() == 'Redigera plocklista') {
+  if ($(this).text() == 'Redigera plocklista') {
     $('#editChecklistButton').text('Klar');
     $('#editChecklist').show();
     $('.centered-remove').show();
     $('.amount-field').show();
     $('.minus-field').show();
     $('.plus-field').show();
-    $('.uneditable-amount').hide();
     $('.uneditable-amount').hide();
     $('.checkbox-js').hide();
   }
