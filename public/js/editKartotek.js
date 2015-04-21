@@ -81,7 +81,6 @@ var findArticles = function (resultsTemplate) {
     $('.add-article-info').click(function () {
       //add here
       var id = $(this).attr('data-kartotekid');
-      console.log(id);
 
       var kartotekArticle = jQuery.grep(results, function (e) {
         return e._id == id;
