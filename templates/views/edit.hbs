@@ -14,19 +14,19 @@
       <input class="form-control" type="text" {{#ifeq data.slug "mall" }} disabled="disabled" {{/ifeq}}
              value="{{data.title}}" placeholder="Namn"
              data-slug="{{ data.slug }}" data-model="Operation"
-             data-field="title" data-update="true"/>
+             data-field="title" data-update="true" data-saved="{{data.title}}"/>
     </div>
     <div id="synonyms">
       Synonymer:
       <input class="form-control tags" type="text" name="tags" placeholder="Synonymer" value="{{data.tags}}"
              data-model="Operation" data-slug="{{ data.slug }}"
-             data-field="tags" data-update="true"/>
+             data-field="tags" data-update="true" data-saved="{{data.tags}}"/>
     </div>
     <div id="specialty">
       Specialitet:
       <select name="specialty" {{#ifeq data.slug "mall" }} disabled="disabled" {{/ifeq}} class="specialitet-select"
               data-model="Operation" data-slug="{{ data.slug }}"
-              data-field="specialty" data-update="true">
+              data-field="specialty" data-update="true"  data-saved="{{data.specialty._id}}">
         {{#if data.specialty }}
           <option value="{{data.specialty._id}}" selected="selected">{{data.specialty.name}}</option>
         {{ else }}
@@ -39,7 +39,7 @@
       <li class="process-item">
         <input type="text" class="process btn btn-default navbar-btn"
                data-model="Processteg" data-slug="\{{ slug }}"
-               data-field="title" data-update="true" value="\{{ title }}"/>
+               data-field="title" data-update="true" value="\{{ title }}"  data-saved="\{{title}}"/>
         <i class="glyphicon glyphicon-remove"></i>
       </li>
     </script>
@@ -49,7 +49,7 @@
         <li class="process-item" data-model="Processteg" data-slug="{{ slug }}">
           <input type="text" class="process btn btn-default navbar-btn" value="{{ title }}"
                  data-model="Processteg" data-slug="{{ slug }}"
-                 data-field="title" data-update="true"/>
+                 data-field="title" data-update="true" data-saved="{{title}}"/>
           <i class="glyphicon glyphicon-remove" 
              data-model="Processteg" data-slug="{{ slug }}"
              data-remove="true"></i>
@@ -117,7 +117,7 @@
     <a href="/info/{{data.slug}}" target="_blank" class="btn btn-primary">Förhandstitt</a>
     <a class="btn btn-primary toReview" data-val="Granskning"
             data-model="Operation" data-slug="{{ data.slug }}"
-            data-field="state" data-update="true">Skicka till granskning</a>
+            data-field="state" data-update="true"">Skicka till granskning</a>
   </form>
 </div>
 

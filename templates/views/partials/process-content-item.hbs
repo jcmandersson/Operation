@@ -3,18 +3,18 @@
   <input class="form-control rubrik" type="text"
          value="{{#unless noData}}{{title}}{{/unless}}" placeholder="Ny rubrik"
          data-model="Processinnehall" {{#unless noData}}data-slug="{{slug}}"{{/unless}}
-         data-field="title" data-update="true"/>
+         data-field="title" data-update="true"/ data-saved="{{#unless noData}}{{title}}{{/unless}}">
     <span>
     Checkbar: 
     <input type="checkbox" class="checkAble" {{#if checkAble}} checked="checked" {{/if}}value="true"
            data-model="Processinnehall" {{#unless noData}}data-slug="{{slug}}"{{/unless}}
-           data-field="checkAble" data-update="true">
+           data-field="checkAble" data-update="true" data-saved="{{#unless noData}}{{checkAble}}{{/unless}}">
     </span>
   </span>
   <span class="contentText">
-    <textarea class="information" 
+    <textarea disabled="disabled" class="information" 
               data-model="Processinnehall" {{#unless noData}}data-slug="{{slug}}"{{/unless}}
-              data-field="text" data-update="true">{{#unless noData}}{{text}}{{/unless}}</textarea>
+              data-field="text" data-update="true" data-saved="{{#unless noData}}{{text}}{{/unless}}">{{#unless noData}}{{text}}{{/unless}}</textarea>
   </span>
   <i class="glyphicon glyphicon-remove"></i>
 </div>

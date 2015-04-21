@@ -6,7 +6,9 @@ var operationId;
 var oldText;
 var saved = false;
 
-$(function() {
+$(document).ready(function () {
+  
+  //Load comments
   operationId = $('#opName').attr('data-operationId');
   var rows = $('.check-js');
   rows.each(function(index, row){ //Set the color of the comment button depending on if there is a comment.
@@ -14,24 +16,40 @@ $(function() {
     var commentButton = $('#commentButton' + row.id);
     changeCommentButton(comment, commentButton);
   });
-  $('.container').on("click", '.check-js', checkjs);
+  
+  
+  //Add click events to table rows in the checklist
+  var container = $('.container');
+  container.on("click", '.check-js', checkjs);
   
   //If the actual checkbox is clicked we will get a double-click effect. So we compensate for that here.
-  $('.container').on("click", '.checkbox-js', function() {
+  container.on("click", '.checkbox-js', function() {
     this.checked = !this.checked;
   });
   
-  $('.process-content').on("click", '.cancelComment', cancelComment);
-    
-  $('.process-content').on("click", '.saveComment', saveComment);
   
-  $('.process-content').on("click", '.showComment', showComment);
+  //TODO: Comment this
+  var processContent = $('.process-content');
+  processContent.on("click", '.cancelComment', cancelComment);
+  processContent.on("click", '.saveComment', saveComment);
+  processContent.on("click", '.showComment', showComment);
   
-  $('.articleTable tbody').on("click", '.article-remove', removeArticle);
+  
+  //TODO: Comment this
+  var articleTable = $('.articleTable tbody');
+  articleTable.on("click", '.article-remove', removeArticle);
+  articleTable.on("click", '.minus-field', minusOne);
+  articleTable.on("click", '.plus-field', plusOne);
 
-  $('.articleTable tbody').on("click", '.minus-field', minusOne);
-  $('.articleTable tbody').on("click", '.plus-field', plusOne);
   
+  //Load templates and compile them.
+  var unCompiledArticle = $('#article-template').html();
+  var articleTemplate = Handlebars.compile(unCompiledArticle);
+  var unCompiledComment = $('#comment-template').html();
+  var commentTemplate = Handlebars.compile(unCompiledComment);
+  
+  
+  //Listen to sockets (backend sockets in lib/checklist.js)
   socket.on('saveComment', saveCommentSocket);
   
   socket.on('removeCheckArticleUpdate', removeCheckArticleUpdate);
@@ -39,24 +57,19 @@ $(function() {
   socket.on('getCheckboxes', getCheckboxes);
   
   socket.on('markAsDone', changeButtonColor);
-
-  var compiledArticle = $('#article-template').html();
-  var articleTemplate = Handlebars.compile(compiledArticle);
-  var compiledComment = $('#comment-template').html();
-  var commentTemplate = Handlebars.compile(compiledComment);
   
   socket.on('newArticleUpdate', newArticleUpdate.bind(undefined, articleTemplate, commentTemplate));
   
   socket.on('articleAmountUpdate', function(amount, articleID) {
-    $('#amount'+articleID).find('.amount-field').text(amount);
-    $('#amount'+articleID).find('.uneditable-amount').text(amount);
-
+    var amountHtml = $('#amount'+articleID);
+    amountHtml.find('.amount-field').text(amount);
+    amountHtml.find('.uneditable-amount').text(amount);
   });
-
+  
   socket.on('saved', function(id) { //Show saved text when the database has successfully stored the comment.
     $('#commentSaved' + id).show();
   });
-
+  
   socket.on('connect', function() { //Runs after socket has been started. Get all checkbox statuses from db.
     socket.emit('operationOpen', operationId);
   });
@@ -71,8 +84,10 @@ $(function() {
     updateTextInTableRow(tableRow, checkObject);
   });
 
+  
 });
 
+//Definition of the minus button that appears when a checklist is edited
 var minusOne = function() {
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
@@ -85,6 +100,7 @@ var minusOne = function() {
   }
 };
 
+//Definition of the plus button that appears when a checklist is edited.
 var plusOne = function() {
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
@@ -97,7 +113,8 @@ var plusOne = function() {
   }
 };
 
-var cancelComment = function() { //Throw away texted comment if cancel button is clicked.
+//Throw away texted comment if cancel button is clicked.
+var cancelComment = function() {
   if (!saved) {
     var id = $(this).data('id');
     var checkComment = $('#checkComment' + id);
@@ -107,19 +124,23 @@ var cancelComment = function() { //Throw away texted comment if cancel button is
   }
 };
 
-var checkjs = function(e) {  //When a checkable row is clicked, check the row and emit to socket.io
+//When a checkable row is clicked, check the row and emit to socket.io
+var checkjs = function(e) {
   var targetClassName = e.target.className.split(" ")[0];
-  if (!(e.target.tagName == 'BUTTON' || e.target.tagName == 'IMG'
-    || targetClassName == 'amount' || targetClassName == 'article-remove' 
-    || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
+  var targetTagName = e.target.tagName;
+  if (!(targetTagName == 'BUTTON' || targetTagName == 'IMG' || targetClassName == 'amount' ||
+        targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
     if (!$(this).prop('disabled')) {
       var checkbox = $(this).find('input')[0];
       var preparation = $(this).hasClass("process-content-item") ? true : false;
 
       checkbox.checked = !checkbox.checked;
       changeTableGraphics($(this), checkbox.checked, preparation); //Function in checkEffect.js
-      var checkObject = {preparation: $(this).data('preparation'), 
-        operation: operationId, id: $(this).attr('id'), check: checkbox.checked};
+      var checkObject = {
+        preparation: $(this).data('preparation'), 
+        operation: operationId, id: $(this).attr('id'),
+        check: checkbox.checked
+      };
       
       socket.emit('checkboxClick', checkObject);
 
@@ -130,6 +151,7 @@ var checkjs = function(e) {  //When a checkable row is clicked, check the row an
           return false;
         }
       });
+      
       socket.emit('markAsDone', { operation: operationId, isDone: done});
     }
   }
@@ -239,10 +261,14 @@ var changeButtonColor = function(data) {
 };
 
 var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
-  $(articleTemplate({ kartotek : kartotekArticle, name : checkArticle.name, operation: operationID, _id : checkArticle._id, amount : 1 })).appendTo('.articleTable');
+  $(articleTemplate({
+    kartotek : kartotekArticle, name : checkArticle.name, operation: operationID,
+    _id : checkArticle._id, amount : 1 
+  })).appendTo('.articleTable');
+  
   $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
   
-  //refactor this later because ugly
+  //TODO: refactor this later because ugly
   if ($('#editChecklistButton').text()=="Klar") {
     $('.centered-remove').show();
     $('.amount-field').show();
