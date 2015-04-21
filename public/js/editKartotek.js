@@ -68,83 +68,81 @@ var findArticles = function (resultsTemplate) {
   var articleName = $('#article-search').val();
   var url = '/api/search/Kartotekartikel?text=' + articleName;
   $.get(url).done(function (results) {
-    
     $('#kartotekResults').html(resultsTemplate({results: results}));
-
     if (results.length != 0) {
       $('#article-search').addClass('has-results');
     }
     else {
       $('#article-search').removeClass('has-results');
     }
-
-    $('.add-article-info').click(function () {
-      //add here
-      var id = $(this).attr('data-kartotekid');
-
-      var kartotekArticle = jQuery.grep(results, function (e) {
-        return e._id == id;
-      });
-      var operationID = $('.operationForm').attr('data-id');
-      var found = false;
-
-      $('.articleTable > tbody > tr').each(function (index) {
-        if ($(this).attr("data-kartotekid") == id) {
-          var slug = $(this).attr("data-slug");
-          var newAmount = parseInt($('#amount' + kartotekArticle[0]._id).children().text()) + 1;
-          $.ajax({
-            type: 'GET',
-            url: '/api/update/artikels/' + slug,
-            data: {
-              amount: newAmount
-            }
-          })
-            .done(function (msg) {
-              $('#amount'+kartotekArticle[0]._id).find('.amount-field').text(newAmount);
-            })
-            .fail(function (err, status) {
-              console.log('Någonting gick fel!');
-              console.log(err);
-              console.log(status);
-            });
-          found = true;
-        }
-      });
-
-      if (!found) {
-        //add new article
-        $.ajax({
-          type: 'POST',
-          url: '/api/artikels',
-          data: {
-            name: kartotekArticle[0].name,
-            kartotek: kartotekArticle[0]._id,
-            operation: operationID,
-            amount: 1
-          }
-        })
-          .done(function (checkArticle) {
-            var compiledArticle = $('#article-template').html();
-            var articleTemplate = Handlebars.compile(compiledArticle);
-            $(articleTemplate({
-              kartotek: kartotekArticle[0],
-              name: checkArticle.name,
-              operation: operationID,
-              _id: checkArticle._id,
-              amount: 1,
-              slug: checkArticle.slug
-            })).appendTo('.articleTable');
-
-          })
-          .fail(function (err, status) {
-            console.log('Någonting gick fel!');
-            console.log(err);
-            console.log(status);
-          });
-      }
+    $('.add-article-info').click(function(){
+      addArticle(results, this)
     });
   });
+};
 
+var addArticle = function (results, tag) {
+  var id = $(tag).attr('data-kartotekid');
+  var kartotekArticle = jQuery.grep(results, function (e) {
+    return e._id == id;
+  });
+  var operationID = $('.operationForm').attr('data-id');
+  var found = false;
+
+  $('.articleTable > tbody > tr').each(function (index) {
+    if ($(this).attr("data-kartotekid") == id) {
+      var slug = $(this).attr("data-slug");
+      var newAmount = parseInt($('#amount' + kartotekArticle[0]._id).children().text()) + 1;
+      $.ajax({
+        type: 'GET',
+        url: '/api/update/artikels/' + slug,
+        data: {
+          amount: newAmount
+        }
+      })
+        .done(function (msg) {
+          $('#amount' + kartotekArticle[0]._id).find('.amount-field').text(newAmount);
+        })
+        .fail(function (err, status) {
+          console.log('Någonting gick fel!');
+          console.log(err);
+          console.log(status);
+        });
+      found = true;
+    }
+  });
+
+  if (!found) {
+    $.ajax({
+      type: 'POST',
+      url: '/api/artikels',
+      data: {
+        name: kartotekArticle[0].name,
+        kartotek: kartotekArticle[0]._id,
+        operation: operationID,
+        amount: 1
+      }
+    })
+      .done(function (checkArticle) {
+        var compiledArticle = $('#article-template').html();
+        var articleTemplate = Handlebars.compile(compiledArticle);
+        
+        $(articleTemplate({
+          kartotek: kartotekArticle[0],
+          name: checkArticle.name,
+          operation: operationID,
+          _id: checkArticle._id,
+          amount: 1,
+          slug: checkArticle.slug
+        })).appendTo('.articleTable');
+
+      })
+      .fail(function (err, status) {
+        console.log('Någonting gick fel!');
+        console.log(err);
+        console.log(status);
+      });
+  }
 };
 
 var removeArticle = function () {

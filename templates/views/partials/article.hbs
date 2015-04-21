@@ -1,21 +1,22 @@
 <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-slug="{{slug}}" class="check-js" id={{_id}}>
   <td class="amountColumn centered" id="amount{{kartotek._id}}">
-      <div class="minus-field" id="minus{{kartotek._id}}">
-        <div class="glyphicon glyphicon-minus minus-icon"></div>
-      </div>
-      <div class="amount-field" id="top{{kartotek._id}}">{{amount}}</div>
-      <div class="plus-field" id="plus{{kartotek._id}}">
-        <div class="glyphicon glyphicon-plus plus-icon"></div>
-      </div>
+    <div class="minus-field" id="minus{{kartotek._id}}">
+      <div class="glyphicon glyphicon-minus minus-icon"></div>
+    </div>
+    <div class="amount-field" id="top{{kartotek._id}}"><p>{{amount}}</p></div>
+    <div class="plus-field" id="plus{{kartotek._id}}">
+      <div class="glyphicon glyphicon-plus plus-icon"></div>
+    </div>
   </td>
-  <td class="centered"><p>{{ name }}</p></td>
-  <td class="centered"><p>Artikelnummer</p></td>
-  <td class="centered"><p>Klinik</p></td>
-  {{#if kartotek}}
-    <td class="centered storage"><p>{{ kartotek.storage }}</p></td>
-  {{else}}
-    <td class="centered storage"><p class='errorText'>Utgått</p></td>
-  {{/if}}
+  
+  <td class="centered name"><p>{{ name }}</p>
+  {{#unless kartotek}}
+    <p class='errorText'>Utgått</p>
+  {{/unless}}
+  </td>
+  <td class="centered articleNumber"><p>{{ kartotek.articleNumber }}</p></td>
+  <td class="centered"><p>{{ kartotek.clinic }}</p></td>
+  <td class="centered storage"><p>{{ kartotek.storage }}</p></td>
   <td class="centered"><p>{{ kartotek.section }}</p></td>
   <td class="centered"><p>{{ kartotek.shelf }}</p></td>
   <td class="centered"><p>{{ kartotek.tray }}</p></td>
