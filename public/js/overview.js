@@ -11,10 +11,10 @@ var getComments = function(operation, template) {
       data: {
         operation: operation
       }
-  }).done(function( checkArticles ) {
+  }).done(function(checkArticles) {
     var operationArticles = [];
-    for(var i in checkArticles){
-      if(checkArticles[i].operation == operation){
+    for(var i in checkArticles) {
+      if(checkArticles[i].operation == operation) {
         operationArticles.push(checkArticles[i]);
       }
     }
@@ -28,7 +28,7 @@ var getComments = function(operation, template) {
     });
 };
 
-$(document).ready(function () {
+$(document).ready(function() {
 
   if ($('#hideDone').val() == "true") {
     $('#hideDone').attr('checked', true);
@@ -46,13 +46,14 @@ $(document).ready(function () {
     }
   }); 
   
-  $('.progressbar').each(function (i, e) {
+  $('.progressbar').each(function(i, e) {
     
     var percentage = parseInt($(e).attr('data-percent'));
     
     $(e).progressbar({
       value: percentage
     }).children('.ui-progressbar-value')
+      
       //.html('&nbsp;&nbsp;&nbsp;' + $(e).attr('data-checked') + ' / ' + $(e).attr('data-total'))
       .html('&nbsp;&nbsp;&nbsp;' + percentage + '% (' + $(e).attr('data-checked') + '/' + $(e).attr('data-total') + ')')
       .css( {display: 'block',
@@ -64,18 +65,18 @@ $(document).ready(function () {
   
   var unCompiledOperationCommentsTemplate = $('#operationComments-template').html();
   var compiledOperationCommentsTemplate = Handlebars.compile(unCompiledOperationCommentsTemplate);
-  $('.showOperationCommentsButton').click(function(){
+  $('.showOperationCommentsButton').click(function() {
     var operation = $(this).attr('data-operation');
     getComments(operation, compiledOperationCommentsTemplate)
   });
 
   var socket = io();
-  socket.on('connect', function () {
+  socket.on('connect', function() {
     socket.emit('overviewOpen');
   });
   
   
-  socket.on('updateProgress', function (progress) {
+  socket.on('updateProgress', function(progress) {
     console.log(progress);
     var percent = calculateProgress(progress.all);
     var $progress = $('[data-id="'+progress.operation+'"] .progressbar').progressbar("value", percent);
@@ -84,7 +85,7 @@ $(document).ready(function () {
     $progress.find('.ui-progressbar-value').html('&nbsp;&nbsp;&nbsp;'+percent+'% ('+progress.all.checked+'/'+progress.all.total+')');
   });
   
-  socket.on('markAsDone', function (data) {    
+  socket.on('markAsDone', function(data) {    
     var $progress = $('[data-id="' + data.operation + '"] .progressbar');    
     if (data.isDone) {
       $progress.find('.ui-progressbar-value').addClass('progressbar-done');
@@ -101,7 +102,7 @@ $(document).ready(function () {
     }
   });
   
-  socket.on('updateOverview', function () {
+  socket.on('updateOverview', function() {
     window.location.reload();
   });
   
