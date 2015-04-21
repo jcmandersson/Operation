@@ -291,7 +291,7 @@ var newArticleUpdate = function(checkArticle, kartotekArticle, operationID) {
   var articleTemplate = Handlebars.compile(compiledArticle);
   var compiledComment = $('#comment-template').html();
   var commentTemplate = Handlebars.compile(compiledComment);
-  $(articleTemplate({ kartotek : kartotekArticle, operation: operationID, _id : checkArticle._id, amount : 1 })).appendTo('.articleTable');
+  $(articleTemplate({ kartotek : kartotekArticle, name : checkArticle.name, operation: operationID, _id : checkArticle._id, amount : 1 })).appendTo('.articleTable');
   $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
   
   //refactor this later because ugly
