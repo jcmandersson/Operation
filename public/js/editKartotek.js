@@ -131,7 +131,6 @@ var addArticle = function (results, tag) {
         var inserted = false;
         $('.articleTable > tbody > tr').each(function (index) {
           var articleName = $(this).find(".name").text();
-          console.log(articleName);
           if (compareString(checkArticle.name, articleName)<1) {
             $('.articleTable > tbody > tr').eq( index ).before(articleTemplate({
               kartotek: kartotekArticle[0],
