@@ -82,7 +82,9 @@ exports = module.exports = function(req, res) {
   view.on('init', function(next) {
     article.model.find({
       operation: locals.data._id
-    }).populate('kartotek')
+    })
+      .sort('name')
+      .populate('kartotek')
       .exec(function (err, articleData) {
         
         if (err) {

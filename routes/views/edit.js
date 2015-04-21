@@ -51,7 +51,9 @@ exports = module.exports = function (req, res) {
     }
     article.model.find({
       operation: locals.data._id
-    }).populate('kartotek')
+    })
+      .sort('name')
+      .populate('kartotek')
       .exec(function (err, articleData) {
         if (err) {
           console.log('DB error');
