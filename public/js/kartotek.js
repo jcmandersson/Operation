@@ -115,7 +115,7 @@ var articles = {
     showAllColumns: false,
     articles: []
   },
-  
+
   /**
    * Fills itself (this.data.articles) with
    * the content in the $(this.data.id) DOM-element.
@@ -158,7 +158,7 @@ var articles = {
       }
     }
   },
-  
+
   // This should essentially only be used when attaching event listeners.
   findArticleInDOM: function(slug) {
     return $(this.data.id).find('[data-slug="'+slug+'"]');
