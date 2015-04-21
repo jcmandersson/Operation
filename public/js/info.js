@@ -58,9 +58,7 @@ $(document).ready(function () {
         console.log(err);
         console.log(status);
       });
-    
   });
-  
 });
   
 var findArticles = function (resultsTemplate) {
