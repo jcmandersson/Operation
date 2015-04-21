@@ -14,6 +14,7 @@ $(document).ready(function () {
   $('.articleTable tbody').on("click", '.article-remove', removeArticle);
   $('.articleTable tbody').on("click", '.minus-field', minusOne);
   $('.articleTable tbody').on("click", '.plus-field', plusOne);
+  
 });
 
 var minusOne = function () {
@@ -127,15 +128,33 @@ var addArticle = function (results, tag) {
         var compiledArticle = $('#article-template').html();
         var articleTemplate = Handlebars.compile(compiledArticle);
         
-        $(articleTemplate({
-          kartotek: kartotekArticle[0],
-          name: checkArticle.name,
-          operation: operationID,
-          _id: checkArticle._id,
-          amount: 1,
-          slug: checkArticle.slug
-        })).appendTo('.articleTable');
-
+        var inserted = false;
+        $('.articleTable > tbody > tr').each(function (index) {
+          var articleName = $(this).find(".name").text();
+          console.log(articleName);
+          if (compareString(checkArticle.name, articleName)<1) {
+            $('.articleTable > tbody > tr').eq( index ).before(articleTemplate({
+              kartotek: kartotekArticle[0],
+              name: checkArticle.name,
+              operation: operationID,
+              _id: checkArticle._id,
+              amount: 1,
+              slug: checkArticle.slug
+            }));
+            inserted = true;
+            return false;
+          }
+        });
+        if (!inserted) {
+          $(articleTemplate({
+            kartotek: kartotekArticle[0],
+            name: checkArticle.name,
+            operation: operationID,
+            _id: checkArticle._id,
+            amount: 1,
+            slug: checkArticle.slug
+          })).appendTo('.articleTable');
+        }
       })
       .fail(function (err, status) {
         console.log('Någonting gick fel!');
@@ -169,5 +188,17 @@ var removeArticle = function () {
   }
   else {
     return false;
+  }
+};
+
+var compareString = function(a, b){
+  var A = a.toLowerCase();
+  var B = b.toLowerCase();
+  if (A < B){
+    return -1;
+  }else if (A > B){
+    return  1;
+  }else{
+    return 0;
   }
 };
