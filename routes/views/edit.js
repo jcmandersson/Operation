@@ -20,7 +20,8 @@ exports = module.exports = function (req, res) {
     'lib/tinymce/tinymce.min.js',
     'updown-counter.js',
     'lib/dateFormat.js',
-    'edit.js'
+    'edit.js',
+    'editKartotek.js'
   ];
 
   locals.css = [

@@ -1,6 +1,6 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
-  <form method="POST" class="operationForm">
+  <form method="POST" class="operationForm" data-id="{{data._id}}" data-slug="{{data.slug}}">
     <div class="lastSave">
       Sparad: 
       <span class="time">
@@ -9,132 +9,115 @@
         {{/if}}
       </span>
     </div>
-    {{#if data._id }}
-      <input type="text" id="operation" name="_id" value="{{data._id}}" class="hidden"/>
-    {{/if}}
-    {{#if data.slug }}
-      <input type="text" name="operationSlug" value="{{data.slug}}" class="hidden"/>
-    {{/if}}
     <div id="name">
       Namn:
-      <input class="form-control" type="text" name="name" {{#ifeq data.slug "mall" }} disabled="disabled" {{/ifeq}}
-             value="{{data.title}}" placeholder="Namn"/>
+      <input class="form-control" type="text" {{#ifeq data.slug "mall" }} disabled="disabled" {{/ifeq}}
+             value="{{data.title}}" placeholder="Namn"
+             data-slug="{{ data.slug }}" data-model="Operation"
+             data-field="title" data-update="true"/>
     </div>
-    <div id="synonyms">Synonymer: <input class="form-control tags" type="text" name="tags" placeholder="Synonymer"
-                                         value="{{data.tags}}"/></div>
-    <div id="specialty">Specialitet: <select name="specialty" {{#ifeq data.slug "mall" }} disabled="disabled" {{/ifeq}}
-                                             class="specialitet-select">
-      {{#if data.specialty }}
-        <option value="{{data.specialty._id}}" selected="selected">{{data.specialty.name}}</option>
-      {{ else }}
-        <option value="none" selected="selected">Lägg till specialitet</option>
-      {{/if}}
-    </select></div>
-
-    <div class="hidden data">
-      <div class="data-operation">
-        {{#eachProperty data}}
-          <input type="text" data-operation="{{property}}" value="{{value}}"/>
-        {{/eachProperty}}
-      </div>
-      <div class="data-processes">
-        {{#each processes}}
-          <div data-process-id="{{ _id }}" data-process-index="{{ @index }}">
-            {{#eachProperty this}}
-              <input type="text" data-process="{{property}}" value="{{value}}"/>
-            {{/eachProperty}}
-            <div class="data-processContents">
-              {{#each contents}}
-                <div data-content-id="{{ _id }}" data-content-index="{{ @index }}">
-                  {{#eachProperty this}}
-                    <input type="text" data-process-content="{{property}}" value="{{value}}"/>
-                  {{/eachProperty}}
-                </div>
-              {{/each}}
-            </div>
-          </div>
-        {{/each}}
-      </div>
-      <div class="data-plocklista">
-        {{#each articles}}
-          <div data-id="{{ _id }}" data-index="{{ @index }}">
-            {{#eachProperty this}}
-              <input type="text" data-article="{{property}}" value="{{value}}"/>
-            {{/eachProperty}}
-          </div>
-        {{/each}}
-      </div>
+    <div id="synonyms">
+      Synonymer:
+      <input class="form-control tags" type="text" name="tags" placeholder="Synonymer" value="{{data.tags}}"
+             data-model="Operation" data-slug="{{ data.slug }}"
+             data-field="tags" data-update="true"/>
+    </div>
+    <div id="specialty">
+      Specialitet:
+      <select name="specialty" {{#ifeq data.slug "mall" }} disabled="disabled" {{/ifeq}} class="specialitet-select"
+              data-model="Operation" data-slug="{{ data.slug }}"
+              data-field="specialty" data-update="true">
+        {{#if data.specialty }}
+          <option value="{{data.specialty._id}}" selected="selected">{{data.specialty.name}}</option>
+        {{ else }}
+          <option value="none" selected="selected">Lägg till specialitet</option>
+        {{/if}}
+      </select>
     </div>
 
-    <ul class="nav nav-pills">
-
-      <li class="process-item hidden">
+    <script id="process-item-template" type="text/x-handlebars-template">
+      <li class="process-item">
         <input type="text" class="process btn btn-default navbar-btn"
-               data-id="-1">
+               data-model="Processteg" data-slug="\{{ slug }}"
+               data-field="title" data-update="true" value="\{{ title }}"/>
         <i class="glyphicon glyphicon-remove"></i>
       </li>
+    </script>
+
+    <ul class="nav nav-pills">
       {{#each processes}}
-        <li class="process-item">
-          <input type="text" name="process{{@index}}" value="{{title}}" class="process btn btn-default navbar-btn"
-                 data-id="{{@index}}">
-          <i class="glyphicon glyphicon-remove"></i>
+        <li class="process-item" data-model="Processteg" data-slug="{{ slug }}">
+          <input type="text" class="process btn btn-default navbar-btn" value="{{ title }}"
+                 data-model="Processteg" data-slug="{{ slug }}"
+                 data-field="title" data-update="true"/>
+          <i class="glyphicon glyphicon-remove" 
+             data-model="Processteg" data-slug="{{ slug }}"
+             data-remove="true"></i>
         </li>
       {{/each}}
       <li class="form-group has-feedback newProcess">
-        <input type="text" class="form-control" placeholder="Ny process"/>
+        <input type="text" class="form-control" placeholder="Ny process"
+               data-model="Processteg" data-slug="{{ slug }}"
+               data-create="true"/>
         <i class="glyphicon glyphicon-plus form-control-feedback"></i>
       </li>
       <li>
-        <button type="button" class="btn-checklist btn btn-default navbar-btn" data-id="checklist" id="checklist">Plocklista</button>
+        <button type="button" class="btn-checklist btn btn-default navbar-btn" data-id="checklist" id="checklist">
+          Plocklista
+        </button>
       </li>
     </ul>
 
-    <div class="process-content mall hidden" id="contentMall">
-      {{> process-content-item extraClass='hidden'}}
-      {{> process-content-item extraClass='init'}}
-    </div>
+    <script id="process-content-item-template" type="text/x-handlebars-template">
+      {{renderPartial 'process-content-item'}}
+    </script>
+    <script id="process-content-template" type="text/x-handlebars-template">
+      <div class="process-content" data-model="Processteg" data-slug="\{{ slug }}" data-id="\{{ _id }}"
+           style="display: none;">
+      </div>
+    </script>
+    
     {{#each processes}}
-      <div class="process-content" id="content{{@index}}" data-id="{{@index}}"
+      <div class="process-content" data-model="Processteg" data-slug="{{ slug }}" data-id="{{ _id }}"
            style="{{#if @index}}display: none;{{/if}}">
-        {{> process-content-item extraClass='hidden'}}
         {{#each contents}}
-          <input class="hidden" type="text" name="content{{@../index}}Id{{@index}}" value="{{ _id }}"/>
-
           {{> process-content-item}}
         {{/each}}
-        {{> process-content-item extraClass='init'}}
+        {{> process-content-item noData=1}}
       </div>
     {{/each}}
-    
-      <div class="process-content" id="contentchecklist" style="display: none;">
-        <table class="table articleTable">
-          <tr class="table-headerstriped">
-            <th class="centered">Antal</th>
-            <th class="centered">Namn</th>
-            <th class="centered">Artikelnummer</th>
-            <th class="centered">Klinik</th>
-            <th class="centered">Förråd</th>
-            <th class="centered">Sektion</th>
-            <th class="centered">Hylla</th>
-            <th class="centered">Fack</th>
-            <th class="centered"></th>
-          </tr>
-        
+
+    <div class="process-content" id="contentchecklist" style="display: none;">
+      <table class="table articleTable">
+        <tr class="table-headerstriped">
+          <th class="centered">Antal</th>
+          <th class="centered">Namn</th>
+          <th class="centered">Artikelnummer</th>
+          <th class="centered">Klinik</th>
+          <th class="centered">Förråd</th>
+          <th class="centered">Sektion</th>
+          <th class="centered">Hylla</th>
+          <th class="centered">Fack</th>
+          <th class="centered"></th>
+        </tr>
+
         {{# each articles }}
           {{> article }}
         {{/each}}
-        </table>
-        
-        <div id="editChecklist">
-          <div class="search-box articleSearch">
-            <input type="search" id="article-search" class="form-control article-search" placeholder="Sök ny artikel" />
-          </div>
-          <div id="kartotekResults"></div>
+      </table>
+
+      <div id="editChecklist">
+        <div class="search-box articleSearch">
+          <input type="search" id="article-search" class="form-control article-search" placeholder="Sök ny artikel"/>
         </div>
+        <div id="kartotekResults"></div>
       </div>
+    </div>
 
     <a href="/info/{{data.slug}}" target="_blank" class="btn btn-primary">Förhandstitt</a>
-    <a href="" class="btn btn-primary toReview">Skicka till granskning</a>
+    <a class="btn btn-primary toReview" data-val="Granskning"
+            data-model="Operation" data-slug="{{ data.slug }}"
+            data-field="state" data-update="true">Skicka till granskning</a>
   </form>
 </div>
 
