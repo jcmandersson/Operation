@@ -151,7 +151,6 @@ var initializeWysiwygElement = function ($e) {
         });
       };
       editor.on('change', onChange);
-      // TODO - Lägg till så det sparas när man slutar skriva och inte bara när man tar bort fokus.
     }
   });
 };
@@ -201,7 +200,6 @@ var attachUpdateListeners = function () {
       window.location = '/info/' + msg.slug;
     });
   };
-  // TODO - Add on change/keypress listeners
   $('body')
     .on('change', 'input[data-update="true"][data-slug],select[data-update="true"]', function () {
       if($(this).val().length <= 0) {
