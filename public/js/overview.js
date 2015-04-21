@@ -30,13 +30,19 @@ var getComments = function(operation, template) {
 
 $(document).ready(function () {
 
-  $('#hideDone').attr('checked', false);
+  if ($('#hideDone').val() == "true") {
+    $('#hideDone').attr('checked', true);
+  } else {
+    $('#hideDone').attr('checked', false);
+  }
 
   $('#hideDone').change(function() {
     if (this.checked) {
       $('.isDone').closest('.operation-card').hide();
+      window.location.href = '?hidden=true'
     } else {
       $('.isDone').closest('.operation-card').show();
+      window.location.href = '/'
     }
   }); 
   

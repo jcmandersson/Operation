@@ -19,11 +19,11 @@
     <td>Fack</td>
     {{#if user.isAdmin}}
       <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Pris</td>
-      <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Artikelnummer</td>
-      <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Återförsäljare</td>
-      <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Återförsäljare artikelnummer</td>
-      <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Beställningspunkt</td>
+      <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Artikelnummer (sjukhuset)</td>
       <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Klinik</td>
+      <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Leverantör</td>
+      <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Artikelnummer (leverantör)</td>
+      <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Beställningspunkt</td>
       <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Mängd</td>
       <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">Enhet</td>
       <td class="\{{#unless showAllColumns}}hidden \{{/unless}}toggable">peoe</td>
@@ -42,13 +42,13 @@
       {{#if user.isAdmin}}
         <td class="toggable"><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
         <td class="toggable"><input data-name="articleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (sjukhuset)..."/></td>
-        <td class="toggable"><input data-name="supplier" type="text" class="form-control modify-input" placeholder="Återförsäljare..."/></td>
-        <td class="toggable"><input data-name="supplierArticleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (återförsäljare)..."/></td>
-        <td class="toggable"><input data-name="orderItem" type="text" class="form-control modify-input" placeholder="Beställningspunkt..."/></td>
         <td class="toggable"><input data-name="clinic" type="text" class="form-control modify-input" placeholder="Klinik..."/></td>
+        <td class="toggable"><input data-name="supplier" type="text" class="form-control modify-input" placeholder="Leverantör..."/></td>
+        <td class="toggable"><input data-name="supplierArticleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (Leverantör)..."/></td>
+        <td class="toggable"><input data-name="orderItem" type="text" class="form-control modify-input" placeholder="Beställningspunkt..."/></td>
         <td class="toggable"><input data-name="amount" type="text" class="form-control modify-input" placeholder="Mängd..."/></td>
         <td class="toggable"><input data-name="unit" type="text" class="form-control modify-input" placeholder="Enhet..."/></td>
-        <td class="toggable"><input data-name="peoe" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
+        <td class="toggable"><input data-name="peoe" type="text" class="form-control modify-input" placeholder="Peoe..."/></td>
       {{/if}}
       <td class="centered"><a class="btn btn-success" id="article-add" href="#" role="button"><span class="glyphicon glyphicon-plus"></span></a></td>
     </tr>
@@ -67,14 +67,14 @@
     {{#if user.isAdmin}}
       <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="price">\{{#modifyable slug 'price' price}}\{{/modifyable}}</td>
       <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="articleNumber">\{{#modifyable slug 'articleNumber' articleNumber}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="supplierArticleNumber">\{{#modifyable slug 'supplierArticleNumber' supplierArticleNumber}}\{{/modifyable}}</td>
       <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="clinic">\{{#modifyable slug 'clinic' clinic}}\{{/modifyable}}</td>
       <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="supplier">\{{#modifyable slug 'supplier' supplier}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="supplierArticleNumber">\{{#modifyable slug 'supplierArticleNumber' supplierArticleNumber}}\{{/modifyable}}</td>
       <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="orderItem">\{{#modifyable slug 'orderItem' orderItem}}\{{/modifyable}}</td>
       <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="amount">\{{#modifyable slug 'amount' amount}}\{{/modifyable}}</td>
-      <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="enhet">\{{#modifyable slug 'unit' unit}}\{{/modifyable}}</td>
+      <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="unit">\{{#modifyable slug 'unit' unit}}\{{/modifyable}}</td>
       <td class="modifyable-article-column \{{#unless ../showAllColumns}}hidden \{{/unless}}toggable column-kartotek" data-name="peoe">\{{#modifyable slug 'peoe' peoe}}\{{/modifyable}}</td>
-
+    
       <td class="centered"><a class="btn btn-danger article-remove" href="#" role="button"><span class="glyphicon glyphicon-remove"></span></a></td>
     {{/if}}
     <td class="modifyable-article-column hidden column-kartotek" data-name="slug">\{{ slug }}</td>
@@ -108,10 +108,10 @@
             {{#if user.isAdmin}}
               <td class="hidden">Pris</td>
               <td class="hidden">Artikelnummer (sjukhuset)</td>
-              <td class="hidden">Återförsäljare</td>
-              <td class="hidden">Artikelnummer (återförsäljare)</td>
-              <td class="hidden">Beställningsnummer</td>
               <td class="hidden">Klinik</td>
+              <td class="hidden">Leverantör</td>
+              <td class="hidden">Artikelnummer (Leverantör)</td>
+              <td class="hidden">Beställningsnummer</td>
               <td class="hidden">Mängd</td>
               <td class="hidden">Enhet</td>
               <td class="hidden">peoe</td>
@@ -128,11 +128,11 @@
               <td><input data-name="tray"    type="text" class="form-control modify-input" placeholder="Fack..."/></td>
               {{#if user.isAdmin}}
                 <td class="hidden toggable"><input data-name="price" type="text" class="form-control modify-input" placeholder="Pris..."/></td>
-                <td class="hidden toggable"><input data-name="articleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer..."/></td>
-                <td class="hidden toggable"><input data-name="supplier" type="text" class="form-control modify-input" placeholder="Återförsäljare..."/></td>
-                <td class="hidden toggable"><input data-name="supplierArticleNumber" type="text" class="form-control modify-input" placeholder="Återförsäljare..."/></td>
-                <td class="hidden toggable"><input data-name="orderItem" type="text" class="form-control modify-input" placeholder="Beställningsnummer..."/></td>
+                <td class="hidden toggable"><input data-name="articleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (sjukhuset)..."/></td>
                 <td class="hidden toggable"><input data-name="clinic" type="text" class="form-control modify-input" placeholder="Klinik..."/></td>
+                <td class="hidden toggable"><input data-name="supplier" type="text" class="form-control modify-input" placeholder="Leverantör..."/></td>
+                <td class="hidden toggable"><input data-name="supplierArticleNumber" type="text" class="form-control modify-input" placeholder="Artikelnummer (Leverantör)..."/></td>
+                <td class="hidden toggable"><input data-name="orderItem" type="text" class="form-control modify-input" placeholder="Beställningspunkt..."/></td>
                 <td class="hidden toggable"><input data-name="amount" type="text" class="form-control modify-input" placeholder="Mängd..."/></td>
                 <td class="hidden toggable"><input data-name="unit" type="text" class="form-control modify-input" placeholder="Enhet..."/></td>
                 <td class="hidden toggable"><input data-name="peoe" type="text" class="form-control modify-input" placeholder="Peoe..."/></td>
@@ -154,10 +154,10 @@
               {{#if ../user.isAdmin}}
                 <td class="modifyable-article-column hidden toggable column-kartotek" data-name="price"><span>{{ price }}</span></td>
                 <td class="modifyable-article-column hidden toggable column-kartotek" data-name="articleNumber"><span>{{ articleNumber }}</span></td>
+                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="clinic"><span>{{ clinic }}</span></td>
                 <td class="modifyable-article-column hidden toggable column-kartotek" data-name="supplier"><span>{{ supplier }}</span></td>
                 <td class="modifyable-article-column hidden toggable column-kartotek" data-name="supplierArticleNumber"><span>{{ supplierArticleNumber }}</span></td>
                 <td class="modifyable-article-column hidden toggable column-kartotek" data-name="orderItem"><span>{{ orderItem }}</span></td>
-                <td class="modifyable-article-column hidden toggable column-kartotek" data-name="clinic"><span>{{ clinic }}</span></td>
                 <td class="modifyable-article-column hidden toggable column-kartotek" data-name="amount"><span>{{ amount }}</span></td>
                 <td class="modifyable-article-column hidden toggable column-kartotek" data-name="unit"><span>{{ unit }}</span></td>
                 <td class="modifyable-article-column hidden toggable column-kartotek" data-name="peoe"><span>{{ peoe }}</span></td>

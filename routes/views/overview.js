@@ -23,6 +23,9 @@ exports = module.exports = function (req, res) {
   locals.specialties = [];
   
   view.on('init', function(next){
+    var hidden = typeof req.query.hidden !== 'undefined' ? req.query.hidden : false ;  
+    locals.hidden = hidden;
+    
     specialty.model.find({}, function(err, docs){
       if(err){
         console.log(err);
@@ -30,10 +33,12 @@ exports = module.exports = function (req, res) {
       }
       docs.forEach(function(e, i){
         view.on('init', function (next) {
-          operation.model.find({
-            template: false,
-            specialty: e._id
-          }).populate('specialty')
+          var searchConditions = {template: false, specialty: e._id};
+          if (hidden) {
+            searchConditions.isDone = false;
+          }
+          operation.model.find(searchConditions)
+          .populate('specialty')
             .exec(function (err, docs) {
               docs.forEach(function(e, i) {
                 view.on('init', function(next) {
