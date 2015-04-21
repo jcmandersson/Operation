@@ -32,10 +32,6 @@ $(function() {
   $('.articleTable tbody').on("click", '.minus-field', minusOne);
   $('.articleTable tbody').on("click", '.plus-field', plusOne);
   
-  if ($('#opName').attr('data-template') == "false") {
-    $('.articleTable tbody').on("click", '.amount', addAmountClick);
-  }
-  
   socket.on('saveComment', saveCommentSocket);
   
   socket.on('removeCheckArticleUpdate', removeCheckArticleUpdate);
@@ -43,8 +39,13 @@ $(function() {
   socket.on('getCheckboxes', getCheckboxes);
   
   socket.on('markAsDone', changeButtonColor);
+
+  var compiledArticle = $('#article-template').html();
+  var articleTemplate = Handlebars.compile(compiledArticle);
+  var compiledComment = $('#comment-template').html();
+  var commentTemplate = Handlebars.compile(compiledComment);
   
-  socket.on('newArticleUpdate', newArticleUpdate);
+  socket.on('newArticleUpdate', newArticleUpdate.bind(undefined, articleTemplate, commentTemplate));
   
   socket.on('articleAmountUpdate', function(amount, articleID) {
     $('#amount'+articleID).find('.amount-field').text(amount);
@@ -176,55 +177,6 @@ var removeArticle = function() {
   }
 };
 
-var addAmountClick = function() {
-  var val = $(this).text();
-  var input = $('<input type="text" class="editInfoAmount form-control" id="editAmount"/>');
-  input.val(val);
-  $(this).replaceWith(input);
-  $(input).focus();
-
-  $(input).keypress(function(e) {
-    editAmountDone(e, $(input), val);
-  });
-
-  setTimeout(function() {
-    $('body').click(function(e) {
-      if (e.target.id == "editAmount") {
-        return;
-      }
-      editAmountDone(e, $(input), val);
-    });
-  },0);
-
-};
-
-function isPosInt(value) {
-  return !isNaN(value) &&
-    parseInt(Number(value)) == value &&
-    !isNaN(parseInt(value, 10)) && value > 0;
-}
-
-var editAmountDone = function(e, tag, val) {
-  var newAmount = $(tag).val();
-  var oldAmount = val;
-  if (e.which == 13 || e.type === 'click') {
-    
-    $('body').unbind();
-    if (!isPosInt(newAmount)) {
-      var input = $('<b class="amount">' + oldAmount + '</b>');
-      $(tag).replaceWith(input);
-    } else {
-      var input = $('<b class="amount">' + newAmount + '</b>');
-      input.val(newAmount);
-      $(tag).replaceWith(input);
-      var checkArticleID = $(input).parent().parent().attr('id');
-      var operationID = $(input).parent().parent().attr('data-operationId');
-      socket.emit('amountChange', checkArticleID, operationID, newAmount);
-    }
-    return false;
-  }
-};
-
 var updateTableRow = function(tableRow, isChecked, isTemplate) { //set checked status and update row color.
   var checkbox = tableRow.find('input');
   checkbox.prop('checked', isChecked);
@@ -286,12 +238,8 @@ var changeButtonColor = function(data) {
   }
 };
 
-var newArticleUpdate = function(checkArticle, kartotekArticle, operationID) {
-  var compiledArticle = $('#article-template').html();
-  var articleTemplate = Handlebars.compile(compiledArticle);
-  var compiledComment = $('#comment-template').html();
-  var commentTemplate = Handlebars.compile(compiledComment);
-  $(articleTemplate({ kartotek : kartotekArticle, operation: operationID, _id : checkArticle._id, amount : 1 })).appendTo('.articleTable');
+var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
+  $(articleTemplate({ kartotek : kartotekArticle, name : checkArticle.name, operation: operationID, _id : checkArticle._id, amount : 1 })).appendTo('.articleTable');
   $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
   
   //refactor this later because ugly
@@ -304,4 +252,3 @@ var newArticleUpdate = function(checkArticle, kartotekArticle, operationID) {
     $('.checkbox-js').hide();
   }
 };
-
