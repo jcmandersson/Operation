@@ -138,7 +138,7 @@ var initializeTagInput = function () {
 var initializeWysiwygElement = function ($e) {
   if ($e.find('.mce-tinymce').length) return;
 
-  $e.find(':not(.mce-tinymce) textarea:not(.wysiwyg)').addClass('wysiwyg').tinymce({
+  $e.find('textarea:not(.wysiwyg)').addClass('wysiwyg').tinymce({
     plugins: 'advlist autoresize charmap contextmenu image ' +
     'media print anchor link paste tabfocus textcolor ' +
     'autolink insertdatetime lists searchreplace table ' +
@@ -204,11 +204,12 @@ var attachUpdateListeners = function () {
   // TODO - Add on change/keypress listeners
   $('body')
     .on('change', 'input[data-update="true"][data-slug],select[data-update="true"]', function () {
-      console.log('UPDATE');
-      REST.update($(this), $(this).val(), function (err, data) {
-        console.log(err);
-        console.log(data);
-      });
+      if($(this).val().length <= 0) {
+        $(this).val( $(this).attr('data-saved'));
+        return;
+      }
+      $(this).attr('data-saved', $(this).val());
+      REST.update($(this), $(this).val(), function (err, data) {});
     })
     .on('click', '.toReview[data-update="true"]', sendToPreview);
 };
@@ -218,17 +219,18 @@ var attachCreateListeners = function () {
   var newProcessContentItem = function () {
     var $this = $(this);
     var $parent = $this.parents().eq(2);
-    initializeWysiwygElement($(templates.processContentItem({noData: 1})).appendTo($parent));
+    $(templates.processContentItem({noData: 1})).appendTo($parent);
 
     REST.create('Processinnehall', {
       title: $(this).val(),
       process: $parent.attr('data-id'),
-      order: $('.process-content .process-content-item').length()
+      order: $('.process-content .process-content-item').length
     }, function (err, msg) {
       if (err) {
         console.log(err);
         return;
       }
+      initializeWysiwygElement($this.parent().parent());
       $this.parent().parent().attr('data-slug', msg.slug).find('[data-model="Processinnehall"]').attr('data-slug', msg.slug);
     });
   };
@@ -239,7 +241,7 @@ var attachCreateListeners = function () {
     REST.create('Processteg', {
       title: value,
       operation: $('form.operationForm').attr('data-id'),
-      order: $('.process-item').length()
+      order: $('.process-item').length
     }, function (err, msg) {
       if (err) {
         console.log(err);
@@ -247,9 +249,6 @@ var attachCreateListeners = function () {
       }
       var $content = $(templates.processContent(msg)).insertAfter($('.process-content').last());
       $(templates.processContentItem({noData: 1})).appendTo($content);
-      $content.find('.process-content-item').each(function (i, e) {
-        initializeWysiwygElement($(e));
-      });
       $(templates.processItem(msg)).insertBefore($('.newProcess input').parent()).find('input').click();
       $('.newProcess input').val('');
       $('input.process').each(changeWidth);
@@ -317,7 +316,7 @@ $(document).ready(function () {
   initializeSpecialitetSelect();
   initializeTagInput();
 
-  $('.process-content:not(.hidden) .process-content-item').each(function (i, e) {
+  $('.process-content:not(.hidden) .process-content-item:not(:last-child)').each(function (i, e) {
     initializeWysiwygElement($(e));
   });
 
