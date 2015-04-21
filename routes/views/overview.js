@@ -25,7 +25,6 @@ exports = module.exports = function (req, res) {
   view.on('init', function(next){
     var hidden = typeof req.query.hidden !== 'undefined' ? req.query.hidden : false ;  
     locals.hidden = hidden;
-
     
     specialty.model.find({}, function(err, docs){
       if(err){
@@ -41,7 +40,6 @@ exports = module.exports = function (req, res) {
           operation.model.find(searchConditions)
           .populate('specialty')
             .exec(function (err, docs) {
-              console.log(docs);
               docs.forEach(function(e, i) {
                 view.on('init', function(next) {
                   //Check if the operation has any comments.
