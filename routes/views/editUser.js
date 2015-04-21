@@ -53,6 +53,7 @@ exports = module.exports = function (req, res) {
         last: typeof data.lastname !== 'undefined' ? data.lastname : user.name.last
       };
       user.email = typeof data.email !== 'undefined' ? data.email : user.email;
+      user.isAdmin = typeof data.isAdmin !== 'undefined' ? data.isAdmin : false;
       
       if(data.password.length > 0 && data.password !== data.confirm){
         req.flash('error', 'Lösenorden matchar inte');
