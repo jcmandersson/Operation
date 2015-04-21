@@ -17,18 +17,17 @@ var REST = {
   remove: function ($e, callback) {
     var slug = $e.attr('data-slug');
     var model = $e.attr('data-model');
-    var $remove = $($e.attr('data-element'));
 
+    if(typeof slug === 'undefined' || slug.length <= 0) {
+      console.log('Varning: Inget slug!');
+      return;
+    }
+    
     $.ajax({
       type: 'DELETE',
       url: '/api/' + model + 's/' + slug
     }).done(function (msg) {
       setLastSaved(new Date());
-      if ($remove.length !== 1) {
-        console.log('Found more then 1 element that matches "' + $e.attr('data-element') + '"');
-        return callback('Found more then 1 element that matches "' + $e.attr('data-element') + '"');
-      }
-      $remove.remove();
       callback(null, msg);
     }).fail(function (err, status) {
       if (err) alert(err);
@@ -40,14 +39,18 @@ var REST = {
   update: function ($e, updated, callback) {
     var slug = $e.attr('data-slug');
     var model = $e.attr('data-model');
+
+    if(typeof slug === 'undefined' || slug.length <= 0) {
+      console.log('Varning: Inget slug!');
+      return;
+    }
+    
     var data = {};
-    if (typeof updated === 'Object') {
+    if (typeof updated === 'object') {
       data = updated;
     } else {
       data[$e.attr('data-field')] = updated;
     }
-
-    console.log(data);
 
     $.ajax({
       type: 'GET',
@@ -76,7 +79,6 @@ var REST = {
       data: data
     }).done(function (msg) {
       setLastSaved(new Date());
-      // TODO - create from template and insert in DOM
       callback(null, msg);
     }).fail(function (err, status) {
       if (err) alert(err);
@@ -165,6 +167,30 @@ var changeWidth = function (i, e) {
 
 var attachUpdateListeners = function () {
 
+  $(".process-content").sortable({
+    cancel: 'input,.mce-tinymce',
+    stop: function (e, ui) {
+      var $this = $(this);
+      console.log($this);
+      $this.find('.process-content-item').each(function (i, e) {
+        var $e = $(e);
+        REST.update($e, {order: $('.process-content .process-content-item').index(e)}, function (err, msg) {});
+      });
+    }
+  });
+
+  $('.nav-pills').sortable({
+    cancel: '.newProcess',
+    stop: function (e, ui) {
+      var $this = $(this);
+      $this.find('.process-item').each(function (i, e) {
+        var $e = $(e);
+        var $input = $e.find('input');
+        REST.update($input, {order: $('.nav-pills .process-item').index(e)}, function(err, msg) {});
+      });
+    }
+  });
+  
   var sendToPreview = function (e) {
     e.preventDefault();
     REST.update($(this), $(this).attr('data-val'), function (err, msg) {
@@ -188,15 +214,16 @@ var attachUpdateListeners = function () {
 };
 
 var attachCreateListeners = function () {
-  
+
   var newProcessContentItem = function () {
     var $this = $(this);
     var $parent = $this.parents().eq(2);
     initializeWysiwygElement($(templates.processContentItem({noData: 1})).appendTo($parent));
-    
+
     REST.create('Processinnehall', {
       title: $(this).val(),
-      process: $parent.attr('data-id')
+      process: $parent.attr('data-id'),
+      order: $('.process-content .process-content-item').length()
     }, function (err, msg) {
       if (err) {
         console.log(err);
@@ -205,13 +232,14 @@ var attachCreateListeners = function () {
       $this.parent().parent().attr('data-slug', msg.slug).find('[data-model="Processinnehall"]').attr('data-slug', msg.slug);
     });
   };
-  
-  var newProcess = function(e) {
+
+  var newProcess = function (e) {
     e.preventDefault();
     var value = $('.newProcess input').val();
     REST.create('Processteg', {
       title: value,
-      operation: $('form.operationForm').attr('data-id')
+      operation: $('form.operationForm').attr('data-id'),
+      order: $('.process-item').length()
     }, function (err, msg) {
       if (err) {
         console.log(err);
@@ -219,7 +247,7 @@ var attachCreateListeners = function () {
       }
       var $content = $(templates.processContent(msg)).insertAfter($('.process-content').last());
       $(templates.processContentItem({noData: 1})).appendTo($content);
-      $content.find('.process-content-item').each(function(i, e) {
+      $content.find('.process-content-item').each(function (i, e) {
         initializeWysiwygElement($(e));
       });
       $(templates.processItem(msg)).insertBefore($('.newProcess input').parent()).find('input').click();
@@ -239,7 +267,31 @@ var attachCreateListeners = function () {
 };
 
 var attachRemoveListeners = function () {
+  var removeProcessContentItem = function () {
+    if (!confirm('Vill du verkligen ta bort denna rubrik?')) return;
+    var $item = $(this).parent();
+    var slug = $item.attr('data-slug');
+    REST.remove($item, function (err, msg) {
+      console.log(err);
+      console.log(msg);
+      $('[data-slug="' + slug + '"]').remove();
+    });
+  };
 
+  var removeProcess = function () {
+    if (!confirm('Vill du verkligen ta bort denna process?')) return;
+    var $item = $(this);
+    var slug = $item.attr('data-slug');
+    REST.remove($item, function (err, msg) {
+      console.log(err);
+      console.log(msg);
+      $('[data-slug="' + slug + '"]').remove();
+    });
+  };
+
+  $('body')
+    .on('click', '.process-content-item .glyphicon-remove', removeProcessContentItem)
+    .on('click', '.process-item .glyphicon-remove', removeProcess);
 };
 
 var attachViewListeners = function () {
@@ -247,15 +299,15 @@ var attachViewListeners = function () {
     $('.nav-pills li.process-item .active').removeClass('active');
     var $this = $(this).addClass('active');
     $(".process-content").hide();
-    if ($(this).attr('data-id') == 'checklist'){
+    if ($(this).attr('data-id') == 'checklist') {
       $('#contentchecklist').show();
     } else {
       $('.process-content[data-slug="' + $(this).attr('data-slug') + '"]').show();
     }
   };
-  
+
   $('input.process').each(changeWidth);
-  
+
   $('body')
     .on('keyup', 'input.process', changeWidth)
     .on('click', '.navbar-btn', navClick);
