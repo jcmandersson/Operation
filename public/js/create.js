@@ -153,7 +153,7 @@ var addArticle = function(articleTemplate, results) {
   var found = false;
 
   $('.article').each(function(index) {
-    if($(this).attr("data-kartotekID") == kartotekID) {
+    if ($(this).attr("data-kartotekID") == kartotekID) {
       found = true;
       }
   });

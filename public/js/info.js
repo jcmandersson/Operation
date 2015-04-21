@@ -11,7 +11,7 @@ tabClick = function(elem) {
   }
 };
 
-$(document).ready(function () {
+$(document).ready(function() {
   var hash = window.location.hash.substring(5);
   if (!hash || hash === 'all') {
     $("#all").addClass('active');
@@ -29,18 +29,17 @@ $(document).ready(function () {
   var compiledResults = $('#kartotekResults-template').html();
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
 
-  $('#article-search').keyup( function() {
-    if ( this.value.length == 0) {
+  $('#article-search').keyup(function() {
+    if (this.value.length == 0) {
       $('#kartotekResults').empty();
       return;
-    }
-    else if ( this.value.length < 3 ) {
+    } else if (this.value.length < 3) {
       return;
     }
     findArticles(kartotekResultsTemplate);
   });
   
-  $(".publicera").click(function () {
+  $(".publicera").click(function() {
     var slug = $("#opName").attr('data-operationSlug');
 
     $.ajax({
@@ -50,10 +49,10 @@ $(document).ready(function () {
         state: 'Publicerad'
       }
     })
-      .done(function (msg) {
+      .done(function(msg) {
         location.reload();
       })
-      .fail(function (err, status) {
+      .fail(function(err, status) {
         console.log('Någonting gick fel!');
         console.log(err);
         console.log(status);
@@ -61,24 +60,23 @@ $(document).ready(function () {
   });
 });
   
-var findArticles = function (resultsTemplate) {
+var findArticles = function(resultsTemplate) {
   var articleName = $('#article-search').val();
   var url = '/api/search/Kartotekartikel?text=' + articleName;
-  $.get(url).done(function (results) {
+  $.get(url).done(function(results) {
     $('#kartotekResults').html(resultsTemplate({ results: results }));
 
     if (results.length != 0) {
       $('#article-search').addClass('has-results');
-    }
-    else {
+    } else {
       $('#article-search').removeClass('has-results');
     }
 
-    $('.add-article-info').click(function () {
+    $('.add-article-info').click(function() {
 
-      //add here
+      // add here
       var id = $(this).attr('data-kartotekid');
-      var kartotekArticle = jQuery.grep(results, function(e){ return e._id == id; });
+      var kartotekArticle = jQuery.grep(results, function(e) { return e._id == id; });
 
       var operationID = $('#opName').attr("data-operationId");
       socket.emit('articleAdd', kartotekArticle, operationID);
@@ -86,7 +84,7 @@ var findArticles = function (resultsTemplate) {
   });
 };
 
-$("#editChecklistButton").click(function () {
+$("#editChecklistButton").click(function() {
   if ($(this).text() == 'Redigera plocklista') {
     $('#editChecklistButton').text('Klar');
     $('#editChecklist').show();
@@ -96,8 +94,7 @@ $("#editChecklistButton").click(function () {
     $('.plus-field').show();
     $('.uneditable-amount').hide();
     $('.checkbox-js').hide();
-  }
-  else {
+  } else {
     $('#editChecklistButton').text('Redigera plocklista');
     $('#editChecklist').hide();
     $('.centered-remove').hide();

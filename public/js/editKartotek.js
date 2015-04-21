@@ -1,9 +1,9 @@
-$(document).ready(function () {
+$(document).ready(function() {
   
   var compiledResults = $('#kartotekResults-template').html();
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
 
-  $('#article-search').keyup(function () {
+  $('#article-search').keyup(function() {
     if (this.value.length == 0) {
       $('#kartotekResults').empty();
       return;
@@ -17,7 +17,7 @@ $(document).ready(function () {
   
 });
 
-var minusOne = function () {
+var minusOne = function() {
   var slug = $(this).parent().parent().attr('data-slug');
   var amountField = $(this).parent().find('.amount-field');
   var oldAmount = parseInt(amountField.text());
@@ -30,10 +30,10 @@ var minusOne = function () {
         amount: newAmount
       }
     })
-      .done(function (msg) {
+      .done(function(msg) {
         $(amountField).text(newAmount);
       })
-      .fail(function (err, status) {
+      .fail(function(err, status) {
         console.log('Någonting gick fel!');
         console.log(err);
         console.log(status);
@@ -41,7 +41,7 @@ var minusOne = function () {
   }
 };
 
-var plusOne = function () {
+var plusOne = function() {
   var slug = $(this).parent().parent().attr('data-slug');
   var amountField = $(this).parent().find('.amount-field');
   var oldAmount = parseInt(amountField.text());
@@ -54,10 +54,10 @@ var plusOne = function () {
         amount: newAmount
       }
     })
-      .done(function (msg) {
+      .done(function(msg) {
         $(amountField).text(newAmount);
       })
-      .fail(function (err, status) {
+      .fail(function(err, status) {
         console.log('Någonting gick fel!');
         console.log(err);
         console.log(status);
@@ -65,32 +65,31 @@ var plusOne = function () {
   }
 };
 
-var findArticles = function (resultsTemplate) {
+var findArticles = function(resultsTemplate) {
   var articleName = $('#article-search').val();
   var url = '/api/search/Kartotekartikel?text=' + articleName;
-  $.get(url).done(function (results) {
+  $.get(url).done(function(results) {
     $('#kartotekResults').html(resultsTemplate({results: results}));
     if (results.length != 0) {
       $('#article-search').addClass('has-results');
-    }
-    else {
+    } else {
       $('#article-search').removeClass('has-results');
     }
-    $('.add-article-info').click(function(){
+    $('.add-article-info').click(function() {
       addArticle(results, this)
     });
   });
 };
 
-var addArticle = function (results, tag) {
+var addArticle = function(results, tag) {
   var id = $(tag).attr('data-kartotekid');
-  var kartotekArticle = jQuery.grep(results, function (e) {
+  var kartotekArticle = jQuery.grep(results, function(e) {
     return e._id == id;
   });
   var operationID = $('.operationForm').attr('data-id');
   var found = false;
 
-  $('.articleTable > tbody > tr').each(function (index) {
+  $('.articleTable > tbody > tr').each(function(index) {
     if ($(this).attr("data-kartotekid") == id) {
       var slug = $(this).attr("data-slug");
       var newAmount = parseInt($('#amount' + kartotekArticle[0]._id).children().text()) + 1;
@@ -101,10 +100,10 @@ var addArticle = function (results, tag) {
           amount: newAmount
         }
       })
-        .done(function (msg) {
+        .done(function(msg) {
           $('#amount' + kartotekArticle[0]._id).find('.amount-field').text(newAmount);
         })
-        .fail(function (err, status) {
+        .fail(function(err, status) {
           console.log('Någonting gick fel!');
           console.log(err);
           console.log(status);
@@ -124,15 +123,15 @@ var addArticle = function (results, tag) {
         amount: 1
       }
     })
-      .done(function (checkArticle) {
+      .done(function(checkArticle) {
         var compiledArticle = $('#article-template').html();
         var articleTemplate = Handlebars.compile(compiledArticle);
         
         var inserted = false;
-        $('.articleTable > tbody > tr').each(function (index) {
+        $('.articleTable > tbody > tr').each(function(index) {
           var articleName = $(this).find(".name").text();
           if (compareString(checkArticle.name, articleName)<1) {
-            $('.articleTable > tbody > tr').eq( index ).before(articleTemplate({
+            $('.articleTable > tbody > tr').eq(index).before(articleTemplate({
               kartotek: kartotekArticle[0],
               name: checkArticle.name,
               operation: operationID,
@@ -155,7 +154,7 @@ var addArticle = function (results, tag) {
           })).appendTo('.articleTable');
         }
       })
-      .fail(function (err, status) {
+      .fail(function(err, status) {
         console.log('Någonting gick fel!');
         console.log(err);
         console.log(status);
@@ -163,7 +162,7 @@ var addArticle = function (results, tag) {
   }
 };
 
-var removeArticle = function () {
+var removeArticle = function() {
   var checkArticleID = $(this).parent().parent().attr('id');
   var slug = $(this).parent().parent().attr('data-slug');
 
@@ -174,30 +173,29 @@ var removeArticle = function () {
       type: 'DELETE',
       url: '/api/artikels/' + slug
     })
-      .done(function (msg) {
+      .done(function(msg) {
         var row = $('#' + checkArticleID);
         row.remove();
       })
-      .fail(function (err, status) {
+      .fail(function(err, status) {
         console.log('Någonting gick fel!');
         console.log(err);
         console.log(status);
       });
 
-  }
-  else {
+  } else {
     return false;
   }
 };
 
-var compareString = function(a, b){
+var compareString = function(a, b) {
   var A = a.toLowerCase();
   var B = b.toLowerCase();
-  if (A < B){
+  if (A < B) {
     return -1;
-  }else if (A > B){
+  } else if (A > B) {
     return  1;
-  }else{
+  } else{
     return 0;
   }
 };
