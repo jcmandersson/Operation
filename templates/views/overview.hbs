@@ -3,6 +3,7 @@
 <div class="container">
   <div id="currentModal"></div>
   <h2>Pågående operationsförberedelser</h2>
+  <input type="checkbox" id="hideDone"> Dölj färdiga förberedelser<br>
 
   {{#if specialties.length}}
 
@@ -22,7 +23,7 @@
 
                   <div class="title">{{ title }}</div>
                   <button type="button" class="close removeOperations" data-toggle="modal" aria-label="Close"
-                          data-target="#alertRemovePreparation">
+                          data-target="#alertRemovePreparation{{_id}}">
                     <span aria-hidden="true">&times;</span>
                   </button>
                   <div class="lindaID">{{ linda_id }}</div>

@@ -29,6 +29,16 @@ var getComments = function(operation, template) {
 };
 
 $(document).ready(function () {
+
+  $('#hideDone').attr('checked', false);
+
+  $('#hideDone').change(function() {
+    if (this.checked) {
+      $('.isDone').closest('.operation-card').hide();
+    } else {
+      $('.isDone').closest('.operation-card').show();
+    }
+  }); 
   
   $('.progressbar').each(function (i, e) {
     
