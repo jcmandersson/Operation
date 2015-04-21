@@ -255,8 +255,7 @@ var attachViewListeners = function () {
   };
   
   $('input.process').each(changeWidth);
-
-
+  
   $('body')
     .on('keyup', 'input.process', changeWidth)
     .on('click', '.navbar-btn', navClick);
