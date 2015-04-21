@@ -1,4 +1,4 @@
-var changeTableGraphics = function(tablerow, isChecked, preparation) {//Changes the color of tablerows when they are checked.
+var changeTableGraphics = function(tablerow, isChecked, preparation) {// Changes the color of tablerows when they are checked.
   if (isChecked) {
     tablerow.css('background-color', 'rgba(76, 169, 34, 0.2)');
   } else {

@@ -2,7 +2,7 @@ function add(data, index, operation, addedProccesstegs) {
   
   var addedProccesstegs = addedProccesstegs;
   
-  if ( !(data === undefined) ) {
+  if (!(data === undefined)) {
     
     var underrubrikName = $(data).find('#underrubrik-name').val();
     var underrubrikText = $(data).find('#underrubrik-text').val();
@@ -51,8 +51,7 @@ function add(data, index, operation, addedProccesstegs) {
           console.log(err);
           console.log(status);
         });
-    }
-    else {
+    } else {
       $.ajax({
         type: 'POST',
         url: '/api/processinnehalls',
@@ -88,8 +87,7 @@ var createNewOperation = function() {
   if (specialty == 'Specialitet') {
     console.log('Fix Error here');
     alert("välj specialitet!")
-  }
-  else {
+  } else {
     $.ajax({
       type: 'POST',
       url: '/api/operations',
@@ -102,7 +100,7 @@ var createNewOperation = function() {
     })
       .done(function(msg) {
         console.log(msg);
-        //adding articles here
+        // adding articles here
         $('.article').each(function(index) {
           var name = $(this).text();
           var kartotek = $(this).attr("data-kartotekID");
@@ -119,7 +117,7 @@ var createNewOperation = function() {
             }
           })
             .done(function(msg) {
-              console.log(msg); //Contains the created Article-model
+              console.log(msg); // Contains the created Article-model
             })
             .fail(function(err, status) {
               console.log('Någonting gick fel!');
@@ -127,13 +125,13 @@ var createNewOperation = function() {
               console.log(status);
             });
         });
-        //adding underrubrik/processteg(recursive)
+        // adding underrubrik/processteg(recursive)
         $(function() {
           var index = 0;
           add($('#underrubriker').children()[index], index, msg._id, {});
         });
         
-        //Show the created handbook
+        // Show the created handbook
         document.location.href = '/info/'+msg.slug;
       })
       .fail(function(err, status) {
@@ -173,8 +171,7 @@ var addArticle = function(articleTemplate, results) {
         $("#top"+kartotekID).html(parseInt($("#top"+kartotekID).html() - 1));
       }
     });
-  }
-  else {
+  } else {
     $("#top"+kartotekID).html(parseInt($("#top"+kartotekID).html()) + 1);
   }
 };
@@ -187,8 +184,7 @@ var findArticles = function(resultsTemplate, articleTemplate) {
 
     if (results.length != 0) {
       $('#article-search').addClass('has-results');
-    }
-    else {
+    } else {
       $('#article-search').removeClass('has-results');
     }
 
@@ -246,18 +242,18 @@ var addUnderrubrik = function(underrubrikTemplate) {
   console.log(checkbar);
   console.log($("#checkbar"));
   
-  //hardcoded for now (iteration1)
+  // hardcoded for now (iteration1)
   var processteg = ["Anestesi", 
                     "Operation", 
                     "Patientpositionering"];
     
   $(underrubrikTemplate({ name: name, text: text, processteg: processteg, checkbar: checkbar })).appendTo('#underrubriker');
 
-  //Set select2 for new underrubrik
+  // Set select2 for new underrubrik
   $(".select-processteg").select2({
   });
   
-  //Reset inputfields for underrubrik
+  // Reset inputfields for underrubrik
   $('#underrubrik-name').val('');
   $('#underrubrik-text').val('');
 };
@@ -293,12 +289,11 @@ $(function() {
   $(".select-processteg").select2({
   });
   
-  //Helper to get selected processteg when creating underrubrik client-side
-  Handlebars.registerHelper('if_selected', function (a, opts) {
+  // Helper to get selected processteg when creating underrubrik client-side
+  Handlebars.registerHelper('if_selected', function(a, opts) {
     if (a == $('.select-processteg').val()) {
       return opts.fn(this);
-    }
-    else {
+    } else {
       return opts.inverse(this);
     }
   });
