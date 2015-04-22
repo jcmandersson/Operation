@@ -3,18 +3,18 @@ $(document).ready(function () {
   var compiledResults = $('#kartotekResults-template').html();
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
 
-  $('#article-search').keyup(function () {
-    if (this.value.length == 0) {
+  $('#article-search').keyup( function() {
+    if ( this.value.length == 0) {
       $('#kartotekResults').empty();
-      return;
+    } else {
+      findArticles(kartotekResultsTemplate);
     }
-    findArticles(kartotekResultsTemplate);
   });
 
   $('.articleTable tbody').on("click", '.article-remove', removeArticle);
   $('.articleTable tbody').on("click", '.minus-field', minusOne);
   $('.articleTable tbody').on("click", '.plus-field', plusOne);
-  
+
 });
 
 var minusOne = function () {

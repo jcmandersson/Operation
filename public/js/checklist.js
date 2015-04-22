@@ -27,7 +27,6 @@ $(document).ready(function () {
     this.checked = !this.checked;
   });
   
-  
   //TODO: Comment this
   var processContent = $('.process-content');
   processContent.on("click", '.cancelComment', cancelComment);
@@ -83,7 +82,6 @@ $(document).ready(function () {
     var tableRow = $('#' + checkObject.id);
     updateTextInTableRow(tableRow, checkObject);
   });
-
   
 });
 
@@ -261,12 +259,30 @@ var changeButtonColor = function(data) {
 };
 
 var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
-  $(articleTemplate({
-    kartotek : kartotekArticle, name : checkArticle.name, operation: operationID,
-    _id : checkArticle._id, amount : 1 
-  })).appendTo('.articleTable');
   
-  $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
+  var inserted = false;
+  $('.articleTable > tbody > tr').each(function (index) {
+    var articleName = $(this).find(".name").text();
+    if (compareString(checkArticle.name, articleName)<1) {
+      $('.articleTable > tbody > tr').eq( index ).before($(articleTemplate({
+        kartotek : kartotekArticle, name : checkArticle.name, operation: operationID,
+        _id : checkArticle._id, amount : 1
+      })));
+      $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
+      inserted = true;
+      return false;
+    }
+  });
+  if (!inserted) {
+    $(articleTemplate({
+      kartotek: kartotekArticle[0],
+      name: checkArticle.name,
+      operation: operationID,
+      _id: checkArticle._id,
+      amount: 1,
+      slug: checkArticle.slug
+    })).appendTo('.articleTable');
+  }
   
   //TODO: refactor this later because ugly
   if ($('#editChecklistButton').text()=="Klar") {
@@ -276,5 +292,17 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
     $('.plus-field').show();
     $('.uneditable-amount').hide();
     $('.checkbox-js').hide();
+  }
+};
+
+var compareString = function(a, b){
+  var A = a.toLowerCase();
+  var B = b.toLowerCase();
+  if (A < B){
+    return -1;
+  }else if (A > B){
+    return  1;
+  }else{
+    return 0;
   }
 };

@@ -32,12 +32,9 @@ $(document).ready(function () {
   $('#article-search').keyup( function() {
     if ( this.value.length == 0) {
       $('#kartotekResults').empty();
-      return;
+    } else {
+      findArticles(kartotekResultsTemplate);
     }
-    else if ( this.value.length < 3 ) {
-      return;
-    }
-    findArticles(kartotekResultsTemplate);
   });
   
   $(".publicera").click(function () {

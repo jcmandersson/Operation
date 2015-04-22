@@ -63,7 +63,8 @@
       {{/each}}
     </div>
   {{/each}}
-
+  
+  
   <div class="process-content" id="contentchecklist">
 
     <table class="table articleTable">
@@ -84,6 +85,7 @@
           <th class="centered-remove" style="display:none">
         {{/unless}}
       </tr>
+      <tbody>
       {{#if articles}}
         {{# each articles }}
           {{> comment }}
@@ -92,6 +94,7 @@
           {{/include}}
         {{/each}}
       {{/if}}
+      </tbody>
     </table>
 
     {{#unless data.template}}
