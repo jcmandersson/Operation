@@ -30,22 +30,22 @@ var getComments = function(operation, template) {
 
 var toggleHidden = function(elem) {
   if (elem.checked) {
-    window.location.href = '?hidden=true'
+    return '?hidden=true';
   } else {
-    window.location.href = '/'
+    return '/';
   }
 };
 
 $(document).ready(function() {
 
-  if ($('#hideDone').val() == "true") {
+  if ($('#hideDone').val() == 'true') {
     $('#hideDone').attr('checked', true);
   } else {
     $('#hideDone').attr('checked', false);
   }
 
   $('#hideDone').change(function() {
-    toggleHidden(this);
+    window.location.href = toggleHidden(this);
   }); 
   
   $('.progressbar').each(function(i, e) {

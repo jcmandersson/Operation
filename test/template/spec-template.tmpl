@@ -37,6 +37,10 @@ Allmän (al) <span class="badge">1</span>
 </ul> 
 </div>
 
+<div id="overview-test">
+<input type="checkbox" id="hideDone" checked="true">
+</div>
+
 <% with (scripts) { %>
   <% [].concat(polyfills, jasmine, boot, vendor, helpers, src, specs,reporters).forEach(function(script){ %>
   <script src="<%= script %>"></script>
