@@ -28,6 +28,14 @@ var getComments = function(operation, template) {
     });
 };
 
+var toggleHidden = function(elem) {
+  if (elem.checked) {
+    window.location.href = '?hidden=true'
+  } else {
+    window.location.href = '/'
+  }
+};
+
 $(document).ready(function() {
 
   if ($('#hideDone').val() == "true") {
@@ -37,13 +45,7 @@ $(document).ready(function() {
   }
 
   $('#hideDone').change(function() {
-    if (this.checked) {
-      $('.isDone').closest('.operation-card').hide();
-      window.location.href = '?hidden=true'
-    } else {
-      $('.isDone').closest('.operation-card').show();
-      window.location.href = '/'
-    }
+    toggleHidden(this);
   }); 
   
   $('.progressbar').each(function(i, e) {
