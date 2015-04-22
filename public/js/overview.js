@@ -30,15 +30,15 @@ var getComments = function(operation, template) {
 
 var toggleHidden = function(elem) {
   if (elem.checked) {
-    return '?hidden=true'
+    return '?hidden=true';
   } else {
-    return '/'
+    return '/';
   }
 };
 
 $(document).ready(function() {
 
-  if ($('#hideDone').val() == "true") {
+  if ($('#hideDone').val() == 'true') {
     $('#hideDone').attr('checked', true);
   } else {
     $('#hideDone').attr('checked', false);
