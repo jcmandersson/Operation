@@ -1,12 +1,12 @@
 tabClick = function(elem) {
   $(elem).addClass('active').siblings().removeClass('active');
-  if(elem.id == "all") {
-    $(".process-content").show();
-    $("#contentchecklist").hide();
+  if (elem.id == 'all') {
+    $('.process-content').show();
+    $('#contentchecklist').hide();
     window.location.replace('#tab_all');
   } else {
-    $(".process-content").hide();
-    $("#content"+elem.id).show();
+    $('.process-content').hide();
+    $('#content'+elem.id).show();
     window.location.replace('#tab_' + elem.id);
   }
 };
