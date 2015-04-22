@@ -24,19 +24,23 @@ span.glyphicon-remove {
 }
 
 #search-article {
-  
+
 }
 
-.whole-table {
-  overflow-x: auto;
+/* Don't do the below for iPads, since mobile safari will bug out */
+@media not screen and (device-width:768px) {
+  .whole-table {
+    overflow-x: auto;
+  }
+  .flipped, .whole-table {
+    transform:rotateX(0deg);
+    -moz-transform:rotateX(0deg); /* Mozilla */
+    -webkit-transform:rotateX(0deg); /* Safari and Chrome */
+    -ms-transform:rotateX(0deg); /* IE 9+ */
+    -o-transform:rotateX(0deg); /* Opera */
+  }
 }
-.flipped, .whole-table {
-  transform:rotateX(180deg);
-  -moz-transform:rotateX(180deg); /* Mozilla */
-  -webkit-transform:rotateX(180deg); /* Safari and Chrome */
-  -ms-transform:rotateX(180deg); /* IE 9+ */
-  -o-transform:rotateX(180deg); /* Opera */
-}
+
 td {
   min-width: 150px;
 }

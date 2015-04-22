@@ -71,9 +71,11 @@ Article.prototype.fillFromElement = function(elem) {
   this.data.slug                  = $(elem).find('[data-name="slug"]').text();
 };
 
-// This takes a single `td` element, and fills itself (i.e. this.data) with the columns.
-// The difference between this and .fillFromElement is that this takes
-// data from `input` elements, whereas .fillFromElement takes data from `td` elements.
+/**
+ * This takes a single `td` element, and fills itself (i.e. this.data) with the columns.
+ * The difference between this and .fillFromElement is that this takes
+ * data from `input` elements, whereas .fillFromElement takes data from `td` elements.
+ */
 Article.prototype.fillFromInput = function(elem) {
   this.data.name                  = $(elem).find('[data-name="name"]').val();
   this.data.tags                  = $(elem).find('[data-name="tags"]').val();
@@ -93,8 +95,10 @@ Article.prototype.fillFromInput = function(elem) {
   this.data.slug                  = $(elem).find('[data-name="slug"]').val();
 };
 
-// Extract essentials (e.g. only name, storage, section, shelf, no functions(?), etc).
-// Basically just the stuff that is necessary to render it to a template.
+/**
+ *Extract essentials (e.g. only name, storage, section, shelf, no functions(?), etc).
+ * Basically just the stuff that is necessary to render it to a template.
+ */
 Article.prototype.essentials = function() {
   return this.data;
 };
@@ -111,25 +115,33 @@ var articles = {
     showAllColumns: false,
     articles: []
   },
-  // Fills itself (this.data.articles) with
-  // the content in the $(this.data.id) DOM-element.
-  // This is supposed to be used directly after the site has
-  // loaded, thus it will assume the structure is similar
-  // to that of the $('#articles') element in kartotek.hbs.
+
+  /**
+   * Fills itself (this.data.articles) with
+   * the content in the $(this.data.id) DOM-element.
+   * This is supposed to be used directly after the site has
+   * loaded, thus it will assume the structure is similar
+   * to that of the $('#articles') element in kartotek.hbs.
+   */
   fillFromElement: function(elem) {
     var elems = $(this.data.id).find('tr');
-    // The first and second element contains the header and the
-    // "add article" column, so ignore those.
+
+    /**
+     * The first and second element contains the header and the
+     * "add article" column, so ignore those.
+     */
     for (var i = 2; i < elems.length; i++) {
       var newArticle = new Article();
       newArticle.fillFromElement(elems[i]);
       this.data.articles.push(newArticle);
     }
 
-    // Yes, we could to this inside the above loop.
-    // Yes, this is three times slower.
-    // But the truth is that performance doesn't matter much.
-    // This is not a bottleneck. (E.g. the internet is a much larger bottleneck.)
+    /**
+     * Yes, we could to this inside the above loop.
+     * Yes, this is three times slower.
+     * But the truth is that performance doesn't matter much.
+     * This is not a bottleneck. (E.g. the internet is a much larger bottleneck.)
+     */
     this.attachModifyEntryListeners();
     this.attachRemoveArticleListeners();
   },
@@ -146,17 +158,24 @@ var articles = {
       }
     }
   },
+
   // This should essentially only be used when attaching event listeners.
   findArticleInDOM: function(slug) {
     return $(this.data.id).find('[data-slug="'+slug+'"]');
   },
-  // Give this an element (like the `td` storage-column on the third row),
-  // and it'll return the slug-name for that row.
+
+  /**
+   * Give this an element (like the `td` storage-column on the third row),
+   * and it'll return the slug-name for that row.
+   */
   findSlugNameFromEntryElement: function(el) {
     return $(el).parent().parent().find('[data-name="slug"]').text();
   },
-  // Extract the essentials from this.data.
-  // Basically just the stuff that is necessary to render it to a template.
+
+  /**
+   * Extract the essentials from this.data.
+   * Basically just the stuff that is necessary to render it to a template.
+   */
   essentials: function() {
     var essentials = [];
     for (var i = 0; i < this.data.articles.length; i++) {
@@ -180,14 +199,20 @@ var articles = {
     this.attachRemoveArticleListeners();
   },
   getRowWhichContainsCreate: function() {
-    // The first row (index 0) contains the header, the second row (index 1)
-    // contains the "create" row, we want to append the new article after the create row.
+
+    /**
+     * The first row (index 0) contains the header, the second row (index 1)
+     * contains the "create" row, we want to append the new article after the create row.
+     */
     return $(this.data.id).find('tr')[1];
   },
   addArticle: function(article) {
-    // Assumes it is added to the top in the database.
-    // A clear way would be to query the db, but that
-    // feels unnecessary.
+
+    /**
+     * Assumes it is added to the top in the database.
+     * A clear way would be to query the db, but that
+     * feels unnecessary.
+     */
     this.data.articles.unshift(article);
     article.createInDatabase(this.render.bind(this));
   },
@@ -241,8 +266,11 @@ var articles = {
       var articleIndex   = articles.findArticle(slugName);
       var removedArticle = articles.data.articles.splice(articleIndex, 1)[0];
       removedArticle.removeFromDatabase();
-      // Alternatively we could to `rowToDelete.remove()` here
-      // (if performance becomes an issue), but this is cleaner.
+
+      /**
+       * Alternatively we could to `rowToDelete.remove()` here
+       * (if performance becomes an issue), but this is cleaner.
+       */
       articles.render();
     }
   },
@@ -336,12 +364,16 @@ var articles = {
 };
 
 $(function() {
-  // This is ugly, and this compilation should really be inside the helper below, but we
-  // need to do this for performance reasons.
+
+  /**
+   * This is ugly, and this compilation should really be inside the helper below, but we
+   * need to do this for performance reasons.
+   */
   var compiledModified = $('#modify-template').html();
   var modifiedTemplate = Handlebars.compile(compiledModified);
 
   Handlebars.registerHelper('modifyable', function(slugName, type, currentValue) {
+    
     //if (currentValue == '') { console.log('hi') }
     var isModifyable = articles.isEntryThatIsCurrentlyBeingModified(slugName, type);
     return modifiedTemplate({ isModifyable: isModifyable, value: currentValue });

@@ -1,5 +1,5 @@
-$(document).ready(function () {
-  Handlebars.registerHelper('math', function (lvalue, operator, rvalue, options) {
+$(document).ready(function() {
+  Handlebars.registerHelper('math', function(lvalue, operator, rvalue, options) {
     lvalue = parseFloat(lvalue);
     rvalue = parseFloat(rvalue);
 
@@ -12,7 +12,7 @@ $(document).ready(function () {
     }[operator];
   });
 
-  $('#search-user').keyup(function () {
+  $('#search-user').keyup(function() {
     var value = $(this).val();
     $.ajax({
       type: 'GET',
@@ -21,13 +21,13 @@ $(document).ready(function () {
         text: value,
         all: 'true'
       }
-    }).done(function (msg) {
+    }).done(function(msg) {
       var templateHTML = $('#user-template').html();
       var compiledTemplate = Handlebars.compile(templateHTML);
       var newHTML = compiledTemplate(msg);
       $('tr:not(tr:first-child)').remove();
       $(newHTML).insertAfter($('table tr'));
-    }).fail(function (err, status) {
+    }).fail(function(err, status) {
         console.log('Någonting gick fel!');
         console.log(err);
         console.log(status);

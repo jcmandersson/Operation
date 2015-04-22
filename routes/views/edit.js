@@ -18,7 +18,6 @@ exports = module.exports = function (req, res) {
     'lib/jquery.iframe-post-form.js',
     //'lib/jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js',
     'lib/tinymce/tinymce.min.js',
-    'updown-counter.js',
     'lib/dateFormat.js',
     'edit.js',
     'editKartotek.js'

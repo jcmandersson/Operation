@@ -1,12 +1,12 @@
-var initializeSpecialitetSelect = function () {
+var initializeSpecialitetSelect = function() {
   $.ajax({
     type: 'GET',
     url: '/api/search/Specialitet/',
     data: {
       all: 1
     }
-  }).done(function( msg ) {
-      var formated = $.map(msg, function (item) {
+  }).done(function(msg) {
+      var formated = $.map(msg, function(item) {
         return {
           text: item.name, id: item.name
         }
@@ -28,23 +28,22 @@ var initializeSpecialitetSelect = function () {
 
 };
 
-var splitOnce = function (str, split) {
+var splitOnce = function(str, split) {
   var index = str.indexOf(split);
-  if (index === -1) {
+  if(index === -1) {
     return [str, ''];
   }
   return [str.slice(0,index), str.slice(index + 1)];
 };
 
-var addAnd = function (str) {
+var addAnd = function(str) {
   if (str[str.length - 1] !== '?') {
     str = str + '&'; 
   }
-  
   return str;
 };
 
-var addToUrl = function (url, type, value) {
+var addToUrl = function(url, type, value) {
 
   if (url.indexOf('?') === -1) {
     url = url + '?';    
@@ -65,7 +64,7 @@ var addToUrl = function (url, type, value) {
   return url;
 };
 
-var removeFromUrl = function (url, type) {
+var removeFromUrl = function(url, type) {
 
   if (url.indexOf(type + '=') !== -1) {
     var before = url.split(type + '=')[0];
@@ -86,7 +85,7 @@ var removeFromUrl = function (url, type) {
   return url;
 };
 
-var changeSpecialty = function (newSpecialty) {
+var changeSpecialty = function(newSpecialty) {
   if (newSpecialty !== "Alla specialiteter") {
     window.location.href = addToUrl(window.location.href, "specialty", newSpecialty);
   } else {
@@ -94,7 +93,7 @@ var changeSpecialty = function (newSpecialty) {
   }
 }
 
-var changeState = function (newState) {
+var changeState = function(newState) {
   if (newState !== "Alla tillstånd") {
     window.location.href = addToUrl(window.location.href, "state", newState);
   } else {
@@ -102,7 +101,7 @@ var changeState = function (newState) {
   }
 }
 
-var changeLimit = function (newLimit) {
+var changeLimit = function(newLimit) {
   if (newLimit !== "25") {
     window.location.href = addToUrl(window.location.href, "limit", newLimit);
   } else {
@@ -110,7 +109,7 @@ var changeLimit = function (newLimit) {
   }
 }
 
-$(document).ready(function () {
+$(document).ready(function() {
   initializeSpecialitetSelect();
   $('.state-select').select2();
 

@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function() {
   $('.process-content').each(function(i, e) {
     var $imgs = $(e).find('.process-content-item img').each(function(i ,e) {
       var $img = $(e);

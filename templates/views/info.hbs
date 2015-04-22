@@ -1,7 +1,7 @@
 {{!< default}}
 <div class="container" xmlns="http://www.w3.org/1999/html">
 
-    <h2>
+  <h2>
     {{#ifeq data.state 'Publicerad'}}
       {{#if data.template}}
         Publicerad Handbok
@@ -16,8 +16,8 @@
     {{#ifeq data.state 'Utkast'}}
       Förhandstitt
     {{/ifeq}}
-    </h2>
-  
+  </h2>
+
   <div id="opName" data-operationId="{{data._id}}" data-operationSlug="{{data.slug}}" data-template="{{data.template}}">
     {{#unless data.template}}
       <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">
@@ -82,7 +82,7 @@
         <th class="centered">Fack</th>
         {{#unless data.template}}
           <th class="centered"></th>
-          <th class="centered-remove" style="display:none">
+        <th class="centered-remove" style="display:none">
         {{/unless}}
       </tr>
       <tbody>
@@ -149,20 +149,6 @@
     {{/ifeq}}
   {{else}}
     {{>removePreparation _id=data._id slug=data.slug}}
-    <!--
-    <div id='btn-done' data-slug='{{ data.slug }}' class="btn btn-primary {{#if data.isDone}} btn-done {{/if}}">
-    -->
-
-      <!-- Det här är en variant-->
-      <!-- Färdig -->
-      
-      <!-- Det här en annan -->
-      <!--
-      <span class="glyphicon glyphicon-ok"></span>
-
-    </div>
-    -->
-  
     <div data-toggle='modal' data-target='#alertRemovePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
   {{/if}}
 </div>

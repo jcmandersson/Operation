@@ -5,8 +5,8 @@ toggleClassHidden = function(elem) {
   $(elem).parent().find('.operations').toggleClass("hidden");   
 };
 
-$(document).ready( function() {
-  $('.speciality').click( function() {
+$(document).ready(function() {
+  $('.speciality').click(function() {
     toggleClassHidden(this);  
   });  
 });
