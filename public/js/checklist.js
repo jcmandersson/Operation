@@ -273,6 +273,7 @@ var changeButtonColor = function(data) {
 var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
   
   var inserted = false;
+  var lastindex = $('.articleTable > tbody > tr').length;
   $('.articleTable > tbody > tr').each(function (index) {
     var articleName = $(this).find(".name").text();
     if (compareString(checkArticle.name, articleName)<1) {
@@ -286,14 +287,12 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
     }
   });
   if (!inserted) {
-    $(articleTemplate({
-      kartotek: kartotekArticle[0],
-      name: checkArticle.name,
-      operation: operationID,
-      _id: checkArticle._id,
-      amount: 1,
-      slug: checkArticle.slug
-    })).appendTo('.articleTable');
+    $('.articleTable > tbody > tr').eq( lastindex-1 ).after($(articleTemplate({
+      kartotek : kartotekArticle, name : checkArticle.name, operation: operationID,
+      _id : checkArticle._id, amount : 1
+    })));
+    
+    $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
   }
   
   // TODO: refactor this later because ugly

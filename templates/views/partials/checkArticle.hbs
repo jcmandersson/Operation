@@ -15,7 +15,7 @@
   
   <td class="name"><p>{{ name }}</p>
     {{#unless kartotek}}
-      <p class='errorText'>Utgått</p>
+      <p class='errorText'>Utgått{{kartotek.name}}</p>
     {{/unless}}
   </td>
   <td class="centered articleNumber"><p>{{ kartotek.articleNumber }}</p></td>
