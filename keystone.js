@@ -17,6 +17,8 @@ keystone.init({
 
 	'name': 'Operation',
 	'brand': 'Operation',
+  
+  port: process.env.PORT || 3000,
 	
 	'less': 'public',
 	'static': 'public',
