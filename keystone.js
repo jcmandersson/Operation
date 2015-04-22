@@ -13,10 +13,12 @@ var keystone = require('keystone'),
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
 
+console.log(process.env.NAME);
+
 keystone.init({
 
-	'name': 'Operation',
-	'brand': 'Operation',
+	'name': typeof process.env.NAME !== 'undefined' ? process.env.NAME : 'Operation',
+	'brand': typeof process.env.NAME !== 'undefined' ? process.env.NAME : 'Operation',
   
   port: process.env.PORT || 3000,
 	
