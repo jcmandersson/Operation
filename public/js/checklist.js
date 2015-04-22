@@ -7,7 +7,6 @@ var oldText;
 var saved = false;
 
 $(document).ready(function() {
-  
   // Load comments
   operationId = $('#opName').attr('data-operationId');
   var rows = $('.check-js');
