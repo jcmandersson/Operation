@@ -30,3 +30,22 @@ describe("CalculateProgress", function() {
   });
 });
 
+describe("The overview page" , function() {
+  it("can hide finished preparations", function() {
+    var url;
+    $('#hideDone').attr('checked', true);
+    console.log($('#hideDone')[0].checked);
+    url = toggleHidden($('#hideDone')[0]);
+    expect(url).toBe("?hidden=true");
+  });
+
+  it("can show finished preparations", function() {
+    var url;
+    $('#hideDone').attr('checked', false);
+    console.log($('#hideDone')[0].checked);
+    url = toggleHidden($('#hideDone')[0]);
+    expect(url).toBe("/");
+  });
+
+});
+

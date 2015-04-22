@@ -30,9 +30,9 @@ var getComments = function(operation, template) {
 
 var toggleHidden = function(elem) {
   if (elem.checked) {
-    window.location.href = '?hidden=true'
+    return '?hidden=true'
   } else {
-    window.location.href = '/'
+    return '/'
   }
 };
 
@@ -45,7 +45,7 @@ $(document).ready(function() {
   }
 
   $('#hideDone').change(function() {
-    toggleHidden(this);
+    window.location.href = toggleHidden(this);
   }); 
   
   $('.progressbar').each(function(i, e) {
