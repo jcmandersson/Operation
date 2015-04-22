@@ -373,8 +373,7 @@ $(function() {
   var modifiedTemplate = Handlebars.compile(compiledModified);
 
   Handlebars.registerHelper('modifyable', function(slugName, type, currentValue) {
-    
-    //if (currentValue == '') { console.log('hi') }
+    if (currentValue == '') currentValue = '#';
     var isModifyable = articles.isEntryThatIsCurrentlyBeingModified(slugName, type);
     return modifiedTemplate({ isModifyable: isModifyable, value: currentValue });
   });
@@ -384,5 +383,7 @@ $(function() {
   window.articles.attachSearchArticleListener();
   window.articles.attachScrollBottomListener();
   window.articles.attachToggleNumColumnsVisibleListener();
-  console.log(window.articles.data)
+  // This line essentially removes all benefits of rending via node, but
+  // otherwise there's just so much duplicate code!
+  window.articles.render();
 });
