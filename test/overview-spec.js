@@ -45,6 +45,7 @@ describe("The overview page" , function() {
     console.log($('#hideDone')[0].checked);
     url = toggleHidden($('#hideDone')[0]);
     expect(url).toBe("/");
+    $('#hideDone').remove();
   });
 
 });
