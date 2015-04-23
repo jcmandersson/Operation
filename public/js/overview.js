@@ -97,16 +97,12 @@ $(document).ready(function() {
   });
   
   socket.on('commentExist', function(commentData) {
-    window.location.reload(); //TODO: Detta ska bort sedan.
-    //TODO: Detta funkar inte av någon anledning...
-    /*
     var commentIcon = $("#comment-icon" + commentData.id);
     if (commentData.hasComment) {
       commentIcon.show();      
     } else {
       commentIcon.hide();
     }
-    */
   });
   
   socket.on('updateOverview', function() {
