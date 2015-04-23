@@ -86,8 +86,8 @@ exports.flashMessages = function (req, res, next) {
 exports.requireUser = function (req, res, next) {
 
   if (!req.user) {
-    req.flash('error', 'Du måste logga in för att nå denna sida.');
-    res.redirect('/login?redirect=' + encodeURIComponent(req.route.path));
+    req.flash('error', 'Du måste logga in för att nå denna sida.'); 
+    res.redirect('/login?redirect=' + encodeURIComponent(req.url));
   } else {
     next();
   }
