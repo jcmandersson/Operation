@@ -39,6 +39,8 @@ KartotekArticle.schema.statics.search = function(text, callback) {
       name: search
     }, {
       tags: search
+    }, {
+      articleNumber: search
     }]
   }).sort('name');
 };
