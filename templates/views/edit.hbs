@@ -100,15 +100,17 @@
           <th class="centered">Fack</th>
           <th class="centered"></th>
         </tr>
-
+        <tbody>
         {{# each articles }}
           {{> article }}
         {{/each}}
+        </tbody>
       </table>
 
       <div id="editChecklist">
-        <div class="search-box articleSearch">
-          <input type="search" id="article-search" class="form-control article-search" placeholder="Sök ny artikel"/>
+        <div class="search-box form-group has-feedback article-search articleSearch">
+          <input type="search" id="article-search" class="form-control article-search" placeholder="Sök ny artikel" />
+          <i class="glyphicon glyphicon-search form-control-feedback"></i>
         </div>
         <div id="kartotekResults"></div>
       </div>
@@ -117,7 +119,7 @@
     <a href="/info/{{data.slug}}" target="_blank" class="btn btn-primary">Förhandstitt</a>
     <a class="btn btn-primary toReview" data-val="Granskning"
             data-model="Operation" data-slug="{{ data.slug }}"
-            data-field="state" data-update="true"">Skicka till granskning</a>
+            data-field="state" data-update="true">Skicka till granskning</a>
   </form>
 </div>
 

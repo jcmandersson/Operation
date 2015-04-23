@@ -1,12 +1,12 @@
 tabClick = function(elem) {
   $(elem).addClass('active').siblings().removeClass('active');
-  if(elem.id == "all") {
-    $(".process-content").show();
-    $("#contentchecklist").hide();
+  if (elem.id == 'all') {
+    $('.process-content').show();
+    $('#contentchecklist').hide();
     window.location.replace('#tab_all');
   } else {
-    $(".process-content").hide();
-    $("#content"+elem.id).show();
+    $('.process-content').hide();
+    $('#content'+elem.id).show();
     window.location.replace('#tab_' + elem.id);
   }
 };
@@ -32,11 +32,9 @@ $(document).ready(function() {
   $('#article-search').keyup(function() {
     if (this.value.length == 0) {
       $('#kartotekResults').empty();
-      return;
-    } else if (this.value.length < 3) {
-      return;
+    } else {
+      findArticles(kartotekResultsTemplate);
     }
-    findArticles(kartotekResultsTemplate);
   });
   
   $(".publicera").click(function() {
@@ -58,6 +56,9 @@ $(document).ready(function() {
         console.log(status);
       });
   });
+  
+  $('#editChecklistButton').click(toggleEdit);
+  
 });
   
 var findArticles = function(resultsTemplate) {
@@ -84,7 +85,7 @@ var findArticles = function(resultsTemplate) {
   });
 };
 
-$("#editChecklistButton").click(function() {
+/*$("#editChecklistButton").click(function() {
   if ($(this).text() == 'Redigera plocklista') {
     $('#editChecklistButton').text('Klar');
     $('#editChecklist').show();
@@ -104,4 +105,27 @@ $("#editChecklistButton").click(function() {
     $('.uneditable-amount').show();
     $('.checkbox-js').show();
   }
-});
+});*/
+
+var toggleEdit = function() {
+  console.log(this);
+  if ($(this).text() == 'Redigera plocklista') {
+    $(this).text('Klar');
+    $('#editChecklist').show();
+    $('.centered-remove').show();
+    $('.amount-field').show();
+    $('.minus-field').show();
+    $('.plus-field').show();
+    $('.uneditable-amount').hide();
+    $('.checkbox-js').hide();
+  } else {
+    $(this).text('Redigera plocklista');
+    $('#editChecklist').hide();
+    $('.centered-remove').hide();
+    $('.amount-field').hide();
+    $('.minus-field').hide();
+    $('.plus-field').hide();
+    $('.uneditable-amount').show();
+    $('.checkbox-js').show();
+  }
+};

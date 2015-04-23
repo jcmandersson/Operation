@@ -6,15 +6,15 @@ $(document).ready(function() {
   $('#article-search').keyup(function() {
     if (this.value.length == 0) {
       $('#kartotekResults').empty();
-      return;
+    } else {
+      findArticles(kartotekResultsTemplate);
     }
-    findArticles(kartotekResultsTemplate);
   });
 
   $('.articleTable tbody').on("click", '.article-remove', removeArticle);
   $('.articleTable tbody').on("click", '.minus-field', minusOne);
   $('.articleTable tbody').on("click", '.plus-field', plusOne);
-  
+
 });
 
 var minusOne = function() {
@@ -128,6 +128,7 @@ var addArticle = function(results, tag) {
         var articleTemplate = Handlebars.compile(compiledArticle);
         
         var inserted = false;
+        var lastindex = $('.articleTable > tbody > tr').length;
         $('.articleTable > tbody > tr').each(function(index) {
           var articleName = $(this).find(".name").text();
           if (compareString(checkArticle.name, articleName)<1) {
@@ -144,14 +145,15 @@ var addArticle = function(results, tag) {
           }
         });
         if (!inserted) {
-          $(articleTemplate({
+
+          $('.articleTable > tbody > tr').eq( lastindex-1 ).after($(articleTemplate({
             kartotek: kartotekArticle[0],
             name: checkArticle.name,
             operation: operationID,
             _id: checkArticle._id,
             amount: 1,
             slug: checkArticle.slug
-          })).appendTo('.articleTable');
+          })));
         }
       })
       .fail(function(err, status) {

@@ -7,7 +7,6 @@ var oldText;
 var saved = false;
 
 $(document).ready(function() {
-  
   // Load comments
   operationId = $('#opName').attr('data-operationId');
   var rows = $('.check-js');
@@ -87,7 +86,6 @@ $(document).ready(function() {
     var tableRow = $('#' + checkObject.id);
     updateTextInTableRow(tableRow, checkObject);
   });
-
   
 });
 
@@ -272,12 +270,29 @@ var changeButtonColor = function(data) {
 };
 
 var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
-  $(articleTemplate({
-    kartotek : kartotekArticle, name : checkArticle.name, operation: operationID,
-    _id : checkArticle._id, amount : 1 
-  })).appendTo('.articleTable');
   
-  $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
+  var inserted = false;
+  var lastindex = $('.articleTable > tbody > tr').length;
+  $('.articleTable > tbody > tr').each(function (index) {
+    var articleName = $(this).find(".name").text();
+    if (compareString(checkArticle.name, articleName)<1) {
+      $('.articleTable > tbody > tr').eq( index ).before($(articleTemplate({
+        kartotek : kartotekArticle, name : checkArticle.name, operation: operationID,
+        _id : checkArticle._id, amount : 1
+      })));
+      $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
+      inserted = true;
+      return false;
+    }
+  });
+  if (!inserted) {
+    $('.articleTable > tbody > tr').eq( lastindex-1 ).after($(articleTemplate({
+      kartotek : kartotekArticle, name : checkArticle.name, operation: operationID,
+      _id : checkArticle._id, amount : 1
+    })));
+    
+    $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
+  }
   
   // TODO: refactor this later because ugly
   if ($('#editChecklistButton').text()=="Klar") {
@@ -287,5 +302,17 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
     $('.plus-field').show();
     $('.uneditable-amount').hide();
     $('.checkbox-js').hide();
+  }
+};
+
+var compareString = function(a, b){
+  var A = a.toLowerCase();
+  var B = b.toLowerCase();
+  if (A < B){
+    return -1;
+  }else if (A > B){
+    return  1;
+  }else{
+    return 0;
   }
 };

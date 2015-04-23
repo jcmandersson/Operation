@@ -28,22 +28,24 @@ var getComments = function(operation, template) {
     });
 };
 
+var toggleHidden = function(elem) {
+  if (elem.checked) {
+    return '?hidden=true';
+  } else {
+    return '/';
+  }
+};
+
 $(document).ready(function() {
 
-  if ($('#hideDone').val() == "true") {
+  if ($('#hideDone').val() == 'true') {
     $('#hideDone').attr('checked', true);
   } else {
     $('#hideDone').attr('checked', false);
   }
 
   $('#hideDone').change(function() {
-    if (this.checked) {
-      $('.isDone').closest('.operation-card').hide();
-      window.location.href = '?hidden=true'
-    } else {
-      $('.isDone').closest('.operation-card').show();
-      window.location.href = '/'
-    }
+    window.location.href = toggleHidden(this);
   }); 
   
   $('.progressbar').each(function(i, e) {
@@ -95,15 +97,23 @@ $(document).ready(function() {
   });
   
   socket.on('commentExist', function(commentData) {
+    var commentIcon = $("#comment-icon" + commentData.id);
     if (commentData.hasComment) {
-      $('#comment-icon' + commentData.id).removeClass('hidden');      
+      commentIcon.show();      
     } else {
-      $('#comment-icon' + commentData.id).addClass('hidden');
+      commentIcon.hide();
     }
   });
   
   socket.on('updateOverview', function() {
     window.location.reload();
+  });
+
+  Handlebars.registerHelper('ifNeq', function(v1, v2, options) {
+    if(v1 !== v2) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
   });
   
 });
