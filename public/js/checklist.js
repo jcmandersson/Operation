@@ -49,6 +49,8 @@ $(document).ready(function() {
   var unCompiledComment = $('#comment-template').html();
   var commentTemplate = Handlebars.compile(unCompiledComment);
   
+  // Checks if all boxes are checked.
+  checkBoxes();
   
   // Listen to sockets (backend sockets in lib/checklist.js)
   socket.on('saveComment', saveCommentSocket);
@@ -56,8 +58,6 @@ $(document).ready(function() {
   socket.on('removeCheckArticleUpdate', removeCheckArticleUpdate);
   
   socket.on('getCheckboxes', getCheckboxes);
-  
-  socket.on('markAsDone', changeButtonColor);
   
   socket.on('newArticleUpdate', newArticleUpdate.bind(undefined, articleTemplate, commentTemplate));
   
@@ -80,6 +80,7 @@ $(document).ready(function() {
   socket.on('checkboxClick', function(checkObject) {
     var tableRow = $('#' + checkObject.id);
     updateTableRow(tableRow, checkObject.isChecked, false);
+    checkBoxes();
   });
   
   socket.on('kartotekUpdate', function(checkObject) {
@@ -148,16 +149,26 @@ var checkjs = function(e) {
       
       socket.emit('checkboxClick', checkObject);
 
-      var done = true;
-      $('.checkbox-js').each(function(i, box) {
-        if (!box.checked) {
-          done = false;
-          return false;
-        }
-      });
+      checkBoxes();
       
-      socket.emit('markAsDone', { operation: operationId, isDone: done});
+       
+      
     }
+  }
+};
+
+var checkBoxes = function() {
+  var done = true;
+  $('.checkbox-js').each(function(i, box) {
+    if (!box.checked) {
+      done = false;
+      return false;
+    }
+  });
+  if (done) {
+    $('#btn-done').addClass('btn-done');
+  } else {
+    $('#btn-done').removeClass('btn-done');
   }
 };
 
@@ -228,14 +239,6 @@ var updateTextInTableRow = function(tableRow, checkObject) {
   tableRow.find('.tray').eq(0).html(kartotekArticle.tray);
 };
 
-var btnDone = function() {
-  if ($('#btn-done').hasClass('btn-done')) {
-    socket.emit('markAsDone', { operation: operationId, isDone: false});
-  } else {
-    socket.emit('markAsDone', { operation: operationId, isDone: true});
-  }
-};
-
 var saveCommentSocket = function (commentObject) {
   var comment = $('#checkComment' + commentObject.id);
   var commentButton = $('#commentButton' + commentObject.id);
@@ -261,13 +264,7 @@ var getCheckboxes = function(checkboxesAndTemplate) {
   }
 };
 
-var changeButtonColor = function(data) {
-  if (data.isDone) {
-    $('#btn-done').addClass('btn-done');
-  } else {
-    $('#btn-done').removeClass('btn-done');
-  }
-};
+
 
 var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
   

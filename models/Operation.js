@@ -15,7 +15,6 @@ Operation.add({
   state: {type: Types.Select, options: 'Utkast, Redigering, Granskning, Publicerad', default: 'Utkast'},
   specialty: {type: Types.Relationship, ref: 'Specialitet', many: false},
   template: {type: Types.Boolean, default: true},
-  isDone: {type: Types.Boolean, default: false},
   lastPrinted: {type: Types.Datetime, default: new Date(0)},
   version: {type: Types.Number, default: 1.0},
   lastUpdated: {type: Types.Datetime, default: new Date()}
