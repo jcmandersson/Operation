@@ -63,8 +63,9 @@ $(document).ready(function() {
   
   socket.on('articleAmountUpdate', function(amount, articleID) {
     var amountHtml = $('#amount'+articleID);
+    var uneditableAmountHtml = $('#uneditableAmount'+articleID);
     amountHtml.find('.amount-field').text(amount);
-    amountHtml.find('.uneditable-amount').text(amount);
+    uneditableAmountHtml.find('.uneditable-amount').text(amount);
   });
 
   // Show saved text when the database has successfully stored the comment.
@@ -109,6 +110,8 @@ var plusOne = function() {
   var amountField = $(this).parent().find('.amount-field');
   var oldAmount = parseInt(amountField.text());
   var newAmount = oldAmount+1;
+  console.log(oldAmount);
+  console.log(newAmount);
   if (newAmount > 0) {
     $(amountField).text(newAmount);
     socket.emit('amountChange', checkArticleID, operationID, newAmount);
@@ -297,10 +300,8 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
   // TODO: refactor this later because ugly
   if ($('#editChecklistButton').text()=="Klar") {
     $('.centered-remove').show();
-    $('.amount-field').show();
-    $('.minus-field').show();
-    $('.plus-field').show();
-    $('.uneditable-amount').hide();
+    $('.amountColumn').show();
+    $('.uneditableAmountColumn').hide();
     $('.checkbox-js').hide();
   }
 };
