@@ -92,6 +92,13 @@ $(document).ready(function() {
 
 // Definition of the minus button that appears when a checklist is edited
 var minusOne = function() {
+
+  row = $(this).parent().parent();
+  checkbox = $(row).find('.checkbox-js');
+  if (checkbox.is(':checked')) {
+    checkAnArticle(row);
+  };
+  
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
   var amountField = $(this).parent().find('.amount-field');
@@ -105,6 +112,13 @@ var minusOne = function() {
 
 // Definition of the plus button that appears when a checklist is edited.
 var plusOne = function() {
+  
+  row = $(this).parent().parent();
+  checkbox = $(row).find('.checkbox-js');
+  if (checkbox.is(':checked')) {
+    checkAnArticle(row);
+  };
+  
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
   var amountField = $(this).parent().find('.amount-field');
@@ -134,33 +148,39 @@ var checkjs = function(e) {
   if (!(targetTagName == 'BUTTON' || targetTagName == 'IMG' || targetClassName == 'amount' ||
         targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
     if (!$(this).prop('disabled')) {
-      var checkbox = $(this).find('input')[0];
-      var preparation = $(this).hasClass("process-content-item") ? true : false;
-
-      checkbox.checked = !checkbox.checked;
-
-      // Function in checkEffect.js
-      changeTableGraphics($(this), checkbox.checked, preparation);
-      var checkObject = {
-        preparation: $(this).data('preparation'), 
-        operation: operationId, id: $(this).attr('id'),
-        check: checkbox.checked
-      };
-      
-      socket.emit('checkboxClick', checkObject);
-
-      var done = true;
-      $('.checkbox-js').each(function(i, box) {
-        if (!box.checked) {
-          done = false;
-          return false;
-        }
-      });
-      
-      socket.emit('markAsDone', { operation: operationId, isDone: done});
+      console.log(this);
+      checkAnArticle(this);
     }
   }
 };
+
+var checkAnArticle = function(row) {
+  var checkbox = $(row).find('input')[0];
+  var preparation = $(row).hasClass("process-content-item") ? true : false;
+
+  checkbox.checked = !checkbox.checked;
+
+  // Function in checkEffect.js
+  changeTableGraphics($(row), checkbox.checked, preparation);
+  var checkObject = {
+    preparation: $(row).data('preparation'),
+    operation: operationId, id: $(row).attr('id'),
+    check: checkbox.checked
+  };
+
+  socket.emit('checkboxClick', checkObject);
+
+  var done = true;
+  $('.checkbox-js').each(function(i, box) {
+    if (!box.checked) {
+      done = false;
+      return false;
+    }
+  });
+
+  socket.emit('markAsDone', { operation: operationId, isDone: done});
+};
+
 
 // Save the comment locally and emit to back-end to save in database.
 var saveComment = function() { 
