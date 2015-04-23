@@ -97,15 +97,27 @@ $(document).ready(function() {
   });
   
   socket.on('commentExist', function(commentData) {
+    window.location.reload(); //TODO: Detta ska bort sedan.
+    //TODO: Detta funkar inte av någon anledning...
+    /*
+    var commentIcon = $("#comment-icon" + commentData.id);
     if (commentData.hasComment) {
-      $('#comment-icon' + commentData.id).removeClass('hidden');      
+      commentIcon.show();      
     } else {
-      $('#comment-icon' + commentData.id).addClass('hidden');
+      commentIcon.hide();
     }
+    */
   });
   
   socket.on('updateOverview', function() {
     window.location.reload();
+  });
+
+  Handlebars.registerHelper('ifNeq', function(v1, v2, options) {
+    if(v1 !== v2) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
   });
   
 });
