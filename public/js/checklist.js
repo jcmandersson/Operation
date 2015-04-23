@@ -150,6 +150,7 @@ var checkjs = function(e) {
     if (!$(this).prop('disabled')) {
       console.log(this);
       checkAnArticle(this);
+      markAsDoneIfDone();
     }
   }
 };
@@ -169,7 +170,10 @@ var checkAnArticle = function(row) {
   };
 
   socket.emit('checkboxClick', checkObject);
+};
 
+// Marks the operationpreperation as done if all checkboxes and preperations are checked. If not it will be unmarked.
+var markAsDoneIfDone = function() {
   var done = true;
   $('.checkbox-js').each(function(i, box) {
     if (!box.checked) {
@@ -177,7 +181,6 @@ var checkAnArticle = function(row) {
       return false;
     }
   });
-
   socket.emit('markAsDone', { operation: operationId, isDone: done});
 };
 
@@ -314,7 +317,9 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
     
     $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
   }
-  
+
+  markAsDoneIfDone();
+
   // TODO: refactor this later because ugly
   if ($('#editChecklistButton').text()=="Klar") {
     $('.centered-remove').show();
