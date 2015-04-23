@@ -1,20 +1,20 @@
 var templates = {
-  processItem: function (data) {
+  processItem: function(data) {
     var template = Handlebars.compile($('#process-item-template').html());
     return template(data);
   },
-  processContent: function (data) {
+  processContent: function(data) {
     var template = Handlebars.compile($('#process-content-template').html());
     return template(data);
   },
-  processContentItem: function (data) {
+  processContentItem: function(data) {
     var template = Handlebars.compile($('#process-content-item-template').html());
     return template(data);
   }
 };
 
 var REST = {
-  remove: function ($e, callback) {
+  remove: function($e, callback) {
     var slug = $e.attr('data-slug');
     var model = $e.attr('data-model');
 
@@ -26,17 +26,17 @@ var REST = {
     $.ajax({
       type: 'DELETE',
       url: '/api/' + model + 's/' + slug
-    }).done(function (msg) {
+    }).done(function(msg) {
       setLastSaved(new Date());
       callback(null, msg);
-    }).fail(function (err, status) {
+    }).fail(function(err, status) {
       if (err) alert(err);
       callback(err, status);
     });
     return true;
   },
 
-  update: function ($e, updated, callback) {
+  update: function($e, updated, callback) {
     var slug = $e.attr('data-slug');
     var model = $e.attr('data-model');
 
@@ -56,7 +56,7 @@ var REST = {
       type: 'GET',
       url: '/api/update/' + model + '/' + slug,
       data: data
-    }).done(function (msg) {
+    }).done(function(msg) {
       setLastSaved(new Date());
 
       if (model === 'Operation' && typeof window.history.pushState !== 'undefined') {
@@ -65,45 +65,45 @@ var REST = {
 
       $('[data-model="' + model + '"][data-slug="' + slug + '"]').attr('data-slug', msg.slug);
       callback(null, msg);
-    }).fail(function (err, status) {
+    }).fail(function(err, status) {
       if (err) alert(err);
       callback(err, status);
     });
     return true;
   },
 
-  create: function (model, data, callback) {
+  create: function(model, data, callback) {
     $.ajax({
       type: 'POST',
       url: '/api/' + model + 's',
       data: data
-    }).done(function (msg) {
+    }).done(function(msg) {
       setLastSaved(new Date());
       callback(null, msg);
-    }).fail(function (err, status) {
+    }).fail(function(err, status) {
       if (err) alert(err);
       callback(err, status);
     });
   }
 };
 
-var initializeSpecialitetSelect = function () {
+var initializeSpecialitetSelect = function() {
   $(".specialitet-select").select2({
     ajax: {
       type: 'GET',
       url: '/api/search/Specialitet/',
       dataType: 'json',
       delay: 250,
-      data: function (params) {
+      data: function(params) {
         return {
           // search term
           text: params.term,
           all: 1
         };
       },
-      processResults: function (data) {
+      processResults: function(data) {
         return {
-          results: $.map(data, function (item) {
+          results: $.map(data, function(item) {
             return {
               text: item.name, id: item._id
             }
@@ -112,7 +112,7 @@ var initializeSpecialitetSelect = function () {
       },
       cache: true
     },
-    escapeMarkup: function (markup) {
+    escapeMarkup: function(markup) {
       return markup;
     },
 
@@ -121,24 +121,24 @@ var initializeSpecialitetSelect = function () {
   });
 };
 
-var initializeTagInput = function () {
+var initializeTagInput = function() {
   $('.tags').tagsInput({
     width: 'auto',
     defaultText: 'Lägg till synonym',
     removeWithBackspace: false,
     height: '40px',
-    'onChange': function ($input, tag) {
+    'onChange': function($input, tag) {
       if (typeof tag === 'undefined') return;
       var value = $($input).val();
       if (value.length) {
-        REST.update($($input), value, function (err, msg) {
+        REST.update($($input), value, function(err, msg) {
         });
       }
     }
   });
 };
 
-var initializeWysiwygElement = function ($e) {
+var initializeWysiwygElement = function($e) {
   if ($e.find('.mce-tinymce').length) return;
 
   $e.find('textarea:not(.wysiwyg)').addClass('wysiwyg').tinymce({
@@ -148,9 +148,9 @@ var initializeWysiwygElement = function ($e) {
     'wordcount imageupload',
     toolbar1: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify |  | bullist numlist outdent indent | link image imageupload',
     imageupload_url: '/api/upload',
-    setup: function (editor) {
-      var onChange = function (e) {
-        REST.update($(e.target.targetElm), $(e.target.targetElm).val(), function (err, msg) {
+    setup: function(editor) {
+      var onChange = function(e) {
+        REST.update($(e.target.targetElm), $(e.target.targetElm).val(), function(err, msg) {
         });
       };
       editor.on('change', onChange);
@@ -158,25 +158,24 @@ var initializeWysiwygElement = function ($e) {
   });
 };
 
-var setLastSaved = function (date) {
+var setLastSaved = function(date) {
   $('.lastSave .time').text(new Date(date).format());
 };
 
-var changeWidth = function (i, e) {
+var changeWidth = function(i, e) {
   var $this = typeof e === 'undefined' ? $(this) : $(e);
   $this.width(($this.val().length + 1) * 8);
 };
 
-var attachUpdateListeners = function () {
-
+var initializeSortable = function() {
   $(".process-content").sortable({
     cancel: 'input,.mce-tinymce',
-    stop: function (e, ui) {
+    stop: function(e, ui) {
       var $this = $(this);
       console.log($this);
-      $this.find('.process-content-item').each(function (i, e) {
+      $this.find('.process-content-item').each(function(i, e) {
         var $e = $(e);
-        REST.update($e, {order: $('.process-content .process-content-item').index(e)}, function (err, msg) {
+        REST.update($e, {order: $('.process-content .process-content-item').index(e)}, function(err, msg) {
         });
       });
     }
@@ -184,20 +183,30 @@ var attachUpdateListeners = function () {
 
   $('.nav-pills').sortable({
     cancel: '.newProcess',
-    stop: function (e, ui) {
+    stop: function(e, ui) {
       var $this = $(this);
-      $this.find('.process-item').each(function (i, e) {
+      $this.find('.process-item').each(function(i, e) {
         var $e = $(e);
         var $input = $e.find('input');
-        REST.update($input, {order: $('.nav-pills .process-item').index(e)}, function (err, msg) {
+        REST.update($input, {order: $('.nav-pills .process-item').index(e)}, function(err, msg) {
         });
       });
     }
   });
+};
 
-  var sendToPreview = function (e) {
+var refreshSortables = function() {
+  $(".process-content").sortable('refresh');
+  $('.nav-pills').sortable('refresh');
+};
+
+var attachUpdateListeners = function() {
+
+  initializeSortable();
+
+  var sendToPreview = function(e) {
     e.preventDefault();
-    REST.update($(this), $(this).attr('data-val'), function (err, msg) {
+    REST.update($(this), $(this).attr('data-val'), function(err, msg) {
       if (err) {
         alert('Kunde inte skicka handboken till granskning.');
         return;
@@ -206,21 +215,21 @@ var attachUpdateListeners = function () {
     });
   };
   $('body')
-    .on('change', 'input[data-update="true"][data-slug],select[data-update="true"]', function () {
+    .on('change', 'input[data-update="true"][data-slug],select[data-update="true"]', function() {
       if ($(this).val().length <= 0) {
         $(this).val($(this).attr('data-saved'));
         return;
       }
       $(this).attr('data-saved', $(this).val());
-      REST.update($(this), $(this).val(), function (err, data) {
+      REST.update($(this), $(this).val(), function(err, data) {
       });
     })
     .on('click', '.toReview[data-update="true"]', sendToPreview);
 };
 
-var attachCreateListeners = function () {
+var attachCreateListeners = function() {
 
-  var newProcessContentItem = function () {
+  var newProcessContentItem = function() {
     var $this = $(this);
     var $parent = $this.parents().eq(2);
     $(templates.processContentItem({noData: 1})).appendTo($parent);
@@ -229,24 +238,25 @@ var attachCreateListeners = function () {
       title: $(this).val(),
       process: $parent.attr('data-id'),
       order: $('.process-content .process-content-item').length
-    }, function (err, msg) {
+    }, function(err, msg) {
       if (err) {
         console.log(err);
         return;
       }
       initializeWysiwygElement($this.parent().parent());
       $this.parent().parent().attr('data-slug', msg.slug).find('[data-model="Processinnehall"]').attr('data-slug', msg.slug);
+      refreshSortables();
     });
   };
 
-  var newProcess = function (e) {
+  var newProcess = function(e) {
     e.preventDefault();
     var value = $('.newProcess input').val();
     REST.create('Processteg', {
       title: value,
       operation: $('form.operationForm').attr('data-id'),
       order: $('.process-item').length
-    }, function (err, msg) {
+    }, function(err, msg) {
       if (err) {
         console.log(err);
         return;
@@ -256,10 +266,12 @@ var attachCreateListeners = function () {
       $(templates.processItem(msg)).insertBefore($('.newProcess input').parent()).find('input').click();
       $('.newProcess input').val('');
       $('input.process').each(changeWidth);
+      initializeSortable();
+      refreshSortables();
     });
   };
 
-  var onEnter = function (event) {
+  var onEnter = function(event) {
     if ((event.keyCode || event.which) === 13) newProcess(event);
   };
 
@@ -269,23 +281,23 @@ var attachCreateListeners = function () {
     .on('click', '.newProcess .glyphicon-plus', newProcess);
 };
 
-var attachRemoveListeners = function () {
-  var removeProcessContentItem = function () {
+var attachRemoveListeners = function() {
+  var removeProcessContentItem = function() {
     if (!confirm('Vill du verkligen ta bort denna rubrik?')) return;
     var $item = $(this).parent();
     var slug = $item.attr('data-slug');
-    REST.remove($item, function (err, msg) {
+    REST.remove($item, function(err, msg) {
       console.log(err);
       console.log(msg);
       $('[data-slug="' + slug + '"]').remove();
     });
   };
 
-  var removeProcess = function () {
+  var removeProcess = function() {
     if (!confirm('Vill du verkligen ta bort denna process?')) return;
     var $item = $(this);
     var slug = $item.attr('data-slug');
-    REST.remove($item, function (err, msg) {
+    REST.remove($item, function(err, msg) {
       console.log(err);
       console.log(msg);
       $('[data-slug="' + slug + '"]').remove();
@@ -297,8 +309,8 @@ var attachRemoveListeners = function () {
     .on('click', '.process-item .glyphicon-remove', removeProcess);
 };
 
-var attachViewListeners = function () {
-  var navClick = function () {
+var attachViewListeners = function() {
+  var navClick = function() {
     $('.nav-pills li.process-item .active').removeClass('active');
     var $this = $(this).addClass('active');
     $(".process-content").hide();
@@ -316,11 +328,11 @@ var attachViewListeners = function () {
     .on('click', '.navbar-btn', navClick);
 };
 
-$(document).ready(function () {
+$(document).ready(function() {
   initializeSpecialitetSelect();
   initializeTagInput();
 
-  $('.process-content:not(.hidden) .process-content-item:not(:last-child)').each(function (i, e) {
+  $('.process-content:not(.hidden) .process-content-item:not(:last-child)').each(function(i, e) {
     initializeWysiwygElement($(e));
   });
 
