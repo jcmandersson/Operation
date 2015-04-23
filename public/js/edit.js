@@ -22,7 +22,7 @@ var REST = {
       console.log('Varning: Inget slug!');
       return;
     }
-    
+
     $.ajax({
       type: 'DELETE',
       url: '/api/' + model + 's/' + slug
@@ -44,7 +44,7 @@ var REST = {
       console.log('Varning: Inget slug!');
       return;
     }
-    
+
     var data = {};
     if (typeof updated === 'object') {
       data = updated;
@@ -167,8 +167,7 @@ var changeWidth = function(i, e) {
   $this.width(($this.val().length + 1) * 8);
 };
 
-var attachUpdateListeners = function() {
-
+var initializeSortable = function() {
   $(".process-content").sortable({
     cancel: 'input,.mce-tinymce',
     stop: function(e, ui) {
@@ -176,7 +175,8 @@ var attachUpdateListeners = function() {
       console.log($this);
       $this.find('.process-content-item').each(function(i, e) {
         var $e = $(e);
-        REST.update($e, {order: $('.process-content .process-content-item').index(e)}, function(err, msg) {});
+        REST.update($e, {order: $('.process-content .process-content-item').index(e)}, function(err, msg) {
+        });
       });
     }
   });
@@ -188,11 +188,22 @@ var attachUpdateListeners = function() {
       $this.find('.process-item').each(function(i, e) {
         var $e = $(e);
         var $input = $e.find('input');
-        REST.update($input, {order: $('.nav-pills .process-item').index(e)}, function(err, msg) {});
+        REST.update($input, {order: $('.nav-pills .process-item').index(e)}, function(err, msg) {
+        });
       });
     }
   });
-  
+};
+
+var refreshSortables = function() {
+  $(".process-content").sortable('refresh');
+  $('.nav-pills').sortable('refresh');
+};
+
+var attachUpdateListeners = function() {
+
+  initializeSortable();
+
   var sendToPreview = function(e) {
     e.preventDefault();
     REST.update($(this), $(this).attr('data-val'), function(err, msg) {
@@ -210,7 +221,8 @@ var attachUpdateListeners = function() {
         return;
       }
       $(this).attr('data-saved', $(this).val());
-      REST.update($(this), $(this).val(), function(err, data) {});
+      REST.update($(this), $(this).val(), function(err, data) {
+      });
     })
     .on('click', '.toReview[data-update="true"]', sendToPreview);
 };
@@ -233,6 +245,7 @@ var attachCreateListeners = function() {
       }
       initializeWysiwygElement($this.parent().parent());
       $this.parent().parent().attr('data-slug', msg.slug).find('[data-model="Processinnehall"]').attr('data-slug', msg.slug);
+      refreshSortables();
     });
   };
 
@@ -253,6 +266,8 @@ var attachCreateListeners = function() {
       $(templates.processItem(msg)).insertBefore($('.newProcess input').parent()).find('input').click();
       $('.newProcess input').val('');
       $('input.process').each(changeWidth);
+      initializeSortable();
+      refreshSortables();
     });
   };
 
