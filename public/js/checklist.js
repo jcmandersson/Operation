@@ -24,10 +24,11 @@ $(document).ready(function() {
   container.on("click", '.check-js', checkjs);
   
   // If the actual checkbox is clicked we will get a double-click effect. So we compensate for that here.
+  /*
   container.on("click", '.checkbox-js', function() {
     this.checked = !this.checked;
   });
-  
+  */
   
   // TODO: Comment this
   var processContent = $('.process-content');
@@ -135,24 +136,23 @@ var checkjs = function(e) {
   if (!(targetTagName == 'BUTTON' || targetTagName == 'IMG' || targetClassName == 'amount' ||
         targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
     if (!$(this).prop('disabled')) {
-      var checkbox = $(this).find('input')[0];
+      var checkbox = $(this).find('.checkbox-js');
       var preparation = $(this).hasClass("process-content-item") ? true : false;
-
-      checkbox.checked = !checkbox.checked;
+      
+      checkbox.toggleClass('glyphicon-ok');
 
       // Function in checkEffect.js
       changeTableGraphics($(this), checkbox.checked, preparation);
       var checkObject = {
         preparation: $(this).data('preparation'), 
         operation: operationId, id: $(this).attr('id'),
-        check: checkbox.checked
+        check: checkbox.hasClass('glyphicon-ok')
       };
       
       socket.emit('checkboxClick', checkObject);
 
       checkBoxes();
-      
-       
+          
       
     }
   }
@@ -161,7 +161,7 @@ var checkjs = function(e) {
 var checkBoxes = function() {
   var done = true;
   $('.checkbox-js').each(function(i, box) {
-    if (!box.checked) {
+    if (!$(box).hasClass('glyphicon-ok')) {
       done = false;
       return false;
     }
@@ -218,8 +218,8 @@ var removeArticle = function() {
 
 // set checked status and update row color.
 var updateTableRow = function(tableRow, isChecked, isTemplate) {
-  var checkbox = tableRow.find('input');
-  checkbox.prop('checked', isChecked);
+  var checkbox = tableRow.find('.checkbox-js');
+  isChecked ? checkbox.addClass('glyphicon-ok') : checkbox.removeClass('glyphicon-ok');
   var preparation = tableRow.hasClass("process-content-item") ? true : false;
   if (isTemplate) {
     checkbox.prop('disabled', true);
