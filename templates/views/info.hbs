@@ -150,7 +150,7 @@
     {{/ifeq}}
   {{else}}
     {{>removePreparation _id=data._id slug=data.slug}}
-    <div data-toggle='modal' data-target='#alertRemovePreparation' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
+    <div data-toggle='modal' data-target='#alertRemovePreparation{{data._id}}' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
   {{/if}}
 </div>
 
