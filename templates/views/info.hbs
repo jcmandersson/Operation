@@ -54,10 +54,13 @@
     <div class="process-content" id="content{{@index}}">
       {{#each contents}}
         <div class="process-content-item check-js" data-operationId="{{../operation}}" data-preparation="true" id="{{_id}}">
-          {{#if checkAble}}
-            <input type="checkbox" class="checkbox-js" {{#if checked}} checked="checked" {{/if}} id="processCheck{{_id}}">
-          {{/if}}
-          <span class="contentTitle">{{title}}</span>
+          
+          <span class="contentTitle">{{title}}
+            {{#if checkAble}}
+              <br><div class="checkbox-js btn btn-default glyphicon {{#if checked}} glyphicon-ok {{/if}}" id="processCheck{{_id}}"></div>
+            {{/if}}
+          </span>
+          
           <span class="contentText">{{{text}}}</span>
         </div>
       {{/each}}

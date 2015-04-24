@@ -1,6 +1,10 @@
 <tr data-kartotekID="{{kartotek._id}}" data-operationId="{{operation}}" data-preparation="false" class="check-js" id={{_id}}>
   {{#unless parent.data.template}}
-    <td class="centered"><input type="checkbox" class="checkbox-js" id="{{_id}}"></td>
+    <td class="centered">
+      <div class="checkbox-js btn btn-default glyphicon{{#if checked}} glyphicon-ok {{/if}}" id="{{_id}}">
+        
+      </div>
+    </td>
   {{/unless}}
   <td class="amountColumn centered" style="display:none" id="amount{{kartotek._id}}">
     <div class="minus-field" id="minus{{kartotek._id}}">

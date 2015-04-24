@@ -29,19 +29,13 @@ $(document).ready(function() {
   var container = $('.container');
   container.on("click", '.check-js', checkjs);
   
-  // If the actual checkbox is clicked we will get a double-click effect. So we compensate for that here.
-  container.on("click", '.checkbox-js', function() {
-    this.checked = !this.checked;
-  });
   
-  // TODO: Comment this
   var processContent = $('.process-content');
   processContent.on("click", '.cancelComment', cancelComment);
   processContent.on("click", '.saveComment', saveComment);
   processContent.on("click", '.showComment', showComment);
   
   
-  // TODO: Comment this
   var articleTable = $('.articleTable tbody');
   articleTable.on("click", '.article-remove', removeArticle);
   articleTable.on("click", '.minus-field', minusOne);
@@ -119,11 +113,11 @@ var sortTable = function() {
 // Definition of the minus button that appears when a checklist is edited
 var minusOne = function() {
 
-  row = $(this).parent().parent();
-  checkbox = $(row).find('.checkbox-js');
+  var row = $(this).parent().parent();
+  var checkbox = $(row).find('.checkbox-js');
   if (checkbox.is(':checked')) {
     checkAnArticle(row);
-  };
+  }
   
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
@@ -139,11 +133,11 @@ var minusOne = function() {
 // Definition of the plus button that appears when a checklist is edited.
 var plusOne = function() {
   
-  row = $(this).parent().parent();
-  checkbox = $(row).find('.checkbox-js');
+  var row = $(this).parent().parent();
+  var checkbox = $(row).find('.checkbox-js');
   if (checkbox.is(':checked')) {
     checkAnArticle(row);
-  };
+  }
   
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
@@ -181,17 +175,17 @@ var checkjs = function(e) {
 };
 
 var checkAnArticle = function(row) {
-  var checkbox = $(row).find('input')[0];
+  var checkbox = $(row).find('.checkbox-js');
   var preparation = $(row).hasClass("process-content-item") ? true : false;
 
-  checkbox.checked = !checkbox.checked;
-
+  checkbox.toggleClass('glyphicon-ok');
+  
   // Function in checkEffect.js
-  changeTableGraphics($(row), checkbox.checked, preparation);
+  changeTableGraphics($(row), checkbox.hasClass('glyphicon-ok'), preparation);
   var checkObject = {
     preparation: $(row).data('preparation'),
     operation: operationId, id: $(row).attr('id'),
-    check: checkbox.checked
+    check: checkbox.hasClass('glyphicon-ok')
   };
 
   socket.emit('checkboxClick', checkObject);
@@ -201,7 +195,7 @@ var checkAnArticle = function(row) {
 var checkIfDone = function() {
   var done = true;
   $('.checkbox-js').each(function(i, box) {
-    if (!box.checked) {
+    if (!$(box).hasClass('glyphicon-ok')) {
       done = false;
       return false;
     }
@@ -258,8 +252,8 @@ var removeArticle = function() {
 
 // set checked status and update row color.
 var updateTableRow = function(tableRow, isChecked, isTemplate) {
-  var checkbox = tableRow.find('input');
-  checkbox.prop('checked', isChecked);
+  var checkbox = tableRow.find('.checkbox-js');
+  isChecked ? checkbox.addClass('glyphicon-ok') : checkbox.removeClass('glyphicon-ok');
   var preparation = tableRow.hasClass("process-content-item") ? true : false;
   if (isTemplate) {
     checkbox.prop('disabled', true);

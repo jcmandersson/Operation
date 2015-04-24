@@ -13,8 +13,8 @@ var getComments = function(operation, template) {
       }
   }).done(function(checkArticles) {
     var operationArticles = [];
-    for(var i in checkArticles) {
-      if(checkArticles[i].operation == operation) {
+    for (var i in checkArticles) {
+      if (checkArticles[i].operation == operation) {
         operationArticles.push(checkArticles[i]);
       }
     }
@@ -101,7 +101,7 @@ $(document).ready(function() {
   });
 
   Handlebars.registerHelper('ifNeq', function(v1, v2, options) {
-    if(v1 !== v2) {
+    if (v1 !== v2) {
       return options.fn(this);
     }
     return options.inverse(this);

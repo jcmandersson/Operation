@@ -108,7 +108,7 @@ var changeLimit = function(newLimit) {
   } else {
     window.location.href = removeFromUrl(window.location.href, 'limit');
   }
-}
+};
 
 $(document).ready(function() {
   initializeSpecialitetSelect();
