@@ -18,7 +18,6 @@ $(document).ready(function() {
     changeCommentButton(comment, commentButton);
   });
   
-  
   // Add click events to table rows in the checklist
   var container = $('.container');
   container.on("click", '.check-js', checkjs);
@@ -27,7 +26,6 @@ $(document).ready(function() {
   container.on("click", '.checkbox-js', function() {
     this.checked = !this.checked;
   });
-  
   
   // TODO: Comment this
   var processContent = $('.process-content');
@@ -49,9 +47,7 @@ $(document).ready(function() {
   var unCompiledComment = $('#comment-template').html();
   var commentTemplate = Handlebars.compile(unCompiledComment);
   
-  // Checks if all boxes are checked.
-  checkBoxes();
-  
+
   // Listen to sockets (backend sockets in lib/checklist.js)
   socket.on('saveComment', saveCommentSocket);
   
@@ -81,7 +77,7 @@ $(document).ready(function() {
   socket.on('checkboxClick', function(checkObject) {
     var tableRow = $('#' + checkObject.id);
     updateTableRow(tableRow, checkObject.isChecked, false);
-    checkBoxes();
+    checkIfDone();
   });
   
   socket.on('kartotekUpdate', function(checkObject) {
@@ -149,9 +145,8 @@ var checkjs = function(e) {
   if (!(targetTagName == 'BUTTON' || targetTagName == 'IMG' || targetClassName == 'amount' ||
         targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
     if (!$(this).prop('disabled')) {
-      console.log(this);
       checkAnArticle(this);
-      checkBoxes();
+      checkIfDone();
     }
   }
 };
@@ -173,8 +168,8 @@ var checkAnArticle = function(row) {
   socket.emit('checkboxClick', checkObject);
 };
 
-
-var checkBoxes = function() {
+// check if done checking and mark as done.
+var checkIfDone = function() {
   var done = true;
   $('.checkbox-js').each(function(i, box) {
     if (!box.checked) {
@@ -266,6 +261,7 @@ var saveCommentSocket = function (commentObject) {
 var removeCheckArticleUpdate = function(checkArticleID) {
   var row = $('#'+checkArticleID);
   row.remove();
+  checkIfDone();
 };
 
 var getCheckboxes = function(checkboxesAndTemplate) {
@@ -279,9 +275,8 @@ var getCheckboxes = function(checkboxesAndTemplate) {
     // var isDisabled = checkbox.attr("disabled");
     updateTableRow(tableRow, isChecked, isTemplate);
   }
+  checkIfDone();
 };
-
-
 
 var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
   
@@ -308,7 +303,7 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
     $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
   }
 
-  checkBoxes();
+  checkIfDone();
 
   // TODO: refactor this later because ugly
   if ($('#editChecklistButton').text()=="Klar") {

@@ -78,7 +78,6 @@ $(document).ready(function() {
     socket.emit('overviewOpen');
   });
   
-  
   socket.on('updateProgress', function(progress) {
     console.log(progress);
     var percent = calculateProgress(progress.all);
