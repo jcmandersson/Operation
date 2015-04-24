@@ -79,10 +79,8 @@ $(document).ready(function() {
   });
   
   socket.on('updateProgress', function(progress) {
-    console.log(progress);
     var percent = calculateProgress(progress.all);
     var $progress = $('[data-id="'+progress.operation+'"] .progressbar').progressbar("value", percent);
-    console.log($progress);
     if (percent === 1) percent--;
     $progress.find('.ui-progressbar-value').html('&nbsp;&nbsp;&nbsp;'+percent+'% ('+progress.all.checked+'/'+progress.all.total+')');
     isDone(percent, $progress);
