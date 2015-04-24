@@ -6,7 +6,7 @@ $('.confirmRemovePreparation').click(function() {
     type: 'DELETE',
     url: '/api/operations/' + slug
   })
-    .done(function( msg ) {
+    .done(function(msg) {
     })
     .fail(function(err, status) {
       console.log('Error');
