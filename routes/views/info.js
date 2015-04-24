@@ -18,7 +18,8 @@ exports = module.exports = function(req, res) {
     'lib/featherlight/featherlight.min.js',
     'lib/jquery.zoom.min.js',
     'lightbox.js',
-    'removePreparation.js'
+    'removePreparation.js',
+    'lib/__jquery.tablesorter/jquery.tablesorter.js'
   ];
 
   locals.css = [
