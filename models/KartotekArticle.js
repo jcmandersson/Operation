@@ -21,7 +21,7 @@ KartotekArticle.add({
   orderItem: {type: String, required: false, initial: true },
   amount: {type: Types.Number, required: false, initial: true },
   unit: {type: String, required: false, initial: true },
-  peoe: {type: Types.Number, requred: false, initial: true}
+  peoe: {type: String, requred: false, initial: true}
 });
 
 /**

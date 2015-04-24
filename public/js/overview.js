@@ -51,6 +51,7 @@ $(document).ready(function() {
   $('.progressbar').each(function(i, e) {
     
     var percentage = parseInt($(e).attr('data-percent'));
+    isDone(percentage, $(e).progressbar());
     
     $(e).progressbar({
       value: percentage
@@ -85,15 +86,8 @@ $(document).ready(function() {
     console.log($progress);
     if (percent === 1) percent--;
     $progress.find('.ui-progressbar-value').html('&nbsp;&nbsp;&nbsp;'+percent+'% ('+progress.all.checked+'/'+progress.all.total+')');
-  });
-  
-  socket.on('markAsDone', function(data) {    
-    var $progress = $('[data-id="' + data.operation + '"] .progressbar');    
-    if (data.isDone) {
-      $progress.find('.ui-progressbar-value').addClass('progressbar-done');
-    } else {
-      $progress.find('.ui-progressbar-value').removeClass('progressbar-done'); 
-    }
+    isDone(percent, $progress);
+    
   });
   
   socket.on('commentExist', function(commentData) {
@@ -117,3 +111,11 @@ $(document).ready(function() {
   });
   
 });
+
+var isDone = function(percent, progress) {
+  if (percent === 100) {
+    progress.find('.ui-progressbar-value').addClass('progressbar-done');
+  } else {
+    progress.find('.ui-progressbar-value').removeClass('progressbar-done');
+  }
+};

@@ -16,6 +16,7 @@ exports = module.exports = function(req, res) {
     'checklist.js',
     'checkEffect.js',
     'lib/featherlight/featherlight.min.js',
+    'lib/jquery.zoom.min.js',
     'lightbox.js',
     'removePreparation.js'
   ];

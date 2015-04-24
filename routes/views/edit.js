@@ -3,7 +3,6 @@ var operation = keystone.list('Operation');
 var process = keystone.list('Processteg');
 var content = keystone.list('Processinnehall');
 var article = keystone.list('Artikel');
-var mongoose = require('mongoose');
 
 exports = module.exports = function (req, res) {
   var view = new keystone.View(req, res),
@@ -16,7 +15,6 @@ exports = module.exports = function (req, res) {
   locals.scripts = [
     'jquery.tagsinput.js',
     'lib/jquery.iframe-post-form.js',
-    //'lib/jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js',
     'lib/tinymce/tinymce.min.js',
     'lib/dateFormat.js',
     'edit.js',
