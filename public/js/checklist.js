@@ -23,13 +23,6 @@ $(document).ready(function() {
   var container = $('.container');
   container.on("click", '.check-js', checkjs);
   
-  // If the actual checkbox is clicked we will get a double-click effect. So we compensate for that here.
-  /*
-  container.on("click", '.checkbox-js', function() {
-    this.checked = !this.checked;
-  });
-  */
-  
   // TODO: Comment this
   var processContent = $('.process-content');
   processContent.on("click", '.cancelComment', cancelComment);
