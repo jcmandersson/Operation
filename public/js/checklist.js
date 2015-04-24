@@ -27,14 +27,13 @@ $(document).ready(function() {
     this.checked = !this.checked;
   });
   
-  // TODO: Comment this
+  
   var processContent = $('.process-content');
   processContent.on("click", '.cancelComment', cancelComment);
   processContent.on("click", '.saveComment', saveComment);
   processContent.on("click", '.showComment', showComment);
   
   
-  // TODO: Comment this
   var articleTable = $('.articleTable tbody');
   articleTable.on("click", '.article-remove', removeArticle);
   articleTable.on("click", '.minus-field', minusOne);
@@ -94,7 +93,7 @@ var minusOne = function() {
   checkbox = $(row).find('.checkbox-js');
   if (checkbox.is(':checked')) {
     checkAnArticle(row);
-  };
+  }
   
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
@@ -114,7 +113,7 @@ var plusOne = function() {
   checkbox = $(row).find('.checkbox-js');
   if (checkbox.is(':checked')) {
     checkAnArticle(row);
-  };
+  }
   
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
