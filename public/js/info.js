@@ -25,7 +25,7 @@ $(document).ready(function() {
     e.preventDefault();
     tabClick(this);
   });
-
+  
   var compiledResults = $('#kartotekResults-template').html();
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
 
@@ -86,7 +86,6 @@ var findArticles = function(resultsTemplate) {
 };
 
 var toggleEdit = function() {
-  console.log(this);
   if ($(this).text() == 'Redigera plocklista') {
     $(this).text('Klar');
     $('#editChecklist').show();

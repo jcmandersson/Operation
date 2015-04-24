@@ -18,19 +18,17 @@ $(document).ready(function() {
     changeCommentButton(comment, commentButton);
   });
   
-  
   // Add click events to table rows in the checklist
   var container = $('.container');
   container.on("click", '.check-js', checkjs);
   
-  // TODO: Comment this
+  
   var processContent = $('.process-content');
   processContent.on("click", '.cancelComment', cancelComment);
   processContent.on("click", '.saveComment', saveComment);
   processContent.on("click", '.showComment', showComment);
   
   
-  // TODO: Comment this
   var articleTable = $('.articleTable tbody');
   articleTable.on("click", '.article-remove', removeArticle);
   articleTable.on("click", '.minus-field', minusOne);
@@ -43,9 +41,7 @@ $(document).ready(function() {
   var unCompiledComment = $('#comment-template').html();
   var commentTemplate = Handlebars.compile(unCompiledComment);
   
-  // Checks if all boxes are checked.
-  checkBoxes();
-  
+
   // Listen to sockets (backend sockets in lib/checklist.js)
   socket.on('saveComment', saveCommentSocket);
   
@@ -75,7 +71,7 @@ $(document).ready(function() {
   socket.on('checkboxClick', function(checkObject) {
     var tableRow = $('#' + checkObject.id);
     updateTableRow(tableRow, checkObject.isChecked, false);
-    checkBoxes();
+    checkIfDone();
   });
   
   socket.on('kartotekUpdate', function(checkObject) {
@@ -87,6 +83,13 @@ $(document).ready(function() {
 
 // Definition of the minus button that appears when a checklist is edited
 var minusOne = function() {
+
+  var row = $(this).parent().parent();
+  var checkbox = $(row).find('.checkbox-js');
+  if (checkbox.is(':checked')) {
+    checkAnArticle(row);
+  }
+  
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
   var amountField = $(this).parent().find('.amount-field');
@@ -100,6 +103,13 @@ var minusOne = function() {
 
 // Definition of the plus button that appears when a checklist is edited.
 var plusOne = function() {
+  
+  var row = $(this).parent().parent();
+  var checkbox = $(row).find('.checkbox-js');
+  if (checkbox.is(':checked')) {
+    checkAnArticle(row);
+  }
+  
   var operationID = $(this).parent().parent().attr("data-operationId");
   var checkArticleID = $(this).parent().parent().attr('id');
   var amountField = $(this).parent().find('.amount-field');
@@ -129,29 +139,31 @@ var checkjs = function(e) {
   if (!(targetTagName == 'BUTTON' || targetTagName == 'IMG' || targetClassName == 'amount' ||
         targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
     if (!$(this).prop('disabled')) {
-      var checkbox = $(this).find('.checkbox-js');
-      var preparation = $(this).hasClass("process-content-item") ? true : false;
-      
-      checkbox.toggleClass('glyphicon-ok');
-
-      // Function in checkEffect.js
-      changeTableGraphics($(this), checkbox.checked, preparation);
-      var checkObject = {
-        preparation: $(this).data('preparation'), 
-        operation: operationId, id: $(this).attr('id'),
-        check: checkbox.hasClass('glyphicon-ok')
-      };
-      
-      socket.emit('checkboxClick', checkObject);
-
-      checkBoxes();
-          
-      
+      checkAnArticle(this);
+      checkIfDone();
     }
   }
 };
 
-var checkBoxes = function() {
+var checkAnArticle = function(row) {
+  var checkbox = $(row).find('.checkbox-js');
+  var preparation = $(row).hasClass("process-content-item") ? true : false;
+
+  checkbox.toggleClass('glyphicon-ok');
+  
+  // Function in checkEffect.js
+  changeTableGraphics($(row), checkbox.hasClass('glyphicon-ok'), preparation);
+  var checkObject = {
+    preparation: $(row).data('preparation'),
+    operation: operationId, id: $(row).attr('id'),
+    check: checkbox.hasClass('glyphicon-ok')
+  };
+
+  socket.emit('checkboxClick', checkObject);
+};
+
+// check if done checking and mark as done.
+var checkIfDone = function() {
   var done = true;
   $('.checkbox-js').each(function(i, box) {
     if (!$(box).hasClass('glyphicon-ok')) {
@@ -243,6 +255,7 @@ var saveCommentSocket = function (commentObject) {
 var removeCheckArticleUpdate = function(checkArticleID) {
   var row = $('#'+checkArticleID);
   row.remove();
+  checkIfDone();
 };
 
 var getCheckboxes = function(checkboxesAndTemplate) {
@@ -256,9 +269,8 @@ var getCheckboxes = function(checkboxesAndTemplate) {
     // var isDisabled = checkbox.attr("disabled");
     updateTableRow(tableRow, isChecked, isTemplate);
   }
+  checkIfDone();
 };
-
-
 
 var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
   
@@ -284,7 +296,9 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
     
     $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
   }
-  
+
+  checkIfDone();
+
   // TODO: refactor this later because ugly
   if ($('#editChecklistButton').text()=="Klar") {
     $('.centered-remove').show();

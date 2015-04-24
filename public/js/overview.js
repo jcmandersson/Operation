@@ -13,8 +13,8 @@ var getComments = function(operation, template) {
       }
   }).done(function(checkArticles) {
     var operationArticles = [];
-    for(var i in checkArticles) {
-      if(checkArticles[i].operation == operation) {
+    for (var i in checkArticles) {
+      if (checkArticles[i].operation == operation) {
         operationArticles.push(checkArticles[i]);
       }
     }
@@ -78,12 +78,9 @@ $(document).ready(function() {
     socket.emit('overviewOpen');
   });
   
-  
   socket.on('updateProgress', function(progress) {
-    console.log(progress);
     var percent = calculateProgress(progress.all);
     var $progress = $('[data-id="'+progress.operation+'"] .progressbar').progressbar("value", percent);
-    console.log($progress);
     if (percent === 1) percent--;
     $progress.find('.ui-progressbar-value').html('&nbsp;&nbsp;&nbsp;'+percent+'% ('+progress.all.checked+'/'+progress.all.total+')');
     isDone(percent, $progress);
@@ -104,7 +101,7 @@ $(document).ready(function() {
   });
 
   Handlebars.registerHelper('ifNeq', function(v1, v2, options) {
-    if(v1 !== v2) {
+    if (v1 !== v2) {
       return options.fn(this);
     }
     return options.inverse(this);

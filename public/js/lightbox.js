@@ -1,22 +1,42 @@
-$(document).ready(function () {
-  $('.process-content').each(function (i, e) {
-    var $imgs = $(e).find('.process-content-item img');
+var initializeImages = function() {
+  $('.process-content-item img')
+    .load(function(e) {
+      var $img = $(this);
 
-    for (var i = 0; i < $imgs.length; ++i) {
-      var $img = $imgs.eq(i);
       var $new = $('<a></a>')
-        .addClass('jquery-zoom')
-        .css('display', 'block')
         .attr('data-featherlight', 'image')
         .attr('href', $img.attr('src'))
         .attr('target', '_blank');
 
       $img.wrap($new);
-    }
-    var $zoom = $('.jquery-zoom');
-    $zoom.zoom({
-      url: $zoom.find('img').attr('src'),
-      magnify: 1.5
+    })
+    .click(function() {
+      setTimeout(function() {
+        var $featherlight = $('.featherlight-content:not(.event)').addClass('event');
+        if (!$featherlight.length) return;
+
+        var $img = $featherlight.find('img');
+
+        var $new = $('<span></span>')
+          .css({
+            display: 'block',
+            width: $img.width(),
+            height: $img.height(),
+            cursor: 'pointer'
+          })
+          .addClass('jquery-zoom')
+
+        $img.wrap($new);
+
+        $('.jquery-zoom').removeClass('jquery-zoom').zoom({
+          url: $img.attr('src'),
+          magnify: 1.5,
+          on: 'grab'
+        });
+      }, 200);
     });
-  });
+};
+
+$(document).ready(function() {
+  initializeImages();
 });
