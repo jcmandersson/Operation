@@ -180,8 +180,6 @@ var checkjs = function(e) {
   var targetTagName = e.target.tagName;
   if (!(targetTagName == 'BUTTON' || targetTagName == 'IMG' || targetClassName == 'amount' ||
         targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
-    console.log(this);
-    console.log($(this).prop('disabled'));
     if (!$(this).prop('disabled')) {
       checkAnArticle(this);
       checkIfDone();
@@ -318,7 +316,6 @@ var getCheckboxes = function(checkboxesAndTemplate) {
     var tableRow = $('#' + checkbox._id);
     var isChecked = checkbox.checked;
     
-    // var isDisabled = checkbox.attr("disabled");
     updateTableRow(tableRow, isChecked, isTemplate);
   }
   checkIfDone();
