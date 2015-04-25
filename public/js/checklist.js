@@ -89,7 +89,9 @@ $(document).ready(function() {
 });
 
 var sortTable = function() {
+  
   if ($('#articleTableOrderCheckbox').is(':checked')){
+    
     $('.articleTable').tablesorter({
       // sort on clinc, storage, section, shelf, tray
       sortList: [[5, 0],[6, 0],[7, 0],[8, 0],[9, 0]],
@@ -105,9 +107,20 @@ var sortTable = function() {
   } else {
     $('.articleTable').tablesorter({
       // sort on name
-    sortList: [[3, 0]]
+      sortList: [[3, 0]],
+      headers:
+      {
+        3 : {sorter: "text"}
+      }
     });
   }
+  // Needed beacause we dont want the table to sort on headerclick.
+  $('.articleTable')
+    .unbind('appendCache applyWidgetId applyWidgets sorton update updateCell')
+    .removeClass('tablesorter')
+    .find('thead th')
+    .unbind('click mousedown')
+    .removeClass('header headerSortDown headerSortUp');
 };
 
 // Definition of the minus button that appears when a checklist is edited
