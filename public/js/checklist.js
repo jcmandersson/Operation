@@ -86,7 +86,7 @@ var minusOne = function() {
 
   var row = $(this).parent().parent();
   var checkbox = $(row).find('.checkbox-js');
-  if (checkbox.is(':checked')) {
+  if (checkbox.hasClass('glyphicon-ok')) {
     checkAnArticle(row);
   }
   
@@ -106,7 +106,7 @@ var plusOne = function() {
   
   var row = $(this).parent().parent();
   var checkbox = $(row).find('.checkbox-js');
-  if (checkbox.is(':checked')) {
+  if (checkbox.hasClass('glyphicon-ok')) {
     checkAnArticle(row);
   }
   
@@ -138,6 +138,8 @@ var checkjs = function(e) {
   var targetTagName = e.target.tagName;
   if (!(targetTagName == 'BUTTON' || targetTagName == 'IMG' || targetClassName == 'amount' ||
         targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
+    console.log(this);
+    console.log($(this).prop('disabled'));
     if (!$(this).prop('disabled')) {
       checkAnArticle(this);
       checkIfDone();
