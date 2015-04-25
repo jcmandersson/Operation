@@ -7,6 +7,13 @@ var oldText;
 var saved = false;
 
 $(document).ready(function() {
+  
+  // Sort the table
+  sortTable();
+  
+  // Sort on checking articleTableOrderCheckbox
+  $('#articleTableOrderCheckbox').change(sortTable);
+  
   // Load comments
   operationId = $('#opName').attr('data-operationId');
   var rows = $('.check-js');
@@ -80,6 +87,41 @@ $(document).ready(function() {
   });
   
 });
+
+var sortTable = function() {
+  
+  if ($('#articleTableOrderCheckbox').is(':checked')){
+    
+    $('.articleTable').tablesorter({
+      // sort on clinc, storage, section, shelf, tray
+      sortList: [[5, 0],[6, 0],[7, 0],[8, 0],[9, 0]],
+      headers:
+      {
+        5 : {sorter: "text"},
+        6 : {sorter: "text"},
+        7 : {sorter: "digit"},
+        8 : {sorter: "text"},
+        9 : {sorter: "digit"}
+      }
+    });
+  } else {
+    $('.articleTable').tablesorter({
+      // sort on name
+      sortList: [[3, 0]],
+      headers:
+      {
+        3 : {sorter: "text"}
+      }
+    });
+  }
+  // Needed beacause we dont want the table to sort on headerclick.
+  $('.articleTable')
+    .unbind('appendCache applyWidgetId applyWidgets sorton update updateCell')
+    .removeClass('tablesorter')
+    .find('thead th')
+    .unbind('click mousedown')
+    .removeClass('header headerSortDown headerSortUp');
+};
 
 // Definition of the minus button that appears when a checklist is edited
 var minusOne = function() {
@@ -257,6 +299,14 @@ var saveCommentSocket = function (commentObject) {
 var removeCheckArticleUpdate = function(checkArticleID) {
   var row = $('#'+checkArticleID);
   row.remove();
+  
+  // Needed to remove row from cache (tablesort)
+  var articleTable = $(".articleTable");
+  articleTable.trigger("update")
+    .trigger("sorton", articleTable.get(0).config.sortList)
+    .trigger("appendCache")
+    .trigger("applyWidgets");
+  
   checkIfDone();
 };
 
@@ -275,30 +325,14 @@ var getCheckboxes = function(checkboxesAndTemplate) {
 };
 
 var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
-  
-  var inserted = false;
-  var lastindex = $('.articleTable > tbody > tr').length;
-  $('.articleTable > tbody > tr').each(function (index) {
-    var articleName = $(this).find(".name").text();
-    if (compareString(checkArticle.name, articleName)<1) {
-      $('.articleTable > tbody > tr').eq( index ).before($(articleTemplate({
-        kartotek : kartotekArticle, name : checkArticle.name, operation: operationID,
-        _id : checkArticle._id, amount : 1
-      })));
-      $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
-      inserted = true;
-      return false;
-    }
-  });
-  if (!inserted) {
-    $('.articleTable > tbody > tr').eq( lastindex-1 ).after($(articleTemplate({
-      kartotek : kartotekArticle, name : checkArticle.name, operation: operationID,
-      _id : checkArticle._id, amount : 1
-    })));
-    
-    $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
-  }
 
+  $('.articleTable > tbody').append($(articleTemplate({
+    kartotek : kartotekArticle, name : checkArticle.name, operation: operationID,
+    _id : checkArticle._id, amount : 1
+  })));
+  $(commentTemplate({ kartotek: kartotekArticle, _id: checkArticle._id, comment: '' })).appendTo('#contentchecklist');
+
+  sortTable();
   checkIfDone();
 
   // TODO: refactor this later because ugly
@@ -307,17 +341,5 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
     $('.amountColumn').show();
     $('.uneditableAmountColumn').hide();
     $('.checkbox-js').hide();
-  }
-};
-
-var compareString = function(a, b){
-  var A = a.toLowerCase();
-  var B = b.toLowerCase();
-  if (A < B){
-    return -1;
-  }else if (A > B){
-    return  1;
-  }else{
-    return 0;
   }
 };

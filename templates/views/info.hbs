@@ -69,7 +69,8 @@
   
   <div class="process-content" id="contentchecklist">
 
-    <table class="table articleTable">
+    <table class="table articleTable tablesorter">
+      <thead>
       <tr class="table-headerstriped">
         {{#unless data.template}}
           <th></th>
@@ -87,6 +88,7 @@
         <th class="centered-remove" style="display:none">
         {{/unless}}
       </tr>
+      </thead>
       <tbody>
       {{#if articles}}
         {{# each articles }}
@@ -108,6 +110,7 @@
         <div id="kartotekResults"></div>
       </div>
       <button type="button" id="editChecklistButton" class="btn btn-primary">Redigera plocklista</button>
+      <input type="checkbox" id="articleTableOrderCheckbox"> Sortera artiklar på plockplats<br>
     {{/unless}}
   </div>
 
