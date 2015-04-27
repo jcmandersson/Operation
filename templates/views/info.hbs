@@ -115,16 +115,14 @@
   </div>
 
   {{#if data.template}}
-
-    {{#ifeq data.state 'Utkast'}}
+    {{#if user.isAdmin}}
       <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
-    {{/ifeq}}
-
-    {{#ifeq data.state 'Granskning'}}
-      <button class="btn btn-primary publicera">Publicera</button>
-      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
-    {{/ifeq}}
-
+      {{#ifeq data.state 'Granskning'}}
+        <button class="btn btn-primary publicera">Publicera</button>
+      {{/ifeq}}
+      
+    {{/if}}
+  
     {{#ifeq data.state 'Publicerad'}}
       <form method="get" id="createOperationInstanceButton">
         <input type="hidden" name="operation" value="create">
@@ -151,11 +149,12 @@
           </div>
         </div>
       </form>
-      <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
     {{/ifeq}}
   {{else}}
+    {{#if user.isAdmin}}
     {{>removePreparation _id=data._id slug=data.slug}}
     <div data-toggle='modal' data-target='#alertRemovePreparation{{data._id}}' data-slug='{{ data.slug }}' class="btn btn-danger">Ta bort förberedelse</div>
+    {{/if}}
   {{/if}}
 </div>
 

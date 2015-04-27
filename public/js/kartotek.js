@@ -373,7 +373,6 @@ $(function() {
   var modifiedTemplate = Handlebars.compile(compiledModified);
 
   Handlebars.registerHelper('modifyable', function(slugName, type, currentValue) {
-    if (currentValue == '') currentValue = '-';
     var isModifyable = articles.isEntryThatIsCurrentlyBeingModified(slugName, type);
     return modifiedTemplate({ isModifyable: isModifyable, value: currentValue });
   });
