@@ -92,7 +92,7 @@ var sortTable = function() {
   
   if ($('#articleTableOrderCheckbox').is(':checked')){
     $('.articleTable').tablesorter({
-      // sort on clinc, storage, section, shelf, tray
+      // sort on clinc, storage, section, shelf, tray.
       sortList: [[5, 0],[6, 0],[7, 0],[8, 0],[9, 0]],
       headers:
       {
