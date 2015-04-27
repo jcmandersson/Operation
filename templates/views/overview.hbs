@@ -22,12 +22,12 @@
                   <a href="/info/{{ slug }}"></a>
 
                   <div class="title">{{ title }}</div>
-                  {{#unless user}}
+                  {{#if ../../../user.isAdmin}}
                   <button type="button" class="close removeOperations" data-toggle="modal" aria-label="Close"
                           data-target="#alertRemovePreparation{{_id}}">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  {{/unless}}  
+                  {{/if}}  
                   <div class="lindaID">{{ linda_id }}</div>
                   <p id="comment-icon{{_id}}" data-operation="{{_id}}" class="commentGlyphicon glyphicon glyphicon-comment showOperationCommentsButton {{#unless comment}} hidden {{/unless}}"></p>
                   <div class="tags">{{ tags }}&nbsp;</div>
