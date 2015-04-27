@@ -91,7 +91,6 @@ $(document).ready(function() {
 var sortTable = function() {
   
   if ($('#articleTableOrderCheckbox').is(':checked')){
-    
     $('.articleTable').tablesorter({
       // sort on clinc, storage, section, shelf, tray
       sortList: [[5, 0],[6, 0],[7, 0],[8, 0],[9, 0]],
@@ -105,9 +104,11 @@ var sortTable = function() {
       }
     });
   } else {
+    // We need the nameColumnIndex here because it can be 2 if its a template and 3 otherwise.
+    var nameColumnIndex = $(".name").index();
     $('.articleTable').tablesorter({
       // sort on name
-      sortList: [[3, 0]],
+      sortList: [[nameColumnIndex, 0]],
       headers:
       {
         3 : {sorter: "text"}
