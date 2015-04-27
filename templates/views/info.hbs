@@ -14,7 +14,7 @@
       Granskning
     {{/ifeq}}
     {{#ifeq data.state 'Utkast'}}
-      Förhandstitt
+      Förhandstitt / Utkast
     {{/ifeq}}
   </h2>
 
@@ -117,10 +117,13 @@
   {{#if data.template}}
     {{#if user.isAdmin}}
       <a href="/edit/{{data.slug}}" class="btn btn-primary">Redigera</a>
+      {{#ifeq data.state 'Publicerad'}}
+        <button class="btn btn-primary toUtkast">Skicka till utkast</button>
+      {{/ifeq}}
       {{#ifeq data.state 'Granskning'}}
+        <button class="btn btn-primary toUtkast">Skicka till utkast</button>
         <button class="btn btn-primary publicera">Publicera</button>
       {{/ifeq}}
-      
     {{/if}}
   
     {{#ifeq data.state 'Publicerad'}}
