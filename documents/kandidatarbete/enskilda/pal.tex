@@ -24,9 +24,9 @@ Dokumentering är någonting som är viktigt att göra när man arbetar i projek
 gå tillbaka och se vad som gjorts, men även för andras skull ifall man kanske får en ny medarbetare som ska integreras i 
 projektet. En fråga som man alltid behöver besvara är i vilket ordbehandlingsprogram dokumentationen skall skrivas. Det populäraste 
 alternativet kan tänkas vara Microsoft Word, vilket har funnits sedan 1983 \cite{word_ursprung}.
-\newline
+
 Ett annat alternativ som blir allt vanligare är Google Docs, vilket är ett web-baserat ordbehandlingsprogram som lanserades av Google 2006 \cite{docs_launch} efter att man hade köpt upp företaget Upstartle \cite{upstartle}.
-\newline
+
 Ett tredje och inte lika vanligt alternativ är Latex, vilket inte är ett ordbehandlingsprogram utan istället ett märkspråk
  så som t.ex. HTML, där man istället för med ett grafiskt gränssnitt formaterar sin text,sätter sin text inom speciella taggar så att när koden senare kompileras får rätt utseende.
 
@@ -43,10 +43,11 @@ Under kursens gång har jag dock skrivit en laborationsrapport i Latex och däri
 När Microsoft utvecklade Word på 80-talet så ville de naturligtvis att dåtidens datorer skulle klara av att ladda 
 dokument utan att det skulle vara alltför prestandakrävande, därför konstruerade man dess filformat (.doc) binärt och gjorde konstruktionen 
 väldigt komplex. Detta medförde att bara personer som var riktigt insatta i detta filformat klarade att ändra direkt i dessa filer. Google docs däremot använder sig av "molnet" för att spara filer och man behöver därför aldrig oroa sig över säkerhetskopiering. Textformatering i båda dessa program görs främst genom att använda det grafiska gränssnittet, men kan även göras genom tangentbordskommandon.
-\newline
+
 Latex är i motsats till Word och Google docs inget ordbehandlingsprogram, utan istället ett märkspråk liksom HTML. När man i Word och Google docs 
-ändrar textformateringen genom ett grafiskt gränssnitt så markerar man istället sin text i Latex med taggar, som senare när man kompilerar koden ger
+ändrar textformateringen genom ett grafiskt gränssnitt så markerar man istället sin text med taggar, som senare när man kompilerar koden ger
 det önskade utseendet. Detta gör att man som användare behöver bry sig mindre om utseendet av dokumentet och kan istället fokusera på innehållet.
+Eftersom inte är något program i sig utan mer ett programspråk så behöver man något program att redigera koden i, detta kan göras i vilken textredigerare som helst egentligen men det finns även alternativ som kan kompilera koden åt användaren så att man kan se direkt i programmet vilka ändringar som görs. Det har på senare år dykt upp flera webbsidor där man kan skriva Latexdokument tillsammans med andra användare, exempel på sådana sidor kan vara Overleaf \cite{overleaf}, eller Authorea \cite{authorea}. Latex har väldigt många inbyggda kommandon och det är väldigt lätt att t.ex. skriva formler vilket har gjort Latex till standard inom den vetenskapliga sektorn \cite{latex_standard}.
 
 
 \subsection{Metod}
@@ -58,6 +59,9 @@ Genom att göra på detta sätt så kan vi garantera att det inte kommer att upp
 Det som vi inte vet, är huruvuda det kommer att uppstå problem då alla gruppmedlemmar skall skriva på den gemensamma delen.
 
 \subsection{Resultat}
+När vi i projektets inledning använde Google docs så märkte vi att det är väldigt svårt att hålla sig till någon sorts dokumentstandard där man använder samma typsnitt på rubriker och text. Även om alla projektmedlemmarna försöker att hålla sig den standard vi satte upp så är det lätt hänt att någon del av dokumentet blir annorlunda när man redigerar samtidigt i det. Detta fungerade mycket bättre i Latex då vi skrev kandidatrapporten. Latex hjälper verkligen användaren till att hela hålla samma standard i dokumentet.
+
+Vi har under projektet försökt att hålla isär på alla olika revisioner av dokument så att man senare kan gå tillbaka och se vilka ändringar som har gjorts mellan de olika iterationerna, detta har varit lite svårt att upprätthålla med Google docs då dessa dokument hela tiden sparas kontinuerligt och det inte finns något sätt att gå tillbaka i ett dokument för att se ändringar, detta har gjort att när man gör ändringar i dokument behöver spara undan en kopia av den föregående revisionen vilket inte alltid har gjorts. Eftersom vi har haft alla våra Latexfiler i samma repository på github så har vi enkelt kunnat gå tilbaka i historiken för att se vilka ändringar som gjorts, och då även lätt kunnat korrekturläsa varandras texter.
 \subsection{Diskussion}
 \subsubsection{Resultat}
 \subsubsection{Metod}
@@ -65,23 +69,35 @@ Det som vi inte vet, är huruvuda det kommer att uppstå problem då alla gruppm
 \subsection{Referenser}
 \begin{thebibliography}{9}
 \bibitem{word_ursprung}
-\url{http://ia801406.us.archive.org/21/items/A\_History\_of\_the\_Personal\_Computer/eBook12.pdf}.\\
+\url{http://ia801406.us.archive.org/21/items/A\_History\_of\_the\_Personal\_Computer/eBook12.pdf}\\
  Sida 11-12. Hämtad 2015-04-20.
 
 \bibitem{docs_launch}
-\url{http://googlepress.blogspot.se/2006/06/google-announces-limited-test-on-google_06.html}.\\
+\url{http://googlepress.blogspot.se/2006/06/google-announces-limited-test-on-google_06.html}\\
  Hämtad 2015-04-28.
 
 \bibitem{upstartle}
-\url{http://googleblog.blogspot.se/2006/03/writely-so.html}.\\
+\url{http://googleblog.blogspot.se/2006/03/writely-so.html}\\
  Hämtad 2015-04-28. 
 
 \bibitem{donald_knuth}
-\url{https://gcc.gnu.org/ml/java/1999-q2/msg00419.html}.\\
+\url{https://gcc.gnu.org/ml/java/1999-q2/msg00419.html}\\
  Hämtad 2015-04-20.
 
 \bibitem{leslie_lamport}
 \url{http://research.microsoft.com/en-us/um/people/lamport/pubs/pubs.html#latex}.\\
  Hämtad 2015-04-20.
+ 
+\bibitem{overleaf}
+\url{https://www.overleaf.com/}\\
+ Hämtad 2015-04-28.
+
+\bibitem{authorea}
+\url{https://www.authorea.com/}\\
+ Hämtad 2015-04-28.
+ 
+\bibitem{latex_standard}
+\url{ftp://ftp.dante.de/tex-archive/info/intro-scientific/scidoc.pdf}\\
+Sida 2. Hämtad 2015-04-28.
 
 \end{thebibliography}
