@@ -38,7 +38,7 @@ Det kan leda till förseningar av projektet.
 Kontinuerlig integration kan leda till att problemen identifieras tidigare i 
 utvecklingsprocessen. Problemen blir då lättare att åtgärda. Automatiserade tester kan effektivisera 
 testprocessen och det finns många tillgängliga lösningar för att köra automatiserade
-tester [1].
+tester \cite{Karlsson}.
 Några av de vanligaste är Travis CI, Codeship och Drone.
 
 \subsubsection{Travis CI}
@@ -64,21 +64,29 @@ för att köra testfall som skrivits med Jasmine.
 Grunt kunfigureras med filen Gruntfile.js.
 
 \subsection{Metod}
-Arbetet inleddes genom att Travis CI kopplades till projektets repository på GitHub. Kopplingen utfördes
-genom att administratören för repositoryn loggade in på travis-ci.org med sitt GitHub-konto och aktiverade
+Arbetet inleddes genom att Travis CI kopplades till projektets repository på GitHub.
+Kopplingen utfördes
+genom att administratören för repositoryn loggade in på travis-ci.org med 
+sitt GitHub-konto och aktiverade
 en webhook för repositoryn.\\
 
-Inställningarna för Travis CI konfigurerades med filen .travis.yml i projektets repository. Språket valdes till
-javascript med node.js med inställningen: \emph{language: node\textunderscore js}. Versionen av node.js valdes till version 0.10
+Inställningarna för Travis CI konfigurerades med filen .travis.yml i projektets
+repository. Språket valdes till
+javascript med node.js med inställningen: \emph{language: node\textunderscore js}.
+Versionen av node.js valdes till version 0.10
 med inställningen: \emph{node\textunderscore js: "0.10"}.\\
 
-De nödvändiga node-modulerna installerades med hjälp av node package manager (npm). Grunt installerades
+De nödvändiga node-modulerna installerades med hjälp av node package manager (npm).
+Grunt installerades
 med kommandot: \emph{npm install -g grunt-cli}. Grunt-contrib-jasmine installerades med kommandot: 
 \emph{npm install grunt-contrib-jasmine}.\\
 
-Task runnern Grunt konfigurerades med filen Gruntfile.js i projektets repository. En task för Jasmine skapades med
-inställningen: \emph{grunt.loadNpmTasks('grunt-contrib-jasmine');}. Eftersom Travis CI använder npm för att starta 
-testerna så definierades testskriptet för npm med raden \emph{''test'': ''grunt jasmine --verbose''} i filen package.json 
+Task runnern Grunt konfigurerades med filen Gruntfile.js i projektets repository.
+En task för Jasmine skapades med
+inställningen: \emph{grunt.loadNpmTasks('grunt-contrib-jasmine');}.
+Eftersom Travis CI använder npm för att starta 
+testerna så definierades testskriptet för npm med raden
+\emph{''test'': ''grunt jasmine --verbose''} i filen package.json 
 i projektets repository.
 
 \subsection{Resultat}
@@ -87,5 +95,14 @@ i projektets repository.
 \subsubsection{Metod}
 \subsection{Slutsatser}
 \subsection{Referenser}
-[1] O. Karlsson, ''Automatiserad testning av webbapplikationer,'' Linköpings univ., Linköping, Sverige, 2014, s.43.
-[Online]. Tillgänglig: http://www.diva-portal.org/smash/get/diva2:727654/FULLTEXT01.pdf. [Hämtad april 19, 2015].
+\begin{thebibliography}{9}
+
+\bibitem{Karlsson}
+O. Karlsson, ''Automatiserad testning av webbapplikationer,''
+Linköpings univ., Linköping, Sverige, 2014, s.43.
+[Online]. 
+Tillgänglig: 
+\url{http://www.diva-portal.org/smash/get/diva2:727654/FULLTEXT01.pdf}.
+[Hämtad april 19, 2015].
+
+\end{thebibliography}
