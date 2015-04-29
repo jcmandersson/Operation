@@ -88,6 +88,27 @@ med kommandot: \emph{npm install -g grunt-cli}. Grunt-contrib-jasmine installera
 Task runnern Grunt konfigurerades med filen Gruntfile.js i projektets repository.
 En task för Jasmine skapades med
 inställningen: \emph{grunt.loadNpmTasks('grunt-contrib-jasmine');}.
+
+\begin{lstlisting}
+grunt.initConfig({
+  pkg: grunt.file.readJSON('package.json'),
+    jasmine: {
+      test: {
+        src: './public/js/*.js',
+	options: {
+	  vendor: [
+	    'public/js/lib/jquery/jquery-2.1.1.js',
+	    'node_modules/jasmine-jquery/lib/jasmine-jquery.js'
+          ],
+	  keepRunner: true,
+	  specs: 'test/*-spec.js',
+	  template: 'test/template/spec-template.tmpl'
+        }
+      }
+    }
+  });
+\end{lstlisting}
+
 Eftersom Travis CI använder npm för att starta 
 testerna så definierades testskriptet för npm med raden
 \emph{''test'': ''grunt jasmine --verbose''} i filen package.json 
