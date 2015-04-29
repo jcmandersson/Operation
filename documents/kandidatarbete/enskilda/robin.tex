@@ -1,11 +1,11 @@
 \section{Checkning av checklistor - Robin Andersson}
 \subsection{Inledning}
-Vårt system ska innehålla olika typer av checklistor på olika webbsidor. Om flera användare är inne på samma sida samtidigt och en person checkar en checkruta så ska den checkrutan bli checkad för alla användare som är inne på den sidan.\\
+Vårt system ska innehålla olika typer av checklistor på olika webbsidor. Om flera användare är inne på samma sida samtidigt och en person checkar en checkruta så ska den checkrutan bli checkad för alla användare som är inne på den webbsidan.\\
 
-Detta kommer att implementeras med hjälp av html, javascript och jquery samt Socket.IO för att checkrutor ska kunna uppdateras utan att webbsidan behöver uppdateras.
+Checklistan kommer att implementeras med hjälp av html, javascript och jquery samt Socket.IO.
 
 \subsubsection{Syfte}
-Syftet med denna del av projektet är att flera sjuksköterskor samtidigt ska kunna plocka olika artiklar till en operation samtidigt utan att de råkar plocka samma artikel. Det ska även finnas en typ av checklista som innehåller olika förberedelser till en operation. 
+Syftet med denna del av projektet är att flera sjuksköterskor samtidigt ska kunna förbereda operationer genom att plocka olika artiklar samt förbereda operationssalen och checka av det som är utfört utan att det ska bli några konflikter med att flera sjuksköterskor plockar samma artikel eller liknande.
 
 \subsubsection{Frågeställning}
 \begin{itemize}
@@ -27,15 +27,20 @@ Jag började med att fundera på hur kommunikationen skulle fungera på för sä
 Jag kom fram till att när en användare går in på en operationsförberedelse så kommer denne in i ett rum. Varje gång en person sedan checkar en checkbox så skickas ett Socket.IO meddelande till servern som innehåller information om vilken checkruta som ska checkas samt vilket rum checkboxen ska checkas i. Servern skickar sedan ett meddelande till det givna rummet vilken checkruta som ska checkas och alla klienter som är anslutna till det rummet checkar den givna checkrutan. \\
 
 Figuren nedan visar detta flöde i ett sekvens liknande box-and-line-diagram.
+\includegraphics[scale=0.5]{checklistdiagram}\\
 
-När två klienter går in på en operation och en klient checkar en checkruta för första gången tar det strax under en sekund innan checkrutan checkas för den andra klienten. Därefter när någon klient checkar en checkruta så kan jag inte se någon fördröjning alls från det att en klient checkar en checkruta och en annan klient får den checkrutan checkad.
+När två klienter går in på en operation och en klient checkar en checkruta för första gången tar det strax under en sekund innan checkrutan checkas för den andra klienten. Därefter när någon klient checkar en checkruta så kan jag inte se någon fördröjning alls från det att en klient checkar en checkruta och en annan klient får den checkrutan checkad.\\
+
+Kunden har prövat att ha flera personer inne på samma plocklista samtidigt och checka av olika artiklar. Kunden tyckte att det fungerade bra och påpekade inte någon fördröjning. \\
+
+All information som krävs för plocklistorna fick plats utan att det blev för plottrigt.
 
 \subsection{Diskussion}
 \subsubsection{Resultat}
-Eftersom jag endast skickar data om vilken checkruta som ska checkas till de klienter som är inne på den operation som checkrutan blev checkad på så uppdateras checkningar snabbare än att göra den enkla lösningen att bara skicka datat till alla anslutna klienter. Att det tar nästan en sekund för en checkning att uppdateras på andra klienter för första gången är långsammare än förväntat. Men att det sedan går nästan helt utan fördröjning var mycket snabbare än förväntat. 
+Eftersom jag endast skickar data om vilken checkruta som ska checkas till de klienter som är inne på den operation som checkrutan blev checkad på så uppdateras checkningar snabbare än att göra den enkla lösningen att bara skicka datat till alla anslutna klienter. Att det tar nästan en sekund för en checkning att uppdateras på andra klienter för första gången är långsammare än förväntat. Men eftersom det endast gäller just första artikeln och att kunden har testat checkning med flera personer samtidig utan att märka några problem så verkar detta inte vara något praktiskt problem. Att en checkning sedan kan uppdateras nästan helt utan fördrdröjning var bättre än vad jag hade förväntat mig.
 
 \subsubsection{Metod}
-Den metod jag använde mig av fungerade bra, men jag tror att jag skulle kunnat komma fram till samma resultat snabbare genom att göra kortare funktioner och vettigare namn redan från början istället för att göra något som funkar så snabbt som möjligt och sedan refaktorisera eftersom det blev väldigt förvirrande kod från början och jag var tvungen att sitta och tänka på vad kod jag skrivit gjorde. Men att skissa olika förslag på ett papper först tror jag var en väldigt bra idé.
+Den metod jag använde mig av fungerade bra, men jag tror att jag skulle kunnat komma fram till samma resultat snabbare genom att göra kortare funktioner och vettigare namn redan från början istället för att göra något som funkar så snabbt som möjligt och sedan refaktorisera. För nu blev det väldigt förvirrande kod från början och jag var tvungen att sitta och tänka på vad kod jag skrivit faktiskt gjorde. Men att skissa olika förslag på ett papper först tror jag var en väldigt bra idé, det gjorde att jag fick några möjliga lösningar och sedan kunde jag överväga fördelar och nackdelar med de olika lösningarna för att sedan välja den som verkade bäst.
 
 \subsection{Slutsatser}
-Den knappa sekundens fördröjning som är då en första checkruta checkas skulle kunna vara tillräckligt mycket för att ge en viss förvirring men eftersom det bara är en gång per operation så kommer detta antagligen inte vara ett praktiskt problem för sjuksköterskorna som ska använda systemet. 
+Eftersom det fungerar bra med checkning av checklistor med hjälp av socket.io och all nödvändig information får plats utan att det upplevs som plottrigt så uppfylls syftet med denna del av projektet och min frågeställning har blivit besvarad.
