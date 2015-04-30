@@ -14,7 +14,8 @@ ramverket Jasmine.
 De frågeställningar som ska besvaras i den här enskilda delen av rapporten är:
 
 \begin{itemize}
-\item Hur kan man använda Travis CI tillsammans med Jasmine för att testa en webbapplikation byggd på javascript och node.js.
+\item Hur kan man använda Travis CI tillsammans med Jasmine för att testa en 
+webbapplikation byggd på javascript och node.js.
 \item Hur många tester hinner Travis CI köra på en sekund?
 \item Vilka typer av tester är svåra att utföra?
 \end{itemize}
@@ -31,7 +32,8 @@ Här beskrivs den teori som är nödvändig för att förstå rapporten.
 
 \subsubsection{Vattenfallsmodellen}
 I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. 
-Om ett problem då identifieras under integrationen så är det krångligt att gå tillbaka och åtgärda problemet. 
+Om ett problem då identifieras under integrationen så är det krångligt att gå 
+tillbaka och åtgärda problemet. 
 Det kan leda till förseningar av projektet.
 Om felet som upptäcks är så allvarligt att en betydande omdesign måste ske så
 kommer utvecklingen i stort sett att börja om från början och man kan räkna 
@@ -48,8 +50,10 @@ Några av de vanligaste är Travis CI, Codeship och Drone.
 \subsubsection{Travis CI}
 Travis CI är en webb-baserad tjänst för att köra automatiserade enhetstester och integrationstester
 på projekt som finns på GitHub. Travis CI är byggt på öppen källkod och är gratis att använda. 
-Tjänsten har stöd för många olika programmeringsspråk, men det som är relevant för innehållet i den här rapporten
-är javascript med node.js. För att konfigurera Travis CI används filen .travis.yml som placeras i det aktuella
+Tjänsten har stöd för många olika programmeringsspråk, men det som är 
+relevant för innehållet i den här rapporten
+är javascript med node.js. För att konfigurera Travis CI används filen .travis.yml 
+som placeras i det aktuella
 projektets repository på GitHub.
 
 \subsubsection{Javascript}
@@ -93,9 +97,13 @@ En task för Jasmine laddedes in med
 inställningen: \emph{grunt.loadNpmTasks('grunt-contrib-jasmine');}.
 Tasken konfigurerades med följande kod i Gruntfile.js.
 
-\begin{lstlisting}
-grunt.initConfig({
-  pkg: grunt.file.readJSON('package.json'),
+\begin{lstlisting}[
+  basicstyle = \small
+]
+module.exports = function(grunt) {
+
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     jasmine: {
       test: {
         src: './public/js/*.js',
@@ -111,6 +119,9 @@ grunt.initConfig({
       }
     }
   });
+
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
+}
 \end{lstlisting}
 
 Med \emph{src: './public/js/*.js'} valdes de filer som som skulle testas.
@@ -121,10 +132,35 @@ detaljerad information om utfallet av testerna.
 Med \emph{specs: 'test/*-spec.js'} valdes de testfall som skulle köras.
 Alla filer som slutar med -spec.js i mappen test anses alltså vara
 testfall som ska köras.
+Raden \emph{template: 'test/template/spec-template.tmpl'i} gör att testerna
+körs med en speciell SpecRunner som även kan innehålla HTML som testfallen
+kan modifiera.
 Eftersom Travis CI använder npm för att starta 
 testerna så definierades testskriptet för npm med raden
 \emph{''test'': ''grunt jasmine --verbose''} i filen package.json 
-i projektets repository.
+i projektets repository.\\
+
+Testfallen skrevs med Jasmine. Jasmine har en enkel och intuitiv syntax.
+Ett exempel på ett testfall skrivet med Jasmine följer nedan.
+
+\begin{lstlisting}[
+  basicstyle = \small
+]
+describe('The function splitOnce', function() {
+	
+  it('can split a string with a char correctly', function() {
+    var str = 'a.b.c.d';
+    var res = splitOnce(str, '.');
+    expect(res[0]).toBe('a');
+    expect(res[1]).toBe('b.c.d');
+  });
+}
+\end{lstlisting}
+
+På den första raden beskrivs vilken del av koden det är som ska testas.
+På nästa rad beskrivs vad det är som ska testas i den utvalde delen av koden.
+Med functionen expect kontrolleras att koden har utfört testet på det sätt
+som förväntats. Flera expect-funktioner kan användas i samma testfall.
 
 \subsection{Resultat}
 \subsection{Diskussion}
@@ -133,6 +169,7 @@ i projektets repository.
 \subsection{Slutsatser}
 \subsection{Referenser}
 \vspace{-9mm}
+\renewcommand{\refname}{}
 \begin{thebibliography}{9}
 
 \bibitem{Royce}
