@@ -6,7 +6,7 @@ tabClick = function(elem) {
     window.location.replace('#tab_all');
   } else {
     $('.process-content').hide();
-    $('#content'+elem.id).show();
+    $('#content' + elem.id).show();
     window.location.replace('#tab_' + elem.id);
   }
 };
@@ -20,12 +20,12 @@ $(document).ready(function() {
     $(".process-content").hide();
     $("#content" + hash).show();
   }
-  
+
   $(".nav-pills > .navbar-btn").click(function(e) {
     e.preventDefault();
     tabClick(this);
   });
-  
+
   var compiledResults = $('#kartotekResults-template').html();
   var kartotekResultsTemplate = Handlebars.compile(compiledResults);
 
@@ -36,9 +36,24 @@ $(document).ready(function() {
       findArticles(kartotekResultsTemplate);
     }
   });
-  
-  $(".publicera").click(function() {
-    var slug = $("#opName").attr('data-operationSlug');
+  $('.toUtkast').click(function() {
+    if(!confirm('Är du säker på att du vill skicka tillbaka handboken till utkast?')) return;
+    var slug = $('#opName').attr('data-operationSlug');
+
+    $.ajax({
+      type: 'GET',
+      url: '/api/update/operations/' + slug,
+      data: {
+        state: 'Utkast'
+      }
+    })
+      .done(function(msg) {
+        location.reload();
+      });
+  });
+  $('.publicera').click(function() {
+    if(!confirm('Är du säker på att du vill publicera denna handbok?')) return;
+    var slug = $('#opName').attr('data-operationSlug');
 
     $.ajax({
       type: 'GET',
@@ -49,23 +64,18 @@ $(document).ready(function() {
     })
       .done(function(msg) {
         location.reload();
-      })
-      .fail(function(err, status) {
-        console.log('Någonting gick fel!');
-        console.log(err);
-        console.log(status);
       });
   });
-  
+
   $('#editChecklistButton').click(toggleEdit);
-  
+
 });
-  
+
 var findArticles = function(resultsTemplate) {
   var articleName = $('#article-search').val();
   var url = '/api/search/Kartotekartikel?text=' + articleName;
   $.get(url).done(function(results) {
-    $('#kartotekResults').html(resultsTemplate({ results: results }));
+    $('#kartotekResults').html(resultsTemplate({results: results}));
 
     if (results.length != 0) {
       $('#article-search').addClass('has-results');
@@ -77,7 +87,9 @@ var findArticles = function(resultsTemplate) {
 
       // add here
       var id = $(this).attr('data-kartotekid');
-      var kartotekArticle = jQuery.grep(results, function(e) { return e._id == id; });
+      var kartotekArticle = jQuery.grep(results, function(e) {
+        return e._id == id;
+      });
 
       var operationID = $('#opName').attr("data-operationId");
       socket.emit('articleAdd', kartotekArticle, operationID);

@@ -67,8 +67,11 @@ var plusOne = function() {
 
 var findArticles = function(resultsTemplate) {
   var articleName = $('#article-search').val();
-  var url = '/api/search/Kartotekartikel?text=' + articleName;
-  $.get(url).done(function(results) {
+  var url = '/api/search/Kartotekartikel';
+  $.get(url, {
+    text: articleName,
+    limit: 50
+  }).done(function(results) {
     $('#kartotekResults').html(resultsTemplate({results: results}));
     if (results.length != 0) {
       $('#article-search').addClass('has-results');

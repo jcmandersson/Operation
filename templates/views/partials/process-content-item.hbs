@@ -15,6 +15,11 @@
     <textarea disabled="disabled" class="information" 
               data-model="Processinnehall" {{#unless noData}}data-slug="{{slug}}"{{/unless}}
               data-field="text" data-update="true" data-saved="{{#unless noData}}{{text}}{{/unless}}">{{#unless noData}}{{text}}{{/unless}}</textarea>
+    <div class="overlay-container">
+      <div class="overlay">{{#unless noData}}{{{text}}}{{/unless}}</div>
+      <div class="blur"></div>
+      <div class="text">Klicka för att redigera <i class="glyphicon glyphicon-pencil" style="margin-left: 5px;"></i></div>
+    </div>
   </span>
   <i class="glyphicon glyphicon-remove"></i>
 </div>

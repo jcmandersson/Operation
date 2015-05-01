@@ -169,7 +169,7 @@ var changeWidth = function (i, e) {
 
 var initializeSortable = function () {
   $(".process-content").sortable({
-    cancel: 'input,.mce-tinymce',
+    cancel: 'input,.mce-tinymce,.overlay-container',
     stop: function (e, ui) {
       var $this = $(this);
       console.log($this);
@@ -326,8 +326,11 @@ var attachViewListeners = function () {
   $('body')
     .on('keyup', 'input.process', changeWidth)
     .on('click', '.navbar-btn', navClick)
-    .on('click', '.process-content:not(.hidden) .process-content-item:not(:last-child) textarea', function () {
+    .on('click', '.process-content:not(.hidden) .process-content-item:not(:last-child) textarea, .process-content:not(.hidden) .process-content-item:not(:last-child) .overlay-container', function () {
       initializeWysiwygElement($(this).parentsUntil('.process-content-item'));
+      if($(this).hasClass('overlay-container')) {
+        $(this).remove();
+      }
     });
 };
 

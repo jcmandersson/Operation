@@ -14,7 +14,8 @@ ramverket Jasmine.
 De frågeställningar som ska besvaras i den här enskilda delen av rapporten är:
 
 \begin{itemize}
-\item Hur kan man använda Travis CI tillsammans med Jasmine för att testa en webbapplikation byggd på javascript och node.js.
+\item Hur kan man använda Travis CI tillsammans med Jasmine för att testa en 
+webbapplikation byggd på javascript och node.js.
 \item Hur många tester hinner Travis CI köra på en sekund?
 \item Vilka typer av tester är svåra att utföra?
 \end{itemize}
@@ -31,30 +32,42 @@ Här beskrivs den teori som är nödvändig för att förstå rapporten.
 
 \subsubsection{Vattenfallsmodellen}
 I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. 
-Om ett problem då identifieras under integrationen så är det krångligt att gå tillbaka och åtgärda problemet. 
+Om ett problem då identifieras under integrationen så är det krångligt att gå 
+tillbaka och åtgärda problemet. 
 Det kan leda till förseningar av projektet.
+Om felet som upptäcks är så allvarligt att en betydande omdesign måste ske så
+kommer utvecklingen i stort sett att börja om från början och man kan räkna 
+med en hundraprocentig ökning av budgeten, 
+både vad gäller pengar och tid \cite{Royce}.
 
 \subsubsection{Kontinuerlig integration och automatiserade tester}
 Kontinuerlig integration kan leda till att problemen identifieras tidigare i 
 utvecklingsprocessen. Problemen blir då lättare att åtgärda. Automatiserade tester kan effektivisera 
 testprocessen och det finns många tillgängliga lösningar för att köra automatiserade
-tester [1].
+tester \cite{Karlsson}.
 Några av de vanligaste är Travis CI, Codeship och Drone.
 
 \subsubsection{Travis CI}
 Travis CI är en webb-baserad tjänst för att köra automatiserade enhetstester och integrationstester
 på projekt som finns på GitHub. Travis CI är byggt på öppen källkod och är gratis att använda. 
-Tjänsten har stöd för många olika programmeringsspråk, men det som är relevant för innehållet i den här rapporten
-är javascript med node.js. För att konfigurera Travis CI används filen .travis.yml som placeras i det aktuella
+Tjänsten har stöd för många olika programmeringsspråk, men det som är 
+relevant för innehållet i den här rapporten
+är javascript med node.js. För att konfigurera Travis CI används filen .travis.yml 
+som placeras i det aktuella
 projektets repository på GitHub.
 
 \subsubsection{Javascript}
 Javascript är ett programmeringsspråk som i första hand används på klientsidan på webbsidor.
-Javascript exekveras av webbläsaren och arbetar mot ett gränssnitt som heter Document Object Model (DOM).
+Javascript exekveras av webbläsaren och arbetar mot ett gränssnitt som heter 
+Document Object Model (DOM).
+
+\subsubsection{JQuery}
 
 \subsubsection{Node.js}
-Node.js är en runtime environment för internetapplikationer. Det kan till exempel användas för att skapa webbservrar.
-Node.js är baserat på öppen källkod och det är enkelt att lägga till nya moduler för att anpassa det system man vill
+Node.js är en runtime environment för internetapplikationer. Det kan till exempel 
+användas för att skapa webbservrar.
+Node.js är baserat på öppen källkod och det är enkelt att lägga till nya 
+moduler för att anpassa det system man vill
 använda. För att lägga till nya moduler används node package manager (npm).
 
 \subsubsection{Jasmine}
@@ -64,22 +77,141 @@ för att köra testfall som skrivits med Jasmine.
 Grunt kunfigureras med filen Gruntfile.js.
 
 \subsection{Metod}
-Arbetet inleddes genom att Travis CI kopplades till projektets repository på GitHub. Kopplingen utfördes
-genom att administratören för repositoryn loggade in på travis-ci.org med sitt GitHub-konto och aktiverade
+Arbetet inleddes genom att Travis CI kopplades till projektets repository på GitHub.
+Kopplingen utfördes
+genom att administratören för repositoryn loggade in på travis-ci.org med 
+sitt GitHub-konto och aktiverade
 en webhook för repositoryn.\\
 
-Inställningarna för Travis CI konfigurerades med filen .travis.yml i projektets repository. Språket valdes till
-javascript med node.js med inställningen: \emph{language: node\textunderscore js}. Versionen av node.js valdes till version 0.10
+Inställningarna för Travis CI konfigurerades med filen .travis.yml i projektets
+repository. Språket valdes till
+javascript med node.js med inställningen: \emph{language: node\textunderscore js}.
+Versionen av node.js valdes till version 0.10
 med inställningen: \emph{node\textunderscore js: "0.10"}.\\
 
-De nödvändiga node-modulerna installerades med hjälp av node package manager (npm). Grunt installerades
+De nödvändiga node-modulerna installerades med hjälp av node package manager (npm).
+Grunt installerades
 med kommandot: \emph{npm install -g grunt-cli}. Grunt-contrib-jasmine installerades med kommandot: 
 \emph{npm install grunt-contrib-jasmine}.\\
 
-Task runnern Grunt konfigurerades med filen Gruntfile.js i projektets repository. En task för Jasmine skapades med
-inställningen: \emph{grunt.loadNpmTasks('grunt-contrib-jasmine');}. Eftersom Travis CI använder npm för att starta 
-testerna så definierades testskriptet för npm med raden \emph{''test'': ''grunt jasmine --verbose''} i filen package.json 
-i projektets repository.
+Task runnern Grunt konfigurerades med filen Gruntfile.js i projektets repository.
+En task för Jasmine laddedes in med
+inställningen: \emph{grunt.loadNpmTasks('grunt-contrib-jasmine');}.
+Tasken konfigurerades med följande kod i Gruntfile.js.
+
+\begin{lstlisting}[
+  basicstyle = \small
+]
+module.exports = function(grunt) {
+
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    jasmine: {
+      test: {
+        src: './public/js/*.js',
+	options: {
+	  vendor: [
+	    'public/js/lib/jquery/jquery-2.1.1.js',
+	    'node_modules/jasmine-jquery/lib/jasmine-jquery.js'
+          ],
+	  keepRunner: true,
+	  specs: 'test/*-spec.js',
+	  template: 'test/template/spec-template.tmpl'
+        }
+      }
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
+}
+\end{lstlisting}
+
+Med \emph{src: './public/js/*.js'} valdes de filer som som skulle testas.
+Med vendor valdes andra filer som var nödvändiga för att köra testerna.
+Raden \emph{keepRunner: true} gör att filen \textunderscore SpecRunner.html sparas efter att
+testerna körts. Filen kan sedan öppnas i en webbläsare och innehåller
+detaljerad information om utfallet av testerna.
+Med \emph{specs: 'test/*-spec.js'} valdes de testfall som skulle köras.
+Alla filer som slutar med -spec.js i mappen test anses alltså vara
+testfall som ska köras.
+Raden \emph{template: 'test/template/spec-template.tmpl'i} gör att testerna
+körs med en speciell SpecRunner som även kan innehålla HTML som testfallen
+kan modifiera.
+Eftersom Travis CI använder npm för att starta 
+testerna så definierades testskriptet för npm med raden
+\emph{''test'': ''grunt jasmine --verbose''} i filen package.json 
+i projektets repository.\\
+
+Testfallen skrevs med Jasmine. Jasmine har en enkel och intuitiv syntax.
+Ett exempel på ett testfall skrivet med Jasmine följer nedan.
+
+\begin{lstlisting}[
+  basicstyle = \small
+]
+describe('The function splitOnce', function() {
+	
+  it('can split a string with a char correctly', function() {
+    var str = 'a.b.c.d';
+    var res = splitOnce(str, '.');
+    expect(res[0]).toBe('a');
+    expect(res[1]).toBe('b.c.d');
+  });
+}
+\end{lstlisting}
+
+På den första raden beskrivs vilken del av koden det är som ska testas.
+På nästa rad beskrivs vad det är som ska testas i den utvalde delen av koden.
+Med functionen expect kontrolleras att koden har utfört testet på det sätt
+som förväntats. Flera expect-funktioner kan användas i samma testfall.\\
+
+Ett speciellt testfall skrevs
+för att besvara frågeställningen om hur många tester som Travis CI kan köra
+på en sekund. Det speciella testfallet visas nedan.
+
+\begin{lstlisting}[
+  basicstyle = \small
+]
+describe('Travis CI', function() {
+	
+  it('can do a lot of tests', function() {
+    var date = new Date();
+    var startTime = date.getTime();
+    var time = startTime;
+    var i = 0;
+
+    while (time < startTime + 1000) {  
+      var str = 'a.b.c.d';
+      var res = splitOnce(str, '.');
+      expect(res[0]).toBe('a');
+      expect(res[1]).toBe('b.c.d');
+
+      i++;
+      date = new Date(); 
+      time = date.getTime();
+    };
+
+    console.log(i);
+  });
+});
+\end{lstlisting}
+
+Testfallet testar funktionen splitOnce() så många gånger som möjligt
+under en sekund. Antalet gånger som funktionen hann köras skrivs
+sedan ut på skärmen med en console.log(). För att antalet ska
+fåen konkret betydelse visas även funktionen splitOnce() nedan.
+
+\begin{lstlisting}[
+  basicstyle = \small
+]
+var splitOnce = function(str, split) {
+  var index = str.indexOf(split);
+  if (index === -1) {
+    return [str, ''];
+  }
+
+  return [str.slice(0,index), str.slice(index + 1)];
+};
+\end{lstlisting}
 
 \subsection{Resultat}
 \subsection{Diskussion}
@@ -87,5 +219,24 @@ i projektets repository.
 \subsubsection{Metod}
 \subsection{Slutsatser}
 \subsection{Referenser}
-[1] O. Karlsson, ''Automatiserad testning av webbapplikationer,'' Linköpings univ., Linköping, Sverige, 2014, s.43.
-[Online]. Tillgänglig: http://www.diva-portal.org/smash/get/diva2:727654/FULLTEXT01.pdf. [Hämtad april 19, 2015].
+\vspace{-9mm}
+\renewcommand{\refname}{}
+\begin{thebibliography}{9}
+
+\bibitem{Royce}
+W.W. Royce, ''Managing the development of large software systems,''
+\textit{Proceedings of IEEE WESCON}, pp. 2, aug, 1970.
+[Online].
+Tillgänglig (nytryckt med annan sidnumrering):
+\url{http://www.cs.umd.edu/class/spring2003/cmsc838p/Process/waterfall.pdf}.
+[Hämtad april 28, 2015].
+
+\bibitem{Karlsson}
+O. Karlsson, ''Automatiserad testning av webbapplikationer,''
+Linköpings univ., Linköping, Sverige, 2014, pp. 43.
+[Online]. 
+Tillgänglig: 
+\url{http://www.diva-portal.org/smash/get/diva2:727654/FULLTEXT01.pdf}.
+[Hämtad april 19, 2015].
+
+\end{thebibliography}
