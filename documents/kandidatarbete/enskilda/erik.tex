@@ -61,6 +61,8 @@ Javascript är ett programmeringsspråk som i första hand används på klientsi
 Javascript exekveras av webbläsaren och arbetar mot ett gränssnitt som heter 
 Document Object Model (DOM).
 
+\subsubsection{JQuery}
+
 \subsubsection{Node.js}
 Node.js är en runtime environment för internetapplikationer. Det kan till exempel 
 användas för att skapa webbservrar.
@@ -191,6 +193,24 @@ describe('Travis CI', function() {
     console.log(i);
   });
 });
+\end{lstlisting}
+
+Testfallet testar funktionen splitOnce() så många gånger som möjligt
+under en sekund. Antalet gånger som funktionen hann köras skrivs
+sedan ut på skärmen med en console.log(). För att antalet ska
+fåen konkret betydelse visas även funktionen splitOnce() nedan.
+
+\begin{lstlisting}[
+  basicstyle = \small
+]
+var splitOnce = function(str, split) {
+  var index = str.indexOf(split);
+  if (index === -1) {
+    return [str, ''];
+  }
+
+  return [str.slice(0,index), str.slice(index + 1)];
+};
 \end{lstlisting}
 
 \subsection{Resultat}
