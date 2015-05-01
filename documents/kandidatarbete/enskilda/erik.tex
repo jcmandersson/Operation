@@ -160,7 +160,38 @@ describe('The function splitOnce', function() {
 På den första raden beskrivs vilken del av koden det är som ska testas.
 På nästa rad beskrivs vad det är som ska testas i den utvalde delen av koden.
 Med functionen expect kontrolleras att koden har utfört testet på det sätt
-som förväntats. Flera expect-funktioner kan användas i samma testfall.
+som förväntats. Flera expect-funktioner kan användas i samma testfall.\\
+
+Ett speciellt testfall skrevs
+för att besvara frågeställningen om hur många tester som Travis CI kan köra
+på en sekund. Det speciella testfallet visas nedan.
+
+\begin{lstlisting}[
+  basicstyle = \small
+]
+describe('Travis CI', function() {
+	
+  it('can do a lot of tests', function() {
+    var date = new Date();
+    var startTime = date.getTime();
+    var time = startTime;
+    var i = 0;
+
+    while (time < startTime + 1000) {  
+      var str = 'a.b.c.d';
+      var res = splitOnce(str, '.');
+      expect(res[0]).toBe('a');
+      expect(res[1]).toBe('b.c.d');
+
+      i++;
+      date = new Date(); 
+      time = date.getTime();
+    };
+
+    console.log(i);
+  });
+});
+\end{lstlisting}
 
 \subsection{Resultat}
 \subsection{Diskussion}
