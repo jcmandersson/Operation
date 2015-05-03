@@ -62,6 +62,11 @@ Javascript exekveras av webbläsaren och arbetar mot ett gränssnitt som heter
 Document Object Model (DOM).
 
 \subsubsection{JQuery}
+JQuery är ett javascript-bibliotek som kan användas för att förenkla programeringen
+av javascript på klientsidan av en webbsida. JQuery innehåller lättanvänd
+funktionalitet för händelsehantering och modifiering av HTML-objekt.
+JQuery är gratis och baserat på öppen källkod som är tillgänglig under en
+MIT-licens.
 
 \subsubsection{Node.js}
 Node.js är en runtime environment för internetapplikationer. Det kan till exempel 
@@ -198,7 +203,7 @@ describe('Travis CI', function() {
 Testfallet testar funktionen splitOnce() så många gånger som möjligt
 under en sekund. Antalet gånger som funktionen hann köras skrivs
 sedan ut på skärmen med en console.log(). För att antalet ska
-fåen konkret betydelse visas även funktionen splitOnce() nedan.
+få en konkret betydelse visas även funktionen splitOnce() nedan.
 
 \begin{lstlisting}[
   basicstyle = \small
@@ -212,6 +217,15 @@ var splitOnce = function(str, split) {
   return [str.slice(0,index), str.slice(index + 1)];
 };
 \end{lstlisting}
+
+Funktionen tar två paramterar. En sträng (str) som ska delas upp och 
+en sträng (split) som anger vilket tecken eller vilken teckenkombination
+som ska dela upp strängen. Funktionen delar endast upp strängen i två delar
+även om (split) förekommer påflera positioner i (str). Funktionen returnerar 
+en array med två element.
+De två elementen är de två delarna av den ursprungliga strängen. Om den andra
+parametern (split) inte existerar i den första parametern (str) så returneras
+hela strängen i det första elementet och en tom sträng i det andra elementet.
 
 \subsection{Resultat}
 \subsection{Diskussion}
