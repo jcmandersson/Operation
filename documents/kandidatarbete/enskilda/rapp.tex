@@ -3,31 +3,12 @@
 Idag är information om Region Östergötlands operationsartiklar, så som priserna och
 placeringen i lagret på tandborstar, tandkräm, handskar och annan
 medicinsk utrustning, hanterat av ett internt system.
-Detta system kallas ett "\textit{kartotek}".
-
+Detta system kallas ett "\textit{kartotek}", och är helt enkelt en sorts artikeldatabas.
+I vårt system så ska detta uppdateras och förbättras på olika sätt.
 
 \subsubsection{Syfte}
-Det största problemet med det nuvarande kartoteket är
-att det inte är integrerat med systemet för att hantera handböcker.
-
-I dagsläget, om en artikel slutas säljas eller Region Östergötland
-väljer att inte köpa in en viss artikel längre så tar de bort artikeln
-från kartoteket. Problemet som då uppstår är att detta inte reflekteras
-i handböckerna. Så om t.ex. en "\textit{Oral-B Pro 600 CrossAction}"\ tandborste används i
-en "\textit{Laparoskopisk sigmoideumresektion}", och tandborsten slutas säljas
-så tas den bort från kartoteket, men eftersom handboken för operationen inte är
-kopplad till kartoteket så uppdateras det inte att denna artikel inte längre finns
-i lagret.
-
-Syftet med denna del av systemet är att lösa detta problem genom att
-integrera systemet som hanterar handböcker tillsammans med ett nytt kartotek,
-allesammans byggt på webben. När en artikel ändras eller tas bort i kartoteket
-så ändras den även i alla handböcker för operationer som kräver denna artikel.
-
-
-%Syftet med denna del av projektet är att..
-
-%Syftet med projektet är att bygga en web-baserad, mobilanpassad, prototyp som ersätter, och förbättrar, det pappersbaserade systemet.
+Syftet med denna del är att beskriva vad kartoteket är samt
+hur vår förbättrade lösning är uppbyggd.
 
 
 \subsubsection{Frågeställning}
@@ -40,21 +21,42 @@ Frågeställningar:
 
 
 \subsubsection{Avgränsningar}
-Förutom ett förbättrat avcheckningsssytem så är Region Östergötland också i behov av
-ett bättre system för att hantera deras lager på ett mer automatiserat sätt. %, med t.ex. en
-%scanner för att scanna av artiklar istället för manuellt checka av dem.
-Bland annat
-så skulle de behöva ett system som låter dem checka in vilka varor från lagret de hämtat
-ut, istället för att checka av manuellt, vilket kan vara felbenäget.
+%Förutom ett förbättrat kartotekssystem så är Region Östergötland också i behov av
+%ett bättre system för att hantera deras lager på ett mer automatiserat sätt.
+%Bland annat så skulle de behöva ett system som låter dem checka in vilka varor från lagret de hämtat
+%ut, istället för att checka av manuellt, vilket kan vara felbenäget.
 
-Vi har dock valt att avgränsa oss från att bygga denna lösning, på grund av tidsbrister.
+%Vi valde dock att avgränsa oss från att bygga denna lösning, på grund av tidsbrister.
+%Istället fokuserade vi på att förbättra kärnfunktionaliteten i applikationen.
 
 
 \subsection{Bakgrund}
+I dagsläget använder Region Östergötland av två separata system
+för att förbereda operationer. En handbok (se ovan) och ett kartotek (se \ref{fig:kartotek}).
+Dessa är för tillfället helt separata applikationer.
+
+\begin{center}
+  \includegraphics[width=0.9\textwidth]{../images/forradsinfo.jpg}
+  \label{fig:kartotek}
+\end{center}
+
+Så om en artikel slutas säljas eller Region Östergötland
+väljer att inte köpa in en viss artikel längre så tar de bort artikeln
+från kartoteket. Problemet som då uppstår är att detta inte reflekteras
+i handböckerna. Så om t.ex. en "\textit{Oral-B Pro 600 CrossAction}"\ tandborste används i
+en "\textit{Laparoskopisk sigmoideumresektion}", och tandborsten slutas säljas
+så tas den bort från kartoteket, men eftersom handboken för operationen inte är
+kopplad till kartoteket så uppdateras det inte att denna artikel inte längre finns i lagret.
+
+Vår förbättrade lösning
+integrerar systemet som hanterar handböcker tillsammans med ett nytt kartotek,
+där allesammans är byggt på webben. När en artikel ändras eller tas bort i kartoteket
+så ändras den även i alla handböcker för operationer som kräver denna artikel.
+
 
 
 \subsection{Teori}
-%Agilt
+
 
 \subsection{Metod}
 \subsection{Resultat}
