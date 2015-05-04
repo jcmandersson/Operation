@@ -15,7 +15,7 @@ De frågeställningar som ska besvaras i den här enskilda delen av rapporten ä
 
 \begin{itemize}
 \item Hur kan man använda Travis CI tillsammans med Jasmine för att testa en 
-webbapplikation byggd på javascript och node.js.
+webbapplikation byggd på javascript och node.js?
 \item Hur många tester hinner Travis CI köra på en sekund?
 \item Vilka typer av tester är svåra att utföra?
 \end{itemize}
@@ -170,7 +170,8 @@ Med functionen expect kontrolleras att koden har utfört testet på det sätt
 som förväntats. Flera expect-funktioner kan användas i samma testfall.\\
 
 Ett speciellt testfall skrevs
-för att besvara frågeställningen om hur många tester som Travis CI kan köra
+för att besvara den andra frågeställningen om hur många tester som 
+Travis CI kan köra
 på en sekund. Det speciella testfallet visas nedan.
 
 \begin{lstlisting}[
@@ -202,7 +203,10 @@ describe('Travis CI', function() {
 
 Testfallet testar funktionen splitOnce() så många gånger som möjligt
 under en sekund. Antalet gånger som funktionen hann köras skrivs
-sedan ut på skärmen med en console.log(). För att antalet ska
+sedan ut på skärmen med en console.log(). 
+Testfallet har körts flera gånger på olika datum och olika tidpunkter.
+Resultatet av testerna presenteras i en tabell under rubriken Resultat.
+För att antalet ska
 få en konkret betydelse visas även funktionen splitOnce() nedan.
 
 \begin{lstlisting}[
@@ -227,17 +231,37 @@ De två elementen är de två delarna av den ursprungliga strängen. Om den andr
 parametern (split) inte existerar i den första parametern (str) så returneras
 hela strängen i det första elementet och en tom sträng i det andra elementet.\\
 
+För att besvara den tredje frågeställningen om vilka tester som är svåra att
+utföra så gicks koden igenom och försök till att skriva testfall genomfördes
+med de olika delarna av koden.
+
+\subsection{Resultat}
+Här presenteras resultatet av rapporten, det vill säga svaren på
+frågeställningarna.
+
+\subsubsection{Hur kan man använda Travis CI tillsammans med Jasmine 
+för att testa en webbapplikation byggd på javascript och node.js?}
+
+\subsubsection{Hur många tester hinner Travis CI köra på en sekund?}
+Resultatet av testerna som utfördes för att besvara den andra frågeställningen
+visas i tabellen nedan.
+
 \begin{center}
   \begin{tabular}{| l | l | l | l |}
   \hline
-  Testnummer & Datum & Tid & Test per sekund\\ \hline
+  Testnummer & Datum (ÅÅ-MM-DD) & Tid (hh-mm-ss) & Test per sekund\\ \hline
   1 & 15-05-01 & 13:53:34 & 11380\\ \hline
   2 & 15-05-01 & 14:27:27 & 12462\\ \hline
   3 & 15-05-01 & 14:47:14 & 9386\\ \hline 
+  4 & 15-05-03 & 10:21:57 & 14093\\ \hline 
+  5 & 15-05-03 & 15:43:20 & 9875\\ \hline 
+  6 & 15-05-04 & 09:42:39 & 10156\\ \hline 
+  7 & 15-05-04 & 11:14:43 & 11933\\ \hline 
   \end{tabular}
 \end{center}
 
-\subsection{Resultat}
+\subsubsection{Vilka typer av tester är svåra att utföra?}
+
 \subsection{Diskussion}
 \subsubsection{Resultat}
 \subsubsection{Metod}
