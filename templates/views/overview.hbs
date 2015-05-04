@@ -32,7 +32,8 @@
                   <p id="comment-icon{{_id}}" data-operation="{{_id}}" class="commentGlyphicon glyphicon glyphicon-comment showOperationCommentsButton {{#unless comment}} hidden {{/unless}}"></p>
                   <div class="tags">{{ tags }}&nbsp;</div>
                   <div class="progressbar {{#if isDone}} isDone {{/if}}" data-total="{{ progress.all.total }}"
-                       data-checked="{{ progress.all.checked }}" data-percent="{{ progress.all.percent }}">
+                       data-checked="{{ progress.all.checked }}" data-percent="{{ progress.all.percent }}"
+                       data-slug="{{ slug }}">
                   </div>
                 </div>
               </div>
