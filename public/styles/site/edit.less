@@ -2,7 +2,7 @@
 
 .operationForm textarea {
   width: 100%;
-  min-height: 100px;
+  min-height: 150px;
   height: 100%;
 }
 
@@ -165,4 +165,44 @@ ul.nav li {
   height: 34px;
   line-height: 34px;
   text-align: center;
+}
+
+.contentText {
+  overflow: hidden;
+  position: relative;
+}
+
+.process-content-item .overlay-container {
+  position: absolute;
+  top: 0;
+  width: 100%;  
+  height: 100%;
+  overflow: hidden;
+  background: #FFF;
+  cursor: text;
+}
+
+.process-content-item .text {
+  position: absolute;
+  top: 20px;
+  text-align: center;
+  width: 100%;
+  color: #FFF;
+}
+
+.process-content-item .blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 74, 130, 0.7);
+}
+
+.process-content-item .overlay-container:hover .blur {
+  opacity: 0.9;
+}
+
+.process-content-item:last-child .overlay-container {
+  display: none;
 }
