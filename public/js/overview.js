@@ -64,6 +64,10 @@ $(document).ready(function() {
     if ($(e).hasClass('isDone')) {
       $(e).children('.ui-progressbar-value').addClass('progressbar-done');
     }
+    
+    $(e).click(function() {
+      window.location.replace("/info/" + $(e).attr("data-slug") + "#tab_checklist");
+    });
   });
   
   var unCompiledOperationCommentsTemplate = $('#operationComments-template').html();
