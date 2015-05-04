@@ -89,39 +89,41 @@ $(document).ready(function() {
 });
 
 var sortTable = function() {
-  
-  if ($('#articleTableOrderCheckbox').is(':checked')){
-    $('.articleTable').tablesorter({
-      // sort on clinc, storage, section, shelf, tray.
-      sortList: [[5, 0],[6, 0],[7, 0],[8, 0],[9, 0]],
-      headers:
-      {
-        5 : {sorter: "text"},
-        6 : {sorter: "text"},
-        7 : {sorter: "digit"},
-        8 : {sorter: "text"},
-        9 : {sorter: "digit"}
-      }
-    });
-  } else {
-    // We need the nameColumnIndex here because it can be 2 if its a template and 3 otherwise.
-    var nameColumnIndex = $(".name").index();
-    $('.articleTable').tablesorter({
-      // sort on name
-      sortList: [[nameColumnIndex, 0]],
-      headers:
-      {
-        3 : {sorter: "text"}
-      }
-    });
+  // Can only sort if the table is not empty
+  if ($('.articleTable tbody tr').length > 0) {
+
+    if ($('#articleTableOrderCheckbox').is(':checked')) {
+      $('.articleTable').tablesorter({
+        // sort on storage, section, shelf, tray, clinc.
+        sortList: [[6, 0], [7, 0], [8, 0], [9, 0], [5, 0]],
+        headers: {
+          5: {sorter: "text"},
+          6: {sorter: "text"},
+          7: {sorter: "digit"},
+          8: {sorter: "text"},
+          9: {sorter: "digit"}
+        }
+      });
+    } else {
+      // We need the nameColumnIndex here because it can be 2 if its a template and 3 otherwise.
+      var nameColumnIndex = $(".nameHeader").index() + 1;
+
+      $('.articleTable').tablesorter({
+        // sort on name
+        sortList: [[nameColumnIndex, 0]],
+        headers: {
+          3: {sorter: "text"}
+        }
+      });
+    }
+    // Needed beacause we dont want the table to sort on headerclick.
+    $('.articleTable')
+      .unbind('appendCache applyWidgetId applyWidgets sorton update updateCell')
+      .removeClass('tablesorter')
+      .find('thead th')
+      .unbind('click mousedown')
+      .removeClass('header headerSortDown headerSortUp');
   }
-  // Needed beacause we dont want the table to sort on headerclick.
-  $('.articleTable')
-    .unbind('appendCache applyWidgetId applyWidgets sorton update updateCell')
-    .removeClass('tablesorter')
-    .find('thead th')
-    .unbind('click mousedown')
-    .removeClass('header headerSortDown headerSortUp');
 };
 
 // Definition of the minus button that appears when a checklist is edited
