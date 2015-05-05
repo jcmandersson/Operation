@@ -233,7 +233,8 @@ hela strängen i det första elementet och en tom sträng i det andra elementet.
 
 För att besvara den tredje frågeställningen om vilka tester som är svåra att
 utföra så gicks koden igenom och försök till att skriva testfall genomfördes
-med de olika delarna av koden.
+med de olika delarna av koden. Resultatet av dessa tester redovisas under 
+avsnittet Resultat.
 
 \subsection{Resultat}
 Här presenteras resultatet av rapporten, det vill säga svaren på
@@ -241,6 +242,9 @@ frågeställningarna.
 
 \subsubsection{Hur kan man använda Travis CI tillsammans med Jasmine 
 för att testa en webbapplikation byggd på javascript och node.js?}
+Travis CI kan användas tillsammans med Jasmine för att testa en
+webbapllikation byggd på javascript och node.js på det sätt som beskrivits
+under avsnittet Metod.
 
 \subsubsection{Hur många tester hinner Travis CI köra på en sekund?}
 Resultatet av testerna som utfördes för att besvara den andra frågeställningen
@@ -257,10 +261,49 @@ visas i tabellen nedan.
   5 & 15-05-03 & 15:43:20 & 9875\\ \hline 
   6 & 15-05-04 & 09:42:39 & 10156\\ \hline 
   7 & 15-05-04 & 11:14:43 & 11933\\ \hline 
+  8 & 15-05-04 & 17:42:34 & 10056\\ \hline 
+  9 & 15-05-05 & 08:32:15 & 12216\\ \hline 
+  10 & 15-05-05 & 08:55:02 & 9767\\ \hline 
+  11 & 15-05-05 & 09:15:16 & 10153\\ \hline 
+  12 & 15-05-05 & 10:12:57 & 6992\\ \hline 
   \end{tabular}
 \end{center}
 
+Medelvärdet är:
+
 \subsubsection{Vilka typer av tester är svåra att utföra?}
+Det visade sig att vanliga javascript-funktioner är lätta
+att testa så länge de ligger utanför JQuery-funktionen
+\emph{\$(document).ready()}. Det kan illustreras med några
+rader kod.
+
+\begin{lstlisting}[
+  basicstyle = \small
+]
+function easyToTest() {
+  return 0;
+}
+
+$(document).ready(function() {
+
+  $('#id1').click(
+    var test = easyToTest(); 
+  );
+
+  $('#id2').click(
+    //Hard to test
+    var test = 0; 
+  );
+});
+
+\end{lstlisting}
+
+Det är alltså rekomenderat att skriva alla javascript-funktioner utanför 
+JQuery-funktionen \emph{\$(document).ready()} eftersom koden då blir 
+lättare att testa.\\
+
+JQuery-funktioner är i allmänhet svårare att testa än vanliga
+javascript-funktioner.
 
 \subsection{Diskussion}
 \subsubsection{Resultat}
