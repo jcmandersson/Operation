@@ -27,19 +27,19 @@ $(document).ready(function() {
   
   // Add click events to table rows in the checklist
   var container = $('.container');
-  container.on("click", '.check-js', checkjs);
+  container.on('click', '.check-js', checkjs);
   
   
   var processContent = $('.process-content');
-  processContent.on("click", '.cancelComment', cancelComment);
-  processContent.on("click", '.saveComment', saveComment);
-  processContent.on("click", '.showComment', showComment);
+  processContent.on('click', '.cancelComment', cancelComment);
+  processContent.on('click', '.saveComment', saveComment);
+  processContent.on('click', '.showComment', showComment);
   
   
   var articleTable = $('.articleTable tbody');
-  articleTable.on("click", '.article-remove', removeArticle);
-  articleTable.on("click", '.minus-field', minusOne);
-  articleTable.on("click", '.plus-field', plusOne);
+  articleTable.on('click', '.article-remove', removeArticle);
+  articleTable.on('click', '.minus-field', minusOne);
+  articleTable.on('click', '.plus-field', plusOne);
 
   
   // Load templates and compile them.
@@ -97,22 +97,22 @@ var sortTable = function() {
         // sort on storage, section, shelf, tray, clinc.
         sortList: [[6, 0], [7, 0], [8, 0], [9, 0], [5, 0]],
         headers: {
-          5: {sorter: "text"},
-          6: {sorter: "text"},
-          7: {sorter: "digit"},
-          8: {sorter: "text"},
-          9: {sorter: "digit"}
+          5: {sorter: 'text'},
+          6: {sorter: 'text'},
+          7: {sorter: 'digit'},
+          8: {sorter: 'text'},
+          9: {sorter: 'digit'}
         }
       });
     } else {
       // We need the nameColumnIndex here because it can be 2 if its a template and 3 otherwise.
-      var nameColumnIndex = $(".nameHeader").index() + 1;
+      var nameColumnIndex = $('.nameHeader').index() + 1;
 
       $('.articleTable').tablesorter({
         // sort on name
         sortList: [[nameColumnIndex, 0]],
         headers: {
-          3: {sorter: "text"}
+          3: {sorter: 'text'}
         }
       });
     }
@@ -135,7 +135,7 @@ var minusOne = function() {
     checkAnArticle(row);
   }
   
-  var operationID = $(this).parent().parent().attr("data-operationId");
+  var operationID = $(this).parent().parent().attr('data-operationId');
   var checkArticleID = $(this).parent().parent().attr('id');
   var amountField = $(this).parent().find('.amount-field');
   var oldAmount = parseInt(amountField.text());
@@ -155,7 +155,7 @@ var plusOne = function() {
     checkAnArticle(row);
   }
   
-  var operationID = $(this).parent().parent().attr("data-operationId");
+  var operationID = $(this).parent().parent().attr('data-operationId');
   var checkArticleID = $(this).parent().parent().attr('id');
   var amountField = $(this).parent().find('.amount-field');
   var oldAmount = parseInt(amountField.text());
@@ -182,7 +182,7 @@ var checkjs = function(e) {
   var targetClassName = e.target.className.split(" ")[0];
   var targetTagName = e.target.tagName;
   if (!(targetTagName == 'BUTTON' || targetTagName == 'IMG' || targetClassName == 'amount' ||
-        targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
+        targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(':visible'))) {
     if (!$(this).prop('disabled')) {
       checkAnArticle(this);
       checkIfDone();
@@ -192,7 +192,7 @@ var checkjs = function(e) {
 
 var checkAnArticle = function(row) {
   var checkbox = $(row).find('.checkbox-js');
-  var preparation = $(row).hasClass("process-content-item") ? true : false;
+  var preparation = $(row).hasClass('process-content-item') ? true : false;
 
   checkbox.toggleClass('glyphicon-ok');
   
@@ -230,7 +230,7 @@ var saveComment = function() {
   var commentButton = $('#commentButton' + id);
 
   if (checkComment.val() == "") {
-    checkComment.val("-");
+    checkComment.val('-');
   }
 
   var commentObject = {operation: operationId, id: id, comment: checkComment.val()};
@@ -246,7 +246,7 @@ var saveComment = function() {
 // Hide the "Saved" text, enable the comment field and save the old text if the user presses cancel.
 var showComment = function() { 
   var id = $(this).data('id');
-  var checkComment = $("#checkComment" + id);
+  var checkComment = $('#checkComment' + id);
 
   $('#commentSaved' + id).hide();
   checkComment.attr('disabled', false);
@@ -256,9 +256,9 @@ var showComment = function() {
 
 var removeArticle = function() {
   var checkArticleID = $(this).parent().parent().attr('id');
-  var operationID = $(this).parent().parent().attr("data-operationId");
+  var operationID = $(this).parent().parent().attr('data-operationId');
 
-  var confirmed = confirm("Är du säker på att du vill ta bort artikeln?");
+  var confirmed = confirm('Är du säker på att du vill ta bort artikeln?');
   if (confirmed) {
     socket.emit('removeCheckArticle', checkArticleID, operationID);
   } else {
@@ -270,7 +270,7 @@ var removeArticle = function() {
 var updateTableRow = function(tableRow, isChecked, isTemplate) {
   var checkbox = tableRow.find('.checkbox-js');
   isChecked ? checkbox.addClass('glyphicon-ok') : checkbox.removeClass('glyphicon-ok');
-  var preparation = tableRow.hasClass("process-content-item") ? true : false;
+  var preparation = tableRow.hasClass('process-content-item') ? true : false;
   if (isTemplate) {
     checkbox.prop('disabled', true);
     tableRow.prop('disabled', true);
@@ -302,11 +302,11 @@ var removeCheckArticleUpdate = function(checkArticleID) {
   row.remove();
   
   // Needed to remove row from cache (tablesort)
-  var articleTable = $(".articleTable");
-  articleTable.trigger("update")
-    .trigger("sorton", articleTable.get(0).config.sortList)
-    .trigger("appendCache")
-    .trigger("applyWidgets");
+  var articleTable = $('.articleTable');
+  articleTable.trigger('update')
+    .trigger('sorton', articleTable.get(0).config.sortList)
+    .trigger('appendCache')
+    .trigger('applyWidgets');
   
   checkIfDone();
 };
@@ -336,7 +336,7 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
   checkIfDone();
 
   // TODO: refactor this later because ugly
-  if ($('#editChecklistButton').text()=="Klar") {
+  if ($('#editChecklistButton').text()=='Klar') {
     $('.centered-remove').show();
     $('.amountColumn').show();
     $('.uneditableAmountColumn').hide();
