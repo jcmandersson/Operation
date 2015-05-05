@@ -1,8 +1,12 @@
 \section{Checkning av checklistor - Robin Andersson}
 \subsection{Inledning}
-Vårt system ska innehålla olika typer av checklistor på olika webbsidor. Om flera användare är inne på samma sida samtidigt och en person checkar en checkruta så ska den checkrutan bli checkad för alla användare som är inne på den webbsidan.\\
+Vårt system ska innehålla två olika typer av checklistor på olika webbsidor. Om flera användare är inne på samma sida samtidigt och en person checkar en checkruta så ska den checkrutan bli checkad för alla användare som är inne på den webbsidan.\\
 
-Checklistan kommer att implementeras med hjälp av html, javascript och jquery samt Socket.IO.
+Den ena typen av checklista är en plocklista där det finns information om vilka engångsmatrial som behövs för den operationsförberedelse som användaren är inne på samt vart de matrialen kan hämtas någonstans. När en sjuksköterska har plockat en artikel så checkar denne av den artikeln i plocklistan.\\
+
+Den andra typen av checklista är en lista av operationssalsförberedelser där det kan stå en längre beskrivning om vad som ska göras och när en sjuksköterska har utfört hela den förberedelsen så checkar denne av den förberedelsen i förberedelselistan.
+
+Checklistorna kommer att implementeras med hjälp av handlebars, javascript och jquery samt Socket.IO.
 
 \subsubsection{Syfte}
 Syftet med denna del av projektet är att flera sjuksköterskor samtidigt ska kunna förbereda operationer genom att plocka olika artiklar samt förbereda operationssalen och checka av det som är utfört utan att det ska bli några konflikter med att flera sjuksköterskor plockar samma artikel eller liknande.
@@ -16,17 +20,21 @@ Syftet med denna del av projektet är att flera sjuksköterskor samtidigt ska ku
 \subsubsection{Avgränsningar}
 Eftersom denna del av projektet endast innehåller checkande av checklistor så saknas etiska aspekter.
 
+\pagebreak
 \subsection{Teori}
 Huvuddelen i implementeringen av checklistan är kommunikationen med Socket.IO som är en modul till Node.JS. Socket.IO använder sig av websockets för att kommunicera mellan front-end och back-end. Med hjälp av socket.IO så kan man skicka data från en klient till alla andra anslutna klienter och visa datan som skickades utan att någon sida behöver laddas om.
 Socket.IO har olika komponenter för front-end och back-end. Händelser som skickas från den ena sidan hanteras av motsvarande händelsehanterare på den andra sidan. Varje händelse identifieras med hjälp av en sträng. Det finns några färdiga händelser i socket.io exempelvis händelsen "connection" på serversidan fås då en klient har anslutit till socket.io. \cite{socketBook} \\
 
-För mer information om Socket.IO se deras officiella hemsida: \url{http://socket.io/}\\
+Handlebars är ett så kallat ''template language'' som är byggt från Mustache. Handlebars ger bland annat möjlighet till att lägga in mindre logik i html kod samt att från html filer komma åt variabler som finns definierade i javascript filer.\cite{handlebars} Till checklistan behövs handlebars bland annat till att komma åt information om var olika artiklar finns. \\
 
-HTML står för Hypertext Markup Language och är ett sidbeskrivnings språk. \cite{html} Jag kommer att behöva HTML till att ge en grafisk representation av checklistan till användarna.\\
+Javascript är ett scriptspråk som är designat för att kunna använda html objekt och ändra data i dem. \cite{javascript} Jag kommer behöva javascript till att bland annat uppdatera de platser som artiklar i plocklistan finns på då de ändras. \\
 
+JQuery är ett javascript bibliotek som innehåller många användbara funktioner och gör det lättare att skriva lättlästkod. \cite{jquery} Jag kommer behöva JQuery till att skriva snyggare kod snabbare.
+
+\pagebreak
  
 \subsection{Metod}
-Jag började med att fundera på hur kommunikationen skulle fungera på för sätt. Jag skissade ner olika förslag på ett papper och kom på det sättet fram till hur jag skulle implementera kommunikationen. Sedan implementerade jag den och fick den att fungera. Därefter så refaktoriserade jag koden för att få den kortare och mer lättläst.
+Jag började med att fundera på hur kommunikationen skulle fungera på för sätt. Jag skissade ner olika förslag på ett papper och kom på det sättet fram till hur jag skulle implementera kommunikationen. Sedan implementerade jag den och fick den att fungera för plocklistan. Därefter så refaktoriserade jag koden för att få den kortare och mer lättläst. När plocklistan sedan var färdig implementerad så började jag fundera på hur jag skulle kunna använda mig av så mycket kod som möjligt från plocklistan till att implementera förberedelselistan. Efter det att jag implementerat förberedelselistan så refaktoriserade jag igen för att få koden mer lättläst.
 
 \subsection{Resultat}
 Jag kom fram till att när en användare går in på en operationsförberedelse så kommer denne in i ett rum. Varje gång en person sedan checkar en checkbox så skickas ett Socket.IO meddelande till servern som innehåller information om vilken checkruta som ska checkas samt vilket rum checkboxen ska checkas i. Servern skickar sedan ett meddelande till det givna rummet vilken checkruta som ska checkas och alla klienter som är anslutna till det rummet checkar den givna checkrutan. \\
@@ -54,5 +62,7 @@ Eftersom det fungerar bra med checkning av checklistor med hjälp av socket.io o
 \vspace{-9mm}
 \begin{thebibliography}{9}
 \bibitem{socketBook} Rai, Rohit. Socket. IO Real-Time Web Application Development. Birmingham: Packt Publishing Ltd., 2013.
-\bibitem{html}\url{http://tools.ietf.org/html/draft-ietf-iiir-html-00}
+\bibitem{handlebars}\url{https://github.com/wycats/handlebars.js}
+\bibitem{javascript}\url{https://web.archive.org/web/20070916144913/http://wp.netscape.com/newsref/pr/newsrelease67.html}
+\bibitem{jquery}\url{https://jquery.com/}
 \end{thebibliography}
