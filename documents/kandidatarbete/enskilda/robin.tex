@@ -6,7 +6,7 @@ Den ena typen av checklista är en plocklista där det finns information om vilk
 
 Den andra typen av checklista är en lista av operationssalsförberedelser där det kan stå en längre beskrivning om vad som ska göras och när en sjuksköterska har utfört hela den förberedelsen så checkar denne av den förberedelsen i förberedelselistan.
 
-Checklistorna kommer att implementeras med hjälp av handlebars, javascript och jquery samt Socket.IO.
+Checklistorna kommer att implementeras med hjälp av handlebars, javascript, jquery samt Socket.IO.
 
 \subsubsection{Syfte}
 Syftet med denna del av projektet är att flera sjuksköterskor samtidigt ska kunna förbereda operationer genom att plocka olika artiklar samt förbereda operationssalen och checka av det som är utfört utan att det ska bli några konflikter med att flera sjuksköterskor plockar samma artikel eller liknande.
@@ -22,13 +22,8 @@ Eftersom denna del av projektet endast innehåller checkande av checklistor så 
 
 \pagebreak
 \subsection{Teori}
-Huvuddelen i implementeringen av checklistan är kommunikationen med  \cite{socketBook} \\
-
-\cite{handlebars} Till checklistan behövs handlebars bland annat till att komma åt information om var olika artiklar finns. \\
-
-Javascript är ett scriptspråk som är designat för att kunna använda html objekt och ändra data i dem. \cite{javascript} Jag kommer behöva javascript till att bland annat uppdatera de platser som artiklar i plocklistan finns på då de ändras. \\
-
-JQuery är ett javascript bibliotek som innehåller många användbara funktioner och gör det lättare att skriva lättlästkod. \cite{jquery} Jag kommer behöva JQuery till att skriva snyggare kod snabbare.
+\subsubsection{Websockets}
+WebSockets består av ett nätverksprotokoll och ett API som gör det möjligt att skapa en WebSocket uppkoppling mellan en klient och en server. Med hjälp av WebSocket API:t så kan man hantera en full-duplex kanal som kan användas till att skicka och ta emot meddelanden. En WebSocket anslutning skapas genom att gå över från HTTP protokollet till WebSockets nätverksprotokoll när en initial handskakning mellan server och klient sker. När en WebSocket anslutning finns uppkopplad så kan WebSocket meddelanden skickas fram och tillbaka mellan metoderna som finns definierade i WebSockets gränssnitt. När WebSockets används i ett system så används asynkrona eventlyssnare för att lyssna på kommunikationen. WebSockets API är rent eventbaserat villket betyder att klienter inte behöver kontrollera om servern har uppdaterats utan att de istället uppdaterar när de får ett event. \cite{websocketbook}
 
 \pagebreak
  
@@ -60,7 +55,7 @@ Eftersom det fungerar bra med checkning av checklistor med hjälp av socket.io o
 \subsection{Referenser}
 \vspace{-9mm}
 \begin{thebibliography}{9}
-\bibitem{socketBook} Rai, Rohit. Socket. IO Real-Time Web Application Development. Birmingham: Packt Publishing Ltd., 2013.
+\bibitem{websocketbook} Wang Vanessa, Salim Frank, Moskovits Peter; The Definitive Guide to HTML5 WebSocket; New York City APress, 2013.
 \bibitem{handlebars}\url{https://github.com/wycats/handlebars.js}
 \bibitem{javascript}\url{https://web.archive.org/web/20070916144913/http://wp.netscape.com/newsref/pr/newsrelease67.html}
 \bibitem{jquery}\url{https://jquery.com/}
