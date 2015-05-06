@@ -5,47 +5,43 @@ Utredningen behandlar en del av utvecklingen av ett webb-baserat system för att
 inför operationer på sjukhusen i Östergötland. Systemet utvecklades på uppdrag av Region Östergötland.
 
 \subsubsection{Syfte}
-Syftet med den här enskilda delen av kandidatarbetet är att ge insikt i hur kontinuerlig integration och 
-automatiserade tester kan användas för att effektivisera testandet i ett projekt som använder en agil 
-utvecklingsmetod. Speciellt ska det undersökas hur väl det går att använda Travis CI tillsammans med 
-ramverket Jasmine.
+Syftet med den här enskilda delen av kandidatarbetet är att ge insikt 
+i hur kontinuerlig integration och 
+automatiserade tester kan användas för att effektivisera testandet 
+i ett projekt som använder en agil 
+utvecklingsmetod. Speciellt ska det undersökas hur väl det går att använda 
+webb-baserade tjänster för
+att utföra kontinuerliga automatiserade tester av webb-applikationer.
 
 \subsubsection{Frågeställning}
-De frågeställningar som ska besvaras i den här enskilda delen av rapporten är:
+De frågeställningar som ska besvaras i den här enskilda 
+delen av rapporten är:
 
 \begin{itemize}
-\item Hur kan man använda Travis CI tillsammans med Jasmine för att testa en 
-webbapplikation byggd på javascript och node.js?
-\item Hur många tester hinner Travis CI köra på en sekund?
-\item Vilka typer av tester är svåra att utföra?
+\item Hur kan man använda webb-baserade tjänster för
+att utföra kontinuerliga automatiserade tester av webb-applikationer?
+\item Hur effektivt är det att använda en webb-baserad tjänst
+för autmatiserade tester? 
+\item Vilka typer av tester är svåra att utföra med en sådan tjänst?
 \end{itemize}
 
-I svaret på den andra frågeställningen ska testfallen specifieras noggrant 
-så att svaret inte blir tvetydigt.
+I den andra frågeställningen så defineras effektivitet som antalet test som kan
+utföras per sekund. I svaret på frågeställningen ska även testfallen 
+specifieras noggrant så att svaret inte blir tvetydigt. Det kan även vara
+intressant att ta reda på hur lång tid det tar från det att koden pushas till GitHub
+till det att testfallen börjar köras på servern.
 
 \subsubsection{Avgränsningar}
-Inga undersökningar kommer att utföras om hur andra lösningar än Travis CI kan användas för kontinuerlig 
-integration. De testfall som kommer användas kommer uteslutande att vara skrivna med ramverket Jasmine.
+Inga undersökningar kommer att utföras om hur andra lösningar än 
+Travis CI kan användas för kontinuerlig 
+integration och automatiserde tester. De testfall som kommer användas 
+kommer uteslutande att vara skrivna med ramverket Jasmine. Den webb-applikation
+som kommer att testas kommer att vara skriven med programmeringsspråket
+javascript och använda javascriptbiblioteken Node.js och JQuery.
 
-\subsection{Teori}
-Här beskrivs den teori som är nödvändig för att förstå rapporten.
-
-\subsubsection{Vattenfallsmodellen}
-I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. 
-Om ett problem då identifieras under integrationen så är det krångligt att gå 
-tillbaka och åtgärda problemet. 
-Det kan leda till förseningar av projektet.
-Om felet som upptäcks är så allvarligt att en betydande omdesign måste ske så
-kommer utvecklingen i stort sett att börja om från början och man kan räkna 
-med en hundraprocentig ökning av budgeten, 
-både vad gäller pengar och tid \cite{Royce}.
-
-\subsubsection{Kontinuerlig integration och automatiserade tester}
-Kontinuerlig integration kan leda till att problemen identifieras tidigare i 
-utvecklingsprocessen. Problemen blir då lättare att åtgärda. Automatiserade tester kan effektivisera 
-testprocessen och det finns många tillgängliga lösningar för att köra automatiserade
-tester \cite{Karlsson}.
-Några av de vanligaste är Travis CI, Codeship och Drone.
+\subsection{Bakgrund}
+Här beskrivs de tjänster, språk och bibliotek som använts under arbetet
+med den här enskilda rapporten.
 
 \subsubsection{Travis CI}
 Travis CI är en webb-baserad tjänst för att köra automatiserade enhetstester och integrationstester
@@ -80,6 +76,27 @@ Jasmine är ett ramverk för testning av Javascript.
 Den node-modul som används är grunt-contrib-jasmine som använder task runnern Grunt 
 för att köra testfall som skrivits med Jasmine.
 Grunt kunfigureras med filen Gruntfile.js.
+
+\subsection{Teori}
+Här beskrivs den teori som ligger till grund för rapporten och som visar
+varför frågeställningarna är relevanta.
+
+\subsubsection{Vattenfallsmodellen}
+I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. 
+Om ett problem då identifieras under integrationen så är det krångligt att gå 
+tillbaka och åtgärda problemet. 
+Det kan leda till förseningar av projektet.
+Om felet som upptäcks är så allvarligt att en betydande omdesign måste ske så
+kommer utvecklingen i stort sett att börja om från början och man kan räkna 
+med en hundraprocentig ökning av budgeten, 
+både vad gäller pengar och tid \cite{Royce}.
+
+\subsubsection{Kontinuerlig integration och automatiserade tester}
+Kontinuerlig integration kan leda till att problemen identifieras tidigare i 
+utvecklingsprocessen. Problemen blir då lättare att åtgärda. Automatiserade tester kan effektivisera 
+testprocessen och det finns många tillgängliga lösningar för att köra automatiserade
+tester \cite{Karlsson}.
+Några av de vanligaste är Travis CI, Codeship och Drone.
 
 \subsection{Metod}
 Arbetet inleddes genom att Travis CI kopplades till projektets repository på GitHub.
@@ -170,9 +187,9 @@ Med functionen expect kontrolleras att koden har utfört testet på det sätt
 som förväntats. Flera expect-funktioner kan användas i samma testfall.\\
 
 Ett speciellt testfall skrevs
-för att besvara den andra frågeställningen om hur många tester som 
-Travis CI kan köra
-på en sekund. Det speciella testfallet visas nedan.
+för att besvara den andra frågeställningen om hur effektivt det är 
+att använda en webb-baserad tjänst
+för autmatiserade tester. Det speciella testfallet visas nedan.
 
 \begin{lstlisting}[
   basicstyle = \small
@@ -231,8 +248,9 @@ De två elementen är de två delarna av den ursprungliga strängen. Om den andr
 parametern (split) inte existerar i den första parametern (str) så returneras
 hela strängen i det första elementet och en tom sträng i det andra elementet.\\
 
-För att besvara den tredje frågeställningen om vilka tester som är svåra att
-utföra så gicks koden igenom och försök till att skriva testfall genomfördes
+För att besvara den tredje frågeställningen om vilka typer av tester som är 
+svåra att utföra med en webb-baserad tjänst så gicks koden igenom och 
+försök till att skriva testfall genomfördes
 med de olika delarna av koden. Resultatet av dessa tester redovisas under 
 avsnittet Resultat.
 
@@ -240,13 +258,17 @@ avsnittet Resultat.
 Här presenteras resultatet av rapporten, det vill säga svaren på
 frågeställningarna.
 
-\subsubsection{Hur kan man använda Travis CI tillsammans med Jasmine 
-för att testa en webbapplikation byggd på javascript och node.js?}
-Travis CI kan användas tillsammans med Jasmine för att testa en
-webbapllikation byggd på javascript och node.js på det sätt som beskrivits
-under avsnittet Metod.
+\subsubsection{Hur kan man använda webb-baserade tjänster för
+att utföra kontinuerliga automatiserade tester av webb-applikationer?}
+Ett sätt att använda en webb-baserad tjänst för att utföra kontinuerliga 
+automatiserade tester av en webb-applikation är att använda  
+Travis CI tillsammans med Jasmine på det sätt som beskrivits
+under avsnittet Metod. Observera att den webb-applikation som testades
+var skriven med javascript. Node.js användes på serversidan och 
+JQuery användes på klientsidan.
 
-\subsubsection{Hur många tester hinner Travis CI köra på en sekund?}
+\subsubsection{Hur effektivt är det att använda en webb-baserad tjänst
+för autmatiserade tester? }
 Resultatet av testerna som utfördes för att besvara den andra frågeställningen
 visas i tabellen nedan.
 
@@ -269,9 +291,9 @@ visas i tabellen nedan.
   \end{tabular}
 \end{center}
 
-Medelvärdet är:
+Medelvärdet är: TODO
 
-\subsubsection{Vilka typer av tester är svåra att utföra?}
+\subsubsection{Vilka typer av tester är svåra att utföra med en sådan tjänst?}
 Det visade sig att vanliga javascript-funktioner är lätta
 att testa så länge de ligger utanför JQuery-funktionen
 \emph{\$(document).ready()}. Det kan illustreras med några
