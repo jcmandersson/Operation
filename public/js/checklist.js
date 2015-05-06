@@ -28,7 +28,8 @@ $(document).ready(function() {
   // Add click events to table rows in the checklist
   var container = $('.container');
   container.on("click", '.check-js', checkjs);
-  
+
+  $('#btn-done').click(btnDone);
   
   var processContent = $('.process-content');
   processContent.on("click", '.cancelComment', cancelComment);
@@ -47,8 +48,10 @@ $(document).ready(function() {
   var articleTemplate = Handlebars.compile(unCompiledArticle);
   var unCompiledComment = $('#comment-template').html();
   var commentTemplate = Handlebars.compile(unCompiledComment);
-  
 
+
+  socket.on('markAsDone', changeButtonColor);
+  
   // Listen to sockets (backend sockets in lib/checklist.js)
   socket.on('saveComment', saveCommentSocket);
   
@@ -78,7 +81,6 @@ $(document).ready(function() {
   socket.on('checkboxClick', function(checkObject) {
     var tableRow = $('#' + checkObject.id);
     updateTableRow(tableRow, checkObject.isChecked, false);
-    checkIfDone();
   });
   
   socket.on('kartotekUpdate', function(checkObject) {
@@ -87,6 +89,21 @@ $(document).ready(function() {
   });
   
 });
+var changeButtonColor = function(data) {
+  if (data.isDone) {
+    $('#btn-done').addClass('btn-done');
+  } else {
+    $('#btn-done').removeClass('btn-done');
+  }
+};
+
+var btnDone = function() {
+  if ($('#btn-done').hasClass('btn-done')) {
+    socket.emit('markAsDone', { operation: operationId, isDone: false});
+  } else {
+    socket.emit('markAsDone', { operation: operationId, isDone: true});
+  }
+};
 
 var sortTable = function() {
   // Can only sort if the table is not empty
@@ -185,7 +202,7 @@ var checkjs = function(e) {
         targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
     if (!$(this).prop('disabled')) {
       checkAnArticle(this);
-      checkIfDone();
+      checkIfDone();      
     }
   }
 };
@@ -205,6 +222,8 @@ var checkAnArticle = function(row) {
   };
 
   socket.emit('checkboxClick', checkObject);
+  checkIfDone();
+  
 };
 
 // check if done checking and mark as done.
@@ -216,12 +235,10 @@ var checkIfDone = function() {
       return false;
     }
   });
-  if (done) {
-    $('#btn-done').addClass('btn-done');
-  } else {
-    $('#btn-done').removeClass('btn-done');
-  }
+  changeButtonColor({isDone : done});
+  socket.emit('markAsDone', { operation: operationId, isDone: done});
 };
+
 
 // Save the comment locally and emit to back-end to save in database.
 var saveComment = function() { 
@@ -307,7 +324,6 @@ var removeCheckArticleUpdate = function(checkArticleID) {
     .trigger("sorton", articleTable.get(0).config.sortList)
     .trigger("appendCache")
     .trigger("applyWidgets");
-  
   checkIfDone();
 };
 
@@ -334,6 +350,7 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
 
   sortTable();
   checkIfDone();
+  
 
   // TODO: refactor this later because ugly
   if ($('#editChecklistButton').text()=="Klar") {

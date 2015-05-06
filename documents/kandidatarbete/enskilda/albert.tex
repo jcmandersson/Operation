@@ -14,7 +14,7 @@ Syftet med denna enskilda utredningen är att underlätta för fortsatt utveckli
 \subsubsection{Avgränsningar}
 Denna rapport gäller endast för vidareutveckling för användning av Region Östergötland. Andra användare kan ha andra krav på applikationen som leder till att denna rapport är ofullständig eller felaktig. 
 \subsection{Bakgrund}
-Region Östergötland ska ta över arbetet med utvecklingen av webbapplikationen efter att projektgruppen slutfört sitt arbete. För att applikationen ska kunna tas i bruk på riktigt så måste databasen bytas ut till MSSQL då Region Östergötland inte tillåter MongoDB på sina servrar. Då utvecklingen av applikationen har fortgått har Keystone fått en mindre och mindre roll i applikationen. En av Keystones största fördelar är dess enkla och smidiga administratörssystem. Detta används inte alls i applikationen längre och då databsen ska bytas till en annan typ försvinner också en annan stor del av Keystone. Detta ledde till tankar om att Keystone kanske skulle kunna bytas ut mot egenskriven kod eller mindre och mer lättförståliga moduler utan jättemycket arbete.
+Region Östergötland ska ta över arbetet med utvecklingen av webbapplikationen efter att projektgruppen slutfört sitt arbete. För att applikationen ska kunna tas i bruk på riktigt så måste databasen bytas ut till MSSQL då Region Östergötland inte tillåter MongoDB på sina servrar. Då utvecklingen av applikationen har fortgått har Keystone fått en mindre och mindre roll i applikationen. En av Keystones största fördelar är dess enkla och smidiga innehållshanterare. Detta har varit till stor nytta för att komma igång med projektet och få snabba resultat för de gruppmedlemmar som inte har hållt på med webbprogrammering innan. Men när applikationen är färdigutvecklad så används inte detta systemet alls längre och då databsen ska bytas till en annan typ försvinner också en annan stor del av Keystone, vilket var den enkla integrationen men MongoDB genom Mongoose. Detta ledde till tankar om att Keystone kanske skulle kunna bytas ut mot egenskriven kod eller mindre och mer lättförståliga moduler utan jättemycket arbete.
 \subsection{Teori}
 En beskrivning och förklaring för många av modulerna som kommer tas upp finns att läsa i avsnitt 3.
 \subsubsection{MSSQL}
@@ -23,14 +23,21 @@ MSSQL är en databashanterare från Microsoft som använder SQL som frågespråk
 \subsubsection{npm}
 npm är en pakethanterare för Node.js som hanterar open-source paket. Det finns även en tillhörande hemsida för npm där teknisk dokumentation med mera för olika paket kan läsas. 
 
+\subsubsection{Express}
+
+
 
 \subsection{Metod}
-För att få en bättre förståelse för Keystones roll i applikationen så läses först och främst Keystones tekniska dokumentation. En ny installation av Keystone görs för att kunna jämföra med projektkoden och få fram vilka komponenter som kommer från Keystone. Keystone är också beroende av många moduler. Dessa moduler kommer utvärderas för att se om de skulle fungera bra i en version av applikationen utan Keystone. 
+För att få en bättre förståelse för Keystones roll i applikationen så läses först och främst Keystones tekniska dokumentation. En ny installation av Keystone görs för att kunna jämföra med projektkoden och få fram vilka komponenter som kommer från Keystone. Keystone är också beroende av många moduler. Dessa moduler utvärderas för att se om de skulle fungera bra i en version av applikationen utan Keystone. 
 
 Information om olika moduler kommer tas från respektive utgivares hemsida eller, i de fall de inte finns, npmjs.com eller github.
 express MIT
 
 \subsection{Resultat}
+Keystone används främst till att skapa ett enkelt användargränssnitt för modifiering av innehållet i databasen. 
+
+https://www.microsoft.com/en-us/download/details.aspx?id=29995
+Det finns flera olika moduler för att koppla ihop en Node.js-applikation med MSSQL. En av dessa är en officiell modul från Microsoft. Denna har dock inte släppts i slutgiltig version utan finns bara som en förhandstitt som släpptes 01-08-2013. Att använda en officiell modul från Microsoft hade gett många fördelar för Region Östergötland så som officiell support och garanti att den skulle fungera. Men då den inte släppts som slutgiltig version och inte verkar utvecklas längre så uppfyller den inte de krav som ställs. 
 \subsection{Diskussion}
 \subsubsection{Resultat}
 \subsubsection{Metod}
