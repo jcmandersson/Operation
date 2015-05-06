@@ -337,7 +337,7 @@ var getCheckboxes = function(checkboxesAndTemplate) {
     
     updateTableRow(tableRow, isChecked, isTemplate);
   }
-  checkIfDone();
+  
 };
 
 var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
