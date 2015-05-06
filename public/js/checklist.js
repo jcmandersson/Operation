@@ -48,7 +48,6 @@ $(document).ready(function() {
   var articleTemplate = Handlebars.compile(unCompiledArticle);
   var unCompiledComment = $('#comment-template').html();
   var commentTemplate = Handlebars.compile(unCompiledComment);
-  
 
 
   socket.on('markAsDone', changeButtonColor);
@@ -339,7 +338,7 @@ var getCheckboxes = function(checkboxesAndTemplate) {
     
     updateTableRow(tableRow, isChecked, isTemplate);
   }
-  //checkIfDone();
+  
 };
 
 var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
@@ -352,6 +351,7 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
 
   sortTable();
   checkIfDone();
+  
 
   // TODO: refactor this later because ugly
   if ($('#editChecklistButton').text()=='Klar') {
