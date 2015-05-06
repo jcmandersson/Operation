@@ -195,6 +195,32 @@ Nästan all utveckling har skett med hela gruppen samlad i samma lokal. Det har 
 \section{Slutsatser}
    
 \section{Fortsatt arbete}
+Här följer en sammanfattning om fortsatt arbete med systemet. Restlistan behandlar krav som inte implementerats eller som borde vidareutvecklas. Även förslag på vidareutveckling som inte tas upp av kravspecifikationen tas upp. Dessa förslag är sådant som kommit fram under utvecklingens gång.
+
+\subsection{Restlista}
+Följande krav är markerade som gula i kravspecifikationen vilket betyder att de bör vidareutvecklas för att ses som klara:
+%%Fyll på gula krav här efter iteration 3 mötet
+Följande krav är markerade som röda i kravspecifikationen vilket betyder att de inte är påbörjade:
+%%Fyll på röda krav här efter iteration 3 mötet
+Alla krav som behandlar lagersystemet finns kvar:
+\begin{description}
+\item[Krav nr 46] Ska finnas ett saldo för varje artikel i förrådet.
+\item[Krav nr 47] Ska gå att skanna av artiklar (streckkod) som plockas i en specifik plocklista.
+\item[Krav nr 48] Ska gå att lagra in en artikel till förrådet som inte blivit använd genom att skanna in den.
+\item[Krav nr 49] Saldot ska kunna användas som underlag till beställning.
+\item[Krav nr 50] Beställningsunderlaget ska ha ett sådant format att det går att importera i Agresso.
+\item[Krav nr 51] En inventeringsfunktion ska finnas.
+\end{description}
+
+Övriga förslag på vidareutveckling:
+%%Fyll på här om ni kommer på något!
+\begin{description}
+\item[Artikelsök] Vid sökning på artikel vid redigering av handbok kan det vara bra om man sorterar resultaten så att de artiklar som tillhör samma enhet som handboken visas först.
+\item[Avancerad sökfunktion] En mer avancerad sökfunktion med * och söknining på flera ord som inte behöver vara direkt efter varandra.
+\item[Förvalda kommentarer] Under användartester observerades att samma kommentarer skrivs ofta så det kan vara bra med en lista på vanliga kommentarer som man kan välja ifrån.
+\item[Roller och rättigheter] Olika roller bör identifieras och en funktion för att tilldela användare olika rättigheter bör implementeras.
+\end{description}
+
 
 \newpage
 \part{Enskilda utredningar}
