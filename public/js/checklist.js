@@ -103,6 +103,7 @@ var btnDone = function() {
   } else {
     socket.emit('markAsDone', { operation: operationId, isDone: true});
   }
+  changeButtonColor({isDone: !$('#btn-done').hasClass('btn-done')});
 };
 
 var sortTable = function() {
