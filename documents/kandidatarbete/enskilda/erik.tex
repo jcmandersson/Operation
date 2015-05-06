@@ -5,30 +5,81 @@ Utredningen behandlar en del av utvecklingen av ett webb-baserat system för att
 inför operationer på sjukhusen i Östergötland. Systemet utvecklades på uppdrag av Region Östergötland.
 
 \subsubsection{Syfte}
-Syftet med den här enskilda delen av kandidatarbetet är att ge insikt i hur kontinuerlig integration och 
-automatiserade tester kan användas för att effektivisera testandet i ett projekt som använder en agil 
-utvecklingsmetod. Speciellt ska det undersökas hur väl det går att använda Travis CI tillsammans med 
-ramverket Jasmine.
+Syftet med den här enskilda delen av kandidatarbetet är att ge insikt 
+i hur kontinuerlig integration och 
+automatiserade tester kan användas för att effektivisera testandet 
+i ett projekt som använder en agil 
+utvecklingsmetod. Speciellt ska det undersökas hur väl det går att använda 
+webb-baserade tjänster för
+att utföra kontinuerliga automatiserade tester av webb-applikationer.
 
 \subsubsection{Frågeställning}
-De frågeställningar som ska besvaras i den här enskilda delen av rapporten är:
+De frågeställningar som ska besvaras i den här enskilda 
+delen av rapporten är:
 
 \begin{itemize}
-\item Hur kan man använda Travis CI tillsammans med Jasmine för att testa en 
-webbapplikation byggd på javascript och node.js.
-\item Hur många tester hinner Travis CI köra på en sekund?
-\item Vilka typer av tester är svåra att utföra?
+\item Hur kan man använda webb-baserade tjänster för
+att utföra kontinuerliga automatiserade tester av webb-applikationer?
+\item Hur effektivt är det att använda en webb-baserad tjänst
+för autmatiserade tester? 
+\item Vilka typer av tester är svåra att utföra med en sådan tjänst?
 \end{itemize}
 
-I svaret på den andra frågeställningen ska testfallen specifieras noggrant 
-så att svaret inte blir tvetydigt.
+I den andra frågeställningen så defineras effektivitet som antalet test som kan
+utföras per sekund. I svaret på frågeställningen ska även testfallen 
+specifieras noggrant så att svaret inte blir tvetydigt. Det kan även vara
+intressant att ta reda på hur lång tid det tar från det att koden pushas till GitHub
+till det att testfallen börjar köras på servern.
 
 \subsubsection{Avgränsningar}
-Inga undersökningar kommer att utföras om hur andra lösningar än Travis CI kan användas för kontinuerlig 
-integration. De testfall som kommer användas kommer uteslutande att vara skrivna med ramverket Jasmine.
+Inga undersökningar kommer att utföras om hur andra lösningar än 
+Travis CI kan användas för kontinuerlig 
+integration och automatiserde tester. De testfall som kommer användas 
+kommer uteslutande att vara skrivna med ramverket Jasmine. Den webb-applikation
+som kommer att testas kommer att vara skriven med programmeringsspråket
+javascript och använda javascriptbiblioteken Node.js och JQuery.
+
+\subsection{Bakgrund}
+Här beskrivs de tjänster, språk och bibliotek som använts under arbetet
+med den här enskilda rapporten.
+
+\subsubsection{Travis CI}
+Travis CI är en webb-baserad tjänst för att köra automatiserade enhetstester och integrationstester
+på projekt som finns på GitHub. Travis CI är byggt på öppen källkod och är gratis att använda. 
+Tjänsten har stöd för många olika programmeringsspråk, men det som är 
+relevant för innehållet i den här rapporten
+är javascript med node.js. För att konfigurera Travis CI används filen .travis.yml 
+som placeras i det aktuella
+projektets repository på GitHub.
+
+\subsubsection{Javascript}
+Javascript är ett programmeringsspråk som i första hand används på klientsidan på webbsidor.
+Javascript exekveras av webbläsaren och arbetar mot ett gränssnitt som heter 
+Document Object Model (DOM).
+
+\subsubsection{JQuery}
+JQuery är ett javascript-bibliotek som kan användas för att förenkla programeringen
+av javascript på klientsidan av en webbsida. JQuery innehåller lättanvänd
+funktionalitet för händelsehantering och modifiering av HTML-objekt.
+JQuery är gratis och baserat på öppen källkod som är tillgänglig under en
+MIT-licens.
+
+\subsubsection{Node.js}
+Node.js är en runtime environment för internetapplikationer. Det kan till exempel 
+användas för att skapa webbservrar.
+Node.js är baserat på öppen källkod och det är enkelt att lägga till nya 
+moduler för att anpassa det system man vill
+använda. För att lägga till nya moduler används node package manager (npm).
+
+\subsubsection{Jasmine}
+Jasmine är ett ramverk för testning av Javascript. 
+Den node-modul som används är grunt-contrib-jasmine som använder task runnern Grunt 
+för att köra testfall som skrivits med Jasmine.
+Grunt kunfigureras med filen Gruntfile.js.
 
 \subsection{Teori}
-Här beskrivs den teori som är nödvändig för att förstå rapporten.
+Här beskrivs den teori som ligger till grund för rapporten och som visar
+varför frågeställningarna är relevanta.
 
 \subsubsection{Vattenfallsmodellen}
 I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. 
@@ -46,35 +97,6 @@ utvecklingsprocessen. Problemen blir då lättare att åtgärda. Automatiserade 
 testprocessen och det finns många tillgängliga lösningar för att köra automatiserade
 tester \cite{Karlsson}.
 Några av de vanligaste är Travis CI, Codeship och Drone.
-
-\subsubsection{Travis CI}
-Travis CI är en webb-baserad tjänst för att köra automatiserade enhetstester och integrationstester
-på projekt som finns på GitHub. Travis CI är byggt på öppen källkod och är gratis att använda. 
-Tjänsten har stöd för många olika programmeringsspråk, men det som är 
-relevant för innehållet i den här rapporten
-är javascript med node.js. För att konfigurera Travis CI används filen .travis.yml 
-som placeras i det aktuella
-projektets repository på GitHub.
-
-\subsubsection{Javascript}
-Javascript är ett programmeringsspråk som i första hand används på klientsidan på webbsidor.
-Javascript exekveras av webbläsaren och arbetar mot ett gränssnitt som heter 
-Document Object Model (DOM).
-
-\subsubsection{JQuery}
-
-\subsubsection{Node.js}
-Node.js är en runtime environment för internetapplikationer. Det kan till exempel 
-användas för att skapa webbservrar.
-Node.js är baserat på öppen källkod och det är enkelt att lägga till nya 
-moduler för att anpassa det system man vill
-använda. För att lägga till nya moduler används node package manager (npm).
-
-\subsubsection{Jasmine}
-Jasmine är ett ramverk för testning av Javascript. 
-Den node-modul som används är grunt-contrib-jasmine som använder task runnern Grunt 
-för att köra testfall som skrivits med Jasmine.
-Grunt kunfigureras med filen Gruntfile.js.
 
 \subsection{Metod}
 Arbetet inleddes genom att Travis CI kopplades till projektets repository på GitHub.
@@ -165,8 +187,9 @@ Med functionen expect kontrolleras att koden har utfört testet på det sätt
 som förväntats. Flera expect-funktioner kan användas i samma testfall.\\
 
 Ett speciellt testfall skrevs
-för att besvara frågeställningen om hur många tester som Travis CI kan köra
-på en sekund. Det speciella testfallet visas nedan.
+för att besvara den andra frågeställningen om hur effektivt det är 
+att använda en webb-baserad tjänst
+för autmatiserade tester. Det speciella testfallet visas nedan.
 
 \begin{lstlisting}[
   basicstyle = \small
@@ -197,8 +220,11 @@ describe('Travis CI', function() {
 
 Testfallet testar funktionen splitOnce() så många gånger som möjligt
 under en sekund. Antalet gånger som funktionen hann köras skrivs
-sedan ut på skärmen med en console.log(). För att antalet ska
-fåen konkret betydelse visas även funktionen splitOnce() nedan.
+sedan ut på skärmen med en console.log(). 
+Testfallet har körts flera gånger på olika datum och olika tidpunkter.
+Resultatet av testerna presenteras i en tabell under rubriken Resultat.
+För att antalet ska
+få en konkret betydelse visas även funktionen splitOnce() nedan.
 
 \begin{lstlisting}[
   basicstyle = \small
@@ -213,7 +239,94 @@ var splitOnce = function(str, split) {
 };
 \end{lstlisting}
 
+Funktionen tar två paramterar. En sträng (str) som ska delas upp och 
+en sträng (split) som anger vilket tecken eller vilken teckenkombination
+som ska dela upp strängen. Funktionen delar endast upp strängen i två delar
+även om (split) förekommer påflera positioner i (str). Funktionen returnerar 
+en array med två element.
+De två elementen är de två delarna av den ursprungliga strängen. Om den andra
+parametern (split) inte existerar i den första parametern (str) så returneras
+hela strängen i det första elementet och en tom sträng i det andra elementet.\\
+
+För att besvara den tredje frågeställningen om vilka typer av tester som är 
+svåra att utföra med en webb-baserad tjänst så gicks koden igenom och 
+försök till att skriva testfall genomfördes
+med de olika delarna av koden. Resultatet av dessa tester redovisas under 
+avsnittet Resultat.
+
 \subsection{Resultat}
+Här presenteras resultatet av rapporten, det vill säga svaren på
+frågeställningarna.
+
+\subsubsection{Hur kan man använda webb-baserade tjänster för
+att utföra kontinuerliga automatiserade tester av webb-applikationer?}
+Ett sätt att använda en webb-baserad tjänst för att utföra kontinuerliga 
+automatiserade tester av en webb-applikation är att använda  
+Travis CI tillsammans med Jasmine på det sätt som beskrivits
+under avsnittet Metod. Observera att den webb-applikation som testades
+var skriven med javascript. Node.js användes på serversidan och 
+JQuery användes på klientsidan.
+
+\subsubsection{Hur effektivt är det att använda en webb-baserad tjänst
+för autmatiserade tester? }
+Resultatet av testerna som utfördes för att besvara den andra frågeställningen
+visas i tabellen nedan.
+
+\begin{center}
+  \begin{tabular}{| l | l | l | l |}
+  \hline
+  Testnummer & Datum (ÅÅ-MM-DD) & Tid (hh-mm-ss) & Test per sekund\\ \hline
+  1 & 15-05-01 & 13:53:34 & 11380\\ \hline
+  2 & 15-05-01 & 14:27:27 & 12462\\ \hline
+  3 & 15-05-01 & 14:47:14 & 9386\\ \hline 
+  4 & 15-05-03 & 10:21:57 & 14093\\ \hline 
+  5 & 15-05-03 & 15:43:20 & 9875\\ \hline 
+  6 & 15-05-04 & 09:42:39 & 10156\\ \hline 
+  7 & 15-05-04 & 11:14:43 & 11933\\ \hline 
+  8 & 15-05-04 & 17:42:34 & 10056\\ \hline 
+  9 & 15-05-05 & 08:32:15 & 12216\\ \hline 
+  10 & 15-05-05 & 08:55:02 & 9767\\ \hline 
+  11 & 15-05-05 & 09:15:16 & 10153\\ \hline 
+  12 & 15-05-05 & 10:12:57 & 6992\\ \hline 
+  \end{tabular}
+\end{center}
+
+Medelvärdet är: TODO
+
+\subsubsection{Vilka typer av tester är svåra att utföra med en sådan tjänst?}
+Det visade sig att vanliga javascript-funktioner är lätta
+att testa så länge de ligger utanför JQuery-funktionen
+\emph{\$(document).ready()}. Det kan illustreras med några
+rader kod.
+
+\begin{lstlisting}[
+  basicstyle = \small
+]
+function easyToTest() {
+  return 0;
+}
+
+$(document).ready(function() {
+
+  $('#id1').click(
+    var test = easyToTest(); 
+  );
+
+  $('#id2').click(
+    //Hard to test
+    var test = 0; 
+  );
+});
+
+\end{lstlisting}
+
+Det är alltså rekomenderat att skriva alla javascript-funktioner utanför 
+JQuery-funktionen \emph{\$(document).ready()} eftersom koden då blir 
+lättare att testa.\\
+
+JQuery-funktioner är i allmänhet svårare att testa än vanliga
+javascript-funktioner.
+
 \subsection{Diskussion}
 \subsubsection{Resultat}
 \subsubsection{Metod}

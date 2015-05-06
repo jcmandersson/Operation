@@ -28,7 +28,8 @@ $(document).ready(function() {
   // Add click events to table rows in the checklist
   var container = $('.container');
   container.on("click", '.check-js', checkjs);
-  
+
+  $('#btn-done').click(btnDone);
   
   var processContent = $('.process-content');
   processContent.on("click", '.cancelComment', cancelComment);
@@ -47,8 +48,10 @@ $(document).ready(function() {
   var articleTemplate = Handlebars.compile(unCompiledArticle);
   var unCompiledComment = $('#comment-template').html();
   var commentTemplate = Handlebars.compile(unCompiledComment);
-  
 
+
+  socket.on('markAsDone', changeButtonColor);
+  
   // Listen to sockets (backend sockets in lib/checklist.js)
   socket.on('saveComment', saveCommentSocket);
   
@@ -78,7 +81,6 @@ $(document).ready(function() {
   socket.on('checkboxClick', function(checkObject) {
     var tableRow = $('#' + checkObject.id);
     updateTableRow(tableRow, checkObject.isChecked, false);
-    checkIfDone();
   });
   
   socket.on('kartotekUpdate', function(checkObject) {
@@ -87,41 +89,58 @@ $(document).ready(function() {
   });
   
 });
+var changeButtonColor = function(data) {
+  if (data.isDone) {
+    $('#btn-done').addClass('btn-done');
+  } else {
+    $('#btn-done').removeClass('btn-done');
+  }
+};
+
+var btnDone = function() {
+  if ($('#btn-done').hasClass('btn-done')) {
+    socket.emit('markAsDone', { operation: operationId, isDone: false});
+  } else {
+    socket.emit('markAsDone', { operation: operationId, isDone: true});
+  }
+};
 
 var sortTable = function() {
-  
-  if ($('#articleTableOrderCheckbox').is(':checked')){
-    $('.articleTable').tablesorter({
-      // sort on clinc, storage, section, shelf, tray.
-      sortList: [[5, 0],[6, 0],[7, 0],[8, 0],[9, 0]],
-      headers:
-      {
-        5 : {sorter: "text"},
-        6 : {sorter: "text"},
-        7 : {sorter: "digit"},
-        8 : {sorter: "text"},
-        9 : {sorter: "digit"}
-      }
-    });
-  } else {
-    // We need the nameColumnIndex here because it can be 2 if its a template and 3 otherwise.
-    var nameColumnIndex = $(".name").index();
-    $('.articleTable').tablesorter({
-      // sort on name
-      sortList: [[nameColumnIndex, 0]],
-      headers:
-      {
-        3 : {sorter: "text"}
-      }
-    });
+  // Can only sort if the table is not empty
+  if ($('.articleTable tbody tr').length > 0) {
+
+    if ($('#articleTableOrderCheckbox').is(':checked')) {
+      $('.articleTable').tablesorter({
+        // sort on storage, section, shelf, tray, clinc.
+        sortList: [[6, 0], [7, 0], [8, 0], [9, 0], [5, 0]],
+        headers: {
+          5: {sorter: "text"},
+          6: {sorter: "text"},
+          7: {sorter: "digit"},
+          8: {sorter: "text"},
+          9: {sorter: "digit"}
+        }
+      });
+    } else {
+      // We need the nameColumnIndex here because it can be 2 if its a template and 3 otherwise.
+      var nameColumnIndex = $(".nameHeader").index() + 1;
+
+      $('.articleTable').tablesorter({
+        // sort on name
+        sortList: [[nameColumnIndex, 0]],
+        headers: {
+          3: {sorter: "text"}
+        }
+      });
+    }
+    // Needed beacause we dont want the table to sort on headerclick.
+    $('.articleTable')
+      .unbind('appendCache applyWidgetId applyWidgets sorton update updateCell')
+      .removeClass('tablesorter')
+      .find('thead th')
+      .unbind('click mousedown')
+      .removeClass('header headerSortDown headerSortUp');
   }
-  // Needed beacause we dont want the table to sort on headerclick.
-  $('.articleTable')
-    .unbind('appendCache applyWidgetId applyWidgets sorton update updateCell')
-    .removeClass('tablesorter')
-    .find('thead th')
-    .unbind('click mousedown')
-    .removeClass('header headerSortDown headerSortUp');
 };
 
 // Definition of the minus button that appears when a checklist is edited
@@ -183,7 +202,7 @@ var checkjs = function(e) {
         targetClassName == 'article-remove' || targetClassName == 'cross' || $('#editChecklist').is(":visible"))) {
     if (!$(this).prop('disabled')) {
       checkAnArticle(this);
-      checkIfDone();
+      checkIfDone();      
     }
   }
 };
@@ -203,6 +222,8 @@ var checkAnArticle = function(row) {
   };
 
   socket.emit('checkboxClick', checkObject);
+  checkIfDone();
+  
 };
 
 // check if done checking and mark as done.
@@ -214,12 +235,10 @@ var checkIfDone = function() {
       return false;
     }
   });
-  if (done) {
-    $('#btn-done').addClass('btn-done');
-  } else {
-    $('#btn-done').removeClass('btn-done');
-  }
+  changeButtonColor({isDone : done});
+  socket.emit('markAsDone', { operation: operationId, isDone: done});
 };
+
 
 // Save the comment locally and emit to back-end to save in database.
 var saveComment = function() { 
@@ -305,7 +324,6 @@ var removeCheckArticleUpdate = function(checkArticleID) {
     .trigger("sorton", articleTable.get(0).config.sortList)
     .trigger("appendCache")
     .trigger("applyWidgets");
-  
   checkIfDone();
 };
 
@@ -319,7 +337,7 @@ var getCheckboxes = function(checkboxesAndTemplate) {
     
     updateTableRow(tableRow, isChecked, isTemplate);
   }
-  checkIfDone();
+  
 };
 
 var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, kartotekArticle, operationID) {
@@ -332,6 +350,7 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
 
   sortTable();
   checkIfDone();
+  
 
   // TODO: refactor this later because ugly
   if ($('#editChecklistButton').text()=="Klar") {

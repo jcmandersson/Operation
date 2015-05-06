@@ -214,16 +214,29 @@ var attachUpdateListeners = function () {
       window.location = '/info/' + msg.slug;
     });
   };
+  var saveRest = function($element, value) {
+    $element.attr('data-saved', value);
+    REST.update($element, value, function (err, data) {});
+  };
+  
+  var timeout = null;
+  var onChange = function () {
+    var $this = $(this);
+    var value = $this.attr('type') != 'checkbox' || $this.is(':checked') ? $this.val() : '0';
+    if (value.length <= 0) {
+      $this.val($this.attr('data-saved'));
+      return;
+    }
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+      console.log('SAVING');
+      saveRest($this,value);
+    }, 500);
+  };
+  
   $('body')
-    .on('change', 'input[data-update="true"][data-slug],select[data-update="true"]', function () {
-      if ($(this).val().length <= 0) {
-        $(this).val($(this).attr('data-saved'));
-        return;
-      }
-      $(this).attr('data-saved', $(this).val());
-      REST.update($(this), $(this).val(), function (err, data) {
-      });
-    })
+    .on('change', 'input[data-update="true"][data-slug],select[data-update="true"]', onChange)
+    .on('keyup', 'input[data-update="true"][data-slug],select[data-update="true"]', onChange)
     .on('click', '.toReview[data-update="true"]', sendToPreview);
 };
 
@@ -328,7 +341,7 @@ var attachViewListeners = function () {
     .on('click', '.navbar-btn', navClick)
     .on('click', '.process-content:not(.hidden) .process-content-item:not(:last-child) textarea, .process-content:not(.hidden) .process-content-item:not(:last-child) .overlay-container', function () {
       initializeWysiwygElement($(this).parentsUntil('.process-content-item'));
-      if($(this).hasClass('overlay-container')) {
+      if ($(this).hasClass('overlay-container')) {
         $(this).remove();
       }
     });
