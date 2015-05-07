@@ -4,6 +4,7 @@
 \usepackage{tocloft}
 \usepackage{etoolbox}
 \usepackage{graphicx}
+
 \graphicspath{ {images/} }
 
 \usepackage{url}
@@ -70,7 +71,7 @@
     \hline
     \textbf{Namn} & \textbf{Ansvarsområde} & \textbf{E-post} \\ \hline
     Daniel Rapp & Teamledare & danth407@student.liu.se \\ \hline
-    Daniel Falk & Analysansvarig & danfa519@student.liu.se \\ \hline
+    Daniel Falk & Analysansvarig & danfa519@student.liu.se \\ \hline1
     Jonas Andersson & Arkitekt & jonan111@student.liu.se \\ \hline
     Albert Karlsson & Kvalitetssamordnare & albka735@student.liu.se \\ \hline
     Erik Malmberg & Testledare & erima694@student.liu.se \\ \hline
@@ -122,46 +123,36 @@ Rapporten ska besvara följande frågeställningar.
 \end{itemize}
 
 \subsection{Avgränsningar}
-Kunden ville till en början att vi skulle integrera ett lagersaldo i systemet och göra det möjligt att scanna av artiklar 
-varefter man tar dessa. Vidare ville kunden även att systemet skulle fungera som ett större system så att alla kliniker i 
-regionen skulle vara anslutna.
- 
-Vi kände att tiden inte skulle räcka till för att åtadkomma dessa implementeringar och klargjorde därför för 
-kunden i ett tidigt skede att vi hellre ville få klart grunden i systemet, så att de skulle få ett likvärdigt men ändå till viss del 
-förbättrat system.
+Den här rapporten beskriver hur ett system för operationsförberedelser på universitetssjukhuset i Linköping kan realiseras. Andra sjukhus kan ha andra rutiner vilket får konsekvensen att systemet inte fungerar där.
 
-En kompromiss gjordes där vi valde ett ge dessa krav prioritet 2 vilket innebar att kraven var önskvärda och skulle implementeras 
-i mån av tid, eller prioritet 3 där kraven sågs som en framtida utbyggnad.
+Kunden ville också att ett lagersaldo i systemet skulle integreras och göra det möjligt att skanna av artiklar då dessa plockas. Vidare ville kunden även att systemet skulle ge möjlighet att välja mellan olika kliniker i regionen. Tiden känndes inte tillräckligt för att åstadkomma dessa implementeringar därför klargjordes det i ett tidigt skede att få bra grundläggande funktionalitet hade högre prioritet än dessa funktioner. En kompromiss gjordes där dessa krav fick prioritet 2 vilket innebar att kraven var önskvärda och skulle implementeras i mån av tid, eller prioritet 3 där kraven sågs som en framtida utbyggnad.
+
+Hur man ska jobba i projektgrupper med olika kunskapsnivåer tas fram genom undersökningar i projektgrupp 7 i kursen TDDC77 på Linköpings Universitet. Resultaten av denna undersökning kan kanske därför inte appliceras i situationer som inte kan likställas med situationen i projektgruppen.
 
 \section{Bakgrund}
-Studenterna som studerar kursen TDDD77 fick i januari 2015 ett uppdrag att utföra ett kandidatarbete. Först fick gruppen rangordna flera projektdirektiv för att sedan få ett av dessa uppdrag tilldelat sig. Grupp 7 fick då projektet operationsförberedelser som skickades in av Region Östergötland.
+Studenterna som studerar kursen TDDD77 fick i januari 2015 ett uppdrag att utföra ett kandidatarbete. Först fick gruppen rangordna flera projektdirektiv för att sedan få ett av dessa uppdrag tilldelat sig. Grupp 7 fick då projektet operationsförberedelser som skickades in av Region Östergötland. 
 
-\subsection{Programspråk och bibliotek}
-I detta projekt kommer följande programspråk och bibliotek att användas.
-
-\subsubsection{Node.js}
-Node.js är en plattform för att skapa applikationer till framförallt webbservrar. Det finns en inbyggd pakethanterare vid namn npm som gör det enkelt att inkludera både små och stora bibliotek i sina projekt. Det är därför väldigt enkelt att använda sig av ett bibliotek istället för att skriva all funktionalitet själv.
-
-\subsubsection{Keystone.js}
-Keystone.js är ett så kallat ''content management system'' som bland annat innehåller ett kraftfullt administrationsverktyg och en databashanterare.
-
-\subsubsection{Socket.IO}
-Socket.IO är en modul till Node.JS. Socket.IO använder sig av websockets för att kommunicera mellan front-end och back-end. Med hjälp av socket.IO så kan man skicka data från en klient till alla andra anslutna klienter och visa datan som skickades utan att någon sida behöver laddas om.
-Socket.IO har olika komponenter för front-end och back-end. Händelser som skickas från den ena sidan hanteras av motsvarande händelsehanterare på den andra sidan. Varje händelse identifieras med hjälp av en sträng. Det finns några färdiga händelser i socket.io exempelvis händelsen "connection" på serversidan fås då en klient har anslutit till socket.io.
-
-\subsubsection{MongoDB}
-MongoDB är en NOSql dokumentbaserad databas som stödjer stödjer många olika plattformar.
-
-\subsubsection{Handlebars}
-Handlebars är ett så kallat ''template language'' som är byggt från Mustache. Handlebars ger bland annat möjlighet till att lägga in mindre logik i html kod samt att från html filer komma åt variabler som finns definierade i javascript filer.
-
-\subsubsection{REST}
-
-\subsubsection{Wkhtmltopdf} 
-Wkhtmltopdf är ett program som tar en hemsida eller en html-fil och skapar en pdf av den. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
 
 
 \section{Teori}
+För att kunna svara på frågeställningar så måste några begrepp i dem defineras.
+Effektivt defineras i detta fallet som att det tar kortare tid för operationsförberedelser och kräver mindre av personalen, till exempel att personalen inte ska behöva hålla lika mycket inforamation i huvudet. 
+Lättare defineras som att det går snabbare för nyanställda och personer som tillfälligt är på en avdelning de inte brukar jobba på, att lära sig rutinerna och kunna utföra arbetet.
+
+Effektiviseringen av sjukvården och hur den ska ske är frågor som diskuterats flitigt de senaste åren. Region Östergötland har gjort tester för att kontrollera hur en operationsförberedelse kan effektiviseras. Ett av dessa tester gick ut på att undersöka hur lång tid det tar att plocka lagerartiklar då lagerplats finns lättillängligt gentemot hur lång tid det tar med nuvarande system. Resultatet var att.. [referens Elisabeth].
+ 
+
+
+\subsection{Node.js}
+\subsection{Keystone.js}
+\subsection{Socket.IO}
+\subsection{MongoDB}
+\subsection{Handlebars}
+\subsection{REST}
+
+\subsection{Wkhtmltopdf} 
+Wkhtmltopdf är ett program som tar en hemsida eller en html-fil och skapar en pdf av den. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
+
 
 \section{Metod}
 I detta avsnitt beskrivs det hur arbetet med projektet har gått till.
@@ -190,37 +181,11 @@ Nästan all utveckling har skett med hela gruppen samlad i samma lokal. Det har 
 
 \subsection{Metod}
 
-\subsection{Arbetet i ett vidare sammanhang}
+\subsection{Arbetat i ett vidare sammanhang}
 
 \section{Slutsatser}
    
 \section{Fortsatt arbete}
-Här följer en sammanfattning om fortsatt arbete med systemet. Restlistan behandlar krav som inte implementerats eller som borde vidareutvecklas. Även förslag på vidareutveckling som inte tas upp av kravspecifikationen tas upp. Dessa förslag är sådant som kommit fram under utvecklingens gång.
-
-\subsection{Restlista}
-Följande krav är markerade som gula i kravspecifikationen vilket betyder att de bör vidareutvecklas för att ses som klara:
-%%Fyll på gula krav här efter iteration 3 mötet
-Följande krav är markerade som röda i kravspecifikationen vilket betyder att de inte är påbörjade:
-%%Fyll på röda krav här efter iteration 3 mötet
-Alla krav som behandlar lagersystemet finns kvar:
-\begin{description}
-\item[Krav nr 46] Ska finnas ett saldo för varje artikel i förrådet.
-\item[Krav nr 47] Ska gå att skanna av artiklar (streckkod) som plockas i en specifik plocklista.
-\item[Krav nr 48] Ska gå att lagra in en artikel till förrådet som inte blivit använd genom att skanna in den.
-\item[Krav nr 49] Saldot ska kunna användas som underlag till beställning.
-\item[Krav nr 50] Beställningsunderlaget ska ha ett sådant format att det går att importera i Agresso.
-\item[Krav nr 51] En inventeringsfunktion ska finnas.
-\end{description}
-
-Övriga förslag på vidareutveckling:
-%%Fyll på här om ni kommer på något!
-\begin{description}
-\item[Artikelsök] Vid sökning på artikel vid redigering av handbok kan det vara bra om man sorterar resultaten så att de artiklar som tillhör samma enhet som handboken visas först.
-\item[Avancerad sökfunktion] En mer avancerad sökfunktion med * och söknining på flera ord som inte behöver vara direkt efter varandra.
-\item[Förvalda kommentarer] Under användartester observerades att samma kommentarer skrivs ofta så det kan vara bra med en lista på vanliga kommentarer som man kan välja ifrån.
-\item[Roller och rättigheter] Olika roller bör identifieras och en funktion för att tilldela användare olika rättigheter bör implementeras.
-\end{description}
-
 
 \newpage
 \part{Enskilda utredningar}
