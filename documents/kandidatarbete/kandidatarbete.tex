@@ -134,21 +134,34 @@ En kompromiss gjordes där vi valde ett ge dessa krav prioritet 2 vilket innebar
 i mån av tid, eller prioritet 3 där kraven sågs som en framtida utbyggnad.
 
 \section{Bakgrund}
-Studenterna som studerar kursen TDDD77 fick i januari 2015 ett uppdrag att utföra ett kandidatarbete. Först fick gruppen rangordna flera projektdirektiv för att sedan få ett av dessa uppdrag tilldelat sig. Grupp 7 fick då projektet operationsförberedelser som skickades in av Region Östergötland. 
+Studenterna som studerar kursen TDDD77 fick i januari 2015 ett uppdrag att utföra ett kandidatarbete. Först fick gruppen rangordna flera projektdirektiv för att sedan få ett av dessa uppdrag tilldelat sig. Grupp 7 fick då projektet operationsförberedelser som skickades in av Region Östergötland.
 
+\subsection{Programspråk och bibliotek}
+I detta projekt kommer följande programspråk och bibliotek att användas.
+
+\subsubsection{Node.js}
+Node.js är en plattform för att skapa applikationer till framförallt webbservrar. Det finns en inbyggd pakethanterare vid namn npm som gör det enkelt att inkludera både små och stora bibliotek i sina projekt. Det är därför väldigt enkelt att använda sig av ett bibliotek istället för att skriva all funktionalitet själv.
+
+\subsubsection{Keystone.js}
+Keystone.js är ett så kallat ''content management system'' som bland annat innehåller ett kraftfullt administrationsverktyg och en databashanterare.
+
+\subsubsection{Socket.IO}
+Socket.IO är en modul till Node.JS. Socket.IO använder sig av websockets för att kommunicera mellan front-end och back-end. Med hjälp av socket.IO så kan man skicka data från en klient till alla andra anslutna klienter och visa datan som skickades utan att någon sida behöver laddas om.
+Socket.IO har olika komponenter för front-end och back-end. Händelser som skickas från den ena sidan hanteras av motsvarande händelsehanterare på den andra sidan. Varje händelse identifieras med hjälp av en sträng. Det finns några färdiga händelser i socket.io exempelvis händelsen "connection" på serversidan fås då en klient har anslutit till socket.io.
+
+\subsubsection{MongoDB}
+MongoDB är en NOSql dokumentbaserad databas som stödjer stödjer många olika plattformar.
+
+\subsubsection{Handlebars}
+Handlebars är ett så kallat ''template language'' som är byggt från Mustache. Handlebars ger bland annat möjlighet till att lägga in mindre logik i html kod samt att från html filer komma åt variabler som finns definierade i javascript filer.
+
+\subsubsection{REST}
+
+\subsubsection{Wkhtmltopdf} 
+Wkhtmltopdf är ett program som tar en hemsida eller en html-fil och skapar en pdf av den. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
 
 
 \section{Teori}
-\subsection{Node.js}
-\subsection{Keystone.js}
-\subsection{Socket.IO}
-\subsection{MongoDB}
-\subsection{Handlebars}
-\subsection{REST}
-
-\subsection{Wkhtmltopdf} 
-Wkhtmltopdf är ett program som tar en hemsida eller en html-fil och skapar en pdf av den. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
-
 
 \section{Metod}
 I detta avsnitt beskrivs det hur arbetet med projektet har gått till.
@@ -181,6 +194,32 @@ Nästan all utveckling har skett med hela gruppen samlad i samma lokal. Det har 
 \section{Slutsatser}
    
 \section{Fortsatt arbete}
+Här följer en sammanfattning om fortsatt arbete med systemet. Restlistan behandlar krav som inte implementerats eller som borde vidareutvecklas. Även förslag på vidareutveckling som inte tas upp av kravspecifikationen tas upp. Dessa förslag är sådant som kommit fram under utvecklingens gång.
+
+\subsection{Restlista}
+Följande krav är markerade som gula i kravspecifikationen vilket betyder att de bör vidareutvecklas för att ses som klara:
+%%Fyll på gula krav här efter iteration 3 mötet
+Följande krav är markerade som röda i kravspecifikationen vilket betyder att de inte är påbörjade:
+%%Fyll på röda krav här efter iteration 3 mötet
+Alla krav som behandlar lagersystemet finns kvar:
+\begin{description}
+\item[Krav nr 46] Ska finnas ett saldo för varje artikel i förrådet.
+\item[Krav nr 47] Ska gå att skanna av artiklar (streckkod) som plockas i en specifik plocklista.
+\item[Krav nr 48] Ska gå att lagra in en artikel till förrådet som inte blivit använd genom att skanna in den.
+\item[Krav nr 49] Saldot ska kunna användas som underlag till beställning.
+\item[Krav nr 50] Beställningsunderlaget ska ha ett sådant format att det går att importera i Agresso.
+\item[Krav nr 51] En inventeringsfunktion ska finnas.
+\end{description}
+
+Övriga förslag på vidareutveckling:
+%%Fyll på här om ni kommer på något!
+\begin{description}
+\item[Artikelsök] Vid sökning på artikel vid redigering av handbok kan det vara bra om man sorterar resultaten så att de artiklar som tillhör samma enhet som handboken visas först.
+\item[Avancerad sökfunktion] En mer avancerad sökfunktion med * och söknining på flera ord som inte behöver vara direkt efter varandra.
+\item[Förvalda kommentarer] Under användartester observerades att samma kommentarer skrivs ofta så det kan vara bra med en lista på vanliga kommentarer som man kan välja ifrån.
+\item[Roller och rättigheter] Olika roller bör identifieras och en funktion för att tilldela användare olika rättigheter bör implementeras.
+\end{description}
+
 
 \newpage
 \part{Enskilda utredningar}
