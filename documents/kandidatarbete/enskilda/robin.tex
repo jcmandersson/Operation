@@ -6,7 +6,7 @@ Den ena typen av checklista är en plocklista där det finns information om vilk
 
 Den andra typen av checklista är en lista av operationssalsförberedelser där det kan stå en längre beskrivning om vad som ska göras och när en sjuksköterska har utfört hela den förberedelsen så checkar denne av den förberedelsen i förberedelselistan.
 
-Checklistorna kommer att implementeras med hjälp av handlebars, javascript, jquery samt Socket.IO.
+Checklistorna kommer att implementeras med hjälp av handlebars, javascript, jquery samt Socket.IO. För information om dessa språk/paket hänvisar jag till bakgrunden i den gemensamma rapporten.
 
 \subsubsection{Syfte}
 Syftet med denna del av projektet är att flera sjuksköterskor samtidigt ska kunna förbereda operationer genom att plocka olika artiklar samt förbereda operationssalen och checka av det som är utfört utan att det ska bli några konflikter med att flera sjuksköterskor plockar samma artikel eller liknande.
@@ -23,7 +23,11 @@ Eftersom denna del av projektet endast innehåller checkande av checklistor så 
 \pagebreak
 \subsection{Teori}
 \subsubsection{Websockets}
-WebSockets består av ett nätverksprotokoll och ett API som gör det möjligt att skapa en WebSocket uppkoppling mellan en klient och en server. Med hjälp av WebSocket API:t så kan man hantera en full-duplex kanal som kan användas till att skicka och ta emot meddelanden. En WebSocket anslutning skapas genom att gå över från HTTP protokollet till WebSockets nätverksprotokoll när en initial handskakning mellan server och klient sker. När en WebSocket anslutning finns uppkopplad så kan WebSocket meddelanden skickas fram och tillbaka mellan metoderna som finns definierade i WebSockets gränssnitt. När WebSockets används i ett system så används asynkrona eventlyssnare för att lyssna på kommunikationen. WebSockets API är rent eventbaserat villket betyder att klienter inte behöver kontrollera om servern har uppdaterats utan att de istället uppdaterar när de får ett event. \cite{websocketbook}
+WebSockets består av ett nätverksprotokoll och ett API som gör det möjligt att skapa en WebSocket uppkoppling mellan en klient och en server. Med hjälp av WebSocket API:t så kan man hantera en full-duplex kanal som kan användas till att skicka och ta emot meddelanden. En WebSocket anslutning skapas genom att gå över från HTTP protokollet till WebSockets nätverksprotokoll när en initial handskakning mellan server och klient sker. När en WebSocket anslutning finns uppkopplad så kan WebSocket meddelanden skickas fram och tillbaka mellan metoderna som finns definierade i WebSockets gränssnitt. När WebSockets används i ett system så används asynkrona eventlyssnare för att lyssna på kommunikationen. WebSockets API är rent eventbaserat villket betyder att klienter inte behöver kontrollera om servern har uppdaterats utan att de istället uppdaterar när de får ett event. \cite{websocketbook} \\
+
+Kanalen som WebSocket använder sig av kommunicerar över nätet med hjälp av en enda socket. WebSockets använder sig av väldigt mycket mindre trafik och har mycket kortare latens än Ajax. WebSockets använder sig av de vanliga HTTP portarna (det vill säga port 80 och port 443) \cite{websocketreport} \\
+
+Huvuddelen av denna del av projektet handlar om kommunikation med Socket.IO som använder sig utav WebSockets för att kommunicera mellan server och klienter.
 
 \pagebreak
  
@@ -48,6 +52,7 @@ Eftersom jag endast skickar data om vilken checkruta som ska checkas till de kli
 
 \subsubsection{Metod}
 Den metod jag använde mig av fungerade bra, men jag tror att jag skulle kunnat komma fram till samma resultat snabbare genom att göra kortare funktioner och vettigare namn redan från början istället för att göra något som funkar så snabbt som möjligt och sedan refaktorisera. För nu blev det väldigt förvirrande kod från början och jag var tvungen att sitta och tänka på vad kod jag skrivit faktiskt gjorde. Men att skissa olika förslag på ett papper först tror jag var en väldigt bra idé, det gjorde att jag fick några möjliga lösningar och sedan kunde jag överväga fördelar och nackdelar med de olika lösningarna för att sedan välja den som verkade bäst.
+\pagebreak
 
 \subsection{Slutsatser}
 Eftersom det fungerar bra med checkning av checklistor med hjälp av socket.io och all nödvändig information får plats utan att det upplevs som plottrigt så uppfylls syftet med denna del av projektet och min frågeställning har blivit besvarad.
@@ -56,7 +61,5 @@ Eftersom det fungerar bra med checkning av checklistor med hjälp av socket.io o
 \vspace{-9mm}
 \begin{thebibliography}{9}
 \bibitem{websocketbook} Wang Vanessa, Salim Frank, Moskovits Peter; The Definitive Guide to HTML5 WebSocket; New York City APress, 2013.
-\bibitem{handlebars}\url{https://github.com/wycats/handlebars.js}
-\bibitem{javascript}\url{https://web.archive.org/web/20070916144913/http://wp.netscape.com/newsref/pr/newsrelease67.html}
-\bibitem{jquery}\url{https://jquery.com/}
+\bibitem{websocketreport} http://www.scirp.org/journal/PaperInformation.aspx?PaperID=25428
 \end{thebibliography}
