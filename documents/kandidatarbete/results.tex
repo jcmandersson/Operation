@@ -72,6 +72,119 @@ Socket.io är event-baserat vilket betyder att man skapar events på antingen kl
 Vanliga javascript-object kan skickas tillsammans med eventen.
 
 \subsubsection{Front-end}
+På klientsidan används bootstrap\footnote{TODO: Bättre referens.} och jQuery\footnote{TODO: Bättre referens.}.
+Bootstrap har många färdiga CSS-klasser så man behöver inte skriva lika mycket CSS själv.
+De klasser som finns är lätta att använda för att skapa responsiva hemsidor.
+All kod är dessutom testad för att fungera på olika webbläsare vilket kan vara krångligt att lösa om man skriver all CSS från grunden.
+JQuery används för att lättare hämta ut ett element på hemsidan och ändra data i det.
+Det finns även många bra jQuery-bibliotek att hämta som gör att man slipper “uppfinna hjulet” i många fall.
+
+För att ytterligare design av hemsidan används LESS\footnote{TODO: Referens.} att användas.
+Det är en påbyggnad till CSS som kompilerar till vanliga CSS-filer.
+Fördelen med LESS är bland annat att man kan använda variabler och enkla funktioner.
+Exempelvis kan variablerna användas för att spara de olika färgerna på hemsidan för att enkelt kunna byta ut dem.
+
+
+\subsubsection{Struktur}
+En nackdel med jQuery gentemot andra bibliotek som exempelvis angular\footnote{TODO: Referens.} är att det lätt blir spaghettikod\footnote{TODO: Måste defineras?}.
+För att strukturera så bra som möjligt är det viktigt att koden uppdelad.
+För att uppnå detta så kommer varje enskild sida ha minst en skriptfil, en cssfil och en htmlfil.
+På vissa sidor är det lätt att det blir stora skript och då bör man dela upp skriptfilen.
+Den bästa lösningen är att abstrahera delar av skriptet till egna biblioteksfiler som man kan ladda in och använda.
+
+\subsubsection{Säkerhetskopiering}
+Ett system för automatisk säkerhetskopiering i form av en PDF-fil för varje handbok kommer att finnas.
+Varje gång en handbok ändras kommer PDF-filen att uppdateras för att matcha handboken.
+PDF-filen ska vara utformad så att operationerna kan förberedas utan hjälp från hemsidan.
+
+\subsection{Mekanismer}
+Här beskrivs syftet och funktionalitet hos olika delar av produkten.
+
+\subsubsection{Översikt}
+Som tidigare nämnts finns en översikt över alla operationsförberedelser.
+Denna sida visar alla operationsförberedelser och hur långt är fortskridna.
+Här används socket.io för att hela tiden hålla information uppdaterad.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\textwidth]{images/site/overview.png}
+  \caption{Bild på översiktsvyn}
+  \label{fig:siteoverview}
+\end{figure}
+
+I figur \ref{fig:siteoverview} kan man se hur förberedelserna är kategoriserade beroende på vilken kirurgisk specialitet handboken tillhör.
+Ibland är det olika samordnare beronde på specialitet och det är då enkelt för en samordnare att hitta de operationerna som personen är ansvarig över.
+
+\subsubsection{Handbok}
+En handbok innehåller information om en operationsförberedelse.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\textwidth]{images/site/handbok.png}
+  \caption{En handbok}
+  \label{fig:handbok}
+\end{figure}
+
+All information i en handbok är uppdelad i olika rubriker. Dessa rubriker kan i sin tur vara uppdelade i olika processer.
+I figur \ref{fig:handbok} ser man dels de olika processerna (Preoparea, anestesi, allmänt och operation) samt rubrikerna som hör till processen Anestesi (Övrigt, Premedicinering, blodrekvisition och  antibiotika).
+Man kan även se att handböckerna har stöd för bilder.
+
+\subsubsection{Sökfunktion}
+Ett krav är att det ska vara lätt att hitta en handbok.
+Därför kan man söka både på operationens namn men även på alternativa sökord (taggar), dessa är bra att ha då de medicinska termerna ibland kan vara svåra att komma ihåg.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\textwidth]{images/site/search}
+  \caption{Sökfunktionen}
+  \label{fig:search}
+\end{figure}
+
+I figur \ref{fig:search} kan man se sökresultaten där namnet på operationen står i större storlek, och sökorden kursivt i mindre storlek.
+
+\subsubsection{Lista med handböcker}
+Applikationen innehåller en enkel lista med alla handböcker.
+Den går att sortera på valfri kolumn och kan även gruppera beroende på vilken specialitet handboken tillhör.
+Se figur \ref{fig:list}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\textwidth]{images/site/list}
+  \caption{Lista med handböcker}
+  \label{fig:list}
+\end{figure}
+
+\subsubsection{Administrering}
+I administreringsvyn kan man utöver att redigera all information även sortera processer och rubriker genom att dra och släppa dem.
+Redigeringen under rubrikerna använder sig av en wysiwyg-editor.
+Innan en redigerad eller ny handbok publiceras måste den granskas av en annan person.
+
+\subsubsection{Operationsförberedelse}
+En operationsförberedelse är nästan likadan som en handbok.
+Det som skiljer är att vissa av rubrikerna kan gå att kryssa av när de är klara.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\textwidth]{images/site/op}
+  \caption{Förberedelsevyn}
+  \label{fig:op}
+\end{figure}
+
+I figur \ref{fig:op} kan man se att rubrikerna går att kryssa av när de är klara. Jämför med figur \ref{fig:handbok} där rubrikerna inte går att kryssa av.
+
+\subsubsection{Plocklista}
+En operationsförberedelse har även en plocklista med artiklar som behövs till operationen.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\textwidth]{images/site/plocklista}
+  \caption{Plocklista}
+  \label{fig:plocklista}
+\end{figure}
+
+I figur \ref{fig:plocklista} kan man även se att det finns stöd för att lägga en kommentar på en artikel.
+Det är vanligt att en artikel är slut eller utbytt och man kan då lägga en kommentar på varför man inte kunde hämta den artikeln och även hur man har löst det istället.
+
 
 
 

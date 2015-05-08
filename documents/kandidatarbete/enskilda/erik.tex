@@ -96,11 +96,36 @@ Kontinuerlig integration kan leda till att problemen identifieras tidigare i
 utvecklingsprocessen. Problemen blir då lättare att åtgärda. Automatiserade tester kan effektivisera 
 testprocessen och det finns många tillgängliga lösningar för att köra automatiserade
 tester \cite{Karlsson}.
-Några av de vanligaste är Travis CI, Codeship och Drone.
+Några av de vanligaste är Travis CI, Codeship och Drone.io.
 
 \subsection{Metod}
-Arbetet inleddes genom att Travis CI kopplades till projektets repository på GitHub.
-Kopplingen utfördes
+Här beskrivs den metod som användes för att 
+besvara frågeställningarna.\\
+
+Arbetet inleddes med att en teoriundersökning genomfördes
+angående vilka metoder, ramverk och tjänster som skulle kunna
+användas för att genomföra testerna i projektet.\\
+
+De ramverk för
+testning som undersöktes var Jasmine, Qunit och Mocha. Det
+ramverk som valdes för arbetet med projektet var Jasmine
+eftersom det är enkelt att konfigurera och har ett 
+tydligt och intuitivt syntax. Att Jasmine var enkelt och tydligt
+var viktigt eftersom det var många andra uppgifter förutom
+testning som skulle utföras i projektet och tiden för
+arbetet med projektet var begränsad till 300 timmar. Det var
+alltsåingen i projektgruppen som hade tid att lära sig 
+en komplicerad syntax i ett ramverk även om det varit
+mer kraftfullt.\\
+
+De tjänster för automatiserade tester som undersöktes var
+Travis CI, Codeship och Drone.io. Även här 
+så gjordes valet beroende på hur enkla tjänsterna var att
+konfigurera och använda. Den tjänst som verkade enklast
+och således valdes var Travis CI.\\
+
+Arbetet med Travis CI inleddes med att tjänsten kopplades till 
+projektets repository på GitHub. Kopplingen utfördes
 genom att administratören för repositoryn loggade in på travis-ci.org med 
 sitt GitHub-konto och aktiverade
 en webhook för repositoryn.\\
@@ -283,7 +308,7 @@ visas i tabellen nedan.\\
   \end{tabular}
 \end{center}
 
-Medelvärdet är: TODO\\
+Medelvärdet avrundat till närmsta heltal är: 10556 tester per sekund.\\
 
 Undersökningen om vad om är svårt att testa ledde till följande resultat.
 Det visade sig att vanliga javascript-funktioner är lätta
@@ -352,7 +377,8 @@ testfallen kommer att köras på mindre än en minut.
 
 \subsubsection{Vilka typer av tester är svåra att utföra 
 med en sådan tjänst?}
-TODO
+Kortfattat kan man säga att vanliga javascriptfunktioner är
+väldigt enkla att testa.
 
 \subsubsection{Framtida arbete inom området}
 Det finns mycket arbete som skulle kunna utföras inom området som behandlats
@@ -365,7 +391,13 @@ arbetet den här rapporten.\\
 
 Det vore även intressant att undersöka vilka nackdelar och fördelar det
 finns med webb-baserade testmiljöer jämfört med lokala
-testmiljöer.
+testmiljöer.\\
+
+En annan undersökning som skulla kunna utföras är att jämföra
+flera olika ramverk för testning av javascript. Till exempel skulle
+man kunna jämföra Jasmine och Mocha. Man skulle öven kunna jömföra
+flera olika webb-baserade tjänster för automatiserade tester. Till
+exempel skulle man kunna jämföra Travis CI med Codeship och Drone.io.
 
 \subsection{Referenser}
 \vspace{-9mm}
