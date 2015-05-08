@@ -12,5 +12,7 @@ config.mongodbConnStr = 'mongodb://localhost:27017/operation';
 config.timeBetweenBackups = 24 * 3600000; // One day
 config.timeBetweenPdfUpdate = 3600000; // One hour
 config.pathToPdf = 'pdf-kopior/';
+// Needs to end with /
+config.siteUrl = 'http://localhost:3000/';
 
 module.exports = config;
