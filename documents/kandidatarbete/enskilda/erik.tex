@@ -255,23 +255,12 @@ med de olika delarna av koden. Resultatet av dessa tester redovisas under
 avsnittet Resultat.
 
 \subsection{Resultat}
-Här presenteras resultatet av rapporten, det vill säga svaren på
-frågeställningarna.
+Här presenteras resultatet av rapporten.\\
 
-\subsubsection{Hur kan man använda webb-baserade tjänster för
-att utföra kontinuerliga automatiserade tester av webb-applikationer?}
-Ett sätt att använda en webb-baserad tjänst för att utföra kontinuerliga 
-automatiserade tester av en webb-applikation är att använda  
-Travis CI tillsammans med Jasmine på det sätt som beskrivits
-under avsnittet Metod. Observera att den webb-applikation som testades
-var skriven med javascript. Node.js användes på serversidan och 
-JQuery användes på klientsidan.
-
-\subsubsection{Hur effektivt är det att använda en webb-baserad tjänst
-för autmatiserade tester? }
 Resultatet av testerna som utfördes för att besvara den andra frågeställningen
-visas i tabellen nedan.
+visas i tabellen nedan.\\
 
+\noindent\emph{Tabell ?.?}
 \begin{center}
   \begin{tabular}{| l | l | l | l |}
   \hline
@@ -288,12 +277,15 @@ visas i tabellen nedan.
   10 & 15-05-05 & 08:55:02 & 9767\\ \hline 
   11 & 15-05-05 & 09:15:16 & 10153\\ \hline 
   12 & 15-05-05 & 10:12:57 & 6992\\ \hline 
+  13 & 15-05-06 & 14:35:46 & 8703\\ \hline 
+  14 & 15-05-06 & 17:01:37 & 10984\\ \hline 
+  15 & 15-05-06 & 18:37:00 & 10186\\ \hline 
   \end{tabular}
 \end{center}
 
-Medelvärdet är: TODO
+Medelvärdet är: TODO\\
 
-\subsubsection{Vilka typer av tester är svåra att utföra med en sådan tjänst?}
+Undersökningen om vad om är svårt att testa ledde till följande resultat.
 Det visade sig att vanliga javascript-funktioner är lätta
 att testa så länge de ligger utanför JQuery-funktionen
 \emph{\$(document).ready()}. Det kan illustreras med några
@@ -328,9 +320,53 @@ JQuery-funktioner är i allmänhet svårare att testa än vanliga
 javascript-funktioner.
 
 \subsection{Diskussion}
+Under den här rubriken diskuteras rapportens resultat
+och metod.
+
 \subsubsection{Resultat}
+TODO
+
 \subsubsection{Metod}
+TODO
+
 \subsection{Slutsatser}
+Under den här rubriken presenteras svaren på
+frågeställningarna och framtida arbete som skulle
+kunna utföras inom det område som behandlats av rapporten.
+
+\subsubsection{Hur kan man använda webb-baserade tjänster för
+att utföra kontinuerliga automatiserade tester av webb-applikationer?}
+Ett sätt att använda en webb-baserad tjänst för att utföra kontinuerliga 
+automatiserade tester av en webb-applikation är att använda  
+Travis CI tillsammans med Jasmine på det sätt som beskrivits
+under avsnittet Metod. Observera att den webb-applikation som testades
+var skriven med javascript. Node.js användes på serversidan och 
+JQuery användes på klientsidan.
+
+\subsubsection{Hur effektivt är det att använda en webb-baserad tjänst
+för autmatiserade tester?}
+Om man använder ett antal testfall i storleksordningen $10^4$ eller
+mindre så kommer den största väntetiden vara tiden från att koden
+pushas till GitHub till det att den börjar köras på servern. Själva
+testfallen kommer att köras på mindre än en minut.
+
+\subsubsection{Vilka typer av tester är svåra att utföra 
+med en sådan tjänst?}
+TODO
+
+\subsubsection{Framtida arbete inom området}
+Det finns mycket arbete som skulle kunna utföras inom området som behandlats
+av den här rapporten.\\
+
+Det vore intressant att undersöka hur stor andel av de totala felen
+som upptäcks med den typ av testning som har beskrivits i den här rapporten.
+Det kräver dock mer tid och resurser än vad som var tillgängligt under
+arbetet den här rapporten.\\
+
+Det vore även intressant att undersöka vilka nackdelar och fördelar det
+finns med webb-baserade testmiljöer jämfört med lokala
+testmiljöer.
+
 \subsection{Referenser}
 \vspace{-9mm}
 \renewcommand{\refname}{}
