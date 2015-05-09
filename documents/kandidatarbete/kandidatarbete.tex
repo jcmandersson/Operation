@@ -159,9 +159,31 @@ Wkhtmltopdf är ett program som tar en hemsida eller en html-fil och skapar en p
 \section{Teori}
 För att kunna svara på frågeställningar så måste några begrepp i dem defineras.
 Effektivt defineras i detta fallet som att det tar kortare tid för operationsförberedelser och kräver mindre av personalen, till exempel att personalen inte ska behöva hålla lika mycket inforamation i huvudet. 
-Lättare defineras som att det går snabbare för nyanställda och personer som tillfälligt är på en avdelning de inte brukar jobba på, att lära sig rutinerna och kunna utföra arbetet.
+Lättare defineras som att det går snabbare för nyanställda, och personer som tillfälligt är på en avdelning de inte brukar jobba på, att lära sig rutinerna och kunna utföra arbetet.
 
-Effektiviseringen av sjukvården och hur den ska ske är frågor som diskuterats flitigt de senaste åren. Region Östergötland har gjort tester för att kontrollera hur en operationsförberedelse kan effektiviseras. Ett av dessa tester gick ut på att undersöka hur lång tid det tar att plocka lagerartiklar då lagerplats finns lättillängligt gentemot hur lång tid det tar med nuvarande system. Resultatet var att.. [referens Elisabeth].
+Effektiviseringen av sjukvården och hur den ska ske är frågor som diskuterats flitigt de senaste åren. Region Östergötland har gjort tester för att kontrollera hur en operationsförberedelse kan effektiviseras. Ett av dessa tester gick ut på att undersöka hur lång tid det tar att plocka lagerartiklar då information om lagerplats finns lättillängligt gentemot hur lång tid det tar med nuvarande system. Resultatet av detta var att det tog 5 minuter för en person att plocka materialet då lagerplats fanns tillgängligt och 30 minuter för en sjuksköterska med lång erfarenhet med nuvarande system \cite{Elisabeth}. Detta visar att det finns stora tidsvinster i att bygga ett system som underlättar operationsförberedelser.
+
+\subsection{Säkerhetskopiering och reservsystem}
+Det ställs stora krav på att handböckerna alltid ska finnas tillgängliga då de ska användas på ett sjukhus där ett fel kan få stora konsekvenser. Detta innebär att ett reservsystem måste finnas till hands ifall systemet slutar fungera. Detta har lösts genom ett system där pdf-kopior av handböcker skapas. Handböckerna hamnar i en mapp-struktur där de sorteras på specialitet och operation. Kopian sparas med ett versionnummer, vilket gör att kopior av gamla versioner av operationer fortfarande finns kvar och kan skrivas ut. Var denna mapp-strukturen ska hamna bestäms i en konfigurationsfil.
+Kopiorna skapas genom att en funktion, som kollar igenom alla handböcker för att se om har uppdaterats sedan senaste kopieringen, körs med ett givet tidsintervall som ställs in i konfigurationsfilen. Om en operation har uppdaterats så körs en funktion som använder en modul, som heter wkhtmltopdf, för att kalla på ett program som också heter wkhtmltopdf. Wkhtmltopdf använder en osynlig webbläsare för att skapa en pdf-kopia. Hur kopiorna ser ut kan ses i figur \ref{fig:pdf-start} och figur \ref{fig:pdf-end}. Utseendet ändras genom att speciell css för utskrift finns och wkhtmltopdf körs med utskrift som mediatyp. 
+Det finns också ett REST-api för att skapa pdf-kopior. Detta används dock inte någonstans. Men en vidareutveckling på detta vore att implementera att en ny pdf-kopia skapas så fort en operation har uppdaterats. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/pdf-start.png}
+  \caption{Början på en pdf-kopia.}
+  \label{fig:pdf-start}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/pdf-end.png}
+  \caption{Plocklista i en pdf-kopia.}
+  \label{fig:pdf-end}
+\end{figure}
+
+Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att det är viktigt att databasen säkerhetskopieras med jämna mellanrum. Med ett givet tidsintervall som går att ställa in i konfigurationsfilen så körs en funktion som använde en modul som heter mongo-utils för att kalla på mongodump som tar en kopia på databasen och lägger den i en mapp med dagens datum. 
+
  
 \section{Metod}
 I detta avsnitt beskrivs det hur arbetet med projektet har gått till.
@@ -189,7 +211,7 @@ Enligt standarden uttrycktes kraven på ska-form. Ett exempel på ett krav från
 \subsubsection{Kravvalidering}
 Vid varje iterationsslut hölls ett möte med kund där vi demonstrerade nya features och lät kunden testa systemet. Iterationerna gjorde att vi snabbt kunde rätta till eventuella missförstånd. Vi gick igenom vilka krav som var genomförda och vilka som skulle prioriteras till nästa iteration. Kravspecifikationen var på så sett dynamisk och uppdaterades under projektets gång. En färgkodning användes för att markera vilka krav som var godkända, vilka som hade påbörjats och vilka som återstod.
 
-\subsection{Utvecklingsmetod}
+\subsection{Utveckling}
 Här beskrivs hur utvecklingen i projektet har gått till väga och vilka hjälpmedel som har använts för att underlätta arbetet.
 		
 \subsubsection{SCRUM}
@@ -237,13 +259,19 @@ Alla krav som behandlar lagersystemet finns kvar:
 
 Övriga förslag på vidareutveckling:
 %%Fyll på här om ni kommer på något!
+
+
 \begin{description}
 \item[Artikelsök] Vid sökning på artikel vid redigering av handbok kan det vara bra om man sorterar resultaten så att de artiklar som tillhör samma enhet som handboken visas först.
 \item[Avancerad sökfunktion] En mer avancerad sökfunktion med * och söknining på flera ord som inte behöver vara direkt efter varandra.
 \item[Förvalda kommentarer] Under användartester observerades att samma kommentarer skrivs ofta så det kan vara bra med en lista på vanliga kommentarer som man kan välja ifrån.
 \item[Roller och rättigheter] Olika roller bör identifieras och en funktion för att tilldela användare olika rättigheter bör implementeras.
 \end{description}
-
+\subsection{Referenser}
+\begin{thebibliography}{9}
+\bibitem{Elisabeth}
+Får nog fixa en bättre referens här.
+\end{thebibliography}
 
 \newpage
 \part{Enskilda utredningar}
