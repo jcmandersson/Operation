@@ -32,7 +32,7 @@ Frågeställningar:
 \clearpage
 \subsection{Bakgrund}
 I dagsläget använder Region Östergötland sig av två separata system
-för att förbereda operationer. En handbok (se ovan) och ett kartotek (se \ref{fig:kartotek}).
+för att förbereda operationer. En handbok (se ovan) och ett kartotek (se figur \ref{fig:kartotek}).
 Dessa är för tillfället helt separata applikationer.
 
 \begin{figure}
@@ -42,17 +42,17 @@ Dessa är för tillfället helt separata applikationer.
   \label{fig:kartotek}
 \end{figure}
 
-Så om en artikel slutas säljas eller Region Östergötland
+Så om en artikel har utgått eller Region Östergötland
 väljer att inte köpa in en viss artikel längre så tar de bort artikeln
 från kartoteket. Problemet som då uppstår är att detta inte reflekteras
 i handböckerna. Så om t.ex. en "\textit{Oral-B Pro 600 CrossAction}"\ tandborste används i
-en "\textit{Laparoskopisk sigmoideumresektion}", och tandborsten slutas säljas
+en "\textit{Laparoskopisk sigmoideumresektion}", och tandborsten utgår
 så tas den bort från kartoteket, men eftersom handboken för operationen inte är
 kopplad till kartoteket så uppdateras det inte att denna artikel inte längre finns i lagret.
 
 Vår förbättrade lösning
 integrerar systemet som hanterar handböcker tillsammans med ett nytt kartotek,
-där allesammans är byggt på webben. När en artikel ändras eller tas bort i kartoteket
+där allt är byggt på webben. När en artikel ändras eller tas bort i kartoteket
 så ändras den även i alla handböcker för operationer som kräver denna artikel.
 
 
@@ -67,8 +67,7 @@ TODO: Skriv mer.
 \clearpage
 \subsection{Resultat}
 Resultatet av vårt arbete är ett förbättrat kartotekssystem
-som integrerar data från handboken till ett
-uniformt system.
+som integrerar data från handboken till ett uniformt system.
 
 Kärnfunktionaliteten i kartoteket är möjligheten att se, modifiera och hitta artiklar.
 Så denna del är uppdelad i tre delar.
@@ -83,7 +82,7 @@ i kartoteket (runt 3000 för tillfället). Se figur \ref{fig:table}
   \caption{Kartoteket}
   \label{fig:table}
 \end{figure}
-När man först kommer in så laddas endast runt 50 artiklar, men
+Först laddas endast runt 50 artiklar, men
 om man skrollar ner så laddas fler.
 
 Det finns två olika sätt att se informationen.
@@ -101,8 +100,8 @@ visa mer information om artiklarna, bland annat pris på artiklarna.
 Vi har valt att inte inkludera en bild på denna information
 då detta är sekretessbelagt.
 
-I den här vyn finns också möjligheten att ta bort, lägga och modifiera
-information om artiklar, vilket är vad nästa två delarna handlar om.
+I den här vyn finns också möjligheten att ta bort, lägga till och modifiera
+information om artiklar, vilket är vad de två följande delarna handlar om.
 
 \clearpage
 \subsubsection{Modifiering av artiklarna}
