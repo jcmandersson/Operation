@@ -277,7 +277,7 @@ För att besvara den tredje frågeställningen om vilka typer av tester som är
 svåra att utföra med en webb-baserad tjänst så gicks koden igenom och 
 försök till att skriva testfall genomfördes
 med de olika delarna av koden. Resultatet av dessa tester redovisas under 
-avsnittet Resultat.
+avsnittet \emph{Resultat}.
 
 \subsection{Resultat}
 Här presenteras resultatet av rapporten.\\
@@ -309,6 +309,11 @@ visas i tabellen nedan.\\
 \end{center}
 
 Medelvärdet avrundat till närmsta heltal är: 10556 tester per sekund.\\
+
+Standardavvikelsen avrundat till närmsta heltal är: 1710.\\
+
+Den tid det tar från det att koden pushas till GitHub till dess att 
+testfallen börjar köras är i genomsnitt ca en minut.\\
 
 Undersökningen om vad om är svårt att testa ledde till följande resultat.
 Det visade sig att vanliga javascript-funktioner är lätta
@@ -342,17 +347,36 @@ JQuery-funktionen \emph{\$(document).ready()} eftersom koden då blir
 lättare att testa.\\
 
 JQuery-funktioner är i allmänhet svårare att testa än vanliga
-javascript-funktioner.
+javascript-funktioner. Anledningen är att JQuery-funktioner
+startas av och manipulerar HTML-objekt. Ett sätt att lösa detta är
+att använda en egen \textunderscore Specrunner.html. Då kan HTML-objekten i den
+filen användas för att testa JQuery-funktionerna.
 
 \subsection{Diskussion}
 Under den här rubriken diskuteras rapportens resultat
 och metod.
 
 \subsubsection{Resultat}
-TODO
+Resultatet angående hur effektivt det var att använda Travis CI
+var inte särskilt förvånande. Att den lilla testfunktionen kunde köras
+ca 10000 gånger per sekund verkar rimligt. Det intressanta med resultatet
+var att det kan dröja ca en minut från att koden pushas till GitHub
+till dess att testfallen börjar köras och att effektiviteten
+kan variera med ca $\pm 30 \%$ vid olika tidpunkter.\\
+
+Det är även värt att påpeka att hur koden skrivs och struktureras
+i väldigt hög grad påverkar hur lätt den blir att testa. I alla fall
+med den metod som använts under arbetet med den här rapporten.
 
 \subsubsection{Metod}
-TODO
+Den metod för testning som användes under arbetet med den här rapporten var
+medvetet väldigt enkel och inte särskilt kraftfull. Anledningen var
+att det var mycket annat som skulle göras i projektet och tiden var
+begränsad till 300 timmar. I efterhand visade det sig dock att det hade varit 
+möjligt att lägga lite mer tid på att använda en lite
+mer avancerad metod för att kunna testa en större
+del av koden i projektet. Nu användes den överblivna tiden istället till
+att göra fler manuella tester av koden.
 
 \subsection{Slutsatser}
 Under den här rubriken presenteras svaren på
@@ -364,7 +388,7 @@ att utföra kontinuerliga automatiserade tester av webb-applikationer?}
 Ett sätt att använda en webb-baserad tjänst för att utföra kontinuerliga 
 automatiserade tester av en webb-applikation är att använda  
 Travis CI tillsammans med Jasmine på det sätt som beskrivits
-under avsnittet Metod. Observera att den webb-applikation som testades
+under avsnittet \emph{Metod}. Observera att den webb-applikation som testades
 var skriven med javascript. Node.js användes på serversidan och 
 JQuery användes på klientsidan.
 
@@ -378,7 +402,10 @@ testfallen kommer att köras på mindre än en minut.
 \subsubsection{Vilka typer av tester är svåra att utföra 
 med en sådan tjänst?}
 Kortfattat kan man säga att vanliga javascriptfunktioner är
-väldigt enkla att testa.
+väldigt enkla att testai med de metoder, ramverk och tjänster som
+används under arbetet med den här rapporten. Men Jquery-funktioner och
+javascript-funktioner i Jquery-funktioner är svårare att
+testa. För en mer detaljerad beskrivning se rubriken \emph{Resultat}.
 
 \subsubsection{Framtida arbete inom området}
 Det finns mycket arbete som skulle kunna utföras inom området som behandlats
