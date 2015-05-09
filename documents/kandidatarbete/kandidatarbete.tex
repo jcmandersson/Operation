@@ -152,7 +152,7 @@ Handlebars är ett så kallat ''template language'' som är byggt från Mustache
 
 \subsubsection{REST}
 
-\subsubsection{Wkhtmltopdf} 
+\subsubsection{Wkhtmltopdf}
 Wkhtmltopdf är ett program som tar en hemsida eller en html-fil och skapar en pdf av den. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
 
 
@@ -168,19 +168,23 @@ Det ställs stora krav på att handböckerna alltid ska finnas tillgängliga då
 Kopiorna skapas genom att en funktion, som kollar igenom alla handböcker för att se om har uppdaterats sedan senaste kopieringen, körs med ett givet tidsintervall som ställs in i konfigurationsfilen. Om en operation har uppdaterats så körs en funktion som använder en modul, som heter wkhtmltopdf, för att kalla på ett program som också heter wkhtmltopdf. Wkhtmltopdf använder en osynlig webbläsare för att skapa en pdf-kopia. Hur kopiorna ser ut kan ses i figur \ref{fig:pdf-start} och figur \ref{fig:pdf-end}. Utseendet ändras genom att speciell css för utskrift finns och wkhtmltopdf körs med utskrift som mediatyp. 
 Det finns också ett REST-api för att skapa pdf-kopior. Detta används dock inte någonstans. Men en vidareutveckling på detta vore att implementera att en ny pdf-kopia skapas så fort en operation har uppdaterats. 
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.9\textwidth]{images/pdf-start.png}
-  \caption{Början på en pdf-kopia.}
-  \label{fig:pdf-start}
-\end{figure}
+\textbf{KOMMENTAR FRÅN RAPP}: Jag kommenterade bort denna bild
+därför att den inte finns i \textit{images/}, vilket
+ledde till att det inte gick att kompilera \textit{kandidatarbete.tex}.
+(Samma för \textit{pdf-end.png} nedan.) Kanske glömde du \textit{git add .}?
+%\begin{figure}
+%  \centering
+%  \includegraphics[width=0.9\textwidth]{images/pdf-start.png}
+%  \caption{Början på en pdf-kopia.}
+%  \label{fig:pdf-start}
+%\end{figure}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.9\textwidth]{images/pdf-end.png}
-  \caption{Plocklista i en pdf-kopia.}
-  \label{fig:pdf-end}
-\end{figure}
+%\begin{figure}
+%  \centering
+%  \includegraphics[width=0.9\textwidth]{images/pdf-end.png}
+%  \caption{Plocklista i en pdf-kopia.}
+%  \label{fig:pdf-end}
+%\end{figure}
 
 Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att det är viktigt att databasen säkerhetskopieras med jämna mellanrum. Med ett givet tidsintervall som går att ställa in i konfigurationsfilen så körs en funktion som använde en modul som heter mongo-utils för att kalla på mongodump som tar en kopia på databasen och lägger den i en mapp med dagens datum. 
 
