@@ -6,9 +6,10 @@ Syftet med denna del av rapporten är att undersöka olika metoder och verktyg f
 \subsubsection{Frågeställning}
 %Hur kan man samla in krav som tillfredställer kundens verkliga behov?
 \begin{itemize}
-\item Hur kan intervjuer och observationer användas för att analysera kundens behov?
+\item Är intervjuer och observationer bra metoder för att analysera kundens behov?
+%\item Hur kan intervjuer och observationer användas för att analysera kundens behov?
 \item Hur kan man arbeta med prototyper för att framställa krav?
-\item Hur kan man använda prototyper för att testa och vallidera krav?
+\item Hur kan man använda prototyper för att testa och validera krav?
 \end{itemize}
 \subsubsection{Avgränsningar}
 Rapporten har sin utgångspunkt i hur kravframställningen gått till i detta projekt. Metoden bör inte ses som ett allmänt tillvägagångssätt.
@@ -38,12 +39,12 @@ Observationer kan användas...
 %(scenarios)
  
 \subsection{Metod}
-Denna del beskriver vilka metoder och verktyg som använts i detta projekt.
+Denna del beskriver hur intervjuer, observationer och prototyper har använts som metoder för kravframställning i detta projekt. Metoden beskriver också hur systemet testats för att vallidera och testa kraven. Frågeställningarna besvaras utifrån denna erfarenhet.
 %Denna del beskriver hur kravframställningen gått till i detta projekt. Först beskrivs arbetet med att analysera kundens behov under förstudien. Vidare beskrivs mer ingående vilka metoder som använts och hur kraven valdes att representeras. Avslutningsvis beskrivs vilka användartester som genomfördes och hur dessa bedrog till utvecklingen.
 %\subsubsection{Förstudie}
 %Den största delen utav analysarbetet skedde under förstudien. Här identifierades de olika intressenterna och en kravspecifikation utarbetades. Våran första kontakt med projektet var en projektbeskrivning där kunden formulerade sina mål och visioner av projektet. Några vikta krav gavs också såsom att prototypdesign skulle genomföras i samarbete med kunden. Ett första möte utav fyra under förstudien gav sedan mer information och vi började våran kravinsamling. Vi kunde konstatera att vi hade två olika intressenter att arbeta med. Dels sjuksköterskorna som är användare av systemet och dels CMIT, Centrum för medicinsk teknik och IT, som ansvarar för sjukhusets IT-miljöer. För att förstå användarnas behov hölls ett studiebesök där vi fick en visning av nuvarande system och hur det används. Detta var nödvändigt för att verkligen förstå vad det var som behövde göras och vad som kunde förbättras. Från CMIT:s sida hölls mer tekniska möten där teknikval diskuterades. Här var det viktigt att ta reda på vilka begränsningar som fanns och vilka val som passade våra och deras erfarenheter.
 \subsubsection{Intervjuer}
-Möten med kund har genomförts vilka kan ses som intervjuer. För att samla in krav under under dessa möten har vi dels fört anteckningar på papper eller dator och dels spelat in på mobil. När vi varit flera personer på möten har vi gått igenom och diskuterat våra anteckningar i efterhand. Vid oklarheter har vi antecknat dessa för att förtydliga med kund. Inspelning användes främst vid första mötet och var användbart då vi fick mycket information att sätta oss in i.
+Möten med kund har genomförts vilka kan ses som intervjuer. Dessa möten har skett dels med IT-ansvariga, verksamhetsutvecklare och sjuksköterskor. För att samla in krav under dessa möten har vi dels fört anteckningar på papper eller dator och dels spelat in på mobil. När vi varit flera personer på möten har vi gått igenom och diskuterat våra anteckningar i efterhand. Vid oklarheter har vi antecknat dessa för att förtydliga med kund. Inspelning användes främst vid första mötet och var användbart då vi fick mycket information att sätta oss in i. 
 %Kravspecifikationen skrev i Google docs. Detta valdes eftersom kraven utarbetades tillsammans med kund. Ett gemensamt redigerbart dokument gav en möjlighet för oss att arbeta på olika platser under kravframställningen vilket var effektivt. En kommentarsfunktion gav oss möjligheten att kommentera krav och föreslå förbättringar. Under interna möten och kundmöten var den gemensamma redigeringen också till nytta då kravformuleringar snabbt kunde genomföras.
 
 %\subsubsection{Kravrepresentation}
@@ -59,7 +60,7 @@ Möten med kund har genomförts vilka kan ses som intervjuer. För att samla in 
 %Enligt standarden uttrycktes kraven på ska-form. Ett exempel på ett krav från projektet är följande: "Plocklistor ska innehålla information om artikelns namn, förråd, sektion, hylla och fack".
 
 \subsubsection{Observationer}
-För att få en inblick i hur operationsförberedelserna fungerar i dagsläget genomfördes ett studiebesök. Ett besök på artikellagret gav oss en inblick i kundens problem och hur det kunde lösas. De svårigheter som beskrivits blev tydligare och det blev lättare att föreställa sig en lösning på problemet. 
+För att få en inblick i hur operationsförberedelserna fungerar i dagsläget genomfördes ett studiebesök på sjukhusets operationsavdelning. Vi fick här se problemet ur sjuksköterskornas synvinkel. Vi fick se hur man arbetade i artikellagret i dagsläget vilket var nödvändigt för att kunna genomföra en förbättring. De svårigheter som beskrivits blev tydligare och det blev lättare att föreställa sig en lösning på problemet.
 
 \subsubsection{LoFi-prototyper}
 Under förstudien valde vi att vid två tillfällen göra LoFi-prototyper som vi tog med till kund. Vid dessa tester kunde vi se om vi var på rätt bana när det gällde design och struktur. LoFi-protptyperna utjordes av enkla pappersskisser. Ett exempel visas i figur~\ref{fig:lofiprototyper}.
@@ -73,6 +74,7 @@ Under förstudien valde vi att vid två tillfällen göra LoFi-prototyper som vi
 Det första tillfället fokuserade på gränssnittsdesign och navigation i systemet. Prototyperna visades för en sjuksköterska som fick föreställa sig systemet. De olika korten gicks igenom för att se om vi hade hittat en bra design och om navigationen var logisk.
 
 Vid det andra tillfället hade vi en intern brainstorming för att ta fram en design för redigeringsvyn av en handbok. Två olika förslag togs fram och presenterades för kunden. Vi observerade och antecknade försökspersonernas olika tankar samt spelade in en ljudupptagning på mobiltelefon för att kunna gå tillbaka och analysera.
+%%Note to self: Lyssna på det ljudklippet.
 \subsubsection{HiFi-prototyp}
 Själva systemet som vi utvecklat kan ses som en HiFi-prototyp. Den är evolutionär på så sätt att den byggts vidare på under varje iteration. Huruvida kunden kommer fortsätta utvecklingen av denna prototyp på egen hand eller inte är inte bestämt. Ett alternativ är att se vårt system som en prototyp till ett nytt system. 
 Prototypen presenterades och utvärderades i samband med kundmöten vid varje iterationsslut. Ett mer omfattande användartest utfördes i iteration 3.
@@ -82,19 +84,37 @@ Prototypen presenterades och utvärderades i samband med kundmöten vid varje it
 %Vid varje iterationsslut hölls ett möte med kund där vi demonstrerade nya features och lät kunden testa systemet. Iterationerna gjorde att vi snabbt kunde rätta till eventuella missförstånd. Vid dessa möten diskuterade vi också vad som skulle genomföras nästa iteration. Vi gick igenom vilka krav som var genomförda och vilka som skulle prioriteras till nästa iteration.
 
 \subsubsection{Användartest}
-I iteration 3 av projektet genomfördes användartester av systemet vid två tillfällen. Vid dessa tester kördes det nya systemet parallellt med det gamla. Testen fokuserade på skapande av handböcker och genomförande av operationsförberedelser. Testen genomfördes dels på egen hand av verksamheten och dels med delar av projektgruppen på plats. Vid användartesterna fick vi in feedback från användarna om vad som var bra och vad som kunde göras bättre. Ett exempel på designval som kunde utredas vid testningen var om en operationsförberedelse skulle kunna sättas som klar även om inte alla artiklar var plockade. Olika alternativ hade diskuterats innan men vid testning blev det tydligt att det var en önskvärd funktionalitet. Andra exempel på saker som upptäcktes vid användartesten var hur engånsmaterialet skulle sorteras på bästa sett,hur navigationen mellan olika sidor kunde fungera effektivare och att vissa saker inte användes.
+I iteration 3 av projektet genomfördes användartester av systemet vid två tillfällen. Vid dessa tester kördes det nya systemet parallellt med det gamla. Testen fokuserade på skapande av handböcker och genomförande av operationsförberedelser. Testen genomfördes dels på egen hand av verksamheten och dels med delar av projektgruppen på plats. Vid användartesterna fick vi in feedback från användarna om vad som var bra och vad som kunde göras bättre. Ett exempel på designval som kunde utredas vid testningen var om en operationsförberedelse skulle kunna sättas som klar även om inte alla artiklar var plockade. Olika alternativ hade diskuterats innan men vid testning blev det tydligt att det var en önskvärd funktionalitet. Andra exempel på saker som upptäcktes vid användartesten var hur engångsmaterialet skulle sorteras på bästa sett,hur navigationen mellan olika sidor kunde fungera effektivare och att vissa saker inte användes.
 Systembuggar kunde också rapporteras och åtgärdas under testningen.
 Kunden höll också en intern utvärdering om hur användarna upplevde systemet.
 
 %skriv eventuellt om de övriga artiklarna som inte behandlas under engångsmaterial
 
 \subsection{Resultat}
+Att använda intervjuer och observationer som metoder för kravinsamling kändes naturligt för detta projekt. Det var ett bra tillvägagångssätt för att få en helhetsbild av vad kunden ville ha. Intervjuerna gav oss kundens mål och visioner av projektet. Observationerna gav oss en inblick i hur användarna använde systemet och saker som var otydliga i intervjuerna kunde fångas in i observationen. På så sett kompletterade dessa metoder varandra och det kändes nödvändigt för en lyckad kravinsamling.
+
+LoFi-Prototyper kunde användas i förstudien för att bekräfta våran bild av vad som skulle byggas. De var ett bra verktyg för att reda ut otydligheter. De var effektiva på så sätt att de gick snabbt att tillverka och gav mycket feedback tillbaks. Det kändes lättare att diskutera systemet när vi hade något visuellt framför oss. De gjorde det lättare att formulera krav och bidrog på så sätt till kravinsamlingen.
+
+HiFi-prototypen kunde användas för att testa systemet utifrån kraven. Vid varje iterationsmöte kunde systemet utvärderas och kraven kunde både formuleras om och prioriteras om. Vi kunde också använda prototypen för att validera vilka krav som var genomförda. 
+ 
+Vid användartesterna i iteration 3 kunde systemet användas för att testa om kraven uppfyllts och formulerats efter kundens behov. Här framkom vissa förändring på krav såsom att mer information skulle visas för en artikel. Prototypen kunde på så sätt användas för att testa och validera krav. För en eventuell vidareutveckling kan observationerna användas som underlag för att skriva nya krav.
+TODO: Fyll på med resultat från användarutvärdering
+
 \subsection{Diskussion}
+Här diskuteras resultatet av den enskilda utredningen och hur metoden fungerat för att undersöka frågeställningarna.
 \subsubsection{Resultat}
+Resultatet bekräftar synen på vad som sägs i teorin...
 \subsubsection{Metod}
+
+TODO:Skriv om/flytta detta
 Metoden som användes fokuserade på att i förstudien samla in så mycket krav som möjligt genom möten, intervjuer och obeservationer. Att arbeta fram kraven tillsammans med kund kändes nödvändigt för att få en fullständig bild. En sak som vi inte prioriterades men som kanske hade kunnat hjälpt arbetet skulle varit att lägga större fokus på olika roller. Slutsystemet har två roller vilket är admins och icke-admins. En avägning gjordes där dessa två enkla roller valdes. Fördelen var att att vi kunde lägga fokus på att snabbare kunna testa andra delar av systemet med högre prioritet. Nackdelen var att dessa funktionaliteter inte hann testas och under förstudien ledde till en viss förivirring. %%blablabla
 Att använda use-cases eller user-stoires diskuterades också under förstudien. Detta bortprioriterades då vi ansåg att de var överflödiga. Denna avvägning ledde till att det var lite svårare att kommunicera kraven. 
+
+Metoden som användes för att svara på frågeställningarna var att utföra själva projektet. Projektet gav således svar på att intervjuer och observationer var bra för detta projekt. Huruvida metoden passar andra projekt kan diskuteras. 
+
+
 \subsection{Slutsatser}
+Intervjuer och observationer är bra metoder för att analysera kundens behov. I detta projekt kändes de som naturliga och nödvändiga tillvägagångssätt. Prototyper är ett väldigt kraftfullt verktyg för kravinsamling och kan användas på flera olika sätt. LoFi-prototyper är bra i början av ett projekt för att snabbt kunna kommunicera ideér och hitta en bra design. De hjälper på så sätt till i kravinsamlingsprocessen. HiFi-prototyper är bra både för att testa om kraven formulerats på ett bra sätt och för att validera systemets funktionalitet.
 \subsection{Referenser}
 %Note to self:Dubbelkolla referenserna, tror det är fel standard
 
