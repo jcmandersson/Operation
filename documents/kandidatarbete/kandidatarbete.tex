@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \graphicspath{ {images/} }
 
+\usepackage{subcaption}
 \usepackage{url}
 \usepackage{listings}
 %\usepackage{showframe}
@@ -220,21 +221,29 @@ Vid varje iterationsslut hölls ett möte med kund där vi demonstrerade nya fea
 Projektets utveckling har skett i fyra iterationer där den första iteration var en förstudie och i de avslutande tre iterationerna har utvecklingen av produkten skett. Nedan beskrivs vilka hjälpmedel som har använts för att underlätta arbetet.
 		
 \subsubsection{SCRUM}
-Projektet har utvecklats iterativt med en utvecklingsmetodik som påminner mycket om SCRUM. Aktiviteterna i projektet har visats på en gemensam SCRUM-board med hjälp av webbsidan Trello. Boarden hade kategorierna TODO, DOING och DONE. När en medlem valt en aktivitet så märktes aktiviteten med medlemmens namn och flyttades till den aktuella kategorin. Varje vecka har gruppen haft ett kort SCRUM-möte på 15 minuter. På mötet har varje gruppmedlem berättat vad som har gjorts den föregående veckan och vad som ska göras nästa vecka. SCRUM-mötet har oftast utförts i samband med varje veckas handledarmöte.
-%TODO bild på trello
+Projektet har utvecklats iterativt med en utvecklingsmetodik som påminner mycket om SCRUM. Aktiviteterna i projektet har visats på en gemensam SCRUM-board med hjälp av webbsidan Trello. 
+
+\begin{figure}[htbp]
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{trello.png}
+                \label{fig:gull}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{trello2.png}
+                \label{fig:tiger}
+        \end{subfigure}
+        \caption{Trello, t.v. översikt över alla boards, t.h. boarden info}\label{fig:trello}
+\end{figure}
+
+Boarden hade kategorierna TODO, DOING och DONE. När en medlem valt en aktivitet så märktes aktiviteten med medlemmens namn och flyttades till den aktuella kategorin. Varje vecka har gruppen haft ett kort SCRUM-möte på 15 minuter. På mötet har varje gruppmedlem berättat vad som har gjorts den föregående veckan och vad som ska göras nästa vecka. SCRUM-mötet har oftast utförts i samband med varje veckas handledarmöte.
 
 \subsubsection{Alpha state cards}
 Ett system med alpha state cards har använts för att gruppen skulle kunna ha koll på hur långt projektet har fortskridit. Korten har även använts till att identifiera aspekter av projektet som kan förbättras och som gruppen behöver arbeta mer med. De aspekter av projektet som kunnat förbättras har använts som mål för kommande iterationer. De olika korten har uppdaterats kontinuerligt under projektets gång.
-%TODO bild på alpa state cards
-
-\subsubsection{Kundmöten}
-Efter varje iteration så har man på plats hos kunden haft ett möte för att diskutera hur arbetet fortskrider, detta är ett perfekt tillfälle
-och även om någon missuppfattning har uppdagats.
 
 \subsubsection{Sammarbete i gruppen}
 Under förstudien så diskuterades det hur utvecklingen skulle ske på bästa på sätt för gruppen. Förslagen som diskuterades var, utveckling i mindre grupper, separat arbete var för sig eller att alla gruppmedlemmar skulle sitta tillsammans och utveckla. Då alla i gruppen inte hade utvecklat någon webbaplikation tidigare så togs beslutet att under förstudien paralellt inleda en intern utbildning inom gruppen i form av så kallade kodstugor, dessa gick ut på att alla skulle sitta tillsammans och lära sig de olika verktygen så som t.ex. javascript och css och att de mindre erfarna skulle ha en möjlighet att få hjälp av de mer erfarna.
 
-När den första iterationen skulle inledas så kände samtliga i gruppen att kodstugorna hade fungerat bra och att det kändes naturligt att fortsätta arbetet på detta sätt.
 
 \clearpage
 \input{results.tex}
