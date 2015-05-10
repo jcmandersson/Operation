@@ -1,17 +1,16 @@
 \section{Pål Kastman}
 \subsection{Inledning}
-I detta projekt så har vi valt att inledningsvis skriva dokumentationen i Googles ordbehandlingsprogram Google Docs för att i ett senare skede, då det var dags att påbörja denna rapport gå över till att använda typsättningssystemet Latex. 
+I detta projekt har jag haft rollen som dokumentansvarig, en del av det arbete jag har utfört i denna roll har gått ut på att se till att dokumenten ser ordentliga ut, att ingenting är felstavat.
 
-Vi valde att göra på detta sätt för att så snabbt som möjligt komma igång, då man bland annat i Google Docs kan se live 
-vad andra skriver.
+I denna individuella del av rapporten så undersöker jag hur det är att arbete med Latex i denna typ av projektform jämfört med andra orbehandlingsprogram.
 
 \subsubsection{Syfte}
 Syftet med denna individuella del är att undersöka funktionaliteten i Latex och väga fördelar mot nackdelar.
 
 \subsubsection{Frågeställning}
 \begin{itemize}
-\item Vad finns det för begränsningar i Latex
-\item Kommer det att vara en fördel eller en nackdel för flera gruppmedlemmar att jobba samtidigt i samma delar av rapporten.
+\item Uppmuntrar latex till en viss typ av samarbete jämfört med andra ordbehandlingsprogram?
+\item Kommer det att vara en fördel eller en nackdel för flera gruppmedlemmar att jobba samtidigt i samma delar av rapporten?
 \end{itemize}
 
 \subsubsection{Avgränsningar}
@@ -34,8 +33,12 @@ Under kursens gång har jag dock skrivit en laborationsrapport i Latex och däri
 
 
 \subsection{Teori}
-När Microsoft utvecklade Word på 80-talet så ville de naturligtvis att dåtidens datorer skulle klara av att ladda dokument utan att det skulle vara alltför prestandakrävande, därför konstruerade man dess filformat (.doc) binärt och gjorde konstruktionen väldigt komplex. Detta medförde att bara personer som var riktigt insatta i detta filformat klarade att ändra direkt i dessa filer. Google docs däremot använder sig av "molnet" för att spara filer och man behöver därför aldrig oroa sig över säkerhetskopiering. Textformatering i båda dessa program görs främst genom att använda det grafiska gränssnittet, men kan även göras genom tangentbordskommandon.
+\subsubsection{Microsoft Word och Google docs}
+När Microsoft utvecklade Word på 80-talet så ville de naturligtvis att dåtidens datorer skulle klara av att ladda dokument utan att det skulle vara alltför prestandakrävande, därför konstruerade man dess filformat (.doc) binärt och gjorde konstruktionen väldigt komplex. Detta medförde att bara personer som var riktigt insatta i detta filformat klarade att ändra direkt i dessa filer.
 
+Google docs däremot använder sig av "molnet" för att spara filer och man behöver därför aldrig oroa sig över säkerhetskopiering. Textformateringen i bägge dessa program görs främst genom att använda det grafiska gränssnittet, men kan även göras genom tangentbordskommandon. En funktion som finns i bägge dessa program är möjligheten att kommentera text.
+
+\subsubsection{Latex}
 Latex är i motsats till Word och Google docs inget ordbehandlingsprogram, utan istället ett märkspråk liksom HTML. När man i Word och Google docs ändrar textformateringen genom ett grafiskt gränssnitt så markerar man istället sin text med taggar, som senare när man kompilerar koden ger det önskade utseendet. 
 
 %exempelkod vore bra här!
@@ -44,14 +47,29 @@ Detta gör att man som användare behöver bry sig mindre om utseendet av dokume
 
 
 \subsection{Metod}
-Vi har till en början valt att under projektets gång arbeta i endast en fil för den gemensamma delen av kandidatprojektet. Vad det gäller de individuella delarna så har vi valt att lägga dessa i separata filer och sedan importera dessa till den gemensamma. Vi sparar alla dokumentfiler i samma repository på github som vi har källkoden.
+I detta projekt så har vi valt att inledningsvis skriva dokumentationen i Googles ordbehandlingsprogram Google Docs för att i ett senare skede, då det var dags att påbörja denna kandidatrapport gå över till att använda typsättningssystemet Latex. Vi valde att göra på detta sätt för att så snabbt som möjligt komma igång, då man bland annat i Google Docs kan se live vad andra skriver.
 
-Genom att göra på detta sätt så kan vi garantera att det inte kommer att uppstå några konflikter i de individuella delarna.Det som vi inte vet, är huruvuda det kommer att uppstå problem då alla gruppmedlemmar skall skriva på den gemensamma delen.
+I denna rapport så skrev vi inledningsvis den gemensamma delen i samma fil, och de indivuella delarna i separata filer som vi sedan importerade till den gemensamma. I ett senare skede lade vi även ut vissa delar av den gemensamma rapporten i separata filer.
+
+Genom att göra på detta sätt så kan vi garantera att det inte kommer uppstå några konflikter i de individuella delarna.
 
 \subsection{Resultat}
-När vi i projektets inledning använde Google docs så märkte vi att det var väldigt svårt att hålla sig till någon sorts dokumentstandard där man t.ex. använder samma typsnitt på rubriker och text. Även om alla projektmedlemmar har försökt att hålla sig till den standard vi satt upp så blev det ändå ibland att någon del av dokumenten blev annorlunda när vi redigerade samtidigt i dessa. Detta fungerade mycket bättre i Latex när vi skrev kandidatrapporten, latex hjälper verkligen användaren till att hela tiden hålla samma standard i dokumenten.
+I detta stycket presenteras resultatet, det är givetvis inte bara mina egna åsikter som är nedskrivna här utan jag har även lyssnat en del på vad de andra projektmedlemmarna har haft för åsikter och synpunkter.
 
-Vi har under projektet försökt att hålla isär på alla olika revisioner av dokument så att man senare kan gå tillbaka och se vilka ändringar som har gjorts från en iteration till en annan, detta har varit svårt att upprätthålla med Google docs då dessa dokument hela tiden sparas kontinuerligt och det inte finns något sätt att gå tillbaka i ett dokument för att se vilka ändringar som gjorts. Detta har gjort att när vi ändrat i dokument, behövt spara undan en kopia av den föregående revisionen vilket inte alltid har gjorts. I kandidatrapporten däremot har vi använt oss utav revisionshanteringsprogrammet git och på så sätt lätt kunnat revisionshantera även våra dokument och enkelt kunnat se vilka ändringar som gjorts. Detta har även hjälpt oss så att vi smidigt har kunnat korrekturläsa varandras texter.
+\subsubsection{Dokumentstandard}
+När vi i projektets inledning använde Google docs så märkte vi att det var väldigt svårt att hålla sig till någon sorts dokumentstandard där man bl.a. använder samma typsnitt på rubriker och text. Även om alla projektmedlemmar har försökt att hålla sig till den standard vi satt upp så blev det ändå ibland att någon del av dokumenten blev annorlunda när vi redigerade samtidigt i dessa. Detta fungerade mycket bättre i Latex när vi skrev kandidatrapporten, latex hjälper verkligen användaren till att hela tiden hålla samma standard i dokumenten.
+
+\subsubsection{Revisionshantering}
+Vi har under projektet försökt att hålla isär på alla olika revisioner av dokument så att man senare kan gå tillbaka och se vilka ändringar som har gjorts från en iteration till en annan, detta har varit svårt att upprätthålla med Google docs då dessa dokument hela tiden sparas kontinuerligt och det inte finns något sätt att se historiken av vad som ändrats i ett dokument. Detta har gjort att när vi ändrat i dokument, behövt spara undan en kopia av den föregående revisionen vilket inte alltid har gjorts. I kandidatrapporten däremot har vi använt oss utav revisionshanteringsprogrammet git och på så sätt lätt kunnat se vilka ändringar som gjorts. Detta har även hjälpt oss så att vi smidigt har kunnat korrekturläsa varandras texter. 
+
+Användningen av git har dock inte helt varit en dans på rosor. Vi har ibland fått mergekonflikter \textbf{KÄLLA!} när vi laddat upp dokumenttext till github. Ett annat problem har varit att om en gruppmedlem lägger till en bild så måste denne komma ihåg att även ladda upp bilden till github, när man glömt detta så bidrar det till att andra gruppmedlemmar inte har kunnat kompilera sin kod efter att ha laddat ned senaste versionen. Just att se till att få filer till github är oftast inget problem när man använder webstorm eftersom detta program frågar om man vill lägga till filen till repositoryt.
+
+\subsubsection{Kommentering}
+En stor fördel med Google docs är att man kan lägga till kommenterar i texten så att andra kan se dessa, detta är en väldigt smidig funktion som gör att man lätt kan kommentera varandras texter. Sedan kan någon annan antingen lösa problemet eller svara på kommentaren. Denna funktionen finns som tidigare nämnts även i Word, men den stora skillnaden är att filerna först måste skickas mellan projektmedlemmarna först för att man ska kunna se dem. Det går i och för sig att lägga in kommentarer i Latex också men de blir ingenting man ser direkt i dokumentet utan man måste leta reda på dem i koden. Vi valde att lösa detta genom att man istället korrekturläser varandras texter på github och istället lägger in kommentarer där istället.
+
+
+Detta är svårare att göra med Latex, vi har löst det genom att man istället kommenterar varandras texter i github, nackdelen med detta är att det givetvis inte sker live utan att man måste ladda upp texten först.
+
 \subsection{Diskussion}
 \subsubsection{Resultat}
 \subsubsection{Metod}
