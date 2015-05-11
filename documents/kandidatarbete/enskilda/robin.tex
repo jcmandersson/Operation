@@ -14,6 +14,7 @@ Syftet med denna del av projektet är att flera sjuksköterskor samtidigt ska ku
 \subsubsection{Frågeställning}
 \begin{itemize}
 \item Går det att anpassa checklistan för en surfplatta medan den samtidigt innehåller information om var artiklar befinner sig samt hur många av varje artikel som behövs?
+
 \item Kommer Socket.IO vara tillräckligt snabbt för att flera personer ska kunna checka av artiklar samtidigt utan förvirring?
 \end{itemize}
 
@@ -44,18 +45,24 @@ När två klienter går in på en operation och en klient checkar en checkruta f
 
 Kunden har prövat att ha flera personer inne på samma plocklista samtidigt och checka av olika artiklar. Kunden tyckte att det fungerade bra och påpekade inte någon fördröjning. \\
 
-All information som krävs för plocklistorna fick plats utan att det blev för plottrigt.
+All information som krävs för plocklistorna fick plats med mycket mellanrum och upplevs därav inte som plottrigt.
 
 \subsection{Diskussion}
 \subsubsection{Resultat}
 Eftersom jag endast skickar data om vilken checkruta som ska checkas till de klienter som är inne på den operation som checkrutan blev checkad på så uppdateras checkningar snabbare än att göra den enkla lösningen att bara skicka datat till alla anslutna klienter. Att det tar nästan en sekund för en checkning att uppdateras på andra klienter för första gången är långsammare än förväntat. Men eftersom det endast gäller just första artikeln och att kunden har testat checkning med flera personer samtidig utan att märka några problem så verkar detta inte vara något praktiskt problem. Att en checkning sedan kan uppdateras nästan helt utan fördrdröjning var bättre än vad jag hade förväntat mig.
 
 \subsubsection{Metod}
-Den metod jag använde mig av fungerade bra, men jag tror att jag skulle kunnat komma fram till samma resultat snabbare genom att göra kortare funktioner och vettigare namn redan från början istället för att göra något som funkar så snabbt som möjligt och sedan refaktorisera. För nu blev det väldigt förvirrande kod från början och jag var tvungen att sitta och tänka på vad kod jag skrivit faktiskt gjorde. Men att skissa olika förslag på ett papper först tror jag var en väldigt bra idé, det gjorde att jag fick några möjliga lösningar och sedan kunde jag överväga fördelar och nackdelar med de olika lösningarna för att sedan välja den som verkade bäst.
+Den metod jag använde mig av fungerade bra, men jag tror att jag skulle kunnat komma fram till samma resultat snabbare genom att göra kortare funktioner och vettigare namn redan från början istället för att göra något som funkar så snabbt som möjligt och sedan refaktorisera. För nu blev det väldigt förvirrande kod från början och jag var tvungen att sitta och tänka på vad kod jag skrivit faktiskt gjorde. Men att skissa olika förslag på ett papper först tror jag var en väldigt bra idé, det gjorde att jag fick några möjliga lösningar och sedan kunde jag överväga fördelar och nackdelar med de olika lösningarna för att sedan välja den som verkade bäst. \\
+
+Att jag började med att implementera plocklistan och inte förän den var klar implementera förberedelselistan tror jag också var en bra idé. Jag kunde då till en början fokusera på en typ av checklista och se till att få den att fungera bra. Sedan när förberedelselistan skulle implementeras så kunde jag återanvända väldigt mycket av den kod som jag skrivit till plocklistan.
 \pagebreak
 
 \subsection{Slutsatser}
-Eftersom det fungerar bra med checkning av checklistor med hjälp av socket.io och all nödvändig information får plats utan att det upplevs som plottrigt så uppfylls syftet med denna del av projektet och min frågeställning har blivit besvarad.
+All nödvändig information i plocklistorna fick plats med bra marginal, därav anser jag att svaret på min första frågeställning är: Ja! \\
+
+Jag har lyckats implementera checkning av både plocklistor och förberedelselistor med ungefär samma kod. Checkningen uppdateras för alla klienter som är inne i samma operationsförberedelse. Det är nästan en sekunds fördröjning när en person checkar den första checkrutan i en checklista tills dess att de andra anslutna klienterna får den checkrutan checkad. Efter det att den första rutan är checkad så uppdateras checkningar utan märkbar fördröjning till de andra anslutna klienterna. Därav anser jag att svaret på min andra frågeställning är: Ja!\\
+
+Eftersom kunden har prövat checkningen av cheklistor med flera personer samtidigt och de tyckte att den fungerade bra som helhet så anser jag att syftet med denna del av projektet är upplevt.
 
 \subsection{Referenser}
 \vspace{-9mm}

@@ -45,7 +45,8 @@ med den här enskilda rapporten.
 
 \subsubsection{Travis CI}
 Travis CI är en webb-baserad tjänst för att köra automatiserade enhetstester och integrationstester
-på projekt som finns på GitHub. Travis CI är byggt på öppen källkod och är gratis att använda. 
+på projekt som finns på GitHub. Travis CI är gratis att använda och byggt på öppen källkod
+som är tillgänglig under en MIT-licens. 
 Tjänsten har stöd för många olika programmeringsspråk, men det som är 
 relevant för innehållet i den här rapporten
 är javascript med node.js. För att konfigurera Travis CI används filen .travis.yml 
@@ -67,7 +68,8 @@ MIT-licens.
 \subsubsection{Node.js}
 Node.js är en runtime environment för internetapplikationer. Det kan till exempel 
 användas för att skapa webbservrar.
-Node.js är baserat på öppen källkod och det är enkelt att lägga till nya 
+Node.js är baserat på öppen källkod som är tillgänglig under en MIT-licens. 
+Det är enkelt att lägga till nya 
 moduler för att anpassa det system man vill
 använda. För att lägga till nya moduler används node package manager (npm).
 
@@ -75,7 +77,8 @@ använda. För att lägga till nya moduler används node package manager (npm).
 Jasmine är ett ramverk för testning av Javascript. 
 Den node-modul som används är grunt-contrib-jasmine som använder task runnern Grunt 
 för att köra testfall som skrivits med Jasmine.
-Grunt kunfigureras med filen Gruntfile.js.
+Grunt kunfigureras med filen Gruntfile.js. Jasmine är baserat på öppen källkod
+som är tillgänglig under en MIT-licens.
 
 \subsection{Teori}
 Här beskrivs den teori som ligger till grund för rapporten och som visar
@@ -96,11 +99,36 @@ Kontinuerlig integration kan leda till att problemen identifieras tidigare i
 utvecklingsprocessen. Problemen blir då lättare att åtgärda. Automatiserade tester kan effektivisera 
 testprocessen och det finns många tillgängliga lösningar för att köra automatiserade
 tester \cite{Karlsson}.
-Några av de vanligaste är Travis CI, Codeship och Drone.
+Några av de vanligaste är Travis CI, Codeship och Drone.io.
 
 \subsection{Metod}
-Arbetet inleddes genom att Travis CI kopplades till projektets repository på GitHub.
-Kopplingen utfördes
+Här beskrivs den metod som användes för att 
+besvara frågeställningarna.\\
+
+Arbetet inleddes med att en teoriundersökning genomfördes
+angående vilka metoder, ramverk och tjänster som skulle kunna
+användas för att genomföra testerna i projektet.\\
+
+De ramverk för
+testning som undersöktes var Jasmine, Qunit och Mocha. Det
+ramverk som valdes för arbetet med projektet var Jasmine
+eftersom det är enkelt att konfigurera och har ett 
+tydligt och intuitivt syntax. Att Jasmine var enkelt och tydligt
+var viktigt eftersom det var många andra uppgifter förutom
+testning som skulle utföras i projektet och tiden för
+arbetet med projektet var begränsad till 300 timmar. Det var
+alltsåingen i projektgruppen som hade tid att lära sig 
+en komplicerad syntax i ett ramverk även om det varit
+mer kraftfullt.\\
+
+De tjänster för automatiserade tester som undersöktes var
+Travis CI, Codeship och Drone.io. Även här 
+så gjordes valet beroende på hur enkla tjänsterna var att
+konfigurera och använda. Den tjänst som verkade enklast
+och således valdes var Travis CI.\\
+
+Arbetet med Travis CI inleddes med att tjänsten kopplades till 
+projektets repository på GitHub. Kopplingen utfördes
 genom att administratören för repositoryn loggade in på travis-ci.org med 
 sitt GitHub-konto och aktiverade
 en webhook för repositoryn.\\
@@ -222,7 +250,8 @@ Testfallet testar funktionen splitOnce() så många gånger som möjligt
 under en sekund. Antalet gånger som funktionen hann köras skrivs
 sedan ut på skärmen med en console.log(). 
 Testfallet har körts flera gånger på olika datum och olika tidpunkter.
-Resultatet av testerna presenteras i en tabell under rubriken Resultat.
+Resultatet av testerna presenteras i \emph{Tabell E.5.1}
+under rubriken \emph{Resultat}.
 För att antalet ska
 få en konkret betydelse visas även funktionen splitOnce() nedan.
 
@@ -252,22 +281,15 @@ För att besvara den tredje frågeställningen om vilka typer av tester som är
 svåra att utföra med en webb-baserad tjänst så gicks koden igenom och 
 försök till att skriva testfall genomfördes
 med de olika delarna av koden. Resultatet av dessa tester redovisas under 
-avsnittet Resultat.
+avsnittet \emph{Resultat}.
 
 \subsection{Resultat}
 Här presenteras resultatet av rapporten.\\
 
-Ett sätt att använda en webb-baserad tjänst för att utföra kontinuerliga 
-automatiserade tester av en webb-applikation är att använda  
-Travis CI tillsammans med Jasmine på det sätt som beskrivits
-under avsnittet Metod. Observera att den webb-applikation som testades
-var skriven med javascript. Node.js användes på serversidan och 
-JQuery användes på klientsidan.i\\
-
 Resultatet av testerna som utfördes för att besvara den andra frågeställningen
-visas i tabellen nedan.\\
+visas i \emph{Tabell E.5.1}.\\
 
-\noindent\emph{Tabell ?.?}
+\noindent\emph{Tabell E.5.1}
 \begin{center}
   \begin{tabular}{| l | l | l | l |}
   \hline
@@ -290,7 +312,14 @@ visas i tabellen nedan.\\
   \end{tabular}
 \end{center}
 
-Medelvärdet är: TODO\\
+Medelvärdet avrundat till närmsta heltal är: 10556 tester per sekund.\\
+
+Standardavvikelsen avrundat till närmsta heltal är: 1710.\\
+
+Den tid det tar från det att koden pushas till GitHub till dess att 
+testkoden börjar köras är i genomsnitt ca en minut. Sedan tar det även ca 30
+sekunder för att alla node packages att installeras innan själva
+testfallen börjar köras.\\
 
 Undersökningen om vad om är svårt att testa ledde till följande resultat.
 Det visade sig att vanliga javascript-funktioner är lätta
@@ -324,26 +353,90 @@ JQuery-funktionen \emph{\$(document).ready()} eftersom koden då blir
 lättare att testa.\\
 
 JQuery-funktioner är i allmänhet svårare att testa än vanliga
-javascript-funktioner.
+javascript-funktioner. Anledningen är att JQuery-funktioner
+startas av och manipulerar HTML-objekt. Ett sätt att lösa detta är
+att använda en egen \textunderscore Specrunner.html. Då kan HTML-objekten i den
+filen användas för att testa JQuery-funktionerna.
 
 \subsection{Diskussion}
+Under den här rubriken diskuteras rapportens resultat
+och metod.
+
 \subsubsection{Resultat}
+Resultatet angående hur effektivt det var att använda Travis CI
+var inte särskilt förvånande. Att den lilla testfunktionen kunde köras
+ca 10000 gånger per sekund verkar rimligt. Det intressanta med resultatet
+var att det kan dröja ca en minut från att koden pushas till GitHub
+till dess att testfallen börjar köras och att effektiviteten
+kan variera med ca $\pm 30 \%$ vid olika tidpunkter.\\
+
+Det är även värt att påpeka att hur koden skrivs och struktureras
+i väldigt hög grad påverkar hur lätt den blir att testa. I alla fall
+med den metod som använts under arbetet med den här rapporten.
+
 \subsubsection{Metod}
+Den metod för testning som användes under arbetet med den här rapporten var
+medvetet väldigt enkel och inte särskilt kraftfull. Anledningen var
+att det var mycket annat som skulle göras i projektet och tiden var
+begränsad till 300 timmar. I efterhand visade det sig dock att det hade varit 
+möjligt att lägga lite mer tid på att använda en lite
+mer avancerad metod för att kunna testa en större
+del av koden i projektet. Nu användes den överblivna tiden istället till
+att göra fler manuella tester av koden.\\
+
+Det är även värt att nämna ett en nackdel med metoden som använts för tester
+under projektet
+är att om ett eventuellt fel upptäcks så är koden redan pushad till GitHub.
+Det hade varit bättre om koden kan testas innan den pushas till GitHub.
 
 \subsection{Slutsatser}
 Under den här rubriken presenteras svaren på
 frågeställningarna och framtida arbete som skulle
-kunna utfäras inom det område som behandlats av rapporten.
+kunna utföras inom det område som behandlats av rapporten.
 
 \subsubsection{Hur kan man använda webb-baserade tjänster för
 att utföra kontinuerliga automatiserade tester av webb-applikationer?}
+Ett sätt att använda en webb-baserad tjänst för att utföra kontinuerliga 
+automatiserade tester av en webb-applikation är att använda  
+Travis CI tillsammans med Jasmine på det sätt som beskrivits
+under avsnittet \emph{Metod}. Observera att den webb-applikation som testades
+var skriven med javascript. Node.js användes på serversidan och 
+JQuery användes på klientsidan.
 
 \subsubsection{Hur effektivt är det att använda en webb-baserad tjänst
-för autmatiserade tester? }
+för autmatiserade tester?}
+Om man använder ett antal testfall (med liknande komplexitet som
+det som användes i den här rapporten) i storleksordningen $60 \cdot 10^3$ eller
+mindre så kommer den största väntetiden vara tiden från att koden
+pushas till GitHub till det att den börjar köras på servern. Själva
+testfallen kommer att köras på mindre än en minut.
 
-\subsubsection{Vilka typer av tester är svåra att utföra med en sådan tjänst?}
+\subsubsection{Vilka typer av tester är svåra att utföra 
+med en sådan tjänst?}
+Kortfattat kan man säga att vanliga javascriptfunktioner är
+väldigt enkla att testai med de metoder, ramverk och tjänster som
+används under arbetet med den här rapporten. Men Jquery-funktioner och
+javascript-funktioner i Jquery-funktioner är svårare att
+testa. För en mer detaljerad beskrivning se rubriken \emph{Resultat}.
 
 \subsubsection{Framtida arbete inom området}
+Det finns mycket arbete som skulle kunna utföras inom området som behandlats
+av den här rapporten.\\
+
+Det vore intressant att undersöka hur stor andel av de totala felen
+som upptäcks med den typ av testning som har beskrivits i den här rapporten.
+Det kräver dock mer tid och resurser än vad som var tillgängligt under
+arbetet den här rapporten.\\
+
+Det vore även intressant att undersöka vilka nackdelar och fördelar det
+finns med webb-baserade testmiljöer jämfört med lokala
+testmiljöer.\\
+
+En annan undersökning som skulla kunna utföras är att jämföra
+flera olika ramverk för testning av javascript. Till exempel skulle
+man kunna jämföra Jasmine och Mocha. Man skulle öven kunna jömföra
+flera olika webb-baserade tjänster för automatiserade tester. Till
+exempel skulle man kunna jämföra Travis CI med Codeship och Drone.io.
 
 \subsection{Referenser}
 \vspace{-9mm}
