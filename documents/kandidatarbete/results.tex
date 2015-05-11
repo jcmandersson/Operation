@@ -109,7 +109,7 @@ En ikon för kommentarer dyker upp om någon valt att kommentera en artikel. En 
 En handbok innehåller information om en operationsförberedelse. All information i en handbok är uppdelad i olika rubriker. Dessa rubriker är i sin tur uppdelade i olika processer.
 I figur \ref{fig:handbok} ser man dels de olika processerna (Preoparea, anestesi, allmänt och operation) samt rubrikerna som hör till processen Anestesi (Övrigt, premedicinering, blodrekvisition och  antibiotika).
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{images/site/handbok.png}
   \caption{En handbok}
@@ -121,22 +121,22 @@ Man kan även se att handböckerna har stöd för bilder.
 \subsubsection{Sökfunktion}
 Ett krav är att det ska vara lätt att hitta en handbok.
 Därför kan man söka både på operationens namn men även på alternativa sökord (taggar), dessa är bra att ha då de medicinska termerna ibland kan vara svåra att komma ihåg.
+I figur \ref{fig:search} kan man se sökresultaten där namnet på operationen står i större storlek, och sökorden kursivt i mindre storlek.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
-  \includegraphics[width=0.9\textwidth]{images/site/search}
+  \includegraphics[width=0.5\textwidth]{images/site/search}
   \caption{Sökfunktionen}
   \label{fig:search}
 \end{figure}
 
-I figur \ref{fig:search} kan man se sökresultaten där namnet på operationen står i större storlek, och sökorden kursivt i mindre storlek.
 
 \subsubsection{Lista med handböcker}
 Applikationen innehåller en enkel lista med alla handböcker. En vanlig användare kan se handböcker som är publicerade medan en administratör också kan se handböcker i tillstånden utkast, redigering och granskning. %Note to self(Daniel):Kan en handbok vara i redigering?
 Listan går att sortera på valfri kolumn och kan även grupperas beroende på vilken specialitet handboken tillhör.
-Se figur \ref{fig:list}
+Se figur \ref{fig:list} för ett exempel.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.95\textwidth]{images/site/list}
   \caption{Lista med handböcker}
@@ -147,7 +147,7 @@ Se figur \ref{fig:list}
 Flödet för att skapa en handbok involverar flera steg och en handbok kan befinna sig i olika tillstånd.
 Se figur \ref{fig:model} för en övervy.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{images/model}
   \caption{Handböcker och deras olika tillstånd}
@@ -169,7 +169,7 @@ som beskrivs i handboken.
 \subsubsection{Redigering}
 I redigeringsvyn skapar man innehållet i en handbok. Det går bland annat lägga till synonymer, processteg med tillhörande information och artiklar från kartoteket. I figur \ref{fig:handboksredigering} visas ett exempel på hur denna redigering ser ut. 
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{images/site/handboksredigering}
   \caption{Redigering av plocklista för handbok}
@@ -183,7 +183,7 @@ I redigeringsvyn kan man utöver att redigera all information även sortera proc
 
 Under processteget engångsmaterial skapar man plocklistan. Ett exempel visas i figur \ref{fig:plocklistaredigering2}. Artiklar kan läggas till genom att söka på dem i kartoteket och antalet kan redigeras.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{images/site/plocklistaredigering2}
   \caption{Redigering av plocklista för handbok}
@@ -194,10 +194,10 @@ Under processteget engångsmaterial skapar man plocklistan. Ett exempel visas i 
 Innan en redigerad eller ny handbok publiceras måste den granskas av en annan person. Detta görs genom att trycka på knappen skicka till granskning längst ned i redigeringsvyn.
 
 \subsubsection{Operationsförberedelse}
-En operationsförberedelse är en instans av en handbok och har samma utseende som en handbok.
-Det som skiljer är att vissa av rubrikerna för förberedelser och artiklar i plocklistan går att checka av när de är förberedda eller plockade.
+En operationsförberedelse är en instans av en handbok vilket medför att att flera operationsförberedelser kan skapas från samma handbok. En operationsförberedelse ser nästan likadan ut som en handbok.
+Det som skiljer sig är att vissa av rubrikerna för förberedelser och artiklar i plocklistan går att checka av när de är förberedda eller plockade.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{images/site/op}
   \caption{Förberedelsevyn}
@@ -208,19 +208,18 @@ I figur \ref{fig:op} kan man se att rubrikerna går att checka av när de är kl
 %Rent tekniskt så kan man se en operationsförberedelse som en instans av en handbok. Flera operationsförberedelser kan alltså vara skapade från samma handbok.
 \subsubsection{Plocklista}
 En operationsförberedelse har en plocklista med artiklar som behövs till operationen. Den ligger under fliken engångsmaterial.
+Listan används för att hitta artiklar i lagret och för att checka av dem när de plockats. För att underlätta plockningen och göra den mer effektiv kan man välja att sortera artiklarna beroende på plockplats.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{images/site/plocklista}
   \caption{Plocklista}
   \label{fig:plocklista}
 \end{figure}
-
-Listan används för att hitta artiklar i lagret och för att checka av dem när de plockats. För att underlätta plockningen och göra den mer effektiv kan man välja att sortera artiklarna beroende på plockplats.
 I figur \ref{fig:plocklista} kan man även se att det finns stöd för att lägga en kommentar på en artikel.
 Det är vanligt att en artikel är slut eller utbytt och man kan då lägga en kommentar på varför man inte kunde hämta den artikeln och även hur man har löst det istället. Ett exempel på kommentar visas i figur \ref{fig:kommentar}.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{images/site/kommentar}
   \caption{Kommentar}
@@ -229,7 +228,7 @@ Det är vanligt att en artikel är slut eller utbytt och man kan då lägga en k
 
 Plocklistan kan under en pågående operation också redigeras. I figur \ref{fig:plocklistaredigering} visas hur man i redigeringsläget kan lägga till nya artiklar. Man kan i detta läge också ändra antalet för en specifik artikel eller välja att ta bort artiklar.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{images/site/plocklistaredigering}
   \caption{Redigering av plocklista för operationsförberedelse}
