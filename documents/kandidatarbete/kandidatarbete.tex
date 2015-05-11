@@ -120,13 +120,13 @@ Hela systemet ska ligga under en open-source licens så det kan användas fritt 
 Rapporten ska besvara följande frågeställningar.
 \begin{itemize}
 \item Hur kan ett system för operationsförberedelser realiseras så arbetet blir lättare och mer effektivt?
-\item Kan man använda plattformen keystone för att bygga detta system?
+\item Vilka strategier kan användas för effektiv utveckling i en grupp där kunskapsnivån varierar? 
 \end{itemize}
 
 \subsection{Avgränsningar}
 Den här rapporten beskriver hur ett system för operationsförberedelser på universitetssjukhuset i Linköping kan realiseras. Andra sjukhus kan ha andra rutiner vilket får konsekvensen att systemet inte fungerar där.
 
-Kunden ville också att ett lagersaldo i systemet skulle integreras och göra det möjligt att skanna av artiklar då dessa plockas. Vidare ville kunden även att systemet skulle ge möjlighet att välja mellan olika kliniker i regionen. Tiden känndes inte tillräckligt för att åstadkomma dessa implementeringar därför klargjordes det i ett tidigt skede att få bra grundläggande funktionalitet hade högre prioritet än dessa funktioner. En kompromiss gjordes där dessa krav fick prioritet 2 vilket innebar att kraven var önskvärda och skulle implementeras i mån av tid, eller prioritet 3 där kraven sågs som en framtida utbyggnad.
+Kunden ville också att ett lagersaldo i systemet skulle integreras och göra det möjligt att skanna av artiklar då dessa plockas. Vidare ville kunden även att systemet skulle ge möjlighet att välja mellan olika kliniker i regionen. Tiden kändes inte tillräckligt för att åstadkomma dessa implementeringar därför klargjordes det i ett tidigt skede att få bra grundläggande funktionalitet hade högre prioritet än dessa funktioner. En kompromiss gjordes där dessa krav fick prioritet 2 vilket innebar att kraven var önskvärda och skulle implementeras i mån av tid, eller prioritet 3 där kraven sågs som en framtida utbyggnad.
 
 Hur man ska jobba i projektgrupper med olika kunskapsnivåer tas fram genom undersökningar i projektgrupp 7 i kursen TDDC77 på Linköpings Universitet. Resultaten av denna undersökning kan kanske därför inte appliceras i situationer som inte kan likställas med situationen i projektgruppen.
 
@@ -165,30 +165,7 @@ Lättare defineras som att det går snabbare för nyanställda, och personer som
 
 Effektiviseringen av sjukvården och hur den ska ske är frågor som diskuterats flitigt de senaste åren. Region Östergötland har gjort tester för att kontrollera hur en operationsförberedelse kan effektiviseras. Ett av dessa tester gick ut på att undersöka hur lång tid det tar att plocka lagerartiklar då information om lagerplats finns lättillängligt gentemot hur lång tid det tar med nuvarande system. Resultatet av detta var att det tog 5 minuter för en person att plocka materialet då lagerplats fanns tillgängligt och 30 minuter för en sjuksköterska med lång erfarenhet med nuvarande system \cite{Elisabeth}. Detta visar att det finns stora tidsvinster i att bygga ett system som underlättar operationsförberedelser.
 
-\subsection{Säkerhetskopiering och reservsystem}
-Det ställs stora krav på att handböckerna alltid ska finnas tillgängliga då de ska användas på ett sjukhus där ett fel kan få stora konsekvenser. Detta innebär att ett reservsystem måste finnas till hands ifall systemet slutar fungera. Detta har lösts genom ett system där pdf-kopior av handböcker skapas. Handböckerna hamnar i en mapp-struktur där de sorteras på specialitet och operation. Kopian sparas med ett versionnummer, vilket gör att kopior av gamla versioner av operationer fortfarande finns kvar och kan skrivas ut. Var denna mapp-strukturen ska hamna bestäms i en konfigurationsfil.
-Kopiorna skapas genom att en funktion, som kollar igenom alla handböcker för att se om har uppdaterats sedan senaste kopieringen, körs med ett givet tidsintervall som ställs in i konfigurationsfilen. Om en operation har uppdaterats så körs en funktion som använder en modul, som heter wkhtmltopdf, för att kalla på ett program som också heter wkhtmltopdf. Wkhtmltopdf använder en osynlig webbläsare för att skapa en pdf-kopia. Hur kopiorna ser ut kan ses i figur \ref{fig:pdf-start} och figur \ref{fig:pdf-end}. Utseendet ändras genom att speciell css för utskrift finns och wkhtmltopdf körs med utskrift som mediatyp. 
-Det finns också ett REST-api för att skapa pdf-kopior. Detta används dock inte någonstans. Men en vidareutveckling på detta vore att implementera att en ny pdf-kopia skapas så fort en operation har uppdaterats. 
 
-\textbf{KOMMENTAR FRÅN RAPP}: Jag kommenterade bort denna bild
-därför att den inte finns i \textit{images/}, vilket
-ledde till att det inte gick att kompilera \textit{kandidatarbete.tex}.
-(Samma för \textit{pdf-end.png} nedan.) Kanske glömde du \textit{git add .}?
-%\begin{figure}
-%  \centering
-%  \includegraphics[width=0.9\textwidth]{images/pdf-start.png}
-%  \caption{Början på en pdf-kopia.}
-%  \label{fig:pdf-start}
-%\end{figure}
-
-%\begin{figure}
-%  \centering
-%  \includegraphics[width=0.9\textwidth]{images/pdf-end.png}
-%  \caption{Plocklista i en pdf-kopia.}
-%  \label{fig:pdf-end}
-%\end{figure}
-
-Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att det är viktigt att databasen säkerhetskopieras med jämna mellanrum. Med ett givet tidsintervall som går att ställa in i konfigurationsfilen så körs en funktion som använde en modul som heter mongo-utils för att kalla på mongodump som tar en kopia på databasen och lägger den i en mapp med dagens datum. 
 
  
 \section{Metod}
@@ -201,8 +178,10 @@ Denna del beskriver hur kravframställningen gått till i detta projekt. Först 
 
 \subsubsection{Förstudie}
 Den största delen utav analysarbetet skedde under förstudien. Här identifierades de olika intressenterna och en kravspecifikation utarbetades. Våran första kontakt med projektet var en projektbeskrivning där kunden formulerade sina mål och visioner av projektet. Några vikta krav gavs också såsom att prototypdesign skulle genomföras i samarbete med kunden. Ett första möte utav fyra under förstudien gav sedan mer information och vi började våran kravinsamling. Vi kunde konstatera att vi hade två olika intressenter att arbeta med. Dels sjuksköterskorna som är användare av systemet och dels CMIT, Centrum för medicinsk teknik och IT, som ansvarar för sjukhusets IT-miljöer. För att förstå användarnas behov hölls ett studiebesök där vi fick en visning av nuvarande system och hur det används. Detta var nödvändigt för att verkligen förstå vad det var som behövde göras och vad som kunde förbättras. Från CMIT:s sida hölls mer tekniska möten där teknikval diskuterades. Här var det viktigt att ta reda på vilka begränsningar som fanns och vilka val som passade våra och deras erfarenheter.
+
 \subsubsection{Kravspecifikation i Google docs}
 Kravspecifikationen skrevs i Google docs. Detta valdes eftersom kraven utarbetades tillsammans med kund. Ett gemensamt redigerbart dokument gav en möjlighet för oss att arbeta på olika platser under kravframställningen vilket var effektivt. En kommentarsfunktion gav oss möjligheten att kommentera krav och föreslå förbättringar. Under interna möten och kundmöten var den gemensamma redigeringen också till nytta då kravformuleringar snabbt kunde genomföras.
+
 \subsubsection{Kravrepresentation}
 Kraven gavs en prioritetsordning för att kunna urskilja de mest väsentliga kraven. Detta kändes nödvändigt då vi var begränsade av en tidsbudget. En prioritering av kraven gav utrymme för vidareutveckling i mån av tid. Krav med prioritet 1 var att betrakta som grundkrav som skulle genomföras för att projektet skulle ses som godkänt. Krav med prioritet 2 var att betrakta som önskvärda och som skulle genomföras om då grundkraven var genomförda. Krav med prioritet 3 var krav som fångats upp men som skulle ses som framtida utbyggnad. 
 %Koppla till nån litteratur/standard.

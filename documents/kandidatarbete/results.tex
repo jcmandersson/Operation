@@ -1,7 +1,6 @@
 \section{Resultat}
 Denna del av dokumentet presenterar resultatet av vårt arbete.
-Här kommer vi diskutera både hur systemet ser ut och används, samt hur
-det är uppbyggt rent tekniskt.
+Här kommer beskrivs både hur systemet ser ut och används, samt hur det är uppbyggt rent tekniskt.
 
 \subsection{Översikt av systemet}
 Det finns två huvuddelar i systemet. Handböckerna och kartoteket.
@@ -92,11 +91,26 @@ För att uppnå detta så kommer varje enskild sida ha minst en skriptfil, en cs
 På vissa sidor är det lätt att det blir stora skript och då bör man dela upp skriptfilen.
 Den bästa lösningen är att abstrahera delar av skriptet till egna biblioteksfiler som man kan ladda in och använda.
 
-\subsubsection{Säkerhetskopiering}
-Ett system för automatisk säkerhetskopiering i form av en PDF-fil för varje handbok kommer att finnas.
-Varje gång en handbok ändras kommer PDF-filen att uppdateras för att matcha handboken.
-PDF-filen ska vara utformad så att operationerna kan förberedas utan hjälp från hemsidan.
+\subsubsection{Säkerhetskopiering och reservsystem}
+Det ställs stora krav på att handböckerna alltid ska finnas tillgängliga då de ska användas på ett sjukhus där ett fel kan få stora konsekvenser. Detta innebär att ett reservsystem måste finnas till hands ifall systemet slutar fungera. Detta har lösts genom ett system där pdf-kopior av handböcker skapas. Handböckerna hamnar i en mapp-struktur där de sorteras på specialitet och operation. Kopian sparas med ett versionnummer, vilket gör att kopior av gamla versioner av operationer fortfarande finns kvar och kan skrivas ut. Var denna mapp-strukturen ska hamna bestäms i en konfigurationsfil.
+Kopiorna skapas genom att en funktion, som kollar igenom alla handböcker för att se om har uppdaterats sedan senaste kopieringen, körs med ett givet tidsintervall som ställs in i konfigurationsfilen. Om en operation har uppdaterats så körs en funktion som använder en modul, som heter wkhtmltopdf, för att kalla på ett program som också heter wkhtmltopdf. Wkhtmltopdf använder en osynlig webbläsare för att skapa en pdf-kopia. Hur kopiorna ser ut kan ses i figur \ref{fig:pdf-start} och figur \ref{fig:pdf-end}. Utseendet ändras genom att speciell css för utskrift finns och wkhtmltopdf körs med utskrift som mediatyp. 
+Det finns också ett REST-api för att skapa pdf-kopior. Detta används dock inte någonstans. Men en vidareutveckling på detta vore att implementera att en ny pdf-kopia skapas så fort en operation har uppdaterats. 
 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/pdf-start.png}
+  \caption{Början på en pdf-kopia.}
+  \label{fig:pdf-start}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/pdf-end.png}
+  \caption{Plocklista i en pdf-kopia.}
+  \label{fig:pdf-end}
+\end{figure}
+
+Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att det är viktigt att databasen säkerhetskopieras med jämna mellanrum. Med ett givet tidsintervall som går att ställa in i konfigurationsfilen så körs en funktion som använde en modul som heter mongo-utils för att kalla på mongodump som tar en kopia på databasen och lägger den i en mapp med dagens datum. 
 \subsection{Mekanismer}
 Här beskrivs syftet och funktionalitet hos olika delar av produkten.
 
