@@ -43,22 +43,23 @@
   {\Large Redaktör: Pål Kastman}
 \end{center}
 \begin{center}
-  {\Large Datum: 2015-04-20}
+  {\Large Datum: 2015-05-11}
 \end{center}
 \begin{center}
-  {\Large \textbf{Version 0.2}}
+  {\Large \textbf{Version 0.3}}
 \end{center}
 \end{titlepage}
 \newpage
 \begin{flushleft}
   {\Large \textbf{Dokumenthistorik}}\\[0.5ex]
   \begin{center}
+  \vspace{3mm}
     \begin{tabular}{ | l | l | p{5cm} | l |}
     \hline
     \textbf{Datum} & \textbf{Version} & \textbf{Utförda ändringar} & \textbf{Utförda av} \\ \hline
     2015-03-13 & 0.1 & Första utkast av gemensam och individuella rapporter & Pål Kastman \\ \hline
     2015-04-20 & 0.2 & Andra utkastet av gemensam och individuella rapporter & Alla \\ \hline
-    2015-05-13 & 0.3 & Tredje utkastet av gemensam och individuella rapporter & Alla \\ \hline
+    2015-05-11 & 0.3 & Tredje utkastet av gemensam och individuella rapporter & Alla \\ \hline
     \end{tabular}
   \end{center}
 \end{flushleft}
@@ -128,7 +129,7 @@ Den här rapporten beskriver hur ett system för operationsförberedelser på un
 
 Kunden ville också att ett lagersaldo i systemet skulle integreras och göra det möjligt att skanna av artiklar då dessa plockas. Vidare ville kunden även att systemet skulle ge möjlighet att välja mellan olika kliniker i regionen. Tiden kändes inte tillräckligt för att åstadkomma dessa implementeringar därför klargjordes det i ett tidigt skede att få bra grundläggande funktionalitet hade högre prioritet än dessa funktioner. En kompromiss gjordes där dessa krav fick prioritet 2 vilket innebar att kraven var önskvärda och skulle implementeras i mån av tid, eller prioritet 3 där kraven sågs som en framtida utbyggnad.
 
-Hur man ska jobba i projektgrupper med olika kunskapsnivåer tas fram genom undersökningar i projektgrupp 7 i kursen TDDC77 på Linköpings Universitet. Resultaten av denna undersökning kan kanske därför inte appliceras i situationer som inte kan likställas med situationen i projektgruppen.
+Hur man ska jobba i projektgrupper med olika kunskapsnivåer tas fram genom undersökningar i projektgrupp 7 i kursen TDDD77 på Linköpings Universitet. Resultaten av denna undersökning kan kanske därför inte appliceras i situationer som inte kan likställas med situationen i projektgruppen.
 
 \section{Bakgrund}
 Studenterna som studerar kursen TDDD77 fick i januari 2015 ett uppdrag att utföra ett kandidatarbete. Först fick gruppen rangordna flera projektdirektiv för att sedan få ett av dessa uppdrag tilldelat sig. Grupp 7 fick då projektet operationsförberedelser som skickades in av Region Östergötland.
@@ -169,6 +170,10 @@ Effektiviseringen av sjukvården och hur den ska ske är frågor som diskuterats
 
  
 \section{Metod}
+%\subsubsection{Kundmöten}
+%I inledningen hölls totalt fyra möten, det första var ett längre möte, där endast teamledaren, kundansvarige och arkitekten närvarade från projektgruppen. Detta möte hölls främst som en introduktion men var även ett tillfälle för kunden att visa upp sitt nuvarande system och få framföra ideér om hur system skulle kunna se ut och fungera istället. Sedan gjordes ett studiebesök hos kunden där alla gruppmedlemmar deltog. Man fick se hur en sjuksköterska förberedde inför en operation och även se deras nuvarande system i bruk. Under det tredje mötet så utformade man kravspecifikationen som man sedan spikade under det fjärde mötet.Efter varje iteration hölls ett möte på plats hos kunden för att diskutera hur arbetet fortskred, detta var även ett perfekt tillfälle att ta upp saker man var osäker kring, men var även bra för båda parter att föreslå ändringar i systemet. Mötet efter iteration två bestämdes att det skulle sättas upp en server där kunden skulle kunna testköra systemet, det bestämdes också att några från projektgruppen skulle närvara vid dessa tester. Detta gjordes två gånger där arkitekt och kundansvarige medverkade vid första tillfället, kvalitetsansvarige och dokumentansvarige medverkade vid det sista tillfället
+
+
 I detta avsnitt beskrivs det hur arbetet med projektet har gått till.
 \subsection{Kravinsamling}
 
@@ -201,29 +206,35 @@ Vid varje iterationsslut hölls ett möte med kund där vi demonstrerade nya fea
 Projektets utveckling har skett i fyra iterationer där den första iteration var en förstudie och i de avslutande tre iterationerna har utvecklingen av produkten skett. Nedan beskrivs vilka hjälpmedel som har använts för att underlätta arbetet.
 		
 \subsubsection{SCRUM}
-Projektet har utvecklats iterativt med en utvecklingsmetodik som påminner mycket om SCRUM. Aktiviteterna i projektet har visats på en gemensam SCRUM-board med hjälp av webbsidan Trello. 
+Projektet har utvecklats iterativt med en utvecklingsmetodik som påminner mycket om SCRUM. Aktiviteterna i projektet har visats på en gemensam SCRUM-board med hjälp av webbsidan Trello (se figur \ref{fig:trello}). 
 
 \begin{figure}[htbp]
-        \centering
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{trello.png}
-                \label{fig:gull}
-        \end{subfigure}%
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{trello2.png}
-                \label{fig:tiger}
-        \end{subfigure}
-        \caption{Trello, t.v. översikt över alla boards, t.h. boarden info}\label{fig:trello}
+	\begin{center}
+	\includegraphics[scale=0.4]{trello.png}
+	\caption{Översiktsvy över alla Trello-boards}
+	\label{fig:trello}
+	\end{center}
 \end{figure}
 
-Boarden hade kategorierna TODO, DOING och DONE. När en medlem valt en aktivitet så märktes aktiviteten med medlemmens namn och flyttades till den aktuella kategorin. Varje vecka har gruppen haft ett kort SCRUM-möte på 15 minuter. På mötet har varje gruppmedlem berättat vad som har gjorts den föregående veckan och vad som ska göras nästa vecka. SCRUM-mötet har oftast utförts i samband med varje veckas handledarmöte.
+
+\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.5]{trello2.png}
+	\caption{Boarden info}
+	\label{fig:trello2}
+	\end{center}
+\end{figure}
+
+
+Boarden hade kategorierna TODO, DOING och DONE enligt figur \ref{fig:trello2}. När en medlem valt en aktivitet så märktes aktiviteten med medlemmens namn och flyttades till den aktuella kategorin. Varje vecka har gruppen haft ett kort SCRUM-möte på 15 minuter. På mötet har varje gruppmedlem berättat vad som har gjorts den föregående veckan och vad som ska göras nästa vecka. SCRUM-mötet har oftast utförts i samband med varje veckas handledarmöte.
 
 \subsubsection{Alpha state cards}
 Ett system med alpha state cards har använts för att gruppen skulle kunna ha koll på hur långt projektet har fortskridit. Korten har även använts till att identifiera aspekter av projektet som kan förbättras och som gruppen behöver arbeta mer med. De aspekter av projektet som kunnat förbättras har använts som mål för kommande iterationer. De olika korten har uppdaterats kontinuerligt under projektets gång.
 
 \subsubsection{Sammarbete i gruppen}
-Under förstudien så diskuterades det hur utvecklingen skulle ske på bästa på sätt för gruppen. Förslagen som diskuterades var, utveckling i mindre grupper, separat arbete var för sig eller att alla gruppmedlemmar skulle sitta tillsammans och utveckla. Då alla i gruppen inte hade utvecklat någon webbaplikation tidigare så togs beslutet att under förstudien paralellt inleda en intern utbildning inom gruppen i form av så kallade kodstugor, dessa gick ut på att alla skulle sitta tillsammans och lära sig de olika verktygen så som t.ex. javascript och css och att de mindre erfarna skulle ha en möjlighet att få hjälp av de mer erfarna.
+Under utvecklingsfasen delade vi till en början upp oss i två grupper som fokuserade på front-end och back-end. När vi sedan kom längre fram i projektet så övergick de flesta av oss till att endast arbete på front-end.
 
+%Under förstudien så diskuterades det hur utvecklingen skulle ske på bästa på sätt för gruppen. Förslagen som diskuterades var, utveckling i mindre grupper, separat arbete var för sig eller att alla gruppmedlemmar skulle sitta tillsammans och utveckla. Då alla i gruppen inte hade utvecklat någon webbaplikation tidigare så togs beslutet att under förstudien paralellt inleda en intern utbildning inom gruppen i form av så kallade kodstugor, dessa gick ut på att alla skulle sitta tillsammans och lära sig de olika verktygen så som t.ex. Javascript och CSS och att de mindre erfarna skulle ha en möjlighet att få hjälp av de mer erfarna.
 
 \clearpage
 \input{results.tex}
@@ -233,9 +244,54 @@ Under förstudien så diskuterades det hur utvecklingen skulle ske på bästa p�
 
 \subsection{Resultat}
 
+\subsubsection{Back-end}
+Vi valde att skriva back-end i javascript dels för att minska inlärningskurvan eftersom det är samma språk som används på front-end och dels för att realtidskommunikation mellan klienterna underlättas. Node.js valdes som plattform på back-end eftersom den har en väldigt enkel pakethanterare som underlättar när flera personer arbetar i ett projekt eftersom om en person lägger till en modul till projektet så behöver inte alla andra personer i projektet installera den modulen manuellt utan behöver endast köra ett enkelt kommando så installeras alla moduler som är tillagda till projektet.
+
+KeystoneJS underlättade utvecklingen väldigt mycket till en början. Några punkter som beskriver vad KeystoneJS hjälper till med följer:
+
+  \begin{itemize}
+    \item Hjälper till att abstrahera systemet.
+    \item Skapar automatiskt en administreringssida för varje databasmodell.
+      Huvuddelen av administeringen har dock bytts ut då den automatgenererade kan vara något begränsad.
+    \item Har ett inbyggt användarsystem som är lätt att modifiera och byta ut.
+    \item Sköter all kommunikation över http-protokollet till klienterna, dvs. gör hemsidan åtkomlig.
+    \item Har inbyggt stöd för templatespråk som exempelvis Handlebars\footnote{TODO: bättre referens. http://handlebarsjs.com/ (2015-04-18)} och Less\footnote{TODO: Bättre referens. http://lesscss.org/ (2015-04-18)}.
+  \end{itemize}
+  
+\subsubsection{Front-end}
+Anledningen till att vi använder oss av bootstrap på front-end är för att bootstrap har många färdiga CSS-klasser så man behöver inte skriva lika mycket CSS själv.
+De klasser som finns är lätta att använda för att skapa responsiva hemsidor.
+All kod är dessutom testad för att fungera på olika webbläsare vilket kan vara krångligt att lösa om man skriver all CSS från grunden.
+
+JQuery används för att lättare hämta ut ett element på hemsidan och ändra data i det.
+Det finns även många bra jQuery-bibliotek att hämta som gör att man slipper “uppfinna hjulet” i många fall.
+
+Fördelen med LESS är bland annat att man kan använda variabler och enkla funktioner i stilmallarna.
+Exempelvis kan variablerna användas för att spara de olika färgerna på hemsidan för att enkelt kunna byta ut dem.
+
+\subsubsection{Struktur}
+En nackdel med jQuery gentemot andra bibliotek som exempelvis angular\footnote{TODO: Referens.} är att det lätt blir spaghettikod\footnote{TODO: Måste defineras?}.
+För att strukturera så bra som möjligt är det viktigt att koden är bra uppdelad.
+Uppdelningen vi använder oss av fungerar ganska bra, men koden är ändå lite rörig.
+
+\subsubsection{Säkerhetskopiering och reservsystem}
+Det som kan göras för att få säkerhetskopieringen bättre är att implementera att en ny pdf-kopia skapas så fort en operationsförberedelse har uppdaterats.
+
+Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att det är viktigt att databasen säkerhetskopieras med jämna mellanrum. Men det tar en del datorkraft att göra en säkerhetskopiering. Därför är det bra att det går att ställa in tidsintervallet som bestämmer hur ofta säkerhetskopiering av databasen ska ske.
+
+\subsubsection{Översiktssida}
+Överssiktssidan är tänkt att den ska kunna vara framme på en monitor och inte kräva någon interaktion för att se resultat för olika operationsförberedelser. Det är därför viktigt att den sidan använder realtidskommunikation, det är därför allt uppdateras vi Socket.IO till översiktssidan.
+
+  
 \subsection{Metod}
+
+\subsubsection{Kravinsamling}
 Metoden som användes för kravframställning fokuserade på att i förstudien samla in så mycket krav som möjligt genom möten, intervjuer och obeservationer. Att arbeta fram kraven tillsammans med kund kändes nödvändigt för att få en fullständig bild. En sak som vi inte prioriterades men som kanske hade kunnat hjälpt arbetet skulle varit att lägga större fokus på olika roller. Slutsystemet har två roller vilket är admins och icke-admins. En avvägning gjordes där dessa två enkla roller valdes. Fördelen var att att vi kunde lägga fokus på att snabbare kunna testa andra delar av systemet med högre prioritet. Nackdelen var att dessa funktionaliteter inte hann testas och under förstudien ledde till en viss förivirring. %%blablabla
 Att använda use-cases eller user-stoires diskuterades också under förstudien. Detta bortprioriterades då vi ansåg att de var överflödiga. Denna avvägning ledde till att det var lite svårare att kommunicera kraven. 
+
+\subsubsection{Utvecklingen}
+\textbf{DET HÄR KÄNNS SOM ETT RESULTAT?}
+Utvecklingen i SCRUM-form har fungerat bra, dock har utvecklingen som beskriven i metod inte varit i rent SCRUM-format utan har modifierats för att bättre passa gruppen. Ett möte med handledare har hållits en gång i veckan där handledaren har haft möjlighet att ta upp saker som denne tyckt har behövts, sedan har gruppen hållit ett kort SCRUM-möte där man fått förklara vad man gjort förra veckan och vad man planerat att göra kommande vecka. Under mötets gång har man noterat om det är någonting som har behövt diskuteras vidare och detta har då noterats, varpå gruppen har gått igenom dessa frågor efteråt. Detta har fungerat väldigt bra då man på detta sättet inte har fått några större avbrott och alla hela tiden kunna hålla fokus. Efter SCRUM-mötena så har ordet varit fritt och alla har haft möjligheten att komma med synpunkter eller åsikter. Samarbetet i gruppen har fungerat väldigt bra, kodstugorna som gruppen höll under förstudien var alla nöjda med, de som var mindre erfarna med webbprogrammering kände att de fick all den hjälp de behövde när de körde fast i sitt arbete och därför kändes det naturligt för hela gruppen att fortsätta med dessa även under utvecklingsfasen.
 
 \subsection{Arbetet i ett vidare sammanhang}
 
