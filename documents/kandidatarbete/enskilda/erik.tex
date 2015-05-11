@@ -1,7 +1,7 @@
 \section{Automatiserade tester av webbapplikationer. - Erik Malmberg}
 \subsection{Inledning}
 Den här enskilda utredningen är en del av kandidatrapporten i kursen TDDD77 vid Linköpings universitet.
-Utredningen behandlar en del av utvecklingen av ett webb-baserat system för att underlätta förberedelser
+Utredningen behandlar en del av utvecklingen av ett webbaserat system för att underlätta förberedelser
 inför operationer på sjukhusen i Östergötland. Systemet utvecklades på uppdrag av Region Östergötland.
 
 \subsubsection{Syfte}
@@ -38,14 +38,14 @@ Travis CI kan användas för kontinuerlig
 integration och automatiserde tester. De testfall som kommer användas 
 kommer uteslutande att vara skrivna med ramverket Jasmine. Den webbapplikation
 som kommer att testas kommer att vara skriven med programmeringsspråket
-Javascript och använda Javascriptbiblioteken Node.js och JQuery.
+Javascript och använda Javascriptbiblioteken Node.js och jQuery.
 
 \subsection{Bakgrund}
 Här beskrivs de tjänster, språk och bibliotek som använts under arbetet
 med den här enskilda rapporten.
 
 \subsubsection{Travis CI}
-Travis CI är en webb-baserad tjänst för att köra automatiserade enhetstester och integrationstester
+Travis CI är en webbaserad tjänst för att köra automatiserade enhetstester och integrationstester
 på projekt som finns på GitHub. Travis CI är gratis att använda och byggt på öppen källkod
 som är tillgänglig under en MIT-licens. 
 Tjänsten har stöd för många olika programmeringsspråk, men det som är 
@@ -131,7 +131,7 @@ och således valdes var Travis CI.\\
 Arbetet med Travis CI inleddes med att tjänsten kopplades till 
 projektets repository på GitHub. Kopplingen utfördes
 genom att administratören för repositoryn loggade in på travis-ci.org med 
-sitt GitHub-konto och aktiverade
+sitt GitHubkonto och aktiverade
 en webhook för repositoryn.\\
 
 Inställningarna för Travis CI konfigurerades med filen .travis.yml i projektets
@@ -323,8 +323,8 @@ sekunder för att alla node-moduler att installeras innan själva
 testfallen börjar köras.\\
 
 Undersökningen om vad om är svårt att testa ledde till följande resultat.
-Det visade sig att vanliga Javascript-funktioner är lätta
-att testa så länge de ligger utanför JQuery-funktionen
+Det visade sig att vanliga Javascriptfunktioner är lätta
+att testa så länge de ligger utanför jQueryfunktionen
 \emph{\$(document).ready()}. Det kan illustreras med några
 rader kod.
 
@@ -349,15 +349,15 @@ $(document).ready(function() {
 
 \end{lstlisting}
 
-Det är alltså rekomenderat att skriva alla Javascript-funktioner utanför 
-JQuery-funktionen \emph{\$(document).ready()} eftersom koden då blir 
+Det är alltså rekomenderat att skriva alla Javascriptfunktioner utanför 
+jQueryfunktionen \emph{\$(document).ready()} eftersom koden då blir 
 lättare att testa.\\
 
-JQuery-funktioner är i allmänhet svårare att testa än vanliga
-Javascript-funktioner. Anledningen är att JQuery-funktioner
+JQueryfunktioner är i allmänhet svårare att testa än vanliga
+Javascriptfunktioner. Anledningen är att jQueryfunktioner
 startas av och manipulerar HTML-objekt. Ett sätt att lösa detta är
 att använda en egen \textunderscore Specrunner.html. Då kan HTML-objekten i den
-filen användas för att testa JQuery-funktionerna.
+filen användas för att testa jQueryfunktionerna.
 
 \subsection{Diskussion}
 Under den här rubriken diskuteras rapportens resultat
@@ -397,12 +397,12 @@ kunna utföras inom det område som behandlats i rapporten.
 
 \subsubsection{Hur kan man använda webbaserade tjänster för
 att utföra kontinuerliga automatiserade tester av webbapplikationer?}
-Ett sätt att använda en webb-baserad tjänst för att utföra kontinuerliga 
+Ett sätt att använda en webbaserad tjänst för att utföra kontinuerliga 
 automatiserade tester av en webbapplikation är att använda  
 Travis CI tillsammans med Jasmine på det sätt som beskrivits
 under avsnittet \emph{Metod}. Observera att den webbapplikation som testades
 var skriven med Javascript. Node.js användes på serversidan och 
-JQuery användes på klientsidan.
+jQuery användes på klientsidan.
 
 \subsubsection{Hur effektivt är det att använda en webbaserad tjänst
 för automatiserade tester?}
@@ -418,10 +418,10 @@ testfallen kommer att köras på mindre än en minut.
 
 \subsubsection{Vilka typer av tester är svåra att utföra 
 med en sådan tjänst?}
-Kortfattat kan man säga att vanliga Javascript-funktioner är
+Kortfattat kan man säga att vanliga Javascriptfunktioner är
 väldigt enkla att testa med de metoder, ramverk och tjänster som
-använts under arbetet med den här rapporten. Men Jquery-funktioner och
-Javascript-funktioner i Jquery-funktioner är svårare att
+använts under arbetet med den här rapporten. Men Jqueryfunktioner och
+Javascriptfunktioner i Jqueryfunktioner är svårare att
 testa. För en mer detaljerad beskrivning se rubriken \emph{Resultat}.
 
 \subsubsection{Framtida arbete inom området}

@@ -5,17 +5,16 @@ Denna del i rapporten behandlar vad som ska utredas och varför.
 Syftet med denna enskilda utredningen är att underlätta för fortsatt utveckling av webbapplikationen som projektgruppen har skapat. Alla delar i applikationen får inte användas i Region Östergötlands intranät, vilket leder till att en del måste bytas ut.
 \subsubsection{Frågeställning}
 \begin{itemize}
-\item Vad används Keystone till i applikationen?
-\item Vad behövs för att ersätta Keystone?
+\item Hur kan man ersätta Keystone då varken administratörgränsnittet eller databaskopplingen används?
 \item Vad behöver ändras för att byta ut databasen från MongoDB till MSSQL?
 \item Vilka moduler eller bibliotek i applikationen kräver en licens för kommersiell användning?
 
 \end{itemize}
 \subsubsection{Avgränsningar}
-Denna rapport gäller endast för vidareutveckling för användning av Region Östergötland. Andra användare kan ha andra krav på applikationen som leder till att denna rapport är ofullständig eller felaktig. 
+Denna rapport gäller endast för vidareutveckling för användning av Region Östergötland. Andra användare kan ha andra krav på applikationen som leder till att denna rapport är ofullständig eller felaktig. Rapporten förutsätter också vissa kunskaper inom Node.js så som att komma igång med en enkel applikation. Den behandlar inte heller alla delar av ersättning av Keystone utan fokuserar främst på hur routern-delen och databaskopplingen ska ersättas.  
 \subsection{Bakgrund}
 Region Östergötland ska ta över arbetet med utvecklingen av webbapplikationen efter att projektgruppen slutfört sitt arbete. För att applikationen ska kunna tas i bruk på riktigt så måste databasen bytas ut till MSSQL då Region Östergötland inte tillåter MongoDB på sina servrar. Då utvecklingen av applikationen har fortgått har Keystone fått en mindre och mindre roll i applikationen. En av Keystones största fördelar är dess enkla och smidiga innehållshanterare. Detta har varit till stor nytta för att komma igång med projektet och få snabba resultat för de gruppmedlemmar som inte har hållt på med webbprogrammering innan. Men när applikationen är färdigutvecklad så används inte detta systemet alls längre och då databsen ska bytas till en annan typ försvinner också en annan stor del av Keystone, vilket var den enkla integrationen med MongoDB genom Mongoose. Detta ledde till tankar om att Keystone kanske skulle kunna bytas ut mot egenskriven kod eller mindre och mer lättförståliga moduler utan jättemycket arbete.
-\subsection{Teori}
+
 En beskrivning och förklaring för många av modulerna som kommer tas upp finns att läsa i avsnitt 3.
 \subsubsection{MSSQL}
 MSSQL är en databashanterare från Microsoft som använder det domänspecifika språket SQL för att extrahera data.
@@ -28,6 +27,14 @@ Pakethanteraren npm används av Node.js för att hantera open-source paket. Det 
 \subsubsection{Edge.js}
 Edge.js är en modul, som är skapad av Tomasz Janczuk, som bland annat gör det möjligt att köra .NET kod direkt i samma process som Node.js. 
 
+\subsubsection{edge-sql}
+Edge-sql är en modul som gör det möjligt att exekvera T-SQL kommandon direkt i Node.js med hjälp av Edge.js. Den använder asynkront ADO.NET, som är ett bibliotek från Microsoft för att få tillgång till data och dataservice, för att få tillgång till MS SQL. 
+
+\subsection{Teori}
+För en oerfaren utvecklare kan ett projekt från början se mycket svårt ut att genomföra. Då kan färdiga ramverk göra att utvecklingen går snabbare och lättare. Men efter att utvecklaren har jobbat ett tag och fått nya kunskaper kan denne inse att projektet kanske inte alls är så svårt och ett ramverk bara har gjort applikationen mer komplicerad och svårt att förstå. Då kan det vara intressant att se hur applikationen skulle kunna skrivas om utan dessa ramverk. 
+
+MongoDB är ett relativt nytt databas-system som klassifieras som en NoSQL-databas. MongoDB används av en hel del företag \cite{mongoComp}, men de flesta använder fortfarande någon typ av SQL-databas \cite{databaseStats}. Att ha flera olika typer av databaser är uteslutet för många företag då det leder till större underhållskostnader och kräver kunskap om flera system. Därför är det intressant att se hur MongoDB kan bytas ut mot en SQL-databas, i detta fallet MSSQL.
+
 
 \subsection{Metod}
 För att få en bättre förståelse för Keystones roll i applikationen så läses först och främst Keystones tekniska dokumentation. En ny installation av Keystone görs för att kunna jämföra med projektkoden och få fram vilka komponenter som kommer från Keystone. Keystone är också beroende av många moduler. Dessa moduler utgör en stor del av den delen av Keystone som används i applikationen, t.ex. för routing. Modulerna kommer utvärderas för att se vilka som fortfarande skulle bidra till en version av applikationen utan Keystone. 
@@ -38,13 +45,58 @@ Information om olika moduler kommer tas från respektive utgivares hemsida eller
 express MIT
 
 \subsection{Resultat}
-Keystone används främst till att skapa ett enkelt användargränssnitt för modifiering av innehållet i databasen. 
+En av modulerna som används av Keystone heter Express och kan användas för att hantera routern \cite{expressRouter} av alla inkommna förfrågningar och rendera sidor. För att använda Handlebars i Express så behövs en modul som heter express-handlebars. Den kan sättas som renderingsmotor för Express genom koden nedan. DefaultLayoutförfrågningar och rendera sidor. För att använda Handlebars i Express så behövs en modul som heter express-handlebars sätts till en mall som bestämmer hur utformningen av sidorna ska se ut.  
+\begin{verbatim}
+var express = require('express');
+var hbsExpree = require('express-handlebars');
+var app = express();
+app.engine('hbs', hbsExpress({defaultLayout: 'default'});
+app.set('view engine', 'hbs');
+\end{verbatim}
+Router:
+Alla rutter kan läggas i en fil som sedan exporteras för att användas av Express. Om någon middleware behöver användas kan den läggas in i Express enligt nedan. En middleware som behövs är för att kompilera less-filer. En modul som kan sköta detta är less-middleware. Denna modul letar efter en CSS-fil med namnet som efterfrågas, om denna inte finns så letas en less-fil med samma namn upp och kompileras.  
 
-https://www.microsoft.com/en-us/download/details.aspx?id=29995
 
-Det finns flera olika moduler för att koppla ihop en Node.js-applikation med MSSQL. En av dessa är en officiell modul från Microsoft. Denna har dock inte släppts i slutgiltig version utan finns bara som en förhandstitt, vilken släpptes den första augusti 2013 och har enligt github repot inte blivit jobbad på sedan dess. Att använda en officiell modul från Microsoft hade gett många fördelar för Region Östergötland så som officiell support och garanti att den skulle fungera. Men då den inte släppts som slutgiltig version och inte verkar utvecklas längre så uppfyller den inte de krav som ställs.
 
-Edge.js kan användas för att köra .NET kod direkt i applikationen och på så sätt hämta data från en MSSQL-server. Att använda Edge.js istället för något modul gör också att det inte finns några begränsningar i hur hämtningen från databasen ska gå till. Det finns en modul till Node.js som hete edge-sql som just är till för att hämta data från en MSSQL databas. Denna modulen gör att man direkt kan skriva SQL-frågor i javascript-koden. Genom att skriva funktioner för uppdatering, sökning, borttagning och tilläggning för varje modell så skulle tiden för anpassningen till MSSQL minska, eftersom det inte blir lika mycket kod att ändra på. 
+Det finns flera olika moduler för att koppla ihop en Node.js-applikation med MSSQL. En av dessa är en officiell modul från Microsoft \cite{sqlMS}. Denna har dock inte släppts i slutgiltig version utan finns bara som en förhandstitt, vilken släpptes den första augusti 2013 och har enligt github repot inte blivit jobbad på sedan dess. Att använda en officiell modul från Microsoft hade gett många fördelar för Region Östergötland så som officiell support och garanti att den skulle fungera. Men då den inte släppts som slutgiltig version och inte verkar utvecklas längre så uppfyller den inte de krav som ställs.
+
+Edge.js kan användas för att köra .NET kod direkt i en Node.js-applikation och på så sätt hämta data från en MSSQL-server. Att använda Edge.js istället för något modul gör också att det inte finns några begränsningar i hur hämtningen från databasen ska gå till. Det finns en modul till Node.js som hete edge-sql som just är till för att hämta data från en MSSQL databas. Denna modulen gör att man direkt kan skriva T-SQL-kommandon i javascript-koden. Genom att använda denna modulen så går det väldigt snabbt att skriva om koden eftersom inga nya kunskaper behöver införskaffas om utvecklaren redan har kunskap inom SQL. En exempel på hur en funktion, för att hämta en operation, kan se ut och vad den skulle ge för utdata kan ses nedan. För att koden ska fungera måste och en omgivningsvariabel vara satt till en anslutningssträng för att kunna ansluta till databasen. 
+
+\begin{verbatim}
+var edge = require('edge');
+// Om anslutningssträng är satt som omgivningsvariabel.
+var getOperation = edge.func('sql', function() {/*
+    SELECT * FROM operations
+    WHERE title LIKE	 '%@title%'
+*/});
+
+// Utan anslutningssträng som omgivningvariabel.
+var getOperation = edge.func('sql', {
+	source: function() {/*
+    		SELECT * FROM operations
+    		WHERE title LIKE	 '%@title%'
+	*/}, connectionString: 'Data Source=......;'
+});
+
+getOperation({ title: 'Kärl' }, function (error, result) {
+    if (error) throw error;
+    console.log(result);
+});
+
+// Resultat
+[{title: '4-kärls',
+linda_id: '0',
+tage: '',
+state: 'Publicerad',
+specialty: 1,
+template: 1,
+isDone: 0,
+lastPrinted: 2015,
+version: 1.0,
+lastUpdated: 2015}]
+
+\end{verbatim}
+
 \subsection{Diskussion}
 \subsubsection{Resultat}
 \subsubsection{Metod}
@@ -52,5 +104,12 @@ Edge.js kan användas för att köra .NET kod direkt i applikationen och på så
 \subsection{Referenser}
 \vspace{-9mm}
 \begin{thebibliography}{9}
-
+\bibitem{expressRouter}
+http://expressjs.com/4x/api.html
+\bibitem{sqlMS}
+https://www.microsoft.com/en-us/download/details.aspx?id=29995
+\bibitem{mongoComp}
+http://www.mongodb.com/who-uses-mongodb
+\bibitem{databaseStats}
+http://db-engines.com/en/ranking
 \end{thebibliography}
