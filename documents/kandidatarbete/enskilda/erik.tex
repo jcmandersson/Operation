@@ -1,4 +1,4 @@
-\section{Automatiserade tester av webb-applikationer. - Erik Malmberg}
+\section{Automatiserade tester av webbapplikationer. - Erik Malmberg}
 \subsection{Inledning}
 Den här enskilda utredningen är en del av kandidatrapporten i kursen TDDD77 vid Linköpings universitet.
 Utredningen behandlar en del av utvecklingen av ett webb-baserat system för att underlätta förberedelser
@@ -10,32 +10,33 @@ i hur kontinuerlig integration och
 automatiserade tester kan användas för att effektivisera testandet 
 i ett projekt som använder en agil 
 utvecklingsmetod. Speciellt ska det undersökas hur väl det går att använda 
-webb-baserade tjänster för
-att utföra kontinuerliga automatiserade tester av webb-applikationer.
+webbaserade tjänster för
+att utföra kontinuerliga automatiserade tester av webbapplikationer.
 
 \subsubsection{Frågeställning}
 De frågeställningar som ska besvaras i den här enskilda 
 delen av rapporten är:
 
 \begin{itemize}
-\item Hur kan man använda webb-baserade tjänster för
-att utföra kontinuerliga automatiserade tester av webb-applikationer?
-\item Hur effektivt är det att använda en webb-baserad tjänst
+\item Hur kan man använda webbaserade tjänster för
+att utföra kontinuerliga automatiserade tester av webbapplikationer?
+\item Hur effektivt är det att använda en webbaserad tjänst
 för automatiserade tester? 
 \item Vilka typer av tester är svåra att utföra med en sådan tjänst?
 \end{itemize}
 
-I den andra frågeställningen så defineras effektivitet som antalet test som kan
+I den andra frågeställningen så definieras effektivitet som antalet test som kan
 utföras per sekund. I svaret på frågeställningen ska även testfallen 
-specifieras noggrant så att svaret inte blir tvetydigt. Det kan även vara
-intressant att ta reda på hur lång tid det tar från det att koden pushas till GitHub
+specificeras noggrant så att svaret inte blir tvetydigt. Det kan även vara
+intressant att ta reda på hur lång tid det tar från det att koden läggs 
+upp på GitHub
 till det att testfallen börjar köras på servern.
 
 \subsubsection{Avgränsningar}
 Inga undersökningar kommer att utföras om hur andra lösningar än 
 Travis CI kan användas för kontinuerlig 
 integration och automatiserde tester. De testfall som kommer användas 
-kommer uteslutande att vara skrivna med ramverket Jasmine. Den webb-applikation
+kommer uteslutande att vara skrivna med ramverket Jasmine. Den webbapplikation
 som kommer att testas kommer att vara skriven med programmeringsspråket
 Javascript och använda Javascriptbiblioteken Node.js och JQuery.
 
@@ -87,8 +88,8 @@ varför frågeställningarna är relevanta.
 \subsubsection{Vattenfallsmodellen}
 I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. 
 Om ett problem då identifieras under integrationen så är det krångligt att gå 
-tillbaka och åtgärda problemet. 
-Det kan leda till förseningar av projektet.
+tillbaka och åtgärda problemet, vilket 
+kan leda till förseningar av projektet.
 Om felet som upptäcks är så allvarligt att en betydande omdesign måste ske så
 kommer utvecklingen i stort sett att börja om från början och man kan räkna 
 med en hundraprocentig ökning av budgeten, 
@@ -216,7 +217,7 @@ som förväntats. Flera expect-funktioner kan användas i samma testfall.\\
 
 Ett speciellt testfall skrevs
 för att besvara den andra frågeställningen om hur effektivt det är 
-att använda en webb-baserad tjänst
+att använda en webbaserad tjänst
 för automatiserade tester. Det speciella testfallet visas nedan.
 
 \begin{lstlisting}[
@@ -278,7 +279,7 @@ parametern (split) inte existerar i den första parametern (str) så returneras
 hela strängen i det första elementet och en tom sträng i det andra elementet.\\
 
 För att besvara den tredje frågeställningen om vilka typer av tester som är 
-svåra att utföra med en webb-baserad tjänst så gicks koden igenom och 
+svåra att utföra med en webbaserad tjänst så gicks koden igenom och 
 försök till att skriva testfall genomfördes
 med de olika delarna av koden. Resultatet av dessa tester redovisas under 
 avsnittet \emph{Resultat}.
@@ -316,7 +317,7 @@ Medelvärdet avrundat till närmsta heltal är: 10556 tester per sekund.\\
 
 Standardavvikelsen avrundat till närmsta heltal är: 1710.\\
 
-Den tid det tar från det att koden pushas till GitHub till dess att 
+Den tid det tar från det att koden läggs upp på GitHub till dess att 
 testkoden börjar köras är i genomsnitt ca en minut. Sedan tar det även ca 30
 sekunder för att alla node-moduler att installeras innan själva
 testfallen börjar köras.\\
@@ -366,7 +367,7 @@ och metod.
 Resultatet angående hur effektivt det var att använda Travis CI
 var inte särskilt förvånande. Att den lilla testfunktionen kunde köras
 ca $10^4$ gånger per sekund verkar rimligt. Det intressanta med resultatet
-var att det kan dröja ca en minut från att koden pushas till GitHub
+var att det kan dröja ca en minut från att koden läggs upp på GitHub
 till dess att testfallen börjar köras och att effektiviteten
 kan variera med ca $\pm 30 \%$ vid olika tidpunkter.\\
 
@@ -386,33 +387,33 @@ att göra fler manuella tester av koden.\\
 
 Det är även värt att nämna ett en nackdel med metoden som använts för tester
 under projektet
-är att om ett eventuellt fel upptäcks så är koden redan pushad till GitHub.
-Det hade varit bättre om koden kan testas innan den pushas till GitHub.
+är att om ett eventuellt fel upptäcks så är koden redan upplagd på GitHub.
+Det hade varit bättre om koden kan testas innan den lades upp på GitHub.
 
 \subsection{Slutsatser}
 Under den här rubriken presenteras svaren på
 frågeställningarna och framtida arbete som skulle
 kunna utföras inom det område som behandlats i rapporten.
 
-\subsubsection{Hur kan man använda webb-baserade tjänster för
-att utföra kontinuerliga automatiserade tester av webb-applikationer?}
+\subsubsection{Hur kan man använda webbaserade tjänster för
+att utföra kontinuerliga automatiserade tester av webbapplikationer?}
 Ett sätt att använda en webb-baserad tjänst för att utföra kontinuerliga 
-automatiserade tester av en webb-applikation är att använda  
+automatiserade tester av en webbapplikation är att använda  
 Travis CI tillsammans med Jasmine på det sätt som beskrivits
-under avsnittet \emph{Metod}. Observera att den webb-applikation som testades
+under avsnittet \emph{Metod}. Observera att den webbapplikation som testades
 var skriven med Javascript. Node.js användes på serversidan och 
 JQuery användes på klientsidan.
 
-\subsubsection{Hur effektivt är det att använda en webb-baserad tjänst
+\subsubsection{Hur effektivt är det att använda en webbaserad tjänst
 för automatiserade tester?}
 Det enkla testfallet som användes kunde käras ca $10^4$ gånger per sekund och
-det tar ca 60 sekunder från att koden pushas till GitHub till det att den
+det tar ca 60 sekunder från att koden läggs upp på GitHub till det att den
 börjar köras på servern.\\
 
 Om man använder ett antal testfall (med liknande komplexitet som
 det som användes i den här rapporten) i storleksordningen $60 \cdot 10^4$ eller
 mindre så kommer den största väntetiden vara tiden från att koden
-pushas till GitHub till det att den börjar köras på servern. Själva
+läggs upp på GitHub till det att den börjar köras på servern. Själva
 testfallen kommer att köras på mindre än en minut.
 
 \subsubsection{Vilka typer av tester är svåra att utföra 
@@ -433,13 +434,13 @@ Det kräver dock mer tid och resurser än vad som var tillgängligt under
 arbetet den här rapporten.\\
 
 Det vore även intressant att undersöka vilka nackdelar och fördelar det
-finns med webb-baserade testmiljöer jämfört med lokala
+finns med webbaserade testmiljöer jämfört med lokala
 testmiljöer.\\
 
 En annan undersökning som skulla kunna utföras är att jämföra
 flera olika ramverk för testning av Javascript. Till exempel skulle
 man kunna jämföra Jasmine och Mocha. Man skulle även kunna jämföra
-flera olika webb-baserade tjänster för automatiserade tester. Till
+flera olika webbaserade tjänster för automatiserade tester. Till
 exempel skulle man kunna jämföra Travis CI med Codeship och Drone.io.
 
 \subsection{Referenser}
