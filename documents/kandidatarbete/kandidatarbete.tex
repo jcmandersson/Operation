@@ -163,26 +163,7 @@ Lättare defineras som att det går snabbare för nyanställda, och personer som
 
 Effektiviseringen av sjukvården och hur den ska ske är frågor som diskuterats flitigt de senaste åren. Region Östergötland har gjort tester för att kontrollera hur en operationsförberedelse kan effektiviseras. Ett av dessa tester gick ut på att undersöka hur lång tid det tar att plocka lagerartiklar då information om lagerplats finns lättillängligt gentemot hur lång tid det tar med nuvarande system. Resultatet av detta var att det tog 5 minuter för en person att plocka materialet då lagerplats fanns tillgängligt och 30 minuter för en sjuksköterska med lång erfarenhet med nuvarande system \cite{Elisabeth}. Detta visar att det finns stora tidsvinster i att bygga ett system som underlättar operationsförberedelser.
 
-\subsection{Säkerhetskopiering och reservsystem}
-Det ställs stora krav på att handböckerna alltid ska finnas tillgängliga då de ska användas på ett sjukhus där ett fel kan få stora konsekvenser. Detta innebär att ett reservsystem måste finnas till hands ifall systemet slutar fungera. Detta har lösts genom ett system där pdf-kopior av handböcker skapas. Handböckerna hamnar i en mapp-struktur där de sorteras på specialitet och operation. Kopian sparas med ett versionnummer, vilket gör att kopior av gamla versioner av operationer fortfarande finns kvar och kan skrivas ut. Var denna mapp-strukturen ska hamna bestäms i en konfigurationsfil.
-Kopiorna skapas genom att en funktion, som kollar igenom alla handböcker för att se om har uppdaterats sedan senaste kopieringen, körs med ett givet tidsintervall som ställs in i konfigurationsfilen. Om en operation har uppdaterats så körs en funktion som använder en modul, som heter wkhtmltopdf, för att kalla på ett program som också heter wkhtmltopdf. Wkhtmltopdf använder en osynlig webbläsare för att skapa en pdf-kopia. Hur kopiorna ser ut kan ses i figur \ref{fig:pdf-start} och figur \ref{fig:pdf-end}. Utseendet ändras genom att speciell css för utskrift finns och wkhtmltopdf körs med utskrift som mediatyp. 
-Det finns också ett REST-api för att skapa pdf-kopior. Detta används dock inte någonstans. Men en vidareutveckling på detta vore att implementera att en ny pdf-kopia skapas så fort en operation har uppdaterats. 
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.9\textwidth]{images/pdf-start.png}
-  \caption{Början på en pdf-kopia.}
-  \label{fig:pdf-start}
-\end{figure}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.9\textwidth]{images/pdf-end.png}
-  \caption{Plocklista i en pdf-kopia.}
-  \label{fig:pdf-end}
-\end{figure}
-
-Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att det är viktigt att databasen säkerhetskopieras med jämna mellanrum. Med ett givet tidsintervall som går att ställa in i konfigurationsfilen så körs en funktion som använde en modul som heter mongo-utils för att kalla på mongodump som tar en kopia på databasen och lägger den i en mapp med dagens datum. 
 
  
 \section{Metod}
