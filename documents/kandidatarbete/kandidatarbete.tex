@@ -6,11 +6,13 @@
 \usepackage{graphicx}
 \graphicspath{ {images/} }
 
+\usepackage{subcaption}
 \usepackage{url}
 \usepackage{listings}
 %\usepackage{showframe}
 %\usepackage[a4paper]{geometry}
 \usepackage{fancyhdr}
+\usepackage[parfill]{parskip}
 \pagestyle{fancy}
 \lhead{Grupp 7}
 
@@ -56,6 +58,7 @@
     \textbf{Datum} & \textbf{Version} & \textbf{Utförda ändringar} & \textbf{Utförda av} \\ \hline
     2015-03-13 & 0.1 & Första utkast av gemensam och individuella rapporter & Pål Kastman \\ \hline
     2015-04-20 & 0.2 & Andra utkastet av gemensam och individuella rapporter & Alla \\ \hline
+    2015-05-13 & 0.3 & Tredje utkastet av gemensam och individuella rapporter & Alla \\ \hline
     \end{tabular}
   \end{center}
 \end{flushleft}
@@ -117,14 +120,13 @@ Hela systemet ska ligga under en open-source licens så det kan användas fritt 
 Rapporten ska besvara följande frågeställningar.
 \begin{itemize}
 \item Hur kan ett system för operationsförberedelser realiseras så arbetet blir lättare och mer effektivt?
-\item Kan man använda plattformen keystone för att bygga detta system?
- 
+\item Vilka strategier kan användas för effektiv utveckling i en grupp där kunskapsnivån varierar? 
 \end{itemize}
 
 \subsection{Avgränsningar}
 Den här rapporten beskriver hur ett system för operationsförberedelser på universitetssjukhuset i Linköping kan realiseras. Andra sjukhus kan ha andra rutiner vilket får konsekvensen att systemet inte fungerar där.
 
-Kunden ville också att ett lagersaldo i systemet skulle integreras och göra det möjligt att skanna av artiklar då dessa plockas. Vidare ville kunden även att systemet skulle ge möjlighet att välja mellan olika kliniker i regionen. Tiden känndes inte tillräckligt för att åstadkomma dessa implementeringar därför klargjordes det i ett tidigt skede att få bra grundläggande funktionalitet hade högre prioritet än dessa funktioner. En kompromiss gjordes där dessa krav fick prioritet 2 vilket innebar att kraven var önskvärda och skulle implementeras i mån av tid, eller prioritet 3 där kraven sågs som en framtida utbyggnad.
+Kunden ville också att ett lagersaldo i systemet skulle integreras och göra det möjligt att skanna av artiklar då dessa plockas. Vidare ville kunden även att systemet skulle ge möjlighet att välja mellan olika kliniker i regionen. Tiden kändes inte tillräckligt för att åstadkomma dessa implementeringar därför klargjordes det i ett tidigt skede att få bra grundläggande funktionalitet hade högre prioritet än dessa funktioner. En kompromiss gjordes där dessa krav fick prioritet 2 vilket innebar att kraven var önskvärda och skulle implementeras i mån av tid, eller prioritet 3 där kraven sågs som en framtida utbyggnad.
 
 Hur man ska jobba i projektgrupper med olika kunskapsnivåer tas fram genom undersökningar i projektgrupp 7 i kursen TDDC77 på Linköpings Universitet. Resultaten av denna undersökning kan kanske därför inte appliceras i situationer som inte kan likställas med situationen i projektgruppen.
 
@@ -141,18 +143,18 @@ Node.js är en plattform för att skapa applikationer till framförallt webbserv
 Keystone.js är ett så kallat ''content management system'' som bland annat innehåller ett kraftfullt administrationsverktyg och en databashanterare.
 
 \subsubsection{Socket.IO}
-Socket.IO är en modul till Node.JS. Socket.IO använder sig av websockets för att kommunicera mellan front-end och back-end. Med hjälp av socket.IO så kan man skicka data från en klient till alla andra anslutna klienter och visa datan som skickades utan att någon sida behöver laddas om.
-Socket.IO har olika komponenter för front-end och back-end. Händelser som skickas från den ena sidan hanteras av motsvarande händelsehanterare på den andra sidan. Varje händelse identifieras med hjälp av en sträng. Det finns några färdiga händelser i socket.io exempelvis händelsen "connection" på serversidan fås då en klient har anslutit till socket.io.
+Socket.IO är en modul till Node.js. Socket.IO använder sig av websockets för att kommunicera mellan front-end och back-end. Med hjälp av Socket.IO så kan man skicka data från en klient till alla andra anslutna klienter och visa datan som skickades utan att någon sida behöver laddas om.
+Socket.IO har olika komponenter för front-end och back-end. Händelser som skickas från den ena sidan hanteras av motsvarande händelsehanterare på den andra sidan. Varje händelse identifieras med hjälp av en sträng. Det finns några färdiga händelser i Socket.IO exempelvis händelsen "connection" på serversidan fås då en klient har anslutit till Socket.IO.
 
 \subsubsection{MongoDB}
-MongoDB är en NOSql dokumentbaserad databas som stödjer stödjer många olika plattformar.
+MongoDB är en NoSql dokumentbaserad databas som stödjer stödjer många olika plattformar.
 
 \subsubsection{Handlebars}
 Handlebars är ett så kallat ''template language'' som är byggt från Mustache. Handlebars ger bland annat möjlighet till att lägga in mindre logik i html kod samt att från html filer komma åt variabler som finns definierade i javascript filer.
 
 \subsubsection{REST}
 
-\subsubsection{Wkhtmltopdf} 
+\subsubsection{Wkhtmltopdf}
 Wkhtmltopdf är ett program som tar en hemsida eller en html-fil och skapar en pdf av den. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
 
 
@@ -176,27 +178,45 @@ Denna del beskriver hur kravframställningen gått till i detta projekt. Först 
 
 \subsubsection{Förstudie}
 Den största delen utav analysarbetet skedde under förstudien. Här identifierades de olika intressenterna och en kravspecifikation utarbetades. Våran första kontakt med projektet var en projektbeskrivning där kunden formulerade sina mål och visioner av projektet. Några vikta krav gavs också såsom att prototypdesign skulle genomföras i samarbete med kunden. Ett första möte utav fyra under förstudien gav sedan mer information och vi började våran kravinsamling. Vi kunde konstatera att vi hade två olika intressenter att arbeta med. Dels sjuksköterskorna som är användare av systemet och dels CMIT, Centrum för medicinsk teknik och IT, som ansvarar för sjukhusets IT-miljöer. För att förstå användarnas behov hölls ett studiebesök där vi fick en visning av nuvarande system och hur det används. Detta var nödvändigt för att verkligen förstå vad det var som behövde göras och vad som kunde förbättras. Från CMIT:s sida hölls mer tekniska möten där teknikval diskuterades. Här var det viktigt att ta reda på vilka begränsningar som fanns och vilka val som passade våra och deras erfarenheter.
-\subsubsection{Google docs}
+
+\subsubsection{Kravspecifikation i Google docs}
 Kravspecifikationen skrevs i Google docs. Detta valdes eftersom kraven utarbetades tillsammans med kund. Ett gemensamt redigerbart dokument gav en möjlighet för oss att arbeta på olika platser under kravframställningen vilket var effektivt. En kommentarsfunktion gav oss möjligheten att kommentera krav och föreslå förbättringar. Under interna möten och kundmöten var den gemensamma redigeringen också till nytta då kravformuleringar snabbt kunde genomföras.
+
 \subsubsection{Kravrepresentation}
-Kraven gavs en prioritetsordning för att kunna urskilja de mest väsentliga kraven. Detta kändes nödvändigt då vi var begränsade av en tidsbudget. En prioritering av kraven gav utrymme för vidareutveckling i mån av tid. Krav med prioritet 1 var att betrakta som grundkrav som skulle genomföras för att projektet skulle ses som godkänt. Krav med prioritet 2 var att betrakta som önskvärda och som skulle genomföras om då grundkraven var genomförda. Krav med prioritet 3 var krav som fångats upp med som skulle ses som framtida utbyggnad. 
+Kraven gavs en prioritetsordning för att kunna urskilja de mest väsentliga kraven. Detta kändes nödvändigt då vi var begränsade av en tidsbudget. En prioritering av kraven gav utrymme för vidareutveckling i mån av tid. Krav med prioritet 1 var att betrakta som grundkrav som skulle genomföras för att projektet skulle ses som godkänt. Krav med prioritet 2 var att betrakta som önskvärda och som skulle genomföras om då grundkraven var genomförda. Krav med prioritet 3 var krav som fångats upp men som skulle ses som framtida utbyggnad. 
 %Koppla till nån litteratur/standard.
 
 %Strukturering av krav
-Kraven numrerades för att lätt kunna refereras till under projektets gång. De delades också in i olika sektioner efter deras del i systemet. Sektionerna var plocklistor, handböcker, kartotek, lagersystem. En extra sektion för generella krav användes. Denna uppdelning kändes naturlig för detta projekt. 
+Kraven numrerades för att lätt kunna refereras till under projektets gång. De delades också in i olika sektioner efter deras del i systemet. Sektionerna var plocklistor, handböcker, kartotek, lagersystem. Två extra sektioner användes också för generella krav och för leveranser. Denna uppdelning kändes naturlig för detta projekt. 
 %Man skulle också kunna dela in dem efter blablabla...
 
 Kravspecifikationen skrevs med stöd från standarden IEEE 830. Enligt standarden ska ett krav vara korrekt, otvetydigt, färdigt, konsekvent, prioriterat, verifierbart, modifierbart och spårbart. Detta eftersträvades men det kan diskuteras om alla krav passerar dessa filter. I slutändan var det ändå våran gemensamma förståelse för kravet tillsammans med kunden som accepterades. 
 
-Enligt standarden uttrycktes kraven på ska-form. Ett exempel på ett krav från projektet är följande: "Plocklistor ska innehålla information om artikelns namn, förråd, sektion, hylla och fack".
+Enligt standarden uttrycktes kraven på ska-form. Ett exempel på ett krav från projektet är följande: \textit{''Plocklistor ska innehålla information om artikelns namn, förråd, sektion, hylla och fack''}.
+
 \subsubsection{Kravvalidering}
 Vid varje iterationsslut hölls ett möte med kund där vi demonstrerade nya features och lät kunden testa systemet. Iterationerna gjorde att vi snabbt kunde rätta till eventuella missförstånd. Vi gick igenom vilka krav som var genomförda och vilka som skulle prioriteras till nästa iteration. Kravspecifikationen var på så sett dynamisk och uppdaterades under projektets gång. En färgkodning användes för att markera vilka krav som var godkända, vilka som hade påbörjats och vilka som återstod.
 
-\subsection{Utvecklingsmetod}
-Här beskrivs hur utvecklingen i projektet har gått till väga och vilka hjälpmedel som har använts för att underlätta arbetet.
+\subsection{Utveckling}
+Projektets utveckling har skett i fyra iterationer där den första iteration var en förstudie och i de avslutande tre iterationerna har utvecklingen av produkten skett. Nedan beskrivs vilka hjälpmedel som har använts för att underlätta arbetet.
 		
 \subsubsection{SCRUM}
-Projektet har utvecklats iterativt med en utvecklingsmetodik som påminner mycket om SCRUM. Aktiviteterna i projektet har visats på en gemensam SCRUM-board med hjälp av webbsidan Trello. Boarden hade kategorierna TODO, DOING och DONE. När en medlem valt en aktivitet så märktes aktiviteten med medlemmens namn och flyttades till den aktuella kategorin. Varje vecka har gruppen haft ett kort SCRUM-möte på 15 minuter. På mötet har varje gruppmedlem berättat vad som har gjorts den föregående veckan och vad som ska göras nästa vecka. SCRUM-mötet har oftast utförts i samband med varje veckas handledarmöte.
+Projektet har utvecklats iterativt med en utvecklingsmetodik som påminner mycket om SCRUM. Aktiviteterna i projektet har visats på en gemensam SCRUM-board med hjälp av webbsidan Trello. 
+
+\begin{figure}[htbp]
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{trello.png}
+                \label{fig:gull}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{trello2.png}
+                \label{fig:tiger}
+        \end{subfigure}
+        \caption{Trello, t.v. översikt över alla boards, t.h. boarden info}\label{fig:trello}
+\end{figure}
+
+Boarden hade kategorierna TODO, DOING och DONE. När en medlem valt en aktivitet så märktes aktiviteten med medlemmens namn och flyttades till den aktuella kategorin. Varje vecka har gruppen haft ett kort SCRUM-möte på 15 minuter. På mötet har varje gruppmedlem berättat vad som har gjorts den föregående veckan och vad som ska göras nästa vecka. SCRUM-mötet har oftast utförts i samband med varje veckas handledarmöte.
 
 \subsubsection{Alpha state cards}
 Ett system med alpha state cards har använts för att gruppen skulle kunna ha koll på hur långt projektet har fortskridit. Korten har även använts till att identifiera aspekter av projektet som kan förbättras och som gruppen behöver arbeta mer med. De aspekter av projektet som kunnat förbättras har använts som mål för kommande iterationer. De olika korten har uppdaterats kontinuerligt under projektets gång.
@@ -204,7 +224,6 @@ Ett system med alpha state cards har använts för att gruppen skulle kunna ha k
 \subsubsection{Sammarbete i gruppen}
 Under förstudien så diskuterades det hur utvecklingen skulle ske på bästa på sätt för gruppen. Förslagen som diskuterades var, utveckling i mindre grupper, separat arbete var för sig eller att alla gruppmedlemmar skulle sitta tillsammans och utveckla. Då alla i gruppen inte hade utvecklat någon webbaplikation tidigare så togs beslutet att under förstudien paralellt inleda en intern utbildning inom gruppen i form av så kallade kodstugor, dessa gick ut på att alla skulle sitta tillsammans och lära sig de olika verktygen så som t.ex. javascript och css och att de mindre erfarna skulle ha en möjlighet att få hjälp av de mer erfarna.
 
-När den första iterationen skulle inledas så kände samtlige i gruppen att kodstugorna hade fungerat bra och att det kändes naturligt att fortsätta arbetet på detta sätt.
 
 \clearpage
 \input{results.tex}
@@ -215,11 +234,13 @@ När den första iterationen skulle inledas så kände samtlige i gruppen att ko
 \subsection{Resultat}
 
 \subsection{Metod}
+Metoden som användes för kravframställning fokuserade på att i förstudien samla in så mycket krav som möjligt genom möten, intervjuer och obeservationer. Att arbeta fram kraven tillsammans med kund kändes nödvändigt för att få en fullständig bild. En sak som vi inte prioriterades men som kanske hade kunnat hjälpt arbetet skulle varit att lägga större fokus på olika roller. Slutsystemet har två roller vilket är admins och icke-admins. En avvägning gjordes där dessa två enkla roller valdes. Fördelen var att att vi kunde lägga fokus på att snabbare kunna testa andra delar av systemet med högre prioritet. Nackdelen var att dessa funktionaliteter inte hann testas och under förstudien ledde till en viss förivirring. %%blablabla
+Att använda use-cases eller user-stoires diskuterades också under förstudien. Detta bortprioriterades då vi ansåg att de var överflödiga. Denna avvägning ledde till att det var lite svårare att kommunicera kraven. 
 
 \subsection{Arbetet i ett vidare sammanhang}
 
 \section{Slutsatser}
-   
+
 \section{Fortsatt arbete}
 Här följer en sammanfattning om fortsatt arbete med systemet. Restlistan behandlar krav som inte implementerats eller som borde vidareutvecklas. Även förslag på vidareutveckling som inte tas upp av kravspecifikationen tas upp. Dessa förslag är sådant som kommit fram under utvecklingens gång.
 

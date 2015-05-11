@@ -1,4 +1,4 @@
-\section{Automatiserade tester med Travis CI - Erik Malmberg}
+\section{Automatiserade tester av webbapplikationer. - Erik Malmberg}
 \subsection{Inledning}
 Den här enskilda utredningen är en del av kandidatrapporten i kursen TDDD77 vid Linköpings universitet.
 Utredningen behandlar en del av utvecklingen av ett webb-baserat system för att underlätta förberedelser
@@ -10,34 +10,35 @@ i hur kontinuerlig integration och
 automatiserade tester kan användas för att effektivisera testandet 
 i ett projekt som använder en agil 
 utvecklingsmetod. Speciellt ska det undersökas hur väl det går att använda 
-webb-baserade tjänster för
-att utföra kontinuerliga automatiserade tester av webb-applikationer.
+webbaserade tjänster för
+att utföra kontinuerliga automatiserade tester av webbapplikationer.
 
 \subsubsection{Frågeställning}
 De frågeställningar som ska besvaras i den här enskilda 
 delen av rapporten är:
 
 \begin{itemize}
-\item Hur kan man använda webb-baserade tjänster för
-att utföra kontinuerliga automatiserade tester av webb-applikationer?
-\item Hur effektivt är det att använda en webb-baserad tjänst
-för autmatiserade tester? 
+\item Hur kan man använda webbaserade tjänster för
+att utföra kontinuerliga automatiserade tester av webbapplikationer?
+\item Hur effektivt är det att använda en webbaserad tjänst
+för automatiserade tester? 
 \item Vilka typer av tester är svåra att utföra med en sådan tjänst?
 \end{itemize}
 
-I den andra frågeställningen så defineras effektivitet som antalet test som kan
+I den andra frågeställningen så definieras effektivitet som antalet test som kan
 utföras per sekund. I svaret på frågeställningen ska även testfallen 
-specifieras noggrant så att svaret inte blir tvetydigt. Det kan även vara
-intressant att ta reda på hur lång tid det tar från det att koden pushas till GitHub
+specificeras noggrant så att svaret inte blir tvetydigt. Det kan även vara
+intressant att ta reda på hur lång tid det tar från det att koden läggs 
+upp på GitHub
 till det att testfallen börjar köras på servern.
 
 \subsubsection{Avgränsningar}
 Inga undersökningar kommer att utföras om hur andra lösningar än 
 Travis CI kan användas för kontinuerlig 
 integration och automatiserde tester. De testfall som kommer användas 
-kommer uteslutande att vara skrivna med ramverket Jasmine. Den webb-applikation
+kommer uteslutande att vara skrivna med ramverket Jasmine. Den webbapplikation
 som kommer att testas kommer att vara skriven med programmeringsspråket
-javascript och använda javascriptbiblioteken Node.js och JQuery.
+Javascript och använda Javascriptbiblioteken Node.js och JQuery.
 
 \subsection{Bakgrund}
 Här beskrivs de tjänster, språk och bibliotek som använts under arbetet
@@ -45,10 +46,11 @@ med den här enskilda rapporten.
 
 \subsubsection{Travis CI}
 Travis CI är en webb-baserad tjänst för att köra automatiserade enhetstester och integrationstester
-på projekt som finns på GitHub. Travis CI är byggt på öppen källkod och är gratis att använda. 
+på projekt som finns på GitHub. Travis CI är gratis att använda och byggt på öppen källkod
+som är tillgänglig under en MIT-licens. 
 Tjänsten har stöd för många olika programmeringsspråk, men det som är 
 relevant för innehållet i den här rapporten
-är javascript med node.js. För att konfigurera Travis CI används filen .travis.yml 
+är Javascript med Node.js. För att konfigurera Travis CI används filen .travis.yml 
 som placeras i det aktuella
 projektets repository på GitHub.
 
@@ -58,8 +60,8 @@ Javascript exekveras av webbläsaren och arbetar mot ett gränssnitt som heter
 Document Object Model (DOM).
 
 \subsubsection{JQuery}
-JQuery är ett javascript-bibliotek som kan användas för att förenkla programeringen
-av javascript på klientsidan av en webbsida. JQuery innehåller lättanvänd
+JQuery är ett Javascriptbibliotek som kan användas för att förenkla programeringen
+av Javascript på klientsidan av en webbsida. JQuery innehåller lättanvänd
 funktionalitet för händelsehantering och modifiering av HTML-objekt.
 JQuery är gratis och baserat på öppen källkod som är tillgänglig under en
 MIT-licens.
@@ -67,7 +69,8 @@ MIT-licens.
 \subsubsection{Node.js}
 Node.js är en runtime environment för internetapplikationer. Det kan till exempel 
 användas för att skapa webbservrar.
-Node.js är baserat på öppen källkod och det är enkelt att lägga till nya 
+Node.js är baserat på öppen källkod som är tillgänglig under en MIT-licens. 
+Det är enkelt att lägga till nya 
 moduler för att anpassa det system man vill
 använda. För att lägga till nya moduler används node package manager (npm).
 
@@ -75,7 +78,8 @@ använda. För att lägga till nya moduler används node package manager (npm).
 Jasmine är ett ramverk för testning av Javascript. 
 Den node-modul som används är grunt-contrib-jasmine som använder task runnern Grunt 
 för att köra testfall som skrivits med Jasmine.
-Grunt kunfigureras med filen Gruntfile.js.
+Grunt kunfigureras med filen Gruntfile.js. Jasmine är baserat på öppen källkod
+som är tillgänglig under en MIT-licens.
 
 \subsection{Teori}
 Här beskrivs den teori som ligger till grund för rapporten och som visar
@@ -84,8 +88,8 @@ varför frågeställningarna är relevanta.
 \subsubsection{Vattenfallsmodellen}
 I vattenfallsmodellen genomförs all integration och alla tester efter att implementeringen är slutförd. 
 Om ett problem då identifieras under integrationen så är det krångligt att gå 
-tillbaka och åtgärda problemet. 
-Det kan leda till förseningar av projektet.
+tillbaka och åtgärda problemet, vilket 
+kan leda till förseningar av projektet.
 Om felet som upptäcks är så allvarligt att en betydande omdesign måste ske så
 kommer utvecklingen i stort sett att börja om från början och man kan räkna 
 med en hundraprocentig ökning av budgeten, 
@@ -114,7 +118,7 @@ tydligt och intuitivt syntax. Att Jasmine var enkelt och tydligt
 var viktigt eftersom det var många andra uppgifter förutom
 testning som skulle utföras i projektet och tiden för
 arbetet med projektet var begränsad till 300 timmar. Det var
-alltsåingen i projektgruppen som hade tid att lära sig 
+alltså ingen i projektgruppen som hade tid att lära sig 
 en komplicerad syntax i ett ramverk även om det varit
 mer kraftfullt.\\
 
@@ -207,14 +211,14 @@ describe('The function splitOnce', function() {
 \end{lstlisting}
 
 På den första raden beskrivs vilken del av koden det är som ska testas.
-På nästa rad beskrivs vad det är som ska testas i den utvalde delen av koden.
-Med functionen expect kontrolleras att koden har utfört testet på det sätt
+På nästa rad beskrivs vad det är som ska testas i den utvalda delen av koden.
+Med funktionen expect kontrolleras att koden har utfört testet på det sätt
 som förväntats. Flera expect-funktioner kan användas i samma testfall.\\
 
 Ett speciellt testfall skrevs
 för att besvara den andra frågeställningen om hur effektivt det är 
-att använda en webb-baserad tjänst
-för autmatiserade tester. Det speciella testfallet visas nedan.
+att använda en webbaserad tjänst
+för automatiserade tester. Det speciella testfallet visas nedan.
 
 \begin{lstlisting}[
   basicstyle = \small
@@ -243,11 +247,12 @@ describe('Travis CI', function() {
 });
 \end{lstlisting}
 
-Testfallet testar funktionen splitOnce() så många gånger som möjligt
+Testfallet testar funktionen splitOnce så många gånger som möjligt
 under en sekund. Antalet gånger som funktionen hann köras skrivs
-sedan ut på skärmen med en console.log(). 
+sedan ut på skärmen med en console.log. 
 Testfallet har körts flera gånger på olika datum och olika tidpunkter.
-Resultatet av testerna presenteras i en tabell under rubriken Resultat.
+Resultatet av testerna presenteras i \emph{Tabell E.5.1}
+under rubriken \emph{Resultat}.
 För att antalet ska
 få en konkret betydelse visas även funktionen splitOnce() nedan.
 
@@ -267,29 +272,29 @@ var splitOnce = function(str, split) {
 Funktionen tar två paramterar. En sträng (str) som ska delas upp och 
 en sträng (split) som anger vilket tecken eller vilken teckenkombination
 som ska dela upp strängen. Funktionen delar endast upp strängen i två delar
-även om (split) förekommer påflera positioner i (str). Funktionen returnerar 
+även om (split) förekommer på flera positioner i (str). Funktionen returnerar 
 en array med två element.
 De två elementen är de två delarna av den ursprungliga strängen. Om den andra
 parametern (split) inte existerar i den första parametern (str) så returneras
 hela strängen i det första elementet och en tom sträng i det andra elementet.\\
 
 För att besvara den tredje frågeställningen om vilka typer av tester som är 
-svåra att utföra med en webb-baserad tjänst så gicks koden igenom och 
+svåra att utföra med en webbaserad tjänst så gicks koden igenom och 
 försök till att skriva testfall genomfördes
 med de olika delarna av koden. Resultatet av dessa tester redovisas under 
-avsnittet Resultat.
+avsnittet \emph{Resultat}.
 
 \subsection{Resultat}
 Här presenteras resultatet av rapporten.\\
 
 Resultatet av testerna som utfördes för att besvara den andra frågeställningen
-visas i tabellen nedan.\\
+visas i \emph{Tabell E.5.1}.\\
 
-\noindent\emph{Tabell ?.?}
+\noindent\emph{Tabell E.5.1}
 \begin{center}
   \begin{tabular}{| l | l | l | l |}
   \hline
-  Testnummer & Datum (ÅÅ-MM-DD) & Tid (hh-mm-ss) & Test per sekund\\ \hline
+  Testnummer & Datum (ÅÅ-MM-DD) & Tid (hh-mm-ss) & Tester per sekund\\ \hline
   1 & 15-05-01 & 13:53:34 & 11380\\ \hline
   2 & 15-05-01 & 14:27:27 & 12462\\ \hline
   3 & 15-05-01 & 14:47:14 & 9386\\ \hline 
@@ -310,8 +315,15 @@ visas i tabellen nedan.\\
 
 Medelvärdet avrundat till närmsta heltal är: 10556 tester per sekund.\\
 
+Standardavvikelsen avrundat till närmsta heltal är: 1710.\\
+
+Den tid det tar från det att koden läggs upp på GitHub till dess att 
+testkoden börjar köras är i genomsnitt ca en minut. Sedan tar det även ca 30
+sekunder för att alla node-moduler att installeras innan själva
+testfallen börjar köras.\\
+
 Undersökningen om vad om är svårt att testa ledde till följande resultat.
-Det visade sig att vanliga javascript-funktioner är lätta
+Det visade sig att vanliga Javascript-funktioner är lätta
 att testa så länge de ligger utanför JQuery-funktionen
 \emph{\$(document).ready()}. Det kan illustreras med några
 rader kod.
@@ -337,52 +349,84 @@ $(document).ready(function() {
 
 \end{lstlisting}
 
-Det är alltså rekomenderat att skriva alla javascript-funktioner utanför 
+Det är alltså rekomenderat att skriva alla Javascript-funktioner utanför 
 JQuery-funktionen \emph{\$(document).ready()} eftersom koden då blir 
 lättare att testa.\\
 
 JQuery-funktioner är i allmänhet svårare att testa än vanliga
-javascript-funktioner.
+Javascript-funktioner. Anledningen är att JQuery-funktioner
+startas av och manipulerar HTML-objekt. Ett sätt att lösa detta är
+att använda en egen \textunderscore Specrunner.html. Då kan HTML-objekten i den
+filen användas för att testa JQuery-funktionerna.
 
 \subsection{Diskussion}
 Under den här rubriken diskuteras rapportens resultat
 och metod.
 
 \subsubsection{Resultat}
-TODO
+Resultatet angående hur effektivt det var att använda Travis CI
+var inte särskilt förvånande. Att den lilla testfunktionen kunde köras
+ca $10^4$ gånger per sekund verkar rimligt. Det intressanta med resultatet
+var att det kan dröja ca en minut från att koden läggs upp på GitHub
+till dess att testfallen börjar köras och att effektiviteten
+kan variera med ca $\pm 30 \%$ vid olika tidpunkter.\\
+
+Det är även värt att påpeka att hur koden skrivs och struktureras
+i väldigt hög grad påverkar hur lätt den blir att testa. I alla fall
+med den metod som använts under arbetet med den här rapporten.
 
 \subsubsection{Metod}
-TODO
+Den metod för testning som användes under arbetet med den här rapporten var
+medvetet väldigt enkel och inte särskilt kraftfull. Anledningen var
+att det var mycket annat som skulle göras i projektet och tiden var
+begränsad till 300 timmar. I efterhand visade det sig dock att det hade varit 
+möjligt att lägga lite mer tid på att använda en lite
+mer avancerad metod för att kunna testa en större
+del av koden i projektet. Nu användes den överblivna tiden istället till
+att göra fler manuella tester av koden.\\
+
+Det är även värt att nämna ett en nackdel med metoden som använts för tester
+under projektet
+är att om ett eventuellt fel upptäcks så är koden redan upplagd på GitHub.
+Det hade varit bättre om koden kan testas innan den lades upp på GitHub.
 
 \subsection{Slutsatser}
 Under den här rubriken presenteras svaren på
 frågeställningarna och framtida arbete som skulle
-kunna utföras inom det område som behandlats av rapporten.
+kunna utföras inom det område som behandlats i rapporten.
 
-\subsubsection{Hur kan man använda webb-baserade tjänster för
-att utföra kontinuerliga automatiserade tester av webb-applikationer?}
+\subsubsection{Hur kan man använda webbaserade tjänster för
+att utföra kontinuerliga automatiserade tester av webbapplikationer?}
 Ett sätt att använda en webb-baserad tjänst för att utföra kontinuerliga 
-automatiserade tester av en webb-applikation är att använda  
+automatiserade tester av en webbapplikation är att använda  
 Travis CI tillsammans med Jasmine på det sätt som beskrivits
-under avsnittet Metod. Observera att den webb-applikation som testades
-var skriven med javascript. Node.js användes på serversidan och 
+under avsnittet \emph{Metod}. Observera att den webbapplikation som testades
+var skriven med Javascript. Node.js användes på serversidan och 
 JQuery användes på klientsidan.
 
-\subsubsection{Hur effektivt är det att använda en webb-baserad tjänst
-för autmatiserade tester?}
-Om man använder ett antal testfall i storleksordningen $10^4$ eller
+\subsubsection{Hur effektivt är det att använda en webbaserad tjänst
+för automatiserade tester?}
+Det enkla testfallet som användes kunde käras ca $10^4$ gånger per sekund och
+det tar ca 60 sekunder från att koden läggs upp på GitHub till det att den
+börjar köras på servern.\\
+
+Om man använder ett antal testfall (med liknande komplexitet som
+det som användes i den här rapporten) i storleksordningen $60 \cdot 10^4$ eller
 mindre så kommer den största väntetiden vara tiden från att koden
-pushas till GitHub till det att den börjar köras på servern. Själva
+läggs upp på GitHub till det att den börjar köras på servern. Själva
 testfallen kommer att köras på mindre än en minut.
 
 \subsubsection{Vilka typer av tester är svåra att utföra 
 med en sådan tjänst?}
-Kortfattat kan man säga att vanliga javascriptfunktioner är
-väldigt enkla att testa.
+Kortfattat kan man säga att vanliga Javascript-funktioner är
+väldigt enkla att testa med de metoder, ramverk och tjänster som
+använts under arbetet med den här rapporten. Men Jquery-funktioner och
+Javascript-funktioner i Jquery-funktioner är svårare att
+testa. För en mer detaljerad beskrivning se rubriken \emph{Resultat}.
 
 \subsubsection{Framtida arbete inom området}
 Det finns mycket arbete som skulle kunna utföras inom området som behandlats
-av den här rapporten.\\
+i den här rapporten.\\
 
 Det vore intressant att undersöka hur stor andel av de totala felen
 som upptäcks med den typ av testning som har beskrivits i den här rapporten.
@@ -390,13 +434,13 @@ Det kräver dock mer tid och resurser än vad som var tillgängligt under
 arbetet den här rapporten.\\
 
 Det vore även intressant att undersöka vilka nackdelar och fördelar det
-finns med webb-baserade testmiljöer jämfört med lokala
+finns med webbaserade testmiljöer jämfört med lokala
 testmiljöer.\\
 
 En annan undersökning som skulla kunna utföras är att jämföra
-flera olika ramverk för testning av javascript. Till exempel skulle
-man kunna jämföra Jasmine och Mocha. Man skulle öven kunna jömföra
-flera olika webb-baserade tjänster för automatiserade tester. Till
+flera olika ramverk för testning av Javascript. Till exempel skulle
+man kunna jämföra Jasmine och Mocha. Man skulle även kunna jämföra
+flera olika webbaserade tjänster för automatiserade tester. Till
 exempel skulle man kunna jämföra Travis CI med Codeship och Drone.io.
 
 \subsection{Referenser}
