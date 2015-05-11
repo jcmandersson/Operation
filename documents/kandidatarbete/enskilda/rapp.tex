@@ -26,7 +26,7 @@ ett bättre system för att hantera deras lager på ett mer automatiserat sätt.
 Bland annat så skulle de behöva ett system som låter dem checka in vilka varor från lagret de hämtat
 ut, istället för att checka av manuellt, vilket kan vara felbenäget.
 
-Vi valde dock att avgränsa oss från att bygga denna lösning, på grund av tidsbrister.
+Vi valde dock att avgränsa oss från att bygga denna lösning, på grund av tidsbrist.
 Istället fokuserade vi på att förbättra kärnfunktionaliteten i applikationen.
 
 
@@ -65,7 +65,7 @@ Vi har även använt Git för versionshantering.
 
 Jag måste också nämna att trots att det är jag som skriver om kartoteket,
 så är det inte endast jag som har implementerat det. Koden och gränssnittet har givetvis
-varit ett stort grupparbete bland alla medlemmar.
+varit ett stort grupparbete mellan alla medlemmar.
 
 
 \clearpage
@@ -131,8 +131,8 @@ Sista kärnfunktionaliteten i kartoteket är sökning.
 Eftersom artiklarna är sorterade i bokstavsordning,
 och kartoteket har en "infinite scroll"-funktionalitet,
 så går det i teorin att hitta alla artiklar utan att söka.
-I våra diskussioner med sjuksöterskorna på sjukhuset så
-verkar det också som det finns vissa människor som primärt använder
+I våra diskussioner kunden på sjukhuset så
+verkar det också som det finns vissa personer som primärt använder
 sig av denna metod för att hitta artiklar.
 Däremot är detta inte en speciellt effektiv lösning, så därför
 har vi valt att implementera en sökfunktion.
@@ -145,7 +145,7 @@ har vi valt att implementera en sökfunktion.
 \end{figure}
 
 Sökfunktionen är enkel.
-Längts upp på sidan finns det en liten sökruta.
+Längst upp på sidan finns det en liten sökruta.
 Användaren har möjlighet att söka på artikelnamn, artikelnummer
 eller synonymer till namnet. Se ett exempel på sökning
 av artikelnamn i figur \ref{fig:kartsearch}.
@@ -162,8 +162,8 @@ Det leder oss till frågeställningen:
   Går det att integrera systemet för handböcker med kartoteket utan att förlora funktionalitet?
 \end{quote}
 Svaret på detta anser jag vara: Ja!
-Och i detta avsnitt hade jag tänkt övertyga denna slutsats.
-\\\\
+Och i detta avsnitt hade jag tänkt övertyga om denna slutsats.
+
 Integreringen sker primärt på två ställen.
 \begin{enumerate}
   \item När man skapar en ny handbok.
@@ -173,14 +173,14 @@ Integreringen sker primärt på två ställen.
 När man skapar en handbok så är kartoteket integrerat på det sättet att
 när man lägger till artiklar som måste hämtas från lagret så söker man
 i kartoteket för att hitta dessa. Detta är en förbättring av förra
-systemet då förut fanns det ingen koppling mellan dessa system.
+systemet då det förut inte fanns det ingen koppling mellan dessa system.
 
 När man förbereder en operation så är kartoteket integrerat på
 så sätt att om en artikel slutar säljas, eller den av någon anledning
 tas bort från kartoteket, informerar vi användaren om att den
 har utgått.
 
-Som vi har nämnt tidigare så fanns varken av dessa funktionaliteter
+Som vi har nämnt tidigare så fanns ingen av dessa av dessa funktionaliteter
 förut. Eftersom vi dessutom har lyckats reproducera all funktionalitet
 som fanns i det förra systemet så anser jag att frågan är klart och
 tydligt positivt bekräftad.
@@ -194,7 +194,7 @@ Svaret är otvivelaktigt: Ja! Det finns
 givetvis små buggar här och där. Ingen
 produkt blir någonsin 100\% bugg-fri.
 Men i våra informella intervjuer under de två studiebesök vi gjorde hos kunden
-vid iteration 3, där kunden har testat
+under iteration 3, där kunden har testat
 vårt system en hel dag, så verkade de enormt nöjda.
 
 
@@ -207,7 +207,7 @@ Allt som allt så blev vi väldigt nöjda med kartoteket.
 Det finns såklart, som alltid, saker vi skulle vilja förbättra om vi
 hade mer tid, som integrering i lagret med t.ex. saldo.
 Men vi anser det som finns nu, kärnfunktionaliteten,
-ger en märkbar förbättring jämtemot det nuvarande systemet.
+ger en märkbar förbättring gentemot det nuvarande systemet.
 
 
 
