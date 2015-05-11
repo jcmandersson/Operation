@@ -43,22 +43,23 @@
   {\Large Redaktör: Pål Kastman}
 \end{center}
 \begin{center}
-  {\Large Datum: 2015-04-20}
+  {\Large Datum: 2015-05-11}
 \end{center}
 \begin{center}
-  {\Large \textbf{Version 0.2}}
+  {\Large \textbf{Version 0.3}}
 \end{center}
 \end{titlepage}
 \newpage
 \begin{flushleft}
   {\Large \textbf{Dokumenthistorik}}\\[0.5ex]
   \begin{center}
+  \vspace{3mm}
     \begin{tabular}{ | l | l | p{5cm} | l |}
     \hline
     \textbf{Datum} & \textbf{Version} & \textbf{Utförda ändringar} & \textbf{Utförda av} \\ \hline
     2015-03-13 & 0.1 & Första utkast av gemensam och individuella rapporter & Pål Kastman \\ \hline
     2015-04-20 & 0.2 & Andra utkastet av gemensam och individuella rapporter & Alla \\ \hline
-    2015-05-13 & 0.3 & Tredje utkastet av gemensam och individuella rapporter & Alla \\ \hline
+    2015-05-11 & 0.3 & Tredje utkastet av gemensam och individuella rapporter & Alla \\ \hline
     \end{tabular}
   \end{center}
 \end{flushleft}
@@ -243,6 +244,45 @@ Under utvecklingsfasen delade vi till en början upp oss i två grupper som foku
 
 \subsection{Resultat}
 
+\subsubsection{Back-end}
+Vi valde att skriva back-end i javascript dels för att minska inlärningskurvan eftersom det är samma språk som används på front-end och dels för att realtidskommunikation mellan klienterna underlättas. Node.js valdes som plattform på back-end eftersom den har en väldigt enkel pakethanterare som underlättar när flera personer arbetar i ett projekt eftersom om en person lägger till en modul till projektet så behöver inte alla andra personer i projektet installera den modulen manuellt utan behöver endast köra ett enkelt kommando så installeras alla moduler som är tillagda till projektet.
+
+KeystoneJS underlättade utvecklingen väldigt mycket till en början. Några punkter som beskriver vad KeystoneJS hjälper till med följer:
+
+  \begin{itemize}
+    \item Hjälper till att abstrahera systemet.
+    \item Skapar automatiskt en administreringssida för varje databasmodell.
+      Huvuddelen av administeringen har dock bytts ut då den automatgenererade kan vara något begränsad.
+    \item Har ett inbyggt användarsystem som är lätt att modifiera och byta ut.
+    \item Sköter all kommunikation över http-protokollet till klienterna, dvs. gör hemsidan åtkomlig.
+    \item Har inbyggt stöd för templatespråk som exempelvis Handlebars\footnote{TODO: bättre referens. http://handlebarsjs.com/ (2015-04-18)} och Less\footnote{TODO: Bättre referens. http://lesscss.org/ (2015-04-18)}.
+  \end{itemize}
+  
+\subsubsection{Front-end}
+Anledningen till att vi använder oss av bootstrap på front-end är för att bootstrap har många färdiga CSS-klasser så man behöver inte skriva lika mycket CSS själv.
+De klasser som finns är lätta att använda för att skapa responsiva hemsidor.
+All kod är dessutom testad för att fungera på olika webbläsare vilket kan vara krångligt att lösa om man skriver all CSS från grunden.
+
+JQuery används för att lättare hämta ut ett element på hemsidan och ändra data i det.
+Det finns även många bra jQuery-bibliotek att hämta som gör att man slipper “uppfinna hjulet” i många fall.
+
+Fördelen med LESS är bland annat att man kan använda variabler och enkla funktioner i stilmallarna.
+Exempelvis kan variablerna användas för att spara de olika färgerna på hemsidan för att enkelt kunna byta ut dem.
+
+\subsubsection{Struktur}
+En nackdel med jQuery gentemot andra bibliotek som exempelvis angular\footnote{TODO: Referens.} är att det lätt blir spaghettikod\footnote{TODO: Måste defineras?}.
+För att strukturera så bra som möjligt är det viktigt att koden är bra uppdelad.
+Uppdelningen vi använder oss av fungerar ganska bra, men koden är ändå lite rörig.
+
+\subsubsection{Säkerhetskopiering och reservsystem}
+Det som kan göras för att få säkerhetskopieringen bättre är att implementera att en ny pdf-kopia skapas så fort en operationsförberedelse har uppdaterats.
+
+Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att det är viktigt att databasen säkerhetskopieras med jämna mellanrum. Men det tar en del datorkraft att göra en säkerhetskopiering. Därför är det bra att det går att ställa in tidsintervallet som bestämmer hur ofta säkerhetskopiering av databasen ska ske.
+
+\subsubsection{Översiktssida}
+Överssiktssidan är tänkt att den ska kunna vara framme på en monitor och inte kräva någon interaktion för att se resultat för olika operationsförberedelser. Det är därför viktigt att den sidan använder realtidskommunikation, det är därför allt uppdateras vi Socket.IO till översiktssidan.
+
+  
 \subsection{Metod}
 
 \subsubsection{Kravinsamling}

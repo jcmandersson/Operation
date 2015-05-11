@@ -51,51 +51,24 @@ I figur \ref{fig:techoverview} kan man se en översikt över de mest betydelsefu
 
 \subsubsection{Back-end}
 Koden till servern har skrivits helt i javascript.
-Dels för att underlätta inlärningskurvan genom att använda samma språk som på klienten och dels för att realtidskommunikation mellan klienterna underlättas.
 Grunden till programmet är node.js vilket är en plattform för att utveckla självständiga program i javascript med inbyggd pakethanterare.
-Pakethanteraren gör det enkelt att installera externa bibliotek.
 
 Det största och mest betydelsefulla ramverket för detta projekt är KeystoneJS, ett CMS-ramverk till node.js.
-Följande är några punkter KeystoneJS underlättar:
-\begin{itemize}
-  \item Hjälper till att abstrahera systemet. Se avsnittet om MVC nedan.
-  \item Skapar automatiskt en administreringssida för varje databasmodell.
-    Huvuddelen av administeringen har dock bytts ut då den automatgenererade kan vara något begränsad.
-  \item Har ett inbyggt användarsystem som är lätt att modifiera och byta ut.
-  \item Sköter all kommunikation över http-protokollet till klienterna, dvs. gör hemsidan åtkomlig.
-  \item Har inbyggt stöd för templatespråk som exempelvis Handlebars\footnote{TODO: bättre referens. http://handlebarsjs.com/ (2015-04-18)} och Less\footnote{TODO: Bättre referens. http://lesscss.org/ (2015-04-18)}.
-\end{itemize}
 
-För realtidskommunikation används ett programmeringsinterface vid namn socket.io\footnote{TODO: bättre referens. http://socket.io/ (2015-04-18)} användas.
-Det är väldigt smidigt eftersom det väljer automatiskt hur datan ska skickas beroende på vilken webbläsare som används och vad den stödjer.
+För realtidskommunikation används ett programmeringsinterface vid namn Socket.IO.\footnote{TODO: bättre referens. http://socket.io/ (2015-04-18)}
+Socket.IO väljer automatiskt hur datan ska skickas beroende på vilken webbläsare som används och vad den stödjer.
 Socket.io är event-baserat vilket betyder att man skapar events på antingen klient eller serversida som man sedan kan trigga från motsatt sida.
 Vanliga javascript-object kan skickas tillsammans med eventen.
 
 \subsubsection{Front-end}
-På klientsidan används bootstrap\footnote{TODO: Bättre referens.} och jQuery\footnote{TODO: Bättre referens.}.
-Bootstrap har många färdiga CSS-klasser så man behöver inte skriva lika mycket CSS själv.
-De klasser som finns är lätta att använda för att skapa responsiva hemsidor.
-All kod är dessutom testad för att fungera på olika webbläsare vilket kan vara krångligt att lösa om man skriver all CSS från grunden.
-JQuery används för att lättare hämta ut ett element på hemsidan och ändra data i det.
-Det finns även många bra jQuery-bibliotek att hämta som gör att man slipper “uppfinna hjulet” i många fall.
-
-För att ytterligare design av hemsidan används LESS\footnote{TODO: Referens.} att användas.
-Det är en påbyggnad till CSS som kompilerar till vanliga CSS-filer.
-Fördelen med LESS är bland annat att man kan använda variabler och enkla funktioner.
-Exempelvis kan variablerna användas för att spara de olika färgerna på hemsidan för att enkelt kunna byta ut dem.
-
+På klientsidan används bootstrap\footnote{TODO: Bättre referens.}, jQuery\footnote{TODO: Bättre referens.} och LESS.
 
 \subsubsection{Struktur}
-En nackdel med jQuery gentemot andra bibliotek som exempelvis angular\footnote{TODO: Referens.} är att det lätt blir spaghettikod\footnote{TODO: Måste defineras?}.
-För att strukturera så bra som möjligt är det viktigt att koden uppdelad.
-För att uppnå detta så kommer varje enskild sida ha minst en skriptfil, en cssfil och en htmlfil.
-På vissa sidor är det lätt att det blir stora skript och då bör man dela upp skriptfilen.
-Den bästa lösningen är att abstrahera delar av skriptet till egna biblioteksfiler som man kan ladda in och använda.
+Varje enskild sida har minst en skriptfil, en css fil och en html fil. På de sidor där det blivigt stora skripts så har skriptfilen delats upp i flera filer.
 
 \subsubsection{Säkerhetskopiering och reservsystem}
 Det ställs stora krav på att handböckerna alltid ska finnas tillgängliga då de ska användas på ett sjukhus där ett fel kan få stora konsekvenser. Detta innebär att ett reservsystem måste finnas till hands ifall systemet slutar fungera. Detta har lösts genom ett system där pdf-kopior av handböcker skapas. Handböckerna hamnar i en mapp-struktur där de sorteras på specialitet och operation. Kopian sparas med ett versionnummer, vilket gör att kopior av gamla versioner av operationer fortfarande finns kvar och kan skrivas ut. Var denna mapp-strukturen ska hamna bestäms i en konfigurationsfil.
-Kopiorna skapas genom att en funktion, som kollar igenom alla handböcker för att se om har uppdaterats sedan senaste kopieringen, körs med ett givet tidsintervall som ställs in i konfigurationsfilen. Om en operation har uppdaterats så körs en funktion som använder en modul, som heter wkhtmltopdf, för att kalla på ett program som också heter wkhtmltopdf. Wkhtmltopdf använder en osynlig webbläsare för att skapa en pdf-kopia. Hur kopiorna ser ut kan ses i figur \ref{fig:pdf-start} och figur \ref{fig:pdf-end}. Utseendet ändras genom att speciell css för utskrift finns och wkhtmltopdf körs med utskrift som mediatyp. 
-Det finns också ett REST-api för att skapa pdf-kopior. Detta används dock inte någonstans. Men en vidareutveckling på detta vore att implementera att en ny pdf-kopia skapas så fort en operation har uppdaterats. 
+Kopiorna skapas genom att en funktion, som kollar igenom alla handböcker för att se om har uppdaterats sedan senaste kopieringen, körs med ett givet tidsintervall som ställs in i konfigurationsfilen. Om en operation har uppdaterats så körs en funktion som använder en modul, som heter wkhtmltopdf, för att kalla på ett program som också heter wkhtmltopdf. Wkhtmltopdf använder en osynlig webbläsare för att skapa en pdf-kopia. Hur kopiorna ser ut kan ses i figur \ref{fig:pdf-start} och figur \ref{fig:pdf-end}. Utseendet ändras genom att speciell css för utskrift finns och wkhtmltopdf körs med utskrift som mediatyp.  
 
 \begin{figure}
   \centering
@@ -111,7 +84,8 @@ Det finns också ett REST-api för att skapa pdf-kopior. Detta används dock int
   \label{fig:pdf-end}
 \end{figure}
 
-Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att det är viktigt att databasen säkerhetskopieras med jämna mellanrum. Med ett givet tidsintervall som går att ställa in i konfigurationsfilen så körs en funktion som använde en modul som heter mongo-utils för att kalla på mongodump som tar en kopia på databasen och lägger den i en mapp med dagens datum. 
+Säkerhetskopiering av databasen finns implementerat. Det finns ett tidsintervall som går att ställa in i konfigurationsfilen så körs en funktion som använder en modul som heter mongo-utils för att kalla på mongodump som tar en kopia på databasen och lägger den i en mapp med dagens datum. 
+
 \subsection{Mekanismer}
 Här beskrivs syftet och funktionalitet hos olika delar av produkten.
 
@@ -231,7 +205,7 @@ Det som skiljer är att vissa av rubrikerna för förberedelser och artiklar i p
 \end{figure}
 
 I figur \ref{fig:op} kan man se att rubrikerna går att checka av när de är klara. Jämför med figur \ref{fig:handbok} där rubrikerna inte går att checka av. När operationen är klar kan en administratör ta bort operationsförberedelsen.
-
+%Rent tekniskt så kan man se en operationsförberedelse som en instans av en handbok. Flera operationsförberedelser kan alltså vara skapade från samma handbok.
 \subsubsection{Plocklista}
 En operationsförberedelse har en plocklista med artiklar som behövs till operationen. Den ligger under fliken engångsmaterial.
 
