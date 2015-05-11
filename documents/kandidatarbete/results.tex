@@ -30,7 +30,7 @@ Hemsidan är responsiv och fungerar på surfplattor och datorer i olika format.
 I kartoteket finns information om alla artiklar som Region Östergötland har i förråden.
 Här finns bland annat information om var artiklarna är placerade samt information relaterade till inköp av artiklar.
 
-Läs mer om kartoteket i "Kartoteket" nedan.
+Läs mer om kartoteket i "Kartoteket"\ nedan.
 
 \subsection{Tekniker}
 Vi börjar med att beskriva tekniken bakom systemet.
@@ -117,11 +117,11 @@ Här beskrivs syftet och funktionalitet hos olika delar av produkten.
 \subsubsection{Översikt}
 Som tidigare nämnts finns en översikt över alla operationsförberedelser.
 Denna sida visar alla operationsförberedelser och hur långt är fortskridna.
-Här används socket.io för att hela tiden hålla information uppdaterad.
+Här används Socket.IO för att hela tiden hålla information uppdaterad.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
-  \includegraphics[width=0.6\textwidth]{images/site/overview.png}
+  \includegraphics[width=0.95\textwidth]{images/site/overview.png}
   \caption{Bild på översiktsvyn}
   \label{fig:siteoverview}
 \end{figure}
@@ -134,7 +134,7 @@ En handbok innehåller information om en operationsförberedelse.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\textwidth]{images/site/handbok.png}
+  \includegraphics[width=0.9\textwidth]{images/site/handbok.png}
   \caption{En handbok}
   \label{fig:handbok}
 \end{figure}
@@ -149,7 +149,7 @@ Därför kan man söka både på operationens namn men även på alternativa sö
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\textwidth]{images/site/search}
+  \includegraphics[width=0.9\textwidth]{images/site/search}
   \caption{Sökfunktionen}
   \label{fig:search}
 \end{figure}
@@ -163,7 +163,7 @@ Se figur \ref{fig:list}
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\textwidth]{images/site/list}
+  \includegraphics[width=0.95\textwidth]{images/site/list}
   \caption{Lista med handböcker}
   \label{fig:list}
 \end{figure}
@@ -179,7 +179,7 @@ Det som skiljer är att vissa av rubrikerna kan gå att kryssa av när de är kl
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\textwidth]{images/site/op}
+  \includegraphics[width=0.9\textwidth]{images/site/op}
   \caption{Förberedelsevyn}
   \label{fig:op}
 \end{figure}
@@ -191,7 +191,7 @@ En operationsförberedelse har även en plocklista med artiklar som behövs till
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\textwidth]{images/site/plocklista}
+  \includegraphics[width=0.9\textwidth]{images/site/plocklista}
   \caption{Plocklista}
   \label{fig:plocklista}
 \end{figure}
@@ -202,11 +202,40 @@ Det är vanligt att en artikel är slut eller utbytt och man kan då lägga en k
 \subsubsection{Kartoteket}
 Kartoteket diskuteras i djup detalj nedan.
 
+\subsubsection{Publicering och granskning}
+Flöded för att skapa en handbok involverar flera steg.
+Se figur för en övervy.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{images/site/model}
+  \caption{Publicering och granskining}
+  \label{fig:model}
+\end{figure}
+
+När man först vill skapa en handbok så hamnar man i ett redigeringsläge,
+där man kan lägga till information om handboken, som artiklar i plocklista,
+beskrivning av operationen.
+Härifrån kan man välja att förhandsgranska, för att se om den ser ok ut,
+eller skicka till granskning, där den går vidare till publicering
+efter någon annan läst igenom materialet och de tycker det ser rätt ut.
+Om man har en handbok i redigeringsläge som inte är klar så hamnar den även i
+"utkast"-läge, likt en email-system.
+Slutligen kan en publicerad handbok gå vidare till att bli en
+operationsförberedelse om det är dags att utföra en sådan operation
+som beskrivs i handboken.
+
 \subsection{Utvecklingen}
-Här nedan beskrivs resultatet av hur utvecklingen inom gruppen har fungerat, och huruvida de olika hjälpmedlen har hjälpt eller stjälpt.
+Här nedan beskrivs resultatet av hur utvecklingen inom gruppen har fungerat,
+och huruvida de olika hjälpmedlen har hjälpt eller stjälpt.
 
 \subsubsection{SCRUM}
-Utvecklingen i SCRUM-form har fungerat bra, dock har utvecklingen som beskriven i metod inte varit i rent SCRUM-format utan har modifierats för att bättre passa gruppen. Ett möte med handledare har hållits en gång i veckan där handledaren har haft möjlighet att ta upp saker som denne tyckt har behövts, sedan har gruppen hållit ett kort SCRUM-möte där man fått förklara vad man gjort förra veckan och vad man planerat att göra kommande vecka. Under mötets gång har man noterat om det är någonting som har behövt diskuteras vidare och detta har då noterats, varpå gruppen har gått igenom dessa frågor efteråt. Detta har fungerat väldigt bra då man på detta sättet inte har fått några större avbrott och alla hela tiden kunna hålla fokus. Efter SCRUM-mötena så har ordet varit fritt och alla har haft möjligheten att komma med synpunkter eller åsikter över någonting.
+Utvecklingen i SCRUM-form har fungerat bra,
+dock har utvecklingen som beskriven i metod inte varit i rent SCRUM-format utan har modifierats för att bättre passa gruppen.
+Ett möte med handledare har hållits en gång i veckan där handledaren har haft möjlighet att ta upp saker som denne tyckt har behövts,
+sedan har gruppen hållit ett kort SCRUM-möte där man fått förklara vad man gjort förra veckan och vad man planerat
+att göra kommande vecka. Under mötets gång har man noterat om det är någonting som har behövt diskuteras
+vidare och detta har då noterats, varpå gruppen har gått igenom dessa frågor efteråt. Detta har fungerat väldigt bra då man på detta sättet inte har fått några större avbrott och alla hela tiden kunna hålla fokus. Efter SCRUM-mötena så har ordet varit fritt och alla har haft möjligheten att komma med synpunkter eller åsikter över någonting.
 
 \subsubsection{Alpha state cards}
 Korten har kontinuerligt uppdaterats av teamledare, dock har de kanske inte använts lika flitigt av gruppen som tanken var att de skulle?
