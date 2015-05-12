@@ -257,6 +257,8 @@ Under utvecklingsfasen delade vi till en början upp oss i två grupper som foku
 \section{Diskussion}
 
 \subsection{Resultat}
+Här diskuteras resultatet av projektet. I iteration 3 utförde kunden användartester av systemet vid två tillfällen. En utvärdering av dessa tester bifogas i Appendix A.
+%kanske kan använda nån fancy latex-referens till appendix egentligen.
 
 \subsubsection{Back-end}
 Vi valde att skriva back-end i javascript dels för att minska inlärningskurvan eftersom det är samma språk som används på front-end och dels för att realtidskommunikation mellan klienterna underlättas. Node.js valdes som plattform på back-end eftersom den har en väldigt enkel pakethanterare som underlättar när flera personer arbetar i ett projekt eftersom om en person lägger till en modul till projektet så behöver inte alla andra personer i projektet installera den modulen manuellt utan behöver endast köra ett enkelt kommando så installeras alla moduler som är tillagda till projektet.
@@ -303,7 +305,7 @@ Den största förändringen ligger i plocklistan som har en koppling direkt till
 Sökfunktionen ger möjligheten att snabbt hitta en handbok. Vi valde att placera den i headern på sidan för att man alltid snabbt ska kunna ta sig till en handbok. Den har utformats efter kundens krav med möjlighet att använda alternativa sökord.
 Sökfunktionen kompletterades med möjligheten att lista alla handböcker. Detta var också ett krav från kund. 
 
-Handbokens tillstånd har utformats för att tillfredsställa kraven. Denna utformning kunde dock ha gjorts på andra sätt. I kundens interna utvärdering (referera till appendix) nämns att tillstånden utkast och granskning upplevs som något förvirrande. Under testningen sågs granskningen som överflödig.
+Handbokens tillstånd har utformats för att tillfredsställa kraven. Denna utformning kunde dock ha gjorts på andra sätt. I kundens interna utvärdering (se Appendix A) nämns att tillstånden utkast och granskning upplevs som något förvirrande. Under testningen sågs granskningen som överflödig.
 \subsubsection{Redigering}
 I redigeringen av handböcker fokuserade vi på att göra gränssnittet så likt en publicerad handbok som möjligt. Redigeringen var den svåraste delen att göra lättförstålig och användarvänlig. Vi hade flera designideér som skrotades under projektets gång.
 
@@ -369,7 +371,7 @@ Här följer övriga förslag på vidareutveckling.
 
 \begin{description}
 \item[Artikelsök] Vid sökning på artikel vid redigering av handbok kan det vara bra om man sorterar resultaten så att de artiklar som tillhör samma enhet som handboken visas först.
-\item[Avancerad sökfunktion] En mer avancerad sökfunktion med * och söknining på flera ord som inte behöver vara direkt efter varandra.
+\item[Avancerad sökfunktion] En mer avancerad sökfunktion med * och sökning på flera ord som inte behöver vara direkt efter varandra.
 \item[Förvalda kommentarer] Under användartester observerades att samma kommentarer skrivs ofta så det kan vara bra med en lista på vanliga kommentarer som man kan välja ifrån.
 \item[Roller och rättigheter] Olika roller bör identifieras och en funktion för att tilldela användare olika rättigheter bör implementeras.
 \item[Galler och extrainstrument] De artiklar som benämns som galler och instrument bör också behandlas med en plocklista. Detta kan göras genom att lägga in dem i kartoteket eller genom att skapa en separat databas för dessa med egen plocklista.
