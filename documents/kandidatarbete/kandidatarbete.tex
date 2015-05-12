@@ -5,6 +5,7 @@
 \usepackage{etoolbox}
 \usepackage{graphicx}
 \graphicspath{ {images/} }
+\usepackage{pdfpages}
 
 \usepackage{subcaption}
 \usepackage{url}
@@ -46,7 +47,7 @@
   {\Large Datum: 2015-05-13}
 \end{center}
 \begin{center}
-  {\Large \textbf{Version 0.4}}
+  {\Large \textbf{Version 1.0}}
 \end{center}
 \end{titlepage}
 \newpage
@@ -60,7 +61,7 @@
     2015-03-13 & 0.1 & Första utkast av gemensam och individuella rapporter & Pål Kastman \\ \hline
     2015-04-20 & 0.2 & Andra utkastet av gemensam och individuella rapporter & Alla \\ \hline
     2015-05-11 & 0.3 & Tredje utkastet av gemensam och individuella rapporter & Alla \\ \hline
-	2015-05-13 & 0.4 & Fjärde utkastet av gemensam och individuella rapporter & Alla \\ \hline    
+	2015-05-13 & 1.0 & Fjärde utkastet av gemensam och individuella rapporter & Alla \\ \hline    
     \end{tabular}
   \end{center}
 \end{flushleft}
@@ -111,13 +112,14 @@ Ingrid Hallander, ingrid.hallander@regionostergotland.se \\
 Detta avsnitt behandlar varför detta projekt utförs.
 \subsection{Motivering}
 
-Region Östergötland har idag ett system med handböcker som en sjuksköterska går igenom inför varje operation. I dessa handböcker finns bland annat förberedelse-uppgifter och plocklistor. Handböckerna är idag inte interaktiva på något sätt, istället skrivs plocklistan och förberedelse\-uppgifterna ut och bockas av för hand. Plattformen med handböcker kan heller inte återanvändas på olika avdelningar på grund utav licensproblem. Utöver detta system så finns ett annat separat system, som heter kartoteket, för uppgifter om vilka artiklar som finns och var i lagret de ligger. Detta gör att personalen som ska förbereda inför operationer behöver gå in i två olika system om de inte vet var alla artiklar ligger.\\*
+Region Östergötland har idag ett system med handböcker som en sjuksköterska går igenom inför varje operation. I dessa handböcker finns bland annat förberedelse-uppgifter och plocklistor. Handböckerna är idag inte interaktiva på något sätt, istället skrivs plocklistan och förberedelse\-uppgifterna ut och bockas av för hand. Plattformen med handböcker kan heller inte återanvändas på olika avdelningar på grund utav licensproblem. Utöver detta system så finns ett annat separat system, som heter kartoteket, för uppgifter om vilka artiklar som finns och var i lagret de ligger. Detta gör att personalen som ska förbereda inför operationer behöver gå in i två olika system om de inte vet var alla artiklar ligger.
 
 \subsection{Syfte}
 Uppgiften som gruppen har fått är att skapa ett nytt system med handböcker som har interaktiva förberedelse-och plocklistor. Listorna ska uppdateras kontinuerligt när de bockas av så flera personer kan jobba på dem samtidigt. Plocklistan ska också innehålla uppgifter om var artiklarna ligger. Tanken är att personalen 
-ska använda en iPad för listorna så de kan gå runt och plocka i lagret och bocka av samtidigt. \\*
-I mån av tid ska också extra funktionalitet implementeras. Till exempel sortera plocklistan med avseende på närmsta väg mellan artiklarna, lagersaldo och media i handböckerna. \\*
+ska använda en iPad för listorna så de kan gå runt och plocka i lagret och bocka av samtidigt.
+I mån av tid ska också extra funktionalitet implementeras. Till exempel sortera plocklistan med avseende på närmsta väg mellan artiklarna, lagersaldo och media i handböckerna.
 Hela systemet ska ligga under en open-source licens så det kan användas fritt av alla.    
+
 \subsection{Frågeställning}
 Rapporten ska besvara följande frågeställningar.
 \begin{itemize}
@@ -139,7 +141,7 @@ Studenterna som studerar kursen TDDD77 fick i januari 2015 ett uppdrag att utfö
 I detta projekt kommer följande programspråk och bibliotek att användas.
 
 \subsubsection{Node.js}
-Node.js är en plattform för att skapa applikationer till framförallt webbservrar. Det finns en inbyggd pakethanterare vid namn npm som gör det enkelt att inkludera både små och stora bibliotek i sina projekt. Det är därför väldigt enkelt att använda sig av ett bibliotek istället för att skriva all funktionalitet själv.
+Node.js är en plattform för att skapa applikationer till framförallt webbservrar. Det finns en inbyggd pakethanterare vid namn npm som gör det enkelt att inkludera både små och stora bibliotek i sina projekt. Det är därför väldigt enkelt att använda sig av ett bibliotek istället för att skriva all funktionalitet själv. Node.js är baserat på öppen källkod som är tillgänglig under en MIT-licens.
 
 \subsubsection{Keystone.js}
 Keystone.js är ett så kallat ''content management system'' som bland annat innehåller ett kraftfullt administrationsverktyg och en databashanterare.
@@ -154,8 +156,6 @@ MongoDB är en NoSql dokumentbaserad databas som stödjer stödjer många olika 
 \subsubsection{Handlebars}
 Handlebars är ett så kallat ''template language'' som är byggt från Mustache. Handlebars ger bland annat möjlighet till att lägga in mindre logik i html kod samt att från html filer komma åt variabler som finns definierade i javascript filer.
 
-\subsubsection{REST}
-
 \subsubsection{Wkhtmltopdf}
 Wkhtmltopdf är ett program som tar en hemsida eller en html-fil och skapar en pdf av den. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
 
@@ -165,7 +165,7 @@ För att kunna svara på frågeställningar så måste några begrepp i dem defi
 Effektivt defineras i detta fallet som att det tar kortare tid för operationsförberedelser och kräver mindre av personalen, till exempel att personalen inte ska behöva hålla lika mycket inforamation i huvudet. 
 Lättare defineras som att det går snabbare för nyanställda, och personer som tillfälligt är på en avdelning de inte brukar jobba på, att lära sig rutinerna och kunna utföra arbetet.
 
-Effektiviseringen av sjukvården och hur den ska ske är frågor som diskuterats flitigt de senaste åren. Region Östergötland har gjort tester för att kontrollera hur en operationsförberedelse kan effektiviseras. Ett av dessa tester gick ut på att undersöka hur lång tid det tar att plocka lagerartiklar då information om lagerplats finns lättillängligt gentemot hur lång tid det tar med nuvarande system. Resultatet av detta var att det tog 5 minuter för en person att plocka materialet då lagerplats fanns tillgängligt och 30 minuter för en sjuksköterska med lång erfarenhet med nuvarande system \cite{Elisabeth}. Detta visar att det finns stora tidsvinster i att bygga ett system som underlättar operationsförberedelser.
+Effektiviseringen av sjukvården och hur den ska ske är frågor som diskuterats flitigt de senaste åren. Region Östergötland har gjort tester för att kontrollera hur en operationsförberedelse kan effektiviseras. Ett av dessa tester gick ut på att undersöka hur lång tid det tar att plocka lagerartiklar då information om lagerplats finns lättillängligt gentemot hur lång tid det tar med nuvarande system. Resultatet av detta var att det tog 5 minuter för en person att plocka materialet då lagerplats fanns tillgängligt och 30 minuter för en sjuksköterska med lång erfarenhet med nuvarande system. Detta visar att det finns stora tidsvinster i att bygga ett system som underlättar operationsförberedelser.
 
 
 
@@ -205,27 +205,30 @@ Vid varje iterationsslut hölls ett möte med kund där vi demonstrerade nya fea
 
 \subsection{Utveckling}
 Projektets utveckling har skett i fyra iterationer där den första iteration var en förstudie och i de avslutande tre iterationerna har utvecklingen av produkten skett. Nedan beskrivs vilka hjälpmedel som har använts för att underlätta arbetet.
-		
+
+\subsubsection{Roller}
+I detta projektet finns det sju olika roller. Dessa är teamledare, analysansvarig, arkitekt, kvalitetssamordnare, testledare, dokumentansvarig och utvecklingsledare. Vad dessa roller innebär kan ses nedan. 
+\begin{itemize}
+\item Teamledare: Har huvudansvar för att arbetet inom gruppen går bra och att de uppgifter som ska genomföras bli gjorda. 
+\item Dokumentansvarig: Har ansvar för att alla dokument korrekturläses och ser bra ut. 
+\item Kvalitetssamordnare: Innehar ansvaret för att en kvalitetsplan tas fram och följs. 
+\item Testledare: Skriver testplan, testrapporter och har huvudansvar för att testning sker och görs på rätt sätt.
+\item Utvecklingsledare: Tar fram verktyg för utveckling och leder utvecklingsarbetet.
+\item Arkitekt: Skriver arkitektturbeskrivning och bestämmer hur applikationen ska utformas.
+\item Analysansvarig: Har hand om kundkontakten och har huvudansvar för att en bra kravspecifikation tas fram.
+\end{itemize}
+Dessa roller delade ut efter vad gruppmedlemmarnas önskelmål. Då flera personer ville ha samma roll så diskuterades de olika kandidaternas kvalifikationer, vilket följdes av ett gemensamt beslut från gruppen.
+
 \subsubsection{SCRUM}
-Projektet har utvecklats iterativt med en utvecklingsmetodik som påminner mycket om SCRUM. Aktiviteterna i projektet har visats på en gemensam SCRUM-board med hjälp av webbsidan Trello (se figur \ref{fig:trello}). 
-
-\begin{figure}[htbp]
-	\begin{center}
-	\includegraphics[scale=0.4]{trello.png}
-	\caption{Översiktsvy över alla Trello-boards}
-	\label{fig:trello}
-	\end{center}
-\end{figure}
-
+Projektet har utvecklats iterativt med en utvecklingsmetodik som påminner mycket om SCRUM. Aktiviteterna i projektet har visats på en gemensam SCRUM-board med hjälp av webbsidan Trello. 
 
 \begin{figure}[htbp]
 	\begin{center}
 	\includegraphics[scale=0.5]{trello2.png}
-	\caption{Boarden info}
+	\caption{Infoboarden i Trello}
 	\label{fig:trello2}
 	\end{center}
 \end{figure}
-
 
 Boarden hade kategorierna TODO, DOING och DONE enligt figur \ref{fig:trello2}. När en medlem valt en aktivitet så märktes aktiviteten med medlemmens namn och flyttades till den aktuella kategorin. Varje vecka har gruppen haft ett kort SCRUM-möte på 15 minuter. På mötet har varje gruppmedlem berättat vad som har gjorts den föregående veckan och vad som ska göras nästa vecka. SCRUM-mötet har oftast utförts i samband med varje veckas handledarmöte.
 
@@ -233,7 +236,7 @@ Boarden hade kategorierna TODO, DOING och DONE enligt figur \ref{fig:trello2}. N
 Ett system med alpha state cards har använts för att gruppen skulle kunna ha koll på hur långt projektet har fortskridit. Korten har även använts till att identifiera aspekter av projektet som kan förbättras och som gruppen behöver arbeta mer med. De aspekter av projektet som kunnat förbättras har använts som mål för kommande iterationer. De olika korten har uppdaterats kontinuerligt under projektets gång.
 
 \subsubsection{Sammarbete i gruppen}
-Under utvecklingsfasen delade vi till en början upp oss i två grupper som fokuserade på front-end och back-end. När vi sedan kom längre fram i projektet så övergick de flesta av oss till att endast arbete på front-end.
+Under utvecklingsfasen delade vi till en början upp oss i två grupper som fokuserade på front-end och back-end. När vi sedan kom längre fram i projektet så övergick de flesta av oss till att endast arbete på front-end. Vi har oftast arbetat på samma ställe.
 
 %Under förstudien så diskuterades det hur utvecklingen skulle ske på bästa på sätt för gruppen. Förslagen som diskuterades var, utveckling i mindre grupper, separat arbete var för sig eller att alla gruppmedlemmar skulle sitta tillsammans och utveckla. Då alla i gruppen inte hade utvecklat någon webbaplikation tidigare så togs beslutet att under förstudien paralellt inleda en intern utbildning inom gruppen i form av så kallade kodstugor, dessa gick ut på att alla skulle sitta tillsammans och lära sig de olika verktygen så som t.ex. Javascript och CSS och att de mindre erfarna skulle ha en möjlighet att få hjälp av de mer erfarna.
 
@@ -256,7 +259,7 @@ KeystoneJS underlättade utvecklingen väldigt mycket till en början. Några pu
       Huvuddelen av administeringen har dock bytts ut då den automatgenererade kan vara något begränsad.
     \item Har ett inbyggt användarsystem som är lätt att modifiera och byta ut.
     \item Sköter all kommunikation över http-protokollet till klienterna, dvs. gör hemsidan åtkomlig.
-    \item Har inbyggt stöd för templatespråk som exempelvis Handlebars\footnote{TODO: bättre referens. http://handlebarsjs.com/ (2015-04-18)} och Less\footnote{TODO: Bättre referens. http://lesscss.org/ (2015-04-18)}.
+    \item Har inbyggt stöd för templatespråk som exempelvis Handlebars \cite{handlebars} och Less.
   \end{itemize}
   
 \subsubsection{Front-end}
@@ -267,11 +270,11 @@ All kod är dessutom testad för att fungera på olika webbläsare vilket kan va
 JQuery används för att lättare hämta ut ett element på hemsidan och ändra data i det.
 Det finns även många bra jQuery-bibliotek att hämta som gör att man slipper “uppfinna hjulet” i många fall.
 
-Fördelen med LESS är bland annat att man kan använda variabler och enkla funktioner i stilmallarna.
+Fördelen med Less är bland annat att man kan använda variabler och enkla funktioner i stilmallarna.
 Exempelvis kan variablerna användas för att spara de olika färgerna på hemsidan för att enkelt kunna byta ut dem.
 
 \subsubsection{Struktur}
-En nackdel med jQuery gentemot andra bibliotek som exempelvis angular\footnote{TODO: Referens.} är att det lätt blir spaghettikod\footnote{TODO: Måste defineras?}.
+En nackdel med jQuery gentemot andra bibliotek som exempelvis AngularJS \cite{angular} är att det lätt blir svårförståelig kod.
 För att strukturera så bra som möjligt är det viktigt att koden är bra uppdelad.
 Uppdelningen vi använder oss av fungerar ganska bra, men koden är ändå lite rörig.
 
@@ -281,33 +284,66 @@ Det som kan göras för att få säkerhetskopieringen bättre är att implemente
 Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att det är viktigt att databasen säkerhetskopieras med jämna mellanrum. Men det tar en del datorkraft att göra en säkerhetskopiering. Därför är det bra att det går att ställa in tidsintervallet som bestämmer hur ofta säkerhetskopiering av databasen ska ske.
 
 \subsubsection{Översiktssida}
-Överssiktssidan är tänkt att den ska kunna vara framme på en monitor och inte kräva någon interaktion för att se resultat för olika operationsförberedelser. Det är därför viktigt att den sidan använder realtidskommunikation, det är därför allt uppdateras vi Socket.IO till översiktssidan.
+Överssiktssidan är tänkt att den ska kunna vara framme på en monitor och inte kräva någon interaktion för att se resultat för olika operationsförberedelser. Det är därför viktigt att den sidan använder realtidskommunikation, det är därför allt uppdateras vi Socket.IO till översiktssidan. 
 
-  
+\subsubsection{Handbok}
+Vi valde att ge handböckerna ett liknande utseende som det gamla systemet för att göra övergången så enkel som möjligt. Det nya systemet har förbättras genom att man har större förmåga att formatera innehållet efter behov. Bilder hanteras bättre då de kan zoomas in.
+Den största förändringen ligger i plocklistan som har en koppling direkt till kartoteket.
+
+Sökfunktionen ger möjligheten att snabbt hitta en handbok. Vi valde att placera den i headern på sidan för att man alltid snabbt ska kunna ta sig till en handbok. Den har utformats efter kundens krav med möjlighet att använda alternativa sökord.
+Sökfunktionen kompletterades med möjligheten att lista alla handböcker. Detta var också ett krav från kund. 
+
+Handbokens tillstånd har utformats för att tillfredsställa kraven. Denna utformning kunde dock ha gjorts på andra sätt. I kundens interna utvärdering (referera till appendix) nämns att tillstånden utkast och granskning upplevs som något förvirrande. Under testningen sågs granskningen som överflödig.
+\subsubsection{Redigering}
+I redigeringen av handböcker fokuserade vi på att göra gränssnittet så likt en publicerad handbok som möjligt. Redigeringen var den svåraste delen att göra lättförstålig och användarvänlig. Vi hade flera designideér som skrotades under projektets gång.
+
+Bland annat var vi tvungna att göra en avvägning mellan flexibilitet och användarvänlighet.
+Till exempel så förekommer ofta samma information under flera processteg enligt kund. Man skulle då kunna tänka sig en lösning där denna information kopplas till flera processteg. Vi valde dock bort denna lösning eftersom vi ansåg att detta skapar för stor komplexitet.
+
+\subsubsection{Plocklista}
+Plocklistan har utformats efter kundens behov. Den har under projektets gång uppdaterats många gånger efter feedback från kund. Efter användartester framkom att artiklar som inte finns i engångsmaterialslagret utan plockas på andra ställen också med fördel kunde ligga i en plocklista. Man kan alltså välja att lägga in dessa artiklar i kartoteket eller välja att skapa en ny databas för dessa med en separat plocklista.
+
 \subsection{Metod}
-
 \subsubsection{Kravinsamling}
-Metoden som användes för kravframställning fokuserade på att i förstudien samla in så mycket krav som möjligt genom möten, intervjuer och obeservationer. Att arbeta fram kraven tillsammans med kund kändes nödvändigt för att få en fullständig bild. En sak som vi inte prioriterade men som kanske hade kunnat hjälpt arbetet skulle varit att lägga större fokus på olika roller. Slutsystemet har två roller vilket är admins och icke-admins. En avvägning gjordes där dessa två enkla roller valdes. Fördelen var att att vi kunde lägga fokus på att snabbare kunna testa andra delar av systemet med högre prioritet. Nackdelen var att dessa funktionaliteter inte hann testas och under förstudien ledde till en viss förivirring. Vid användartesterna upplevdes inte detta som att det saknades vilket kan ses som att vi gjorde en bra avvägning. %%blablabla
+Metoden som användes för kravframställning fokuserade på att i förstudien samla in så mycket krav som möjligt genom möten, intervjuer och obeservationer. Att arbeta fram kraven tillsammans med kund kändes nödvändigt för att få en fullständig bild. 
+
+En sak som vi inte prioriterade men som kanske hade kunnat hjälpt arbetet skulle varit att lägga större fokus på olika roller. Slutsystemet har två roller vilket är admins och icke-admins. En avvägning gjordes där dessa två enkla roller valdes. Fördelen var att att vi kunde lägga fokus på att snabbare kunna testa andra delar av systemet med högre prioritet. Nackdelen var att dessa funktionaliteter inte hann testas och under förstudien ledde till en viss förivirring. Vid användartesterna upplevdes inte detta som att det saknades vilket kan ses som att vi gjorde en bra avvägning. 
+
+
 Att använda use-cases eller user-stoires diskuterades också under förstudien. Detta bortprioriterades då vi ansåg att de var överflödiga. Denna avvägning ledde till att det var lite svårare att kommunicera kraven. 
+
+
 Studiebesöket under förstudien var bra för att få en inblick i arbetet. Vi hade dock kunnat behöva mer tid för observation. Vid studiebesöket var hela gruppen med och det blev lite stressigt och mycket folk. Det kunde ha varit bättre att ha fler studiebesök uppdelade på färre personer för.
 
 \subsubsection{Utvecklingen}
 \textbf{DET HÄR KÄNNS SOM ETT RESULTAT?}
 Utvecklingen i SCRUM-form har fungerat bra, dock har utvecklingen som beskriven i metod inte varit i rent SCRUM-format utan har modifierats för att bättre passa gruppen. Ett möte med handledare har hållits en gång i veckan där handledaren har haft möjlighet att ta upp saker som denne tyckt har behövts, sedan har gruppen hållit ett kort SCRUM-möte där man fått förklara vad man gjort förra veckan och vad man planerat att göra kommande vecka. Under mötets gång har man noterat om det är någonting som har behövt diskuteras vidare och detta har då noterats, varpå gruppen har gått igenom dessa frågor efteråt. Detta har fungerat väldigt bra då man på detta sättet inte har fått några större avbrott och alla hela tiden kunna hålla fokus. Efter SCRUM-mötena så har ordet varit fritt och alla har haft möjligheten att komma med synpunkter eller åsikter. Samarbetet i gruppen har fungerat väldigt bra, kodstugorna som gruppen höll under förstudien var alla nöjda med, de som var mindre erfarna med webbprogrammering kände att de fick all den hjälp de behövde när de körde fast i sitt arbete och därför kändes det naturligt för hela gruppen att fortsätta med dessa även under utvecklingsfasen.
 
+Att vissa roller inte riktigt fungerade som de skulle har flera orsaker. Utbildningsledarens roll var dåligt definerad. Exemepluppgifter kunde ha tagits fram för att få en bättre förståelse för vad rollen innebar. Kvalitetssamordnaren hade inte hand om speciellt mycket kvalitetsarbete under projektets gång. Detta berodde främst på att funktionalitet prioriterades framför kvalitet och att det kvalitetsarbete som gjordes delades ut på alla gruppmedlemmar. Dokumentansvarige hade också en roll där det mesta av arbetet delades ut på alla gruppmedlemmar. Anledningen till att arbetet distribuerades var mycket att arbetet för både kvalitetssamordnaren och dokumentansvarige hade fått mycket enformigt arbete med att granska dokument och kod. Att arbetet distribuerades ledde också till att personen i rollen inte identifierade sig själv med rollen och tog därför mindre rollspecifikt ansvar. Detta ger en svår avvägning. Om en roll blir för liten så finns risken att den inte tas på allvar och att låta en person göra allt jobb inom rollen kan få konsekvenser om inte denne är intresserad av jobbet som rollen innebär. I detta projektet är det svårt att komma undan detta problemet då sju stycken olika personer sammanförs och ska fördela sju roller. I större projekt och projekt hos företag är detta ett mindre problem då det finns mer personer att välja på och så blir till exempel en person som inte är speciellt intresserad av kvalité inte anställd som kvalitetssamordnare. 
+
+Den personen med mest erfarenhet blev arkitekt. Detta var ett mycket bra val då detta gjorde att en stabil grund kunde tas fram snabbt för att jobbas vidare på. Om någon med mindre erfarenhet fått denna roll hade det tagit mycket längre tid att komma igång eftersom denne person då hade fått göra mycket mer efterforskning och hade haft svårt att tyda resultaten. 
+
+Att vi oftast arbetade på samma ställe gjorde att vi enkelt kunde fråga någon om vi fick problem vilket kunde spara oss många timmar av felsökning. Eftersom det var varierad kunskapsnivå på deltagarna i projektet så vart det också lättare för alla att komma igång och jobba när de snabbt och enkelt kunde fråga om saker som de inte förstod. Det behövder färre möten eftersom vi alltid visste vem som gjorde vad och vad som behövdes göras.
+
 \subsection{Arbetet i ett vidare sammanhang}
 
 \section{Slutsatser}
+Vi har lyckats göra ett system som innehåller handböcker för operationer som kan användas för operationsförberedelser. Handböckerna innehåller bland annat en plocklista av engångsartiklar som behövs till olika operationer. Vid engångsartiklarna finns data om vart engångsartikeln kan hämtas. Engångsartiklarna blir också sorterade efter var de finns så att man inte kommer att behöva springa fram och tillbaka mellan olika förråd och hyllor för att hämta artiklarna. Eftersom plocklistan uppdateras i realtid så kan också flera sjuksköterskor hämta artiklar samtidigt och checka av de artiklar som de plockat, vilket gör att det inte kommer att bli några konflikter med att flera sjuksköterskor plockar samma artikel. Detta system effektiviserar arbetet vid operationsförberedelser eftersom sjuksköterskor inte längre kommer behöva gå till en dator och söka på artikeln de ska ha för att få reda på i vilken hylla den finns. Syftet med detta projekt är därav avklarat.
+
+Vi har i projektet arbetat på samma ställe vilket för oss har varit väldigt effektivt. Problem har lösts snabbt genom samarbete och gruppmedlemmar har alltid vetat vad som behöver göras.
 
 \section{Fortsatt arbete}
 Här följer en sammanfattning om fortsatt arbete med systemet. Restlistan behandlar krav som inte implementerats eller som borde vidareutvecklas. Även förslag på vidareutveckling som inte tas upp av kravspecifikationen tas upp. Dessa förslag är sådant som kommit fram under utvecklingens gång.
 
 \subsection{Restlista}
-Följande krav är markerade som gula i kravspecifikationen vilket betyder att de bör vidareutvecklas för att ses som klara:
+\subsubsection{Krav som bör vidareutvecklas}
+Följande krav är markerade som gula i kravspecifikationen vilket betyder att de bör vidareutvecklas för att ses som klara.
 %%Fyll på gula krav här efter iteration 3 mötet
-Följande krav är markerade som röda i kravspecifikationen vilket betyder att de inte är påbörjade:
+\subsubsection{Ej påbörjade krav}
+Följande krav är markerade som röda i kravspecifikationen vilket betyder att de inte är påbörjade.
 %%Fyll på röda krav här efter iteration 3 mötet
-Alla krav som behandlar lagersystemet finns kvar:
+
+Alla krav som behandlar lagersystemet finns kvar. För att utveckla ett lagersystem bör en ny förstudie genomföras för att ta fram tydligare krav. Ett lagersystem med skanning av artiklar skulle bidra till att plockningen blir mer säker. Det skulle också bidra till effektivare inventering och översikt av lagret. Ett saldo för varje artikel skulle kunna användas som beställningsunderlag. Kraven rörande lagret som samlats in under vår förstudie är följande:
 \begin{description}
 \item[Krav nr 46] Ska finnas ett saldo för varje artikel i förrådet.
 \item[Krav nr 47] Ska gå att skanna av artiklar (streckkod) som plockas i en specifik plocklista.
@@ -317,21 +353,17 @@ Alla krav som behandlar lagersystemet finns kvar:
 \item[Krav nr 51] En inventeringsfunktion ska finnas.
 \end{description}
 
-Övriga förslag på vidareutveckling:
+\subsubsection{Övriga förslag}
+Här följer övriga förslag på vidareutveckling.
 %%Fyll på här om ni kommer på något!
-
 
 \begin{description}
 \item[Artikelsök] Vid sökning på artikel vid redigering av handbok kan det vara bra om man sorterar resultaten så att de artiklar som tillhör samma enhet som handboken visas först.
 \item[Avancerad sökfunktion] En mer avancerad sökfunktion med * och söknining på flera ord som inte behöver vara direkt efter varandra.
 \item[Förvalda kommentarer] Under användartester observerades att samma kommentarer skrivs ofta så det kan vara bra med en lista på vanliga kommentarer som man kan välja ifrån.
 \item[Roller och rättigheter] Olika roller bör identifieras och en funktion för att tilldela användare olika rättigheter bör implementeras.
+\item[Galler och extrainstrument] De artiklar som benämns som galler och instrument bör också behandlas med en plocklista. Detta kan göras genom att lägga in dem i kartoteket eller genom att skapa en separat databas för dessa med egen plocklista.
 \end{description}
-\subsection{Referenser}
-\begin{thebibliography}{9}
-\bibitem{Elisabeth}
-Får nog fixa en bättre referens här.
-\end{thebibliography}
 
 \newpage
 \part{Enskilda utredningar}
@@ -349,7 +381,12 @@ Får nog fixa en bättre referens här.
 \input{enskilda/robin.tex}
 \newpage
 \input{enskilda/albert.tex}
+\newpage
 
+\part{Referenser}
+\input{referenser.tex}
+\newpage
 
-
+\part{Appendix A - Användarutvärdering}
+\includepdf[pages={-}]{utv.pdf}
 \end{document}
