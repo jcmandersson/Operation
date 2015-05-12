@@ -1,7 +1,6 @@
 \section{Resultat}
 Denna del av dokumentet presenterar resultatet av vårt arbete.
-Här kommer beskrivs både hur systemet ser ut och används, samt hur det är uppbyggt rent tekniskt.
-%Här borde vi också skriva att vi besvarar andra frågan
+Här kommer beskrivs både hur systemet ser ut och används, samt hur det är uppbyggt rent tekniskt. Vidare beskrivs också hur utvecklingen inom gruppen fungerat.
 
 \subsection{Översikt av systemet}
 Det finns två huvuddelar i systemet. Handböckerna och kartoteket.
@@ -55,13 +54,13 @@ Grunden till programmet är node.js vilket är en plattform för att utveckla sj
 
 Det största och mest betydelsefulla ramverket för detta projekt är KeystoneJS, ett CMS-ramverk till node.js.
 
-För realtidskommunikation används ett programmeringsinterface vid namn Socket.IO.\footnote{TODO: bättre referens. http://socket.io/ (2015-04-18)}
+För realtidskommunikation används ett programmeringsinterface vid namn Socket.IO \cite{socketio}.
 Socket.IO väljer automatiskt hur datan ska skickas beroende på vilken webbläsare som används och vad den stödjer.
 Socket.io är event-baserat vilket betyder att man skapar events på antingen klient eller serversida som man sedan kan trigga från motsatt sida.
 Vanliga javascript-object kan skickas tillsammans med eventen.
 
 \subsubsection{Front-end}
-På klientsidan används bootstrap\footnote{TODO: Bättre referens.}, jQuery\footnote{TODO: Bättre referens.} och LESS.
+På klientsidan används bootstrap\cite{bootstrap}, jQuery\cite{jquery} och LESS \cite{less}.
 
 \subsubsection{Struktur}
 Varje enskild sida har minst en skriptfil, en css fil och en html fil. På de sidor där det blivigt stora skripts så har skriptfilen delats upp i flera filer.
