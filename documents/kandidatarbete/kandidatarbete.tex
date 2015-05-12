@@ -118,6 +118,7 @@ Uppgiften som gruppen har fått är att skapa ett nytt system med handböcker so
 ska använda en iPad för listorna så de kan gå runt och plocka i lagret och bocka av samtidigt. \\*
 I mån av tid ska också extra funktionalitet implementeras. Till exempel sortera plocklistan med avseende på närmsta väg mellan artiklarna, lagersaldo och media i handböckerna. \\*
 Hela systemet ska ligga under en open-source licens så det kan användas fritt av alla.    
+
 \subsection{Frågeställning}
 Rapporten ska besvara följande frågeställningar.
 \begin{itemize}
@@ -153,8 +154,6 @@ MongoDB är en NoSql dokumentbaserad databas som stödjer stödjer många olika 
 
 \subsubsection{Handlebars}
 Handlebars är ett så kallat ''template language'' som är byggt från Mustache. Handlebars ger bland annat möjlighet till att lägga in mindre logik i html kod samt att från html filer komma åt variabler som finns definierade i javascript filer.
-
-\subsubsection{REST}
 
 \subsubsection{Wkhtmltopdf}
 Wkhtmltopdf är ett program som tar en hemsida eller en html-fil och skapar en pdf av den. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
@@ -233,7 +232,7 @@ Boarden hade kategorierna TODO, DOING och DONE enligt figur \ref{fig:trello2}. N
 Ett system med alpha state cards har använts för att gruppen skulle kunna ha koll på hur långt projektet har fortskridit. Korten har även använts till att identifiera aspekter av projektet som kan förbättras och som gruppen behöver arbeta mer med. De aspekter av projektet som kunnat förbättras har använts som mål för kommande iterationer. De olika korten har uppdaterats kontinuerligt under projektets gång.
 
 \subsubsection{Sammarbete i gruppen}
-Under utvecklingsfasen delade vi till en början upp oss i två grupper som fokuserade på front-end och back-end. När vi sedan kom längre fram i projektet så övergick de flesta av oss till att endast arbete på front-end.
+Under utvecklingsfasen delade vi till en början upp oss i två grupper som fokuserade på front-end och back-end. När vi sedan kom längre fram i projektet så övergick de flesta av oss till att endast arbete på front-end. Vi har oftast arbetat på samma ställe.
 
 %Under förstudien så diskuterades det hur utvecklingen skulle ske på bästa på sätt för gruppen. Förslagen som diskuterades var, utveckling i mindre grupper, separat arbete var för sig eller att alla gruppmedlemmar skulle sitta tillsammans och utveckla. Då alla i gruppen inte hade utvecklat någon webbaplikation tidigare så togs beslutet att under förstudien paralellt inleda en intern utbildning inom gruppen i form av så kallade kodstugor, dessa gick ut på att alla skulle sitta tillsammans och lära sig de olika verktygen så som t.ex. Javascript och CSS och att de mindre erfarna skulle ha en möjlighet att få hjälp av de mer erfarna.
 
@@ -295,9 +294,14 @@ Studiebesöket under förstudien var bra för att få en inblick i arbetet. Vi h
 \textbf{DET HÄR KÄNNS SOM ETT RESULTAT?}
 Utvecklingen i SCRUM-form har fungerat bra, dock har utvecklingen som beskriven i metod inte varit i rent SCRUM-format utan har modifierats för att bättre passa gruppen. Ett möte med handledare har hållits en gång i veckan där handledaren har haft möjlighet att ta upp saker som denne tyckt har behövts, sedan har gruppen hållit ett kort SCRUM-möte där man fått förklara vad man gjort förra veckan och vad man planerat att göra kommande vecka. Under mötets gång har man noterat om det är någonting som har behövt diskuteras vidare och detta har då noterats, varpå gruppen har gått igenom dessa frågor efteråt. Detta har fungerat väldigt bra då man på detta sättet inte har fått några större avbrott och alla hela tiden kunna hålla fokus. Efter SCRUM-mötena så har ordet varit fritt och alla har haft möjligheten att komma med synpunkter eller åsikter. Samarbetet i gruppen har fungerat väldigt bra, kodstugorna som gruppen höll under förstudien var alla nöjda med, de som var mindre erfarna med webbprogrammering kände att de fick all den hjälp de behövde när de körde fast i sitt arbete och därför kändes det naturligt för hela gruppen att fortsätta med dessa även under utvecklingsfasen.
 
+Att vi oftast arbetade på samma ställe gjorde att vi enkelt kunde fråga någon om vi fick problem vilket kunde spara oss många timmar av felsökning. Eftersom det var varierad kunskapsnivå på deltagarna i projektet så vart det också lättare för alla att komma igång och jobba när de snabbt och enkelt kunde fråga om saker som de inte förstod. Det behövder färre möten eftersom vi alltid visste vem som gjorde vad och vad som behövdes göras.
+
 \subsection{Arbetet i ett vidare sammanhang}
 
 \section{Slutsatser}
+Vi har lyckats göra ett system som innehåller handböcker för operationer som kan användas för operationsförberedelser. Handböckerna innehåller bland annat en plocklista av engångsartiklar som behövs till olika operationer. Vid engångsartiklarna finns data om vart engångsartikeln kan hämtas. Engångsartiklarna blir också sorterade efter var de finns så att man inte kommer att behöva springa fram och tillbaka mellan olika förråd och hyllor för att hämta artiklarna. Eftersom plocklistan uppdateras i realtid så kan också flera sjuksköterskor hämta artiklar samtidigt och checka av de artiklar som de plockat, vilket gör att det inte kommer att bli några konflikter med att flera sjuksköterskor plockar samma artikel. Detta system effektiviserar arbetet vid operationsförberedelser eftersom sjuksköterskor inte längre kommer behöva gå till en dator och söka på artikeln de ska ha för att få reda på i vilken hylla den finns. Syftet med detta projekt är därav avklarat.
+
+Vi har i projektet arbetat på samma ställe vilket för oss har varit väldigt effektivt. Problem har lösts snabbt genom samarbete och gruppmedlemmar har alltid vetat vad som behöver göras.
 
 \section{Fortsatt arbete}
 Här följer en sammanfattning om fortsatt arbete med systemet. Restlistan behandlar krav som inte implementerats eller som borde vidareutvecklas. Även förslag på vidareutveckling som inte tas upp av kravspecifikationen tas upp. Dessa förslag är sådant som kommit fram under utvecklingens gång.
