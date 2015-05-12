@@ -19,144 +19,105 @@ Det finns många programmeringsspråk som man kan använda i samma syfte som Nod
 
 I detta projekt har jag haft rollen som arkitekt och alltså tagit fram grundstenarna till programmet. Jag valde en arkitektur byggd på Node.js med många bibliotek och ramverk. Node.js valdes framförallt av två anledningar. 
 
-Först och främst så kom alla in i projektet med olika erfarenheter och kunskaper inom webbprogrammering och vissa hade aldrig tidigare skapat en hemsida. Trots detta ville vi snabbt komma igång och jag ville därför ta fram en arkitektur som var så lite nytt som möjligt. Eftersom man på ett eller annat sätt är tvungen att skriva Javascript när man programmerar till webben så tyckte jag det var bra att hålla sig till så få nya språk som möjligt.
+Först och främst så kom alla in i projektet med olika erfarenheter och kunskaper inom webbprogrammering och vissa hade aldrig tidigare skapat en hemsida. Trots detta ville vi snabbt komma igång och jag ville därför ta fram en arkitektur som var enkel att lära sig. Eftersom man på ett eller annat sätt är tvungen att skriva Javascript när man programmerar till webben så tyckte jag det var bra att hålla sig till så få nya språk som möjligt.
 
-Den andra anledning till att jag valde Node.js beror på kunden. Visserligen hade inte kunden några specifika krav på arkitekturen men däremot är vissa av kraven i kravspecifikationen olika lätta att implementera beroende på vilken plattform man väljer. Det fanns ett krav som gick ut på att flera personer skulle kunna kryssa av en lista samtidigt och alla som var inne på sidan skulle se uppdateringen i realtid. Detta kan vara svårt att lösa på många plattformar men blir väldigt enkelt med websockets som Node.js har bra stöd för. Detta till skillnad mot exempelvis PHP där websocket är krångligare att använda.
+Den andra anledning till att jag valde Node.js beror på uppgiften. Det fanns ett krav som gick ut på att flera personer skulle kunna kryssa av en lista samtidigt och alla som var inne på sidan skulle se uppdateringen i realtid. Detta kan vara svårt att lösa på många plattformar men blir väldigt enkelt med websockets som Node.js har bra stöd för. Detta till skillnad mot exempelvis PHP där websocket är krångligare att använda.
 
 I och med att jag inte hade så mycket erfarenhet av Node.js och att använda många bibliotek sedan tidigare så var det svårt att veta om det skulle passa bra till detta projekt. Dessutom hade jag ingen tidigare erfarenhet av webbprogrammering i grupp. Under projektets gång har jag samlat på mig mer erfarenheter som underlättar för att göra en bedömning av detta arkitekturval.
 
-%Skriv om: 
-%-* Olika erfarenheter och kunskaper
-%-* Ville komma igång snabbt
-%-* Socket.IO - Engångsartiklar
-%-* Mina tidigare erfarenheter (av Javascript, ...)
-%* Få en bättre röd tråd här...
-%-* Varför jag valde arkitekturen
-
 \subsection{Teori}
 
+Nedan följer lite information om PHP, Python och Node.js samt vad som skiljer dom åt i stora drag.
+
 \subsubsection{PHP}
-%http://php.net/manual/en/history.php.php
 
-PHP är ett programmeringsspråk som man kan skriva direkt i sin HTML-kod. Det skapades från början för att göra det enklare att lägga in funktionalitet på en hemsida. Du behövde inte längre skapa ett helt program i C, eller liknande, som i sin tur genererade HTML-kod för att exempelvis skapa en enkel gästbok. Nu kunde du enkelt lägga in PHP-kod direkt i HTML-koden som kördes i samband med att klienten frågar efter sidan. Det saknar även en standardiserad pakethanterare vilket gör att det är svårare att använda sig av många bibliotek. 
-
-%PHP : Byggt för webben men är rätt gamalt, ingen pakethanterare, svårt att skala
-%Python: Inte byggt för webben från början
+PHP är ett programmeringsspråk som man kan skriva direkt i sin HTML-kod. Det skapades från början för att göra det enklare att lägga in funktionalitet på en hemsida. Du behövde inte längre skapa ett helt program i C, eller liknande, som i sin tur genererade HTML-kod för att exempelvis skapa en enkel gästbok\cite{php_history}. Nu kunde du enkelt lägga in PHP-kod direkt i HTML-koden som kördes i samband med att klienten frågar efter sidan. Det saknar även en standardiserad pakethanterare vilket gör att det är svårare att använda sig av många bibliotek. 
 
 \subsubsection{Python}
 
-%http://flask.pocoo.org/
-På senare tid har flera språk som inte är skapade för webben från början fått stöd för att göra hemsidor. Ett exempel är Python vilket alltså inte är byggt för webben till en början men ramverk som exempelvis Flask\cite{python_flask} gör det möjligt att starta en enkel webbserver som genererar HTML-kod. Till skillnad från PHP så separerar alltså Python logiken från själva HTML-koden och man skriver inte Python direkt i HTML-filerna. Programmeringsstilen är ganska lik Node.js och man använder sig ofta av liknande designmönster, men eftersom språket inte är skapat för webben från början kan det få problem med exempelvis prestanda när antalet användare ökar.
+På senare tid har flera språk som inte är skapade för webben från början blivit populära för att göra hemsidor. Ett exempel är Python vilket alltså inte är byggt för webben till en början men ramverk som exempelvis Flask\cite{python_flask} gör det möjligt att starta en enkel webbserver som genererar HTML-kod. Till skillnad från PHP så separerar alltså Python logiken från själva HTML-koden och man skriver inte Python direkt i HTML-filerna. Programmeringsstilen är ganska lik Node.js och man använder sig ofta av liknande designmönster, men eftersom språket inte är skapat för webben från början kan det få problem med exempelvis prestanda när antalet användare ökar.
 
 \subsubsection{Node.js}
-%http://radar.oreilly.com/2011/07/what-is-node.html
-Internet ändras hela tiden. Om man går tillbaka några år så bestod mest internet av statiska hemsidor med enkla gästböcker eller liknande. Idag består internet av sociala nätverk och sidor med dynamiskt innehåll som kan ha tusentals användare varje dag. Node.js är skapat med detta i åtanke. Det är inte skapat för att göra tunga beräkningar men däremot för att snabbt kunna distribuera information till flera användare samtidigt. En stor skillnad på internet idag gentemot när PHP skapades är att när man har laddat klart en hemsida så kan fortfarande saker uppdateras. Exempelvis kan man på många sidor direkt se när en ny kommentar skickas in eller som i detta projekt så ska flera personer kunna se när man kryssar i en checkruta. Detta är fullt möjligt i både PHP och Python också men Node.js är skapat just för att lösa sådana problem utan att prestanda ska bli lidande.
+Internet ändras hela tiden. Om man går tillbaka några år så bestod mest internet av statiska hemsidor med enkla gästböcker eller liknande. Idag består internet av sociala nätverk och sidor med dynamiskt innehåll som kan ha tusentals användare varje dag. Node.js är skapat med detta i åtanke. Det är inte skapat för att göra tunga beräkningar men däremot för att snabbt kunna distribuera information till flera användare samtidigt. En stor skillnad på internet idag gentemot när PHP skapades är att när man har laddat klart en hemsida så kan fortfarande delar av hemsidan uppdateras. Exempelvis kan man på många sidor direkt se nya kommentar utan att uppdatera sidan eller som i detta projekt så ska flera personer kunna se när man kryssar i en checkruta i realtid. Detta är fullt möjligt i PHP och Python också men skillnaden är att Node.js är skapat för att lösa just sådana problem med bra prestanda. Detta har lett till att Node.js snabbt har fått stöd från många programmerare\cite{node_performance}.
 
 \subsection{Metod}
 
 I takt med att vi kom igång med projektet så fick vi i gruppen hela tiden nya erfarenheter med Node.js. Vi har upptäckt både fördelar och nackdelar med arkitekturen som jag inte hade tänkt på tidigare. 
 
-Utifrån vad jag har hört och sett från gruppen tillsammans med mina egna åsikter har jag tagit fram vad jag ser för fördelar och nackdelar med Node.js i detta projekt. Jag har även utifrån tidigare erfarenheter tagit med några potentiella fördelar och nackdelar som kan uppstå med denna arkitektur i längden.
+Utifrån mina iakttagelser av gruppen tillsammans med mina egna åsikter har jag tagit fram vad jag ser för fördelar och nackdelar med Node.js och många bibliotek i detta projekt. Jag har även utifrån tidigare erfarenheter tagit med några potentiella fördelar och nackdelar som kan uppstå med denna arkitektur i längden.
 
 Till sist har jag utifrån mina tidigare erfarenheter vägt fördelarna och nackdelarna gentemot hur det kan fungera i PHP och Python. 
 
-%Skriv om:
-%* Hur jag kom fram till fördelar/nackdelar
-%* Hur jag kom fram till många externa bibliotek?
-%* Såg min chans att prova något nytt?
-% FRAMFÖRALLT: Samlat erfarenheter under projektet.
-
 \subsection{Resultat}
 
-Under denna rubrik presenteras resultatet av undersökningen. 
+Under denna rubrik presenteras resultatet av undersökningen. Resultatet bygger på mina erfarenheter under projektets gång samt mina iakttagelser när jag läst andras kod i projektet.
 
-\subsubsection{Fördelar och nackdelar med Node.js}
+\subsubsection{Fördelar med Node.js}
 
-Följande ska skrivas om i flytande text!
-Fördelar:
-\begin{itemize}
-	\item Många bibliotek med npm
-	\item Enkelt att börja med
-	\item Samma språk som på klienten
-	\item Simpelt med realtidsuppdateringar (socket.io)
-\end{itemize}
-Nackdelar:
-\begin{itemize}
-	\item Ibland svårt att strukturera koden
-	\item Behövs inte speciellt tunga beräkningar för att prestandan ska bli lidande och man får därför lägga mycket logik på klienten. (exempelvis redigera-sidan)
-	\item Inte skapat för relationsdatabaser vilket passar bättre till vissa av sakerna (kartoteket exempelvis)
-	\item Non-blocking är svårt att greppa till en början
-\end{itemize}
+Först och främst var det en stor fördel med en plattform som är byggd runt sin pakethanterare, i detta fall npm. Det var väldigt enkelt att lägga till, uppdatera och ta bort bibliotek. När man behövde programmera under en ny miljö, exempelvis en annan dator så var det enkelt att bara behöva skriva en rad i kommandotolken eller liknande för att installera allt man behövde för att köra programmet. Det var även enkelt för alla att installera de moduler som behövs när någon valde att använda ett bibliotek.
 
-\subsubsection{Fördelar och nackdelar med externa bibliotek}
+Det var även lätt att hitta en bra grund att bygga på. Då vi det finns så många bibliotek var det enkelt att hitta ett kraftfull men utbyggbart system att börja med. I detta fall föll valet på KeystoneJS. Detta gjort att vi snabbt kom igång och inte behövde lösa allt med kodstruktur och liknande innan vi såg resultat.
 
-Följande ska skrivas om i flytande text!
-Fördelar:
-\begin{itemize}
-	\item Ofta snygga och effektiva lösningar som hade tagit lång tid att skriva själv
-	\item Går snabbt att nå resultat
-	\item 
-\end{itemize}
-Nackdelar:
-\begin{itemize}
-	\item Konstiga buggar
-	\item Förlitar sig på andra programmerare
-	\item Svårt att sätta sig in i hur allt fungerar och känns ibland som saker sker av magi.
-	\item Svårt att hålla reda på alla Licenser
-\end{itemize}
+En annan fördel som också hör till att det finns så mycket bibliotek att välja mellan är att det var väldigt enkelt att jobba realtidsuppdatering. Detta beror inte enbart på att vi hittade ett bra bibliotek, Socket.IO, utan även på hur språket är uppbyggt. Node.js är skapat för att klara av många småberäkningar samtidigt och det är precis vad det handlade om i detta projekt. Flera personer ska kunna kryssa i rutor och alla ska se vad som händer direkt. Det handlar inte om speciellt mycket datorkraft utan mer om många små meddelanden som ska skickas mellan klienterna.
 
-%Skriv om:
-%* Fördelar/nackdelar med Node.js
-%* Fördelar/nackdelar med externa bibliotek
-%* Konstiga buggar
-%* Förlitar sig på andra
-%* Svårt med nonblocking när man aldrig använt innan
-%* Känns ibland som magi när man inte vet vad som händer i bakgrunden
-%* Svårt att felsöka när man inte förstår vad som händer till 100\%.
+Den sista fördelen med Node.js i just detta projekt var att man skriver i språket Javascript. Hade jag valt en annan plattform hade de som inte hållit på med webbprogrammering tidigare både behövt lärt sig Javascript för webbläsaren och ett nytt språk till servern. Nu räckte det med att lära sig Javascript vilket gick snabbt för alla att lära sig. Dessutom underlättade detta att jobba med kommunikation mellan klienterna då man enkelt skrev samma, eller liknande kod, på både klient och server.
+
+\subsubsection{Nackdelar med Node.js}
+
+Det finns tyvärr även nackdelar med Node.js. Den första är att plattformen skapades för att användas tillsammans med dokumentdatabaser. Vissa av delarna i detta projekt skulle passa bättre att ha i relationsdatabaser. Det är visserligen fullt möjligt att med hjälp av bibliotek till Node.js använda sig av relationsdatabaser men det finns inte lika bra och utarbetat stöd som det gör för dokumentdatabaser.
+
+En annan nackdel var att Node.js programmeringstänk var svårt att komma in i till en början. Tanken är att man all kod ska köras asynkront. I början var det lite ovant för många att skriva kod på det sättet. 
+
+Eftersom både server och klient använder sig av Javascript så kunde det ibland vara svårt att hålla isär vad som händer på servern respektive klienten. Exempelvis läsning och skrivning till databasen kan enbart ske från servern och man måste därför använda sig av något gränssnitt som i sin tur körs på servern för att göra detta genom klienten. Detta var lite krångligt till en början och det var vanligt att man blandade ihop hur man pratar med databasen beroende på om man är på servern eller klienten.
+
+Den sista nackdelen handlar om prestanda. I fall där tyngre och längre beräkningar behövdes göras så märks snabbt en fördröjning på klienten. Jag tänker specifikt på en redigeringssida i projektet. Sidan har relativt komplexa databaskopplingar och ifall man ville skicka all data och sedan tolka den på servern tog det mycket kraft och det var även svårt att skriva kod som kan köras asynkront. Därför var vi tvungna att flytta mycket av logiken till klienten istället.
+
+\subsubsection{Fördelar med många externa bibliotek} 
+
+Den kanske största fördelen med externa bibliotek är att man snabbt når resultat. Det går fort att lägga in ett paket som löser stora delar av ditt problem och eftersom det finns så många bibliotek till Node.js så går det ofta lätt att hitta ett som passar för just ditt problem.
+
+Det blir också ofta i många fall snygga och mer utarbetade lösningar än om man skrivit det själv. Eftersom många bibliotek används av tusentals programmerare så utvecklas de även hela tiden. På det sättet har många bibliotek växt fram till att bli väldigt kraftfulla och effektiva. 
+
+\subsubsection{Nackdelar med många externa bibliotek}
+
+En stor nackdel som jag framförallt har upptäckt i tidigare projekt men även ett par gånger i detta projekt är att man lätt kan få konstiga buggar som är svåra att felsöka. I vissa fall är inte bibliotek kompatibla med varandra och om man då inte har lite tur med en Google-sökning och hittar någon med exakt samma problem så kan de vara väldigt svårt att hitta ursprunget till buggarna som uppstår. Detta kan även hända när man uppdatera ett befintligt bibliotek som i och med uppdateringen blir inkompatibelt med något annat bibliotek. På så sätt kan det enkelt eskalera ifall man använder sig av allt för mycket stora bibliotek.
+
+Dessutom finns det även en säkerhetsaspekt som inte spelar så stor roll i detta projekt då programmet enbart körs på ett intranät men kan spela roll i framtiden. Vissa bibliotek lider av säkerhetsproblem som upptäcks och täpps till under utvecklingen. Med många bibliotek i ett projekt kan det vara svårt att hålla alla uppdaterade och man riskerar då att vara utsatt för en säkerhetsrisker.
+
+En annan nackdel är att när man är ny inom webbprogrammering och inte har full förståelse för hur saker och ting hör ihop så kan det ibland kännas som saker händer av ren magi. Man ser att det fungerar men man vet inte hur. Om då till exempel ett testfall inte fungerar kan det vara svårt att lokalisera och lösa. Detta hände framförallt med det stora biblioteket KeystoneJS som gör mycket i bakgrunden och lyfter fram ett enkelt gränssnitt till programmeraren.
+
+Den sista nackdelen är att hålla reda på alla licenser. Det finns en uppsjö av licenser för öppen källkod och det gäller att ha koll på vad man får, och inte får, göra med koden. När dessutom alla kan lägga till bibliotek hur de vill så kan det lätt slinka igenom ett bibliotek som har en otillåten licens.
+
 
 \subsection{Diskussion}
 
 \subsubsection{Resultat}
 
-Ska skrivas:
-\begin{itemize}
-	\item Varför väger fördelarna över nackdelarna
-	\item Vad kan man göra åt nackdelarna?
-	\item Var Node.js ett bra val?
-	\item Var det ett bra val att använda sig av mycket bibliotek eller skulle man varit mer konservativ?
-	\item Skulle man kunna gjort något annorlunda?
-\end{itemize}
-%Skriv om: 
-%* Varför fördelarna väger över nackdelarna
-%* Vad man kan göra åt nackdelarna?
-%* Var Node.js ett bra val?
-%* Kan det finnas ett annat utgångsläge där ett alternativ varit bättre?
+Många av fördelarna för tyvärr även med sig en nackdel. Så väger fördelarna verkligen över nackdelarna? 
+
+Om vi börjar med att Node.js använder sig av Javascript så tycker jag det är en väldigt stor fördel när man börjar med en grupp som är ny inom webbprogrammering. Det är inte så stort att lära sig ett nytt språk men kan bli krångligt att lära sig två språk samtidigt. Man blir lätt att blanda ihop små finesser i språken och dessutom hinner man inte lära sig två språk lika djupt. Samtidigt skapade Javascript förvirring mellan vad som kördes på servern respektive klienten. Det hade varit tydligare ifall man använt sig av ett helt annat språk på servern, som exempelvis PHP eller Python.
+
+Men med både PHP och Python blir det istället krångligare med kommunikationen mellan server och klient. Det som nu kunde skriva med samma, eller liknande, kod på både server och klient skulle kunna behöva varit helt annorlunda. Säkert är i alla fall att det inte skulle gått att kopiera, eller flytta kod mellan server och klient.
+
+Resterande nackdelar med Node.js tycker jag inte har någon större betydelse i detta projekt då det handlar om ett relativt litet projekt. Saker som prestanda kommer inte bli lidande i nuläget. Däremot ifall programmet ska skalas upp och köras på flera sjukhus ifrån samma instans skulle man behöva undersöka detta närmare. Med det inte sagt att en sådan undersökning skulle visa att PHP, Python eller någon annan plattform hade varit ett bättre alternativ.
+
+När det gäller att använda många externa bibliotek så är det enkelt att välja en arkitektur som ger snabba resultat framför en som ger mer långsiktiga lösningar i ett sådant här projekt där man har begränsat med tid. I ett projekt som pågår under längre tid kan det vara bättre med en lite mer konservativ inställning kring att ta in nya bibliotek för att lösa ett problem. I många fall är det bra och man får enkelt effektiva och kraftfulla lösningar men ibland gör det också projektet mer svårhanterligt. Som jag skrev i resultatet så finns det en risk att buggar uppkommer på grund av inkompatibilitet mellan bibliotek. 
+
+Med det inte sagt att man inte bör använda externa bibliotek överhuvudtaget men det bör kanske ligga lite mer forskning bakom innan man väljer att ta inte ett bibliotek i ett projekt. I detta projekt har vi tagit in ett projekt, kollat så det löser vårat problem och att licensen är tillåten och ifall detta är uppfyllt så har vi behållit biblioteket. Här finns det utrymme för förbättring och mer forskning. Exempelvis kan det vara bra att undersöka ifall biblioteket är stabilt, effektivt och vad som finns för support om något inte fungerar. Det kan även vara bra att sätta sig in lite i koden för att se så den håller måttet.
 
 \subsubsection{Metod}
 
-Ska skrivas:
-\begin{itemize}
-	\item Kunde jag gjort något annorlunda?
-	\item Hade jag gjort något annorlunda om det funnits mer tid?
-	\item Mer research om andra liknande projekt?
-	\item Skulle jag tagit mer hänsyn till kunden?
-\end{itemize}
+Det finns mycket jag skulle kunnat gjort för att få bättre resultat i denna rapport. Exempelvis skulle en undersökning kunnat gjorts i gruppen för att se vad de tyckt varit bra respektive dåligt med egna ord och inte bara gått på mina iakttagelser. Jag hade även kunnat hitta mer källor på nätet om vad som generellt är bra och dåligt med Node.js och utvärderat hur det har påverkat vårat projekt. 
 
-%Skriv om:
-%* Kunde jag gjort något annorlunda?
-%* Varför använde jag just den metoden?
-%* Tidsbrist? Tvingad till snabba beslut?
-%* Önskemål från kund?
-%* Kunde ha gjort mer research om andra liknande projekt
+Det går även att tänka ur ett mer långsiktigt perspektiv där kunden tagit över utvecklingen. Helt enkelt hur det skulle fungera att ta över detta projekt och koppla detta till min frågeställning. Jag tänker då på kunden som väljer mellan att modifiera detta projekt eller låta ett företag skriva om från början. En undersökning ur ett långsiktigt perspektiv skulle kunna hjälpa kunden i detta beslut.
 
 \subsection{Slutsatser}
-Ska skrivas:
-\begin{itemize}
-	\item Var Node.js ett bra val?
-	\item Kunde PHP eller Python ha varit bättre alternativ?
-\end{itemize}
-%Skriv om: 
-%* Slutsatsen är att Node.js var ett bra val och fördelarna väger över nackdelarna. Jag tror inte heller att PHP hade varit ett bättre alternativ.
+
+Just för detta projekt tycker jag valet av Node.js och att använda många bibliotek var bra. Vi hade press på oss att snabbt få en färdig produkt och att använda mycket färdig kod har hjälpt oss dit. 
+
+De flesta delarna skulle nog kunna göras lika bra i PHP eller Python men det hade förmodligen varit en något längre inlärningskurva för gruppens medlemmar. Jag tror även att just delen med att flera personer samtidigt ska kryssa av en lista skulle varit svårare att lösa med PHP eller Python och är ett problem som egentligen är perfekt för Node.js.
+
+Jag tycker att fördelarna väger över nackdelarna för både Node.js och för att använda många bibliotek i detta projekt.
 
 \subsection{Referenser}
 \vspace{-9mm}
@@ -170,8 +131,8 @@ Ska skrivas:
 	\url{http://flask.pocoo.org/}\\
 	Hämtad 2015-05-11.
 	
-	\bibitem{nodejs_whatis}
-	\url{http://radar.oreilly.com/2011/07/what-is-node.html}\\
-	Hämtad 2015-05-11.
+	\bibitem{node_performance}
+	\url{http://arxiv.org/abs/1503.01398?}\\
+	Hämtad 2015-05-12.
 	
 \end{thebibliography}
