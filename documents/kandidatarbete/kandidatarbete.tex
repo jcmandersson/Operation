@@ -5,6 +5,7 @@
 \usepackage{etoolbox}
 \usepackage{graphicx}
 \graphicspath{ {images/} }
+\usepackage{pdfpages}
 
 \usepackage{subcaption}
 \usepackage{url}
@@ -281,14 +282,35 @@ Det som kan göras för att få säkerhetskopieringen bättre är att implemente
 Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att det är viktigt att databasen säkerhetskopieras med jämna mellanrum. Men det tar en del datorkraft att göra en säkerhetskopiering. Därför är det bra att det går att ställa in tidsintervallet som bestämmer hur ofta säkerhetskopiering av databasen ska ske.
 
 \subsubsection{Översiktssida}
-Överssiktssidan är tänkt att den ska kunna vara framme på en monitor och inte kräva någon interaktion för att se resultat för olika operationsförberedelser. Det är därför viktigt att den sidan använder realtidskommunikation, det är därför allt uppdateras vi Socket.IO till översiktssidan.
+Överssiktssidan är tänkt att den ska kunna vara framme på en monitor och inte kräva någon interaktion för att se resultat för olika operationsförberedelser. Det är därför viktigt att den sidan använder realtidskommunikation, det är därför allt uppdateras vi Socket.IO till översiktssidan. 
 
-  
+\subsubsection{Handbok}
+Vi valde att ge handböckerna ett liknande utseende som det gamla systemet för att göra övergången så enkel som möjligt. Det nya systemet har förbättras genom att man har större förmåga att formatera innehållet efter behov. Bilder hanteras bättre då de kan zoomas in.
+Den största förändringen ligger i plocklistan som har en koppling direkt till kartoteket.
+
+Sökfunktionen ger möjligheten att snabbt hitta en handbok. Vi valde att placera den i headern på sidan för att man alltid snabbt ska kunna ta sig till en handbok. Den har utformats efter kundens krav med möjlighet att använda alternativa sökord.
+Sökfunktionen kompletterades med möjligheten att lista alla handböcker. Detta var också ett krav från kund. 
+
+Handbokens tillstånd har utformats för att tillfredsställa kraven. Denna utformning kunde dock ha gjorts på andra sätt. I kundens interna utvärdering (referera till appendix) nämns att tillstånden utkast och granskning upplevs som något förvirrande. Under testningen sågs granskningen som överflödig.
+\subsubsection{Redigering}
+I redigeringen av handböcker fokuserade vi på att göra gränssnittet så likt en publicerad handbok som möjligt. Redigeringen var den svåraste delen att göra lättförstålig och användarvänlig. Vi hade flera designideér som skrotades under projektets gång.
+
+Bland annat var vi tvungna att göra en avvägning mellan flexibilitet och användarvänlighet.
+Till exempel så förekommer ofta samma information under flera processteg enligt kund. Man skulle då kunna tänka sig en lösning där denna information kopplas till flera processteg. Vi valde dock bort denna lösning eftersom vi ansåg att detta skapar för stor komplexitet.
+
+\subsubsection{Plocklista}
+Plocklistan har utformats efter kundens behov. Den har under projektets gång uppdaterats många gånger efter feedback från kund. Efter användartester framkom att artiklar som inte finns i engångsmaterialslagret utan plockas på andra ställen också med fördel kunde ligga i en plocklista. Man kan alltså välja att lägga in dessa artiklar i kartoteket eller välja att skapa en ny databas för dessa med en separat plocklista.
+
 \subsection{Metod}
-
 \subsubsection{Kravinsamling}
-Metoden som användes för kravframställning fokuserade på att i förstudien samla in så mycket krav som möjligt genom möten, intervjuer och obeservationer. Att arbeta fram kraven tillsammans med kund kändes nödvändigt för att få en fullständig bild. En sak som vi inte prioriterade men som kanske hade kunnat hjälpt arbetet skulle varit att lägga större fokus på olika roller. Slutsystemet har två roller vilket är admins och icke-admins. En avvägning gjordes där dessa två enkla roller valdes. Fördelen var att att vi kunde lägga fokus på att snabbare kunna testa andra delar av systemet med högre prioritet. Nackdelen var att dessa funktionaliteter inte hann testas och under förstudien ledde till en viss förivirring. Vid användartesterna upplevdes inte detta som att det saknades vilket kan ses som att vi gjorde en bra avvägning. %%blablabla
+Metoden som användes för kravframställning fokuserade på att i förstudien samla in så mycket krav som möjligt genom möten, intervjuer och obeservationer. Att arbeta fram kraven tillsammans med kund kändes nödvändigt för att få en fullständig bild. 
+
+En sak som vi inte prioriterade men som kanske hade kunnat hjälpt arbetet skulle varit att lägga större fokus på olika roller. Slutsystemet har två roller vilket är admins och icke-admins. En avvägning gjordes där dessa två enkla roller valdes. Fördelen var att att vi kunde lägga fokus på att snabbare kunna testa andra delar av systemet med högre prioritet. Nackdelen var att dessa funktionaliteter inte hann testas och under förstudien ledde till en viss förivirring. Vid användartesterna upplevdes inte detta som att det saknades vilket kan ses som att vi gjorde en bra avvägning. 
+
+
 Att använda use-cases eller user-stoires diskuterades också under förstudien. Detta bortprioriterades då vi ansåg att de var överflödiga. Denna avvägning ledde till att det var lite svårare att kommunicera kraven. 
+
+
 Studiebesöket under förstudien var bra för att få en inblick i arbetet. Vi hade dock kunnat behöva mer tid för observation. Vid studiebesöket var hela gruppen med och det blev lite stressigt och mycket folk. Det kunde ha varit bättre att ha fler studiebesök uppdelade på färre personer för.
 
 \subsubsection{Utvecklingen}
@@ -303,11 +325,14 @@ Utvecklingen i SCRUM-form har fungerat bra, dock har utvecklingen som beskriven 
 Här följer en sammanfattning om fortsatt arbete med systemet. Restlistan behandlar krav som inte implementerats eller som borde vidareutvecklas. Även förslag på vidareutveckling som inte tas upp av kravspecifikationen tas upp. Dessa förslag är sådant som kommit fram under utvecklingens gång.
 
 \subsection{Restlista}
-Följande krav är markerade som gula i kravspecifikationen vilket betyder att de bör vidareutvecklas för att ses som klara:
+\subsubsection{Krav som bör vidareutvecklas}
+Följande krav är markerade som gula i kravspecifikationen vilket betyder att de bör vidareutvecklas för att ses som klara.
 %%Fyll på gula krav här efter iteration 3 mötet
-Följande krav är markerade som röda i kravspecifikationen vilket betyder att de inte är påbörjade:
+\subsubsection{Ej påbörjade krav}
+Följande krav är markerade som röda i kravspecifikationen vilket betyder att de inte är påbörjade.
 %%Fyll på röda krav här efter iteration 3 mötet
-Alla krav som behandlar lagersystemet finns kvar:
+
+Alla krav som behandlar lagersystemet finns kvar. För att utveckla ett lagersystem bör en ny förstudie genomföras för att ta fram tydligare krav. Ett lagersystem med skanning av artiklar skulle bidra till att plockningen blir mer säker. Det skulle också bidra till effektivare inventering och översikt av lagret. Ett saldo för varje artikel skulle kunna användas som beställningsunderlag. Kraven rörande lagret som samlats in under vår förstudie är följande:
 \begin{description}
 \item[Krav nr 46] Ska finnas ett saldo för varje artikel i förrådet.
 \item[Krav nr 47] Ska gå att skanna av artiklar (streckkod) som plockas i en specifik plocklista.
@@ -317,7 +342,8 @@ Alla krav som behandlar lagersystemet finns kvar:
 \item[Krav nr 51] En inventeringsfunktion ska finnas.
 \end{description}
 
-Övriga förslag på vidareutveckling:
+\subsubsection{Övriga förslag}
+Här följer övriga förslag på vidareutveckling.
 %%Fyll på här om ni kommer på något!
 
 
@@ -326,6 +352,7 @@ Alla krav som behandlar lagersystemet finns kvar:
 \item[Avancerad sökfunktion] En mer avancerad sökfunktion med * och söknining på flera ord som inte behöver vara direkt efter varandra.
 \item[Förvalda kommentarer] Under användartester observerades att samma kommentarer skrivs ofta så det kan vara bra med en lista på vanliga kommentarer som man kan välja ifrån.
 \item[Roller och rättigheter] Olika roller bör identifieras och en funktion för att tilldela användare olika rättigheter bör implementeras.
+\item[Galler och extrainstrument] De artiklar som benämns som galler och instrument bör också behandlas med en plocklista. Detta kan göras genom att lägga in dem i kartoteket eller genom att skapa en separat databas för dessa med egen plocklista.
 \end{description}
 \subsection{Referenser}
 \begin{thebibliography}{9}
@@ -349,7 +376,8 @@ Får nog fixa en bättre referens här.
 \input{enskilda/robin.tex}
 \newpage
 \input{enskilda/albert.tex}
+\newpage
 
-
-
+\part{Appendix A - Användarutvärdering}
+\includepdf[pages={-}]{utv.pdf}
 \end{document}
