@@ -205,7 +205,20 @@ Vid varje iterationsslut hölls ett möte med kund där vi demonstrerade nya fea
 
 \subsection{Utveckling}
 Projektets utveckling har skett i fyra iterationer där den första iteration var en förstudie och i de avslutande tre iterationerna har utvecklingen av produkten skett. Nedan beskrivs vilka hjälpmedel som har använts för att underlätta arbetet.
-		
+
+\subsubsection{Roller}
+I detta projektet finns det sju olika roller. Dessa är teamledare, analysansvarig, arkitekt, kvalitetssamordnare, testledare, dokumentansvarig och utvecklingsledare. Vad dessa roller innebär kan ses nedan. 
+\begin{itemize}
+\item Teamledare: Har huvudansvar för att arbetet inom gruppen går bra och att de uppgifter som ska genomföras bli gjorda. 
+\item Dokumentansvarig: Har ansvar för att alla dokument korrekturläses och ser bra ut. 
+\item Kvalitetssamordnare: Innehar ansvaret för att en kvalitetsplan tas fram och följs. 
+\item Testledare: Skriver testplan, testrapporter och har huvudansvar för att testning sker och görs på rätt sätt.
+\item Utvecklingsledare: Tar fram verktyg för utveckling och leder utvecklingsarbetet.
+\item Arkitekt: Skriver arkitektturbeskrivning och bestämmer hur applikationen ska utformas.
+\item Analysansvarig: Har hand om kundkontakten och har huvudansvar för att en bra kravspecifikation tas fram.
+\end{itemize}
+Dessa roller delade ut efter vad gruppmedlemmarnas önskelmål. Då flera personer ville ha samma roll så diskuterades de olika kandidaternas kvalifikationer, vilket följdes av ett gemensamt beslut från gruppen.
+
 \subsubsection{SCRUM}
 Projektet har utvecklats iterativt med en utvecklingsmetodik som påminner mycket om SCRUM. Aktiviteterna i projektet har visats på en gemensam SCRUM-board med hjälp av webbsidan Trello (se figur \ref{fig:trello}). 
 
@@ -281,7 +294,7 @@ Det som kan göras för att få säkerhetskopieringen bättre är att implemente
 Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att det är viktigt att databasen säkerhetskopieras med jämna mellanrum. Men det tar en del datorkraft att göra en säkerhetskopiering. Därför är det bra att det går att ställa in tidsintervallet som bestämmer hur ofta säkerhetskopiering av databasen ska ske.
 
 \subsubsection{Översiktssida}
-Överssiktssidan är tänkt att den ska kunna vara framme på en monitor och inte kräva någon interaktion för att se resultat för olika operationsförberedelser. Det är därför viktigt att den sidan använder realtidskommunikation, det är därför allt uppdateras vi Socket.IO till översiktssidan.
+Överssiktssidan är tänkt att den ska kunna vara framme på en monitor och inte kräva någon interaktion för att se resultat för olika operationsförberedelser. Det är därför viktigt att den sidan använder realtidskommunikation, det är därför allt uppdateras via Socket.IO till översiktssidan.
 
   
 \subsection{Metod}
@@ -293,6 +306,10 @@ Att använda use-cases eller user-stoires diskuterades också under förstudien.
 \subsubsection{Utvecklingen}
 \textbf{DET HÄR KÄNNS SOM ETT RESULTAT?}
 Utvecklingen i SCRUM-form har fungerat bra, dock har utvecklingen som beskriven i metod inte varit i rent SCRUM-format utan har modifierats för att bättre passa gruppen. Ett möte med handledare har hållits en gång i veckan där handledaren har haft möjlighet att ta upp saker som denne tyckt har behövts, sedan har gruppen hållit ett kort SCRUM-möte där man fått förklara vad man gjort förra veckan och vad man planerat att göra kommande vecka. Under mötets gång har man noterat om det är någonting som har behövt diskuteras vidare och detta har då noterats, varpå gruppen har gått igenom dessa frågor efteråt. Detta har fungerat väldigt bra då man på detta sättet inte har fått några större avbrott och alla hela tiden kunna hålla fokus. Efter SCRUM-mötena så har ordet varit fritt och alla har haft möjligheten att komma med synpunkter eller åsikter. Samarbetet i gruppen har fungerat väldigt bra, kodstugorna som gruppen höll under förstudien var alla nöjda med, de som var mindre erfarna med webbprogrammering kände att de fick all den hjälp de behövde när de körde fast i sitt arbete och därför kändes det naturligt för hela gruppen att fortsätta med dessa även under utvecklingsfasen.
+
+Att vissa roller inte riktigt fungerade som de skulle har flera orsaker. Utbildningsledarens roll var dåligt definerad. Exemepluppgifter kunde ha tagits fram för att få en bättre förståelse för vad rollen innebar. Kvalitetssamordnaren hade inte hand om speciellt mycket kvalitetsarbete under projektets gång. Detta berodde främst på att funktionalitet prioriterades framför kvalitet och att det kvalitetsarbete som gjordes delades ut på alla gruppmedlemmar. Dokumentansvarige hade också en roll där det mesta av arbetet delades ut på alla gruppmedlemmar. Anledningen till att arbetet distribuerades var mycket att arbetet för både kvalitetssamordnaren och dokumentansvarige hade fått mycket enformigt arbete med att granska dokument och kod. Att arbetet distribuerades ledde också till att personen i rollen inte identifierade sig själv med rollen och tog därför mindre rollspecifikt ansvar. Detta ger en svår avvägning. Om en roll blir för liten så finns risken att den inte tas på allvar och att låta en person göra allt jobb inom rollen kan få konsekvenser om inte denne är intresserad av jobbet som rollen innebär. I detta projektet är det svårt att komma undan detta problemet då sju stycken olika personer sammanförs och ska fördela sju roller. I större projekt och projekt hos företag är detta ett mindre problem då det finns mer personer att välja på och så blir till exempel en person som inte är speciellt intresserad av kvalité inte anställd som kvalitetssamordnare. 
+
+Den personen med mest erfarenhet blev arkitekt. Detta var ett mycket bra val då detta gjorde att en stabil grund kunde tas fram snabbt för att jobbas vidare på. Om någon med mindre erfarenhet fått denna roll hade det tagit mycket längre tid att komma igång eftersom denne person då hade fått göra mycket mer efterforskning och hade haft svårt att tyda resultaten. 
 
 \subsection{Arbetet i ett vidare sammanhang}
 
