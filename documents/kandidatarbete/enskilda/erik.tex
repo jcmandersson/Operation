@@ -129,13 +129,13 @@ och således valdes var Travis CI.
 Arbetet med Travis CI inleddes med att tjänsten kopplades till 
 projektets repository på GitHub. Kopplingen utfördes
 genom att administratören för repositoryn loggade in på travis-ci.org med 
-sitt GitHubkonto och aktiverade
+sitt GitHub-konto och aktiverade
 en webhook för repositoryn.
 
 Inställningarna för Travis CI konfigurerades med filen .travis.yml i projektets
 repository. Språket valdes till
-javascript med node.js med inställningen: \emph{language: node\textunderscore js}.
-Versionen av node.js valdes till version 0.10
+Javascript med Node.js med inställningen: \emph{language: node\textunderscore js}.
+Versionen av Node.js valdes till version 0.10
 med inställningen: \emph{node\textunderscore js: "0.10"}.
 
 De nödvändiga node-modulerna installerades med hjälp av node package manager (npm).
@@ -144,7 +144,7 @@ med kommandot: \emph{npm install -g grunt-cli}. Grunt-contrib-jasmine installera
 \emph{npm install grunt-contrib-jasmine}.
 
 Task runnern Grunt konfigurerades med filen Gruntfile.js i projektets repository.
-En task för Jasmine laddedes in med
+En task för Jasmine laddades in med
 inställningen: \emph{grunt.loadNpmTasks('grunt-contrib-jasmine');}.
 Tasken konfigurerades med följande kod i Gruntfile.js.
 
@@ -183,8 +183,8 @@ detaljerad information om utfallet av testerna.
 Med \emph{specs: 'test/*-spec.js'} valdes de testfall som skulle köras.
 Alla filer som slutar med -spec.js i mappen test anses alltså vara
 testfall som ska köras.
-Raden \emph{template: 'test/template/spec-template.tmpl'i} gör att testerna
-körs med en speciell SpecRunner som även kan innehålla HTML som testfallen
+Raden \emph{template: 'test/template/spec-template.tmpl'} gör att testerna
+körs med en speciell SpecRunner som även kan innehålla HTML-kod som testfallen
 kan modifiera.
 Eftersom Travis CI använder npm för att starta 
 testerna så definierades testskriptet för npm med raden
@@ -252,7 +252,7 @@ Testfallet har körts flera gånger på olika datum och olika tidpunkter.
 Resultatet av testerna presenteras i \emph{Tabell E.5.1}
 under rubriken \emph{E.5 Resultat}.
 För att antalet ska
-få en konkret betydelse visas även funktionen splitOnce() nedan.
+få en konkret betydelse visas även funktionen splitOnce nedan.
 
 \begin{lstlisting}[
   basicstyle = \small
@@ -317,7 +317,7 @@ Standardavvikelsen avrundat till närmsta heltal är: 1710.
 
 Den tid det tar från det att koden läggs upp på GitHub till dess att 
 testkoden börjar köras är i genomsnitt ca en minut. Sedan tar det även ca 30
-sekunder för att alla node-moduler att installeras innan själva
+sekunder för alla node-moduler att installeras innan själva
 testfallen börjar köras.
 
 Undersökningen om vad om är svårt att testa ledde till följande resultat.
@@ -347,7 +347,7 @@ $(document).ready(function() {
 
 \end{lstlisting}
 
-Det är alltså rekomenderat att skriva alla Javascriptfunktioner utanför 
+Det är alltså rekommenderat att skriva alla Javascriptfunktioner utanför 
 jQueryfunktionen \emph{\$(document).ready()} eftersom koden då blir 
 lättare att testa.
 
@@ -390,7 +390,7 @@ att göra fler manuella tester av koden.
 Det skulle inte vara några problem att skala metoden till ett större projekt.
 Men i ett större projekt skulle det antagligen finnas någon som arbetar
 uteslutande med testning och då skulle det finnas tid till att använda en
-mer avancerad och mer kraftfull metod. Därför är det en bättre ide att 
+mer avancerad och mer kraftfull metod. Därför är det en bättre idé att 
 använda den här metoden i ett mindre projekt.
 
 Det är även värt att nämna ett en nackdel med metoden som använts för tester
@@ -416,7 +416,7 @@ jQuery användes på klientsidan.
 
 \subsubsection{Hur effektivt är det att använda en webbaserad tjänst
 för automatiserade tester?}
-Det enkla testfallet som användes kunde käras ca $10^4$ gånger per sekund och
+Det enkla testfallet som användes kunde köras ca $10^4$ gånger per sekund och
 det tar ca 60 sekunder från att koden läggs upp på GitHub till det att den
 börjar köras på servern.
 
