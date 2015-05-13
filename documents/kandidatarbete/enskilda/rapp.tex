@@ -3,7 +3,7 @@
 Idag är information om Region Östergötlands operationsartiklar, så som priserna och
 placeringen i lagret på tandborstar, tandkräm, handskar och annan
 medicinsk utrustning, hanterat av ett internt system.
-Detta system kallas ett "\textit{kartotek}", och är helt enkelt en sorts artikeldatabas.
+Detta system kallas ett ''kartotek'', och är helt enkelt en sorts artikeldatabas.
 I vårt system så ska detta uppdateras och förbättras på olika sätt.
 
 \subsubsection{Syfte}
@@ -45,8 +45,8 @@ Dessa är för tillfället helt separata applikationer.
 Så om en artikel har utgått eller Region Östergötland
 väljer att inte köpa in en viss artikel längre så tar de bort artikeln
 från kartoteket. Problemet som då uppstår är att detta inte reflekteras
-i handböckerna. Så om t.ex. en "\textit{Oral-B Pro 600 CrossAction}"\ tandborste används i
-en "\textit{Laparoskopisk sigmoideumresektion}", och tandborsten utgår
+i handböckerna. Så om t.ex. en ''\textit{Oral-B Pro 600 CrossAction}'' tandborste används i
+en ''\textit{Laparoskopisk sigmoideumresektion}'', och tandborsten utgår
 så tas den bort från kartoteket, men eftersom handboken för operationen inte är
 kopplad till kartoteket så uppdateras det inte att denna artikel inte längre finns i lagret.
 
@@ -55,12 +55,16 @@ integrerar systemet som hanterar handböcker tillsammans med ett nytt kartotek,
 där allt är byggt på webben. När en artikel ändras eller tas bort i kartoteket
 så ändras den även i alla handböcker för operationer som kräver denna artikel.
 
+Den gamla lösningen byggde på MSSQL, medans vårt system använder
+MongoDB. Vi valde detta val både för att MongoDB är lättare att
+integrera med KeystoneJS, som vi använde för att strukturera vår
+Node.js kod, samt av prestandaanledningar\cite{mongoPerf}.
 
 
 %\subsection{Teori}
 \subsection{Metod}
 Precis som resten av systemet så är kartoteket skrivet på webben, och
-därmed i javascript, HTML och CSS.
+därmed i Javascript, HTML och CSS.
 Vi har även använt Git för versionshantering.
 
 Jag måste också nämna att trots att det är jag som skriver om kartoteket,
@@ -117,9 +121,9 @@ Med vårt gränssnitt så är det enkelt att modifiera information om en artikel
 Om man vill ändra på, t.ex., artikelnamnet så är det bara att klicka på det!
 En input-ruta kommer då upp som låter dig ändra namnet till någonting mer passande.
 Detta är inspirerat av Trello, som vi använder för att organisera saker att göra.
-I Trello så finns en liknande funktionalitet för att ändra namn på olika "\textit{Boards}".
+I Trello så finns en liknande funktionalitet för att ändra namn på olika ''Boards''.
 
-För att ta bort artiklar så finns det ett smidig "X" till vänster om artikel-raden.
+För att ta bort artiklar så finns det ett smidig ''X'' till vänster om artikel-raden.
 
 Vi har valt att göra en del av den här informationen obligatorisk, eftersom
 sjukhuset hade problem i sitt tidigare system att vissa sjuksköterskor skippade
@@ -129,7 +133,7 @@ att skriva in en del viktig information om artikeln.
 \subsubsection{Sökning av artiklarna}
 Sista kärnfunktionaliteten i kartoteket är sökning.
 Eftersom artiklarna är sorterade i bokstavsordning,
-och kartoteket har en "infinite scroll"-funktionalitet,
+och kartoteket har en ''infinite scroll''-funktionalitet,
 så går det i teorin att hitta alla artiklar utan att söka.
 I våra diskussioner kunden på sjukhuset så
 verkar det också som det finns vissa personer som primärt använder
@@ -150,7 +154,7 @@ Användaren har möjlighet att söka på artikelnamn, artikelnummer
 eller synonymer till namnet. Se ett exempel på sökning
 av artikelnamn i figur \ref{fig:kartsearch}.
 När man söker på någonting så byts hela tabellen ut mot sökresultatet.
-Hela upplevelsen är inspirerat av "\textit{Google Instant}".
+Hela upplevelsen är inspirerat av ''Google Instant''.
 
 \clearpage
 \subsubsection{Integrering med handböckerna}
@@ -197,6 +201,12 @@ Men i våra informella intervjuer under de två studiebesök vi gjorde hos kunde
 under iteration 3, där kunden har testat
 vårt system en hel dag, så verkade de enormt nöjda.
 
+Om vi hade haft 300 timmar extra-tid
+att lägga på det här projektet så hade
+vi aboslut spenderat det på att integrera
+systemet med lagret samt med agresso, deras system
+som hanterar de ekonomiska delarna av artiklarna (för det mesta pris).
+
 
 %\subsubsection{Resultat}
 %\subsubsection{Metod}
@@ -212,8 +222,8 @@ ger en märkbar förbättring gentemot det nuvarande systemet.
 
 
 
-\subsection{Referenser}
-\vspace{-9mm}
-\begin{thebibliography}{9}
-
-\end{thebibliography}
+%\subsection{Referenser}
+%\vspace{-9mm}
+%\begin{thebibliography}{9}
+%\bibitem{mongoPerf} Parker, Zachary and Poe, Scott and Vrbsky, Susan V., ''Comparing NoSQL MongoDB to an SQL DB'' vid \textit{Proceedings of the 51st ACM Southeast Conference}, New York, ACM, 2013, 5:1--5:6. Tillänglig: \url{http://dl.acm.org/citation.cfm?id=2500047} [Hämtad 2015-05-11].
+%\end{thebibliography}
