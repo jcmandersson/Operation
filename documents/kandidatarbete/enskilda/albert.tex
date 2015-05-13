@@ -2,48 +2,48 @@
 \subsection{Inledning}
 Denna del i rapporten behandlar vad som ska utredas och varför.
 \subsubsection{Syfte}
-Syftet med denna enskilda utredningen är att underlätta för fortsatt utveckling av webbapplikationen som projektgruppen har skapat. Alla delar i applikationen får inte användas i Region Östergötlands intranät, vilket leder till att en del måste bytas ut.
+Syftet med denna enskilda utredningen är att underlätta fortsatt utveckling av webbapplikationen som projektgruppen har skapat. Alla delar i applikationen får av säkerhetsskäl inte användas i Region Östergötlands intranät, vilket leder till att en del måste bytas ut.
+
 \subsubsection{Frågeställning}
 \begin{itemize}
 \item Hur kan man ersätta KeystoneJS då varken administratörgränsnittet eller databaskopplingen används?
 \item Vad behöver ändras för att byta ut databasen från MongoDB till MS SQL?
-
-
 \end{itemize}
 \subsubsection{Avgränsningar}
-Denna rapport gäller endast för vidareutveckling för användning av Region Östergötland. Andra användare kan ha andra krav på applikationen som leder till att denna rapport är ofullständig eller felaktig. Rapporten förutsätter också vissa kunskaper inom Node.js så som att komma igång med en enkel applikation. Den behandlar inte heller alla delar av ersättning av KeystoneJS utan fokuserar främst på hur routern-delen och databaskopplingen ska ersättas.  
+Denna rapport gäller endast för vidareutveckling för användning av Region Östergötland. Andra intressenter kan ha krav på applikationen som leder till att denna rapport är ofullständig eller felaktig. Rapporten förutsätter också vissa kunskaper inom Node.js, så som att komma igång med en enkel applikation. Den behandlar inte heller alla delar av ersättning av KeystoneJS utan fokuserar främst på hur routern-delen och databaskopplingen ska ersättas.  
 \subsection{Bakgrund}
-Region Östergötland ska ta över arbetet med utvecklingen av webbapplikationen efter att projektgruppen slutfört sitt arbete. För att applikationen ska kunna tas i bruk på riktigt så måste databasen bytas ut till MS SQL då Region Östergötland inte tillåter MongoDB på sina servrar. Då utvecklingen av applikationen har fortgått har KeystoneJS fått en mindre och mindre roll i applikationen. En av KeystoneJS största fördelar är dess enkla och smidiga innehållshanterare. Detta har varit till stor nytta för att komma igång med projektet och få snabba resultat för de gruppmedlemmar som inte har jobbar med webbprogrammering innan. Men när applikationen är färdigutvecklad så används inte detta systemet alls längre och då databasen ska bytas till en annan typ försvinner också en annan stor del av KeystoneJS, vilket var den enkla integrationen med MongoDB genom Mongoose. Detta ledde till tankar om att KeystoneJS kanske skulle kunna bytas ut mot egenskriven kod eller mindre och mer lättförståeliga moduler utan jättemycket arbete.
+Region Östergötland ska ta över arbetet med utvecklingen av webbapplikationen efter att projektgruppen slutfört sitt arbete. För att applikationen ska kunna tas i bruk på riktigt så måste databasen bytas ut till MS SQL då Region Östergötland inte tillåter MongoDB på sina servrar. 
+
+Då utvecklingen av applikationen fortgått så har KeystoneJS fått en mindre och mindre roll i applikationen. En av KeystoneJS största fördelar är dess enkla och smidiga innehållshanterare. Detta har varit till stor nytta för att komma igång med projektet och få snabba resultat för de gruppmedlemmar som inte har jobbar med webbprogrammering innan. Men när applikationen är färdigutvecklad så används inte detta systemet alls längre och då databasen ska bytas till en annan typ försvinner också en annan stor del av KeystoneJS, vilket var den enkla integrationen med MongoDB genom Mongoose. Detta ledde till tankar om att KeystoneJS kanske skulle kunna bytas ut mot egenskriven kod eller mindre och mer lättförståeliga moduler utan jättemycket arbete.
 
 En beskrivning och förklaring för många av modulerna som kommer tas upp finns att läsa i avsnitt 2.1 i den gemensamma delen.
 \subsubsection{MS SQL}
 MS SQL är en databashanterare från Microsoft som använder det domänspecifika språket SQL för att extrahera data.
 
-\subsubsection{Npm}
-Pakethanteraren npm används av Node.js för att hantera paket med öppen källkod. Det finns även en tillhörande hemsida för npm där teknisk dokumentation med mera för olika paket kan läsas. 
-
 \subsubsection{Express}
-Express är ett ramverk för Node.js som gör det lättare att bygga webbapplikationer.
+Express är ett minimalistiskt och smidigt ramverk för Node.js som gör det lättare att bygga webbapplikationer.
 
 \subsubsection{Edge.js}
-Edge.js är en modul, som är skapad av Tomasz Janczuk, som bland annat gör det möjligt att köra .NET kod direkt i samma process som Node.js. 
+Edge.js är en modul som gör det möjligt att köra .NET kod direkt i samma process som Node.js. Den kan till exempel användas för att skriva kod i språk som är snabbare och flertrådade om mer prestanda krävs eller för att använda färdiga bibliotek skrivna i .NET-språk.  
 
-\subsubsection{edge-sql}
-Edge-sql är en modul som gör det möjligt att exekvera T-SQL kommandon direkt i Node.js med hjälp av Edge.js. Den använder asynkront ADO.NET, som är ett bibliotek från Microsoft för att få tillgång till data och dataservice, för att få tillgång till MS SQL. 
+\subsubsection{Edge-sql}
+Edge-sql är en modul som gör det möjligt att exekvera SQL kommandon direkt i Node.js med hjälp av Edge.js. Den använder ADO.NET asynkront, som är ett bibliotek från Microsoft för att få tillgång till data och dataservice, för att få tillgång till MS SQL. 
 
 \subsection{Teori}
-För en oerfaren utvecklare kan ett projekt från början se mycket svårt ut att genomföra. Då kan färdiga ramverk göra att utvecklingen går snabbare och lättare. Men efter att utvecklaren har jobbat ett tag och fått nya kunskaper kan denne inse att projektet kanske inte alls är så svårt och ett ramverk bara har gjort applikationen mer komplicerad och svårt att förstå. Då kan det vara intressant att se hur applikationen skulle kunna skrivas om utan dessa ramverk. 
+För en oerfaren utvecklare kan detta projekt från början se svårt ut att genomföra. Då kan färdiga ramverk göra att utvecklingen går snabbare och lättare. Men efter att utvecklaren har jobbat ett tag och fått nya kunskaper kan denne inse att projektet kanske inte alls är så svårt och ett ramverk bara har gjort applikationen mer komplicerad och svårt att förstå. Då kan det vara intressant att se hur applikationen skulle kunna skrivas om utan dessa ramverk. 
 
-MongoDB är ett relativt nytt databas-system som klassificeras som en NoSQL-databas. MongoDB används av en hel del företag \cite{mongoComp}, men de flesta använder fortfarande någon typ av SQL-databas \cite{databaseStats}. Att ha flera olika typer av databaser är uteslutet för många företag då det leder till större underhållskostnader och kräver kunskap om flera system. Därför är det intressant att se hur MongoDB kan bytas ut mot en SQL-databas, i detta fallet MS SQL.
+MongoDB är ett relativt nytt databas-system som klassificeras som en NoSQL-databas. MongoDB används av en hel del företag \cite{mongoComp}, men de flesta använder fortfarande någon typ av SQL-databas \cite{databaseStats}. Båda typer av databaser har sin roll på marknaden \cite{compareSQL} men att ha flera olika typer av databaser är uteslutet för många företag då det leder till större underhållskostnader och kräver kunskap om flera system. Därför är det intressant att se hur MongoDB kan bytas ut mot en SQL-databas, i detta fallet MS SQL.
 
 
 \subsection{Metod}
 För att få en bättre förståelse för KeystoneJS roll i applikationen så läses först och främst KeystoneJS tekniska dokumentation. En ny installation av KeystoneJS görs för att kunna jämföra med projektkoden och få fram vilka komponenter som kommer från KeystoneJS. KeystoneJS är också beroende av många moduler. Dessa moduler utgör en stor del av den delen av KeystoneJS som används i applikationen, t.ex. för router-delen. Modulerna kommer utvärderas för att se vilka som fortfarande skulle bidra till en version av applikationen utan KeystoneJS. 
 
-För att utvärdera moduler för MS SQL och för att vad som krävs för att få applikationen att funka med MS SQL så kommer främst artiklar om ämnet läsas och då ett bra alternativ har hittats så kommer en liten del av applikationen tas och anpassas till MS SQL och testas. Om inte modulen uppfyller kraven på enkelhet och stabilitet så kommer ett annat alternativ tas fram och testas.
+För att utvärdera moduler för MS SQL och för att vad som krävs för att få applikationen att funka med MS SQL så kommer främst artiklar om ämnet läsas och då ett bra alternativ har hittats så kommer en liten del av applikationen tas och anpassas med denna modulen och testas. Om inte modulen uppfyller kraven på enkelhet och stabilitet så kommer ett annat alternativ tas fram och testas.
 
 \subsection{Resultat}
-En av modulerna som används av KeystoneJS heter Express och används av KeystoneJS för att hantera router-delen. Denna modulen kan också användas för att hantera hantera  alla förfrågningar \cite{expressRouter} och rendera sidor utan KeystoneJS. För att använda Handlebars i Express så behövs en modul som heter express-handlebars. Den kan sättas som renderingsmotor för Express genom koden nedan. \textit{DefaultLayout} sätts till en mall som bestämmer hur utformningen av sidorna ska se ut. I just applikationen som det skrivs om i detta fallet heter den \textit{default.hbs}. 
+Här presenteras vilka resultat som framkom. 
+\subsubsection{Ersättning av KeystoneJS}
+En av modulerna som används av KeystoneJS heter Express och används av KeystoneJS för att hantera router-delen. Denna modulen kan också användas för att hantera hantera  alla förfrågningar \cite{expressRouter} och rendera sidor utan KeystoneJS. För att använda Handlebars i Express så behövs en modul som heter express-handlebars. Den kan sättas som renderingsmotor för Express genom koden nedan. \textit{DefaultLayout} sätts till en mall som bestämmer hur utformningen av sidorna ska se ut. 
 \begin{verbatim}
 var express = require('express');
 var hbsExpree = require('express-handlebars');
@@ -52,43 +52,43 @@ app.engine('hbs', hbsExpress({defaultLayout: 'default'});
 app.set('view engine', 'hbs');
 \end{verbatim}
 
-Om någon middleware behöver användas kan den läggas in i Express enligt exemplet nedan. Alla förfrågningar som går genom \textit{'/'} kommer då köras igenom funktionen middleware. Om man bara vill att en funktion ska köras för en sida så lägger man helt enkelt in sökvägen för den sidan istället för \textit{'/'}. 
+Om någon middleware behöver användas kan den läggas in i Express enligt exemplet nedan. Alla förfrågningar som går genom \textit{root} kommer då köras igenom funktionen middleware. Om man bara vill att en funktion ska köras för en sida så lägger man helt enkelt in sökvägen för den sidan istället för \textit{root}. 
 \begin{verbatim}
 var router = express.Router();
 router.use('/', middleware);
 \end{verbatim}
-En middleware som behövs för denna applikationen är less-middleware. Den används för att kompilera om less-filer till CSS-filer. Då en förfrågning efter en CSS-fil inkommer så kollar den först upp om filen existerar, om så är fallet skickas den ut. Annars så letar modulen upp en less-fil med samma namn och kompilerar den till en CSS-fil för att sedan skicka ut den. 
+En middleware som behövs för denna applikationen är less-middleware. Den används för att kompilera om Less-filer till CSS-filer. Då en förfrågning efter en CSS-fil inkommer så kollar den först upp om filen existerar, om så är fallet skickas den ut. Annars så letar modulen upp en less-fil med samma namn och kompilerar den till en CSS-fil för att sedan skicka ut den. 
 
 Alla rutter kan läggas i en fil som sedan exporteras för att användas av Express enligt nedan. 
 \begin{verbatim}
 router.get('/', function(req, res) {
-	res.render('overview', data);
+    res.render('overview', data);
 });
 
 \end{verbatim}
-Detta gör att sidan overview renderas med datan data genom Handlebars. Istället för att ha en anonym funktion så kan man kalla på en namngiven funktion som ligger i annnan fil, precis som i nuvarande applikation för att låta den funktionen hämta ut all information för att sedan kalla på \textit{res.render}. Handlebars-filerna som finns i nuvarande applikation kommer i så fall inte behöva ändras. 
+Detta gör att sidan overview renderas med data, framtagen från exempelvis en databas, genom Handlebars. Istället för att ha en anonym funktion så kan man kalla på en namngiven funktion som ligger i annnan fil, precis som i nuvarande applikation för att låta den funktionen hämta ut all information för att sedan kalla på \textit{res.render}. Handlebars-filerna som finns i nuvarande applikation kommer i så fall inte behöva ändras. 
 \begin{verbatim}
 router.get('/', overview);
 router.get('/info/:slug, info);
 ...
 var overview = function() {
-	data = getData();
-	res.render('overview', data);
+    data = getData();
+    res.render('overview', data);
 }:
 \end{verbatim} 
 
-Det finns också några api:er som måste skrivas om. I nuvarande applikation så används en modul som heter keystone-rest och används för att skapa ett REST-api för alla databasmodeller. När inte KeystoneJS används längre så kan denna modulen inte heller användas. Alltså måste ett eget REST-api skrivas, vilket ett enkelt exempel för kan ses nedan. 
+Det finns också några API:er som måste skrivas om. I nuvarande applikation så används en modul som heter keystone-rest och används för att skapa ett REST-api för alla databasmodeller. När inte KeystoneJS används längre så kan denna modulen inte heller användas. Alltså måste ett eget REST-API skrivas. Ett enkelt exempel för detta kan ses nedan. 
 
 \begin{verbatim}
 router.route('/api/:slug').post(function(req, res) {
-		// Gör post för slug
-	}).get(function(req, res) {
-		// Gör get för slug
-	}).put(function(req, res) {
-		// Gör put för slug
-	}).delete(function(req, res) {
-		// Gör delete för slug
-	});
+        // Gör post för slug
+    }).get(function(req, res) {
+        // Gör get för slug
+    }).put(function(req, res) {
+        // Gör put för slug
+    }).delete(function(req, res) {
+        // Gör delete för slug
+    });
 \end{verbatim}
 
 Det sista som behöver göras är att sätta så applikationen använder \textit{router}.
@@ -96,11 +96,12 @@ Det sista som behöver göras är att sätta så applikationen använder \textit
 app.use('/', router);
 \end{verbatim}
 
-Detta leder fram till nästa frågeställning om hur datan till renderingen ska tas fram då databasen är utbytt till MS SQL istället för MongoDB.
+\subsubsection{Databaskoppling}
+Detta leder fram till nästa frågeställning om hur datan för renderingen ska tas fram då databasen är utbytt till MS SQL istället för MongoDB.
 
 Det finns flera olika moduler för att koppla ihop en Node.js-applikation med MS SQL. En av dessa är en officiell modul från Microsoft \cite{sqlMS}. Denna har dock inte släppts i slutgiltig version utan finns bara som en förhandstitt, vilken släpptes den första augusti 2013 och har enligt Github inte blivit uppdaterad sedan dess.
 
-En annan modul är Edge.js som kan användas för att köra .NET kod direkt i en Node.js-applikation och på så sätt hämta data från en MS SQL databas. Det finns en modul till Node.js som hete edge-sql som just är till för att hämta data från en MS SQL databas. Denna modulen gör att man direkt kan skriva SQL-kod i Javascript-koden. En exempel på hur en funktion, för att hämta en operation, kan se ut och vad den skulle ge för utdata kan ses nedan. För att koden ska fungera måste och en omgivningsvariabel vara satt till en anslutningssträng för att kunna ansluta till databasen eller så kan man direkt lägga in anslutningssträngen då man definierar funktionen. 
+En annan modul är Edge.js som kan användas för att köra .NET kod direkt i en Node.js-applikation och på så sätt hämta data från en MS SQL databas. Det finns en modul till Node.js som hete edge-sql som just är till för att hämta data från en MS SQL databas. Denna modulen gör att man direkt kan skriva SQL-kod i Javascript-koden. En exempel på hur en funktion, för att hämta en operation, kan se ut kan ses nedan. För att koden ska fungera måste och en omgivningsvariabel vara satt till en anslutningssträng för att kunna ansluta till databasen eller så kan man direkt lägga in anslutningssträngen då man definierar funktionen. 
 
 
 \begin{verbatim}
@@ -113,9 +114,9 @@ var getOperation = edge.func('sql', function() {/*
 
 // Utan anslutningssträng som omgivningvariabel.
 var getOperation = edge.func('sql', {
-	source: function() {/*
-    		SELECT * FROM operations
-    		WHERE title LIKE	 '%@title%'
+    source: function() {/*
+        SELECT * FROM operations
+        WHERE title LIKE	 '%@title%'
 	*/}, connectionString: 'Data Source=......;'
 });
 
@@ -123,8 +124,9 @@ getOperation({ title: 'Kärl' }, function (error, result) {
     if (error) throw error;
     console.log(result);
 });
-
-// Resultat
+\end{verbatim}
+Här kan ett exempel på hur utdatan är formaterad ses. Formateringen skiljer sig inte från hur datan är formaterad i nuvarande applikation. 
+\begin{verbatim}
 [{title: '4-kärlsangiografi',
 linda_id: '0',
 tage: '',
@@ -141,6 +143,8 @@ lastUpdated: 2015}]
 \subsection{Diskussion}
 Här diskuteras alternativ till resultat och metod och varför just dessa valdes.
 \subsubsection{Resultat}
+Eftersom Express redan använda av KeystoneJS så var det inte mycket som krävdes för att skriva om den delen av applikationen utan KeystoneJS. Då Express är ett väldigt vanligt och välkänt ramverk till Node.js så är det svårt att se några alternativ som hade gjort applikationen bättre. Att implementera andra ramverk som har liknande funktionalitet hade troligen krävt en mycket större arbetsinsats. 
+
 Att använda en officiell modul från Microsoft hade gett många fördelar för Region Östergötland så som officiell support och garanti att den skulle fungera. Men då en sådan inte har släppts officiellt än och den version som finns tillgänglig inte är färdigutvecklad eller aktiv \cite{sqlGit} och innehåller kända buggar \cite{sqlBugs} så kan inte dess funktionalitet garanteras. 
 
 Att använda Edge.js och edge-sql istället för någon annan modul gör att det inte finns några begränsningar i hur hämtningen från databasen ska gå till. Denna lösningen gör så att den bara skickar vidare förfrågan till ADO.NET vilket gör att just den delen av lösningen är officiell och garanterad att fungera. Här ligger ju istället osäkerheten i att det skulle vara något fel på Edge.js och edge-sql. Detta känns som en mindre risk än att en modul som är skriven direkt för koppling med MS SQL skulle ha buggar.
