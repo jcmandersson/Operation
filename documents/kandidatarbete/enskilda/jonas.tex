@@ -5,10 +5,9 @@ Tidigare när jag har utvecklat webbprogram så har jag använt mig av PHP tills
 
 \subsubsection{Syfte}
 
-Syftet med denna del av rapporten är att analysera om vad det finns för fördelar och nackdelar med att använda Node.js till ett sådant här projekt. Det ska även undersökas vad det finns för fördelar och nackdelar med att använda många externa ramverk och bibliotek.
+Syftet med denna del av rapporten är att analysera vad det finns för fördelar och nackdelar med att använda Node.js till ett sådant här projekt. Det ska även undersökas vad det finns för fördelar och nackdelar med att använda många externa ramverk och bibliotek.
 
 \subsubsection{Frågeställning}
-Frågeställningar
 \begin{itemize}
 	\item Vad finns det för fördelar/nackdelar med att använda Node.js till detta projekt?
 	\item Vad finns det för fördelar/nackdelar med att använda så många externa bibliotek som vi gjorde i detta projekt?
@@ -27,11 +26,11 @@ I och med att jag inte hade så mycket erfarenhet av Node.js och att använda m�
 
 \subsection{Teori}
 
-Nedan följer lite information om PHP, Python och Node.js samt vad som skiljer dom åt i stora drag.
+Nedan följer lite information om PHP, Python och Node.js samt vad som skiljer dem åt i stora drag.
 
 \subsubsection{PHP}
 
-PHP är ett programmeringsspråk som man kan skriva direkt i sin HTML-kod. Det skapades från början för att göra det enklare att lägga in funktionalitet på en hemsida. Du behövde inte längre skapa ett helt program i C, eller liknande, som i sin tur genererade HTML-kod för att exempelvis skapa en enkel gästbok\cite{php_history}. Nu kunde du enkelt lägga in PHP-kod direkt i HTML-koden som kördes i samband med att klienten frågar efter sidan. Det saknar även en standardiserad pakethanterare vilket gör att det är svårare att använda sig av många bibliotek. 
+PHP är ett programmeringsspråk som man kan skriva direkt i sin HTML-kod. Det skapades från början för att göra det enklare att lägga in funktionalitet på en hemsida. Du behövde inte längre skapa ett helt program i C, eller liknande, som i sin tur genererade HTML-kod för att exempelvis skapa en enkel gästbok\cite{php_history}. Nu kunde du enkelt lägga in PHP-kod direkt i HTML-koden som kördes i samband med att klienten frågar efter sidan. Tyvärr saknas det även en standardiserad pakethanterare vilket gör att det blir svårare att använda sig av många bibliotek. 
 
 \subsubsection{Python}
 
@@ -56,9 +55,9 @@ Under denna rubrik presenteras resultatet av undersökningen. Resultatet bygger 
 
 Först och främst var det en stor fördel med en plattform som är byggd runt sin pakethanterare, i detta fall npm. Det var väldigt enkelt att lägga till, uppdatera och ta bort bibliotek. När man behövde programmera under en ny miljö, exempelvis en annan dator så var det enkelt att bara behöva skriva en rad i kommandotolken eller liknande för att installera allt man behövde för att köra programmet. Det var även enkelt för alla att installera de moduler som behövs när någon valde att använda ett bibliotek.
 
-Det var även lätt att hitta en bra grund att bygga på. Då vi det finns så många bibliotek var det enkelt att hitta ett kraftfull men utbyggbart system att börja med. I detta fall föll valet på KeystoneJS. Detta gjort att vi snabbt kom igång och inte behövde lösa allt med kodstruktur och liknande innan vi såg resultat.
+Det var även lätt att hitta en bra grund att bygga på. Då det finns så många bibliotek var det enkelt att hitta ett kraftfullt men utbyggbart system att börja med. I detta fall föll valet på KeystoneJS. Detta gjorde att vi snabbt kom igång och inte behövde lösa allt med kodstruktur och liknande innan vi såg resultat.
 
-En annan fördel som också hör till att det finns så mycket bibliotek att välja mellan är att det var väldigt enkelt att jobba realtidsuppdatering. Detta beror inte enbart på att vi hittade ett bra bibliotek, Socket.IO, utan även på hur språket är uppbyggt. Node.js är skapat för att klara av många småberäkningar samtidigt och det är precis vad det handlade om i detta projekt. Flera personer ska kunna kryssa i rutor och alla ska se vad som händer direkt. Det handlar inte om speciellt mycket datorkraft utan mer om många små meddelanden som ska skickas mellan klienterna.
+En annan fördel som också hör till att det finns så mycket bibliotek att välja mellan är att det var väldigt enkelt att jobba med realtidsuppdatering. Detta beror inte enbart på att vi hittade ett bra bibliotek, Socket.IO, utan även på hur språket är uppbyggt. Node.js är skapat för att klara av många småberäkningar samtidigt och det är precis vad det handlade om i detta projekt. Flera personer ska kunna kryssa i rutor och alla ska se vad som händer direkt. Det handlar inte om speciellt mycket datorkraft utan mer om många små meddelanden som ska skickas mellan klienterna.
 
 Den sista fördelen med Node.js i just detta projekt var att man skriver i språket Javascript. Hade jag valt en annan plattform hade de som inte hållit på med webbprogrammering tidigare både behövt lärt sig Javascript för webbläsaren och ett nytt språk till servern. Nu räckte det med att lära sig Javascript vilket gick snabbt för alla att lära sig. Dessutom underlättade detta att jobba med kommunikation mellan klienterna då man enkelt skrev samma, eller liknande kod, på både klient och server.
 
@@ -66,7 +65,7 @@ Den sista fördelen med Node.js i just detta projekt var att man skriver i språ
 
 Det finns tyvärr även nackdelar med Node.js. Den första är att plattformen skapades för att användas tillsammans med dokumentdatabaser. Vissa av delarna i detta projekt skulle passa bättre att ha i relationsdatabaser. Det är visserligen fullt möjligt att med hjälp av bibliotek till Node.js använda sig av relationsdatabaser men det finns inte lika bra och utarbetat stöd som det gör för dokumentdatabaser.
 
-En annan nackdel var att Node.js programmeringstänk var svårt att komma in i till en början. Tanken är att man all kod ska köras asynkront. I början var det lite ovant för många att skriva kod på det sättet. 
+En annan nackdel var att Node.js programmeringstänk var svårt att komma in i till en början. Tanken är att all kod ska köras asynkront. I början var det lite ovant för många att skriva kod på det sättet. 
 
 Eftersom både server och klient använder sig av Javascript så kunde det ibland vara svårt att hålla isär vad som händer på servern respektive klienten. Exempelvis läsning och skrivning till databasen kan enbart ske från servern och man måste därför använda sig av något gränssnitt som i sin tur körs på servern för att göra detta genom klienten. Detta var lite krångligt till en början och det var vanligt att man blandade ihop hur man pratar med databasen beroende på om man är på servern eller klienten.
 
@@ -80,7 +79,7 @@ Det blir också ofta i många fall snygga och mer utarbetade lösningar än om m
 
 \subsubsection{Nackdelar med många externa bibliotek}
 
-En stor nackdel som jag framförallt har upptäckt i tidigare projekt men även ett par gånger i detta projekt är att man lätt kan få konstiga buggar som är svåra att felsöka. I vissa fall är inte bibliotek kompatibla med varandra och om man då inte har lite tur med en Google-sökning och hittar någon med exakt samma problem så kan de vara väldigt svårt att hitta ursprunget till buggarna som uppstår. Detta kan även hända när man uppdatera ett befintligt bibliotek som i och med uppdateringen blir inkompatibelt med något annat bibliotek. På så sätt kan det enkelt eskalera ifall man använder sig av allt för mycket stora bibliotek.
+En stor nackdel som jag framförallt har upptäckt i tidigare projekt men även ett par gånger i detta projekt är att man lätt kan få konstiga buggar som är svåra att felsöka. I vissa fall är inte bibliotek kompatibla med varandra och om man då inte har lite tur med en Google-sökning och hittar någon med exakt samma problem så kan de vara väldigt svårt att hitta ursprunget till buggarna som uppstår. Detta kan även hända när man uppdaterar ett befintligt bibliotek som i och med uppdateringen blir inkompatibelt med något annat bibliotek. På så sätt kan det enkelt eskalera ifall man använder sig av allt för mycket stora bibliotek.
 
 Dessutom finns det även en säkerhetsaspekt som inte spelar så stor roll i detta projekt då programmet enbart körs på ett intranät men kan spela roll i framtiden. Vissa bibliotek lider av säkerhetsproblem som upptäcks och täpps till under utvecklingen. Med många bibliotek i ett projekt kan det vara svårt att hålla alla uppdaterade och man riskerar då att vara utsatt för en säkerhetsrisker.
 
@@ -95,9 +94,9 @@ Den sista nackdelen är att hålla reda på alla licenser. Det finns en uppsjö 
 
 Många av fördelarna för tyvärr även med sig en nackdel. Så väger fördelarna verkligen över nackdelarna? 
 
-Om vi börjar med att Node.js använder sig av Javascript så tycker jag det är en väldigt stor fördel när man börjar med en grupp som är ny inom webbprogrammering. Det är inte så stort att lära sig ett nytt språk men kan bli krångligt att lära sig två språk samtidigt. Man blir lätt att blanda ihop små finesser i språken och dessutom hinner man inte lära sig två språk lika djupt. Samtidigt skapade Javascript förvirring mellan vad som kördes på servern respektive klienten. Det hade varit tydligare ifall man använt sig av ett helt annat språk på servern, som exempelvis PHP eller Python.
+Om vi börjar med att Node.js använder sig av Javascript så tycker jag det är en väldigt stor fördel när man börjar med en grupp som är ny inom webbprogrammering. Det är nödvändigtvis inte så svårt att lära sig ett nytt språk men blir betydligt krångligare att lära sig två språk samtidigt. Dels hinner man inte lära sig språken lika djupt men det kan även vara svårt att hålla isär olika finesser i språken. Samtidigt skapade Javascript förvirring mellan vad som kördes på servern respektive klienten. Det hade varit tydligare ifall man använt sig av ett helt annat språk på servern, som exempelvis PHP eller Python.
 
-Men med både PHP och Python blir det istället krångligare med kommunikationen mellan server och klient. Det som nu kunde skriva med samma, eller liknande, kod på både server och klient skulle kunna behöva varit helt annorlunda. Säkert är i alla fall att det inte skulle gått att kopiera, eller flytta kod mellan server och klient.
+Men med både PHP och Python blir det istället krångligare med kommunikationen mellan server och klient. Det som nu kunde skrivas med samma, eller liknande, kod på både server och klient skulle kunna behöva varit helt annorlunda. Säkert är i alla fall att det inte skulle gått att kopiera, eller flytta kod mellan server och klient.
 
 Resterande nackdelar med Node.js tycker jag inte har någon större betydelse i detta projekt då det handlar om ett relativt litet projekt. Saker som prestanda kommer inte bli lidande i nuläget. Däremot ifall programmet ska skalas upp och köras på flera sjukhus ifrån samma instans skulle man behöva undersöka detta närmare. Med det inte sagt att en sådan undersökning skulle visa att PHP, Python eller någon annan plattform hade varit ett bättre alternativ.
 
