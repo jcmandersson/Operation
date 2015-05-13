@@ -343,9 +343,53 @@ Här följer en sammanfattning om fortsatt arbete med systemet. Restlistan behan
 \subsubsection{Krav som bör vidareutvecklas}
 Följande krav är markerade som gula i kravspecifikationen vilket betyder att de bör vidareutvecklas för att ses som klara.
 %%Fyll på gula krav här efter iteration 3 mötet
+\begin{description}
+\item[Krav nr 2] Systemet ska kunna köras på mobil (iphone).
+
+Systemet ska i första hand köras på dator och surfplatta. Vi har alltså lämnat detta för eventuell vidareutveckling då prioriteten är låg.
+
+\item[Krav nr 7] Systemet ska ha en funktion för att kunna göra backup av databaserna.
+
+En funktion för backup finns och funktionaliteten går att utveckla med nuvarande api.%Bra om nån med koll fyller på
+\item[Krav nr 10] Avcheckning av plocklistor och förberedelselistor ska under pågående operationsförberedelse uppdateras automatiskt/kontinuerligt och tillåta växling mellan inmatningsenheter.
+
+Detta krav ligger kvar för vidareutveckling då en bugg upptäcktes vid slutmötet i iteration 3. Avcheckningen uppdaterades inte på surfplatta.%Denna kanske vi kan fixa innan sista inlämning?
+\item[Krav nr 14] Separata plocklistor/påfyllnadslistor ska kunna skapas för t.ex. operationssalar.
+
+Rent tekniskt kan man skapa en handbok för en specifik sal som tillfredställer detta krav. Det finns dock ingen speciell funktionalitet för detta.
+\item[Krav nr 29] Administratörer ska kunna lägga till video och ljud i de olika underrubrikerna.
+
+Det går att länka till externa video/ljudfiler. De hanteras dock inte inom systemet. %Formulera om iaf nån kan
+\item[Krav nr 38] Behörighetsstyrning ska finnas för att kunna tilldela användare rättigheter att administrera innehållet i kartoteket.
+
+Det finns i dagsläget bara en behörighetsnivå som gäller för hela systemet. En vidareutveckling vore att ge användare mer specifika tillstånd som detta.
+\item[Krav nr 42] När en artikel tas bort från kartoteket ska det synas att den utgått i handboken.
+
+Detta krav är inte uppfyllt då en bugg upptäcktes vid mötet i iteration 3. %Denna kanske vi kan fixa innan sista inlämning?
+\end{description}
+
 \subsubsection{Ej påbörjade krav}
 Följande krav är markerade som röda i kravspecifikationen vilket betyder att de inte är påbörjade.
 %%Fyll på röda krav här efter iteration 3 mötet
+
+\begin{description}
+\item[Krav nr 5]  I systemet ska användare kunna välja instans (operationsklinik med tillhörande handböcker och kartotek) av applikationen. 
+
+Detta går inte att göra i dagsläget. %Fyll på någon med koll om hur det skulle kunna lösas.
+\item[Krav nr 17] Det ska finnas en importfunktion där handböcker kan läsas in från ifylld excelmall.
+
+Om detta krav ska vidareutvecklas måste en tydlig excelmall tas fram.
+\item[Krav nr 22] Påminnelsefunktion (t.ex. mailutskick) när handbok är äldre än ett angivet datum ska finnas.
+
+Denna funktionalitet finns inte. %Fyll på någon med koll om hur det skulle kunna lösas.
+\item[Krav nr 30] Multimedia ska hanteras inom programmet och inte i någon extern applikation.
+
+Detta krav kräver mer tanke om hur det ska hanteras. Det är inte säkert att vinsten blir så stor vid vidareutveckling.%tankar?
+\item[Krav nr 43] Kartoteket ska kunna skilja på vilket sjukhus och klinik som artikeln tillhör. (Viktigt då artiklar av samma sort finns men tillhör olika kliniker). 
+
+Detta fungerar inte i dagsläget. %Fyll på någon med koll om hur det skulle kunna lösas.
+\end{description}
+
 
 Alla krav som behandlar lagersystemet finns kvar. För att utveckla ett lagersystem bör en ny förstudie genomföras för att ta fram tydligare krav. Ett lagersystem med skanning av artiklar skulle bidra till att plockningen blir mer säker. Det skulle också bidra till effektivare inventering och översikt av lagret. Ett saldo för varje artikel skulle kunna användas som beställningsunderlag. Kraven rörande lagret som samlats in under vår förstudie är följande:
 \begin{description}
@@ -365,8 +409,17 @@ Här följer övriga förslag på vidareutveckling.
 \item[Artikelsök] Vid sökning på artikel vid redigering av handbok kan det vara bra om man sorterar resultaten så att de artiklar som tillhör samma enhet som handboken visas först.
 \item[Avancerad sökfunktion] En mer avancerad sökfunktion med * och sökning på flera ord som inte behöver vara direkt efter varandra.
 \item[Förvalda kommentarer] Under användartester observerades att samma kommentarer skrivs ofta så det kan vara bra med en lista på vanliga kommentarer som man kan välja ifrån.
-\item[Roller och rättigheter] Olika roller bör identifieras och en funktion för att tilldela användare olika rättigheter bör implementeras.
+\item[Roller och rättigheter] Olika roller bör identifieras och en funktion för att tilldela användare olika rättigheter bör implementeras. I dagsläget kan en användare tilldelas rollen administratör. En användare utan denna behörighet har samma rättigheter som en användare utan inlogg.
 \item[Galler och extrainstrument] De artiklar som benämns som galler och instrument bör också behandlas med en plocklista. Detta kan göras genom att lägga in dem i kartoteket eller genom att skapa en separat databas för dessa med egen plocklista.
+\item[Versionshantering av handböcker] Det finns ingen versionshantering av handböckerna. %Skriv mer utförligt
+\item[Tillstånd av handböcker] Denna punkt hänger ihop med versionshanteringen. Vid användartester upplevdes tillstånden som något förrvirrande.
+\item[Redigering av handböcker] I nuvarande system kan flera personer redigera en handbok samtidigt. Ett lås skulle kunna implementeras för att lösa detta.
+\item[Förhandstitt] I nuvarande system öppnas en ny flik vid förhandstitt. Detta upplevdes vid användartester som något förvirrande.
+\item[Borttagning av handbok] I dagsläget går det inte ta bort en handbok. Detta bör vara enkelt att implementera.
+\item[Handbok till pdf] %skriv vad som kan ändras
+\item[Redigering av kartotekartikel] Det är svårt att redigera ett fält i kartoteket som är tomt. Själva rutan är för lite och det är svårt att pricka rätt.
+\item[Varning] Det går inte att spara en artikel i kartoteket då pris inte angivits. Användaren får dock ingen varning eller information om detta vilket leder till frustration.
+
 \end{description}
 
 \newpage
