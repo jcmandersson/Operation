@@ -13,18 +13,13 @@ Syftet med denna individuella del är att undersöka funktionaliteten i Latex oc
 \item Kommer det att vara en fördel eller en nackdel för flera gruppmedlemmar att jobba samtidigt i samma delar av rapporten?
 \end{itemize}
 
-\subsubsection{Avgränsningar} %, Microsoft Office
+\subsubsection{Avgränsningar}
 Denna rapport kommer att avgränsas för att endast jämföra Latex och Google Docs, detta för att inte behöva jämföra alla olika ordbenhandlingsprogram.
 
 \subsection{Bakgrund}
-Dokumentering är någonting som är viktigt att göra när man arbetar i projektform, dels för egen del utifall man behöver gå tillbaka och se vad som gjorts, men även för andras skull ifall man kanske får en ny medarbetare som ska integreras i 
-projektet. En fråga som man alltid behöver besvara är i vilket ordbehandlingsprogram dokumentationen skall skrivas. 
-
-%Det populäraste alternativet kan tänkas vara Microsoft Word, vilket har funnits sedan 1983 \cite{word_ursprung}.
+När man utvecklar en produkt i projektform så hamnar ofta utvecklingen av produkten i fokus, varav dokumenteringen blir utdaterad. Dokumentering är dock viktig att ha av flera anledningar, t.ex. om man behöver utföra underhåll av, eller vill återanvända ett system \cite{m_spichkova}.
 
 Ett alternativ som blir allt vanligare är Google Docs, vilket är ett webbaserat ordbehandlingsprogram som lanserades av Google 2006 \cite{docs_launch} efter att man hade köpt upp företaget Upstartle \cite{upstartle}. En stor fördel med detta program är att det är gratis så länge man bara har ett konto hos Google.
-
-%Ett annat och inte lika vanligt alternativ är Latex, vilket inte är ett ordbehandlingsprogram utan istället ett märkspråk så som t.ex. HTML, där man istället för med ett grafiskt gränssnitt formaterar sin text,sätter sin text inom speciella taggar så att när koden senare kompileras får rätt utseende.
 
 Ett annat alternativ är Latex, vilket egentligen bara är en uppsättning makron skrivna för språket Tex, vilket skapades av den amerikanske matimatikern Donald Knuth 1978 \cite{donald_knuth}. I början av 80-talet så vidareutvecklade Leslie Lamport Tex med hjälp av dess makrospråk till det som 
 idag är Latex \cite{leslie_lamport}.
@@ -36,11 +31,7 @@ Under kursens gång har jag dock skrivit en laborationsrapport i Latex och däri
 
 \subsection{Teori}
 I denna del behandlas en del teori om Google docs och Latex.
-\subsubsection{Google docs} %Microsoft Word och 
-%När Microsoft utvecklade Word på 80-talet så ville de naturligtvis att dåtidens datorer skulle klara av att ladda dokument utan att det skulle vara alltför prestandakrävande, därför konstruerade man dess filformat (.doc) binärt och gjorde konstruktionen väldigt komplex. Detta medförde att bara personer som var riktigt insatta i detta filformat klarade att ändra direkt i dessa filer.
-
-%Google docs däremot använder sig av "molnet" för att spara filer och man behöver därför aldrig oroa sig över säkerhetskopiering. Textformateringen i bägge dessa program görs främst genom att använda det grafiska gränssnittet, men kan även göras genom tangentbordskommandon. En funktion som finns i bägge dessa program är möjligheten att kommentera text.
-
+\subsubsection{Google docs}
 Google docs använder sig av molnet för att spara filer och man behöver därför inte oroa sig över säkerhetskopiering. Textformateringen görs främst genom att använda det grafiska gränssnittet, men kan även göras genom tangentbordskommandon. Det finns ett antal inbygda funktioner för att t.ex. importera bilder eller skapa tabeller, det finns även en inbyggd funktion för att kommentera texten.
 
 En stor fördel med Google docs är att dokumenten live-uppdateras hela tiden och att man på så sätt kan arbete flera personer samtidigt i ett dokument.
@@ -61,9 +52,6 @@ I denna rapport så skrev vi inledningsvis den gemensamma delen i samma fil, och
 Varje dokument har en dokumenthistorik där tanken är att när man gör en ändring så ger man dokumentet en ny version och skriver vilka ändringar man gjort.
 
 Vi använde IEEE-standarden för referenser.
-%I kandidatrapporten har vi korrekturläst varandras texter på samma sätt som med källkoden.
-%De övriga dokumenten 
-%Vi korrekturläser varandras texter på samma sätt som vi gör med källkoden.
 
 \subsection{Resultat}
 I denna del presenteras resultatet, det är givetvis inte bara resultatet av mitt eget arbete utan givetvis projektgruppens arbete som en helhet.
@@ -77,34 +65,24 @@ Detta fungerade bättre i Latex, men inte helt, då det även här uppstod probl
 Under projektets gång har vi försökt att hålla isär på olika revisioner av dokument så att man i ett senare skede kan gå tillbaka och se vilka ändgringar som har gjort mellan iterationerna.
 Detta har vi dock haft en del problem med i Google docs då dokumenten hela tiden sparas när man skriver och det inte på något smidigt sätt går att se historiken. Detta löste vi genom att göra en ny kopia på en fil när man ska skapar en ny revision.
 
-%Vi har under projektet försökt att hålla isär på alla olika revisioner av dokument så att man senare kan gå tillbaka och se vilka ändringar som har gjorts från en iteration till en annan, detta har varit svårt att upprätthålla med Google docs då dessa dokument hela tiden sparas kontinuerligt och det inte finns något sätt att se historiken av vad som ändrats i ett dokument. Detta har gjort att när vi ändrat i dokument, behövt spara undan en kopia av den föregående revisionen vilket inte alltid har gjorts. 
-
 I kandidatrapporten var inte detta ett lika stort problem då vi, som tidigare nämnt, använde oss utav revisionshanteringssystemet git. Detta gjorde att vi utan problem kunde gå tillbaka och se vad som hade ändrat sig i dokumentet. Dock har detta inte heller varit helt problemfritt då vi ibland fått mergekonflikter när vi laddat upp dokumentext. Detta beror på att om flera personer ändrar på samma rader i ett dokument så kan git inte avgöra vilken text som ska sparas och då måste användarna lösa detta tillsammans, vilket inte alltid varit så enkelt om man sitter och skriver på olika ställen.
 
 Ett annat problem har varit att om en gruppmedlem har lagt till en bild så måste denne komma ihåg att lägga till bilden i git så att även denna laddas upp, det som har skett annars har varit att när någon annan har pullat koden så saknas bilden och det går inte att kompilera dokumentet.
 
-%I kandidatrapporten däremot använde vi oss utav revisionshanteringsprogrammet git och har på så sätt lätt kunnat se vilka ändringar som gjorts. Detta har även hjälpt oss så att vi smidigt har kunnat korrekturläsa varandras texter.
-
-%Användningen av git har dock inte helt varit en dans på rosor. Vi har ibland fått mergekonflikter \textbf{KÄLLA!} när vi laddat upp dokumenttext till github. Ett annat problem har varit att om en gruppmedlem lägger till en bild så måste denne komma ihåg att även ladda upp bilden till github, när man glömt detta så bidrar det till att andra gruppmedlemmar inte har kunnat kompilera sin kod efter att ha laddat ned senaste versionen. Just att se till att få filer till github är oftast inget problem när man använder webstorm eftersom detta program frågar om man vill lägga till filen till repositoryt.
-
 \subsubsection{Kommentering}
 Kommentering av varandras texter t.ex. vid korrekturläsning har skett smidigt i Google docs med den inbyggda kommenteringsfunktion. Den projektmedlem som varit ansvarig för texten har sedan fått välja mellan att lösa problemet eller att ge ett svar på kommentaren.
 
-%En stor fördel med Google docs är att man kan lägga till kommentarer i texten så att andra kan se dessa, detta är en väldigt smidig funktion som gör att man lätt kan kommentera varandras texter. Sedan kan någon annan antingen lösa problemet eller svara på kommentaren. Denna funktionen finns som tidigare nämnts även i Word, men den stora skillnaden är att filerna först måste skickas mellan projektmedlemmarna först för att man ska kunna se dem. 
-
 Kommentering av texter i Latex har vi gjort på github istället för i dokumenten.
-
-%Det går i och för sig att lägga in kommentarer i Latex också men det är ingenting man ser direkt i dokumentet utan man måste leta reda på dem i koden. Vi valde att lösa detta genom att man istället korrekturläser varandras texter på github och istället lägger in kommentarer där istället.
 
 \subsubsection{Referenser}
 Referenser har varit lite av ett problem, eftersom vi hade bestämt att använda IEEE-standarden men det i Google docs inte finns något inbyggt system för detta. Detta gjorde att vi fick lägga till referenserna manuellt.
 
-
-
-I Latex däremot så fanns det ett antal sätt att göra detta på, vilket istället ledde till att vi 
+I Latex däremot så fanns det ett antal sätt att göra detta på, vilket istället ledde till att vi valde ett sätt som senare skulle visa sig vara ganska omständigt att använda, vilket ledde till att formateringen av referenserna blev onödigt komplicerat.
 
 \subsection{Diskussion}
-Här diskuteras den metod vi har använt och det resultat vi har uppnått.
+Här diskuteras resultatet och metoden
+%Här diskuteras den metod vi har använt och det resultat vi har uppnått.
+
 %kommentering av text är ingenting som är lätt att lösa i något av dessa system då man inte i google docs kan se senaste ändringarna och i latex måste läsa på github eller pulla koden om kommentarerna finns i texten.
 
 %DOKUMENTSTANDARD - RESULTAT
@@ -116,10 +94,10 @@ Här diskuteras den metod vi har använt och det resultat vi har uppnått.
 %METOD
 %Genom att göra på detta sätt så kan vi garantera att det inte kommer uppstå några konflikter i de individuella delarna.
 
-%OVERLEAF HADE KANSKE VARIT BRA ISTÄLLET, DOCK MÅSTE MAN VARA PRO-MEMBER FÖR ATT KOMMENTERA TEXTER.
-
 \subsubsection{Resultat}
-Även om Latex är ett väldigt trevligt sätt att skriva dokument på så upplever jag att det ändå tar ett bra tag bara för att lära sig grunderna, man får dock helt klart en bra hjälp med att hålla samma dokumentstandard. Vi kunde dock ha fått ett ännu bättre resultat om vi hade gått igenom Latex mer noggrant inom gruppen och bestämt oss för vad man får och inte får göra, då det finns många sätt att lösa ett problem på.
+Latex kan vara ett väldigt trevligt sätt att skriva dokument på även om ett det kan ta en hel del tid innan man har vänjt sig helt. Man får en bra hjälp med att hålla samma dokumentstandard, vad som dock kan vara värt att tänka på är att det finns en hel del valmöjligheter, och om man vill jobba med Latex i en större grupp så bör man nog ha klart för sig att det kan vara en bra idé att prata ihop sig för att avgöra vad man får och inte får göra.
+
+%Även om Latex är ett väldigt trevligt sätt att skriva dokument på så upplever jag att det ändå tar ett bra tag bara för att lära sig grunderna, dock får man helt klart en bra hjälp med att hålla samma dokumentstandard. Vi kunde ha fått ett ännu bättre resultat om vi hade gått igenom Latex mer noggrant inom gruppen och bestämt oss för vad man får och inte får göra, då det finns många sätt att lösa ett problem på.
 
 Man kan ibland känna sig väldigt begränsad i Google docs, t.ex. så kan man inte på något sätt välja på vilken sida sidnumreringen ska börja. Dock tycker jag ändå att detta kan vara till en fördel, för om det endast finns en lösning till ett problem så slipper man leta efter det bästa sättet, vilket ibland blir fallet i Latex.
 
@@ -127,55 +105,26 @@ Man kan ibland känna sig väldigt begränsad i Google docs, t.ex. så kan man i
 
 %Jag tycker helt klart att Latex har sina fördelar när man väl har lärt sig det, det är dock just inlärningskurvan som kan vara ett problem, speciellt om man är många som ska lära sig det. Som visat i resultat så kan man aldrig helt komma ifrån att dokument skrivs på olika sätt i alla fall till en början.
 
-Kommentering av dokument är någonting som har varit svårt att lösa, kommenteringsfunktionen i Google docs fungerar jättebra så länge man vet vad man ska kommentera på, alltså så länge man kommenterar det man själv skriver så upplever jag inte några problem, men om man ska korrekturläsa någon annans dokument så är det väldigt svårt att veta exakt vad som blivit tillagt sedan sist i dokumentet, särskilt om revisionshanteringen inte sköts på rätt sätt.
+Kommentering av dokument är någonting som har varit svårt att lösa, kommenteringsfunktionen i Google docs fungerar jättebra så länge man vet vilken text man ska kommentera, alltså så länge man kommenterar sin egen text så är det inga problem, däremot om man vill kommentera någonting som tidigare har skrivits av en annan gruppmedlem så kan det vara väldigt svårt att veta exakt vad denna medlem har skrivit, särskilt om denna om inte revisionshanteringen sköts på rätt sätt.
+
+%Kommentering av dokument är någonting som har varit svårt att lösa, kommenteringsfunktionen i Google docs fungerar jättebra så länge man vet vilken text man ska kommentera, alltså så länge man kommenterar det man själv skriver så upplever jag inte några problem, men om man ska korrekturläsa någon annans dokument så är det väldigt svårt att veta exakt vad som blivit tillagt sedan sist i dokumentet, särskilt om revisionshanteringen inte sköts på rätt sätt.
 
 
 \subsubsection{Metod}
-Kandidatrapporten hade kunnat strukturerats upp mer till en början, om vi hade gjort det så tror jag att vi hade fått mindre komplikationer med mergekonflikter, dock så följer det rätt så naturligt att vi då, hade behövt ha en bättre strukturering på vem som skriver vad, men då flera personer har jobbat på samma delar inom projektet så kommer man i slutändan även att behöva skriva på samma delar och då kvarstår ändå detta problem.
+Uppdelningen som vi gjorde i detta projekt med att inleda dokumenteringen i Google docs och sedan gå över till Latex tycker jag har fungerat väldigt bra, vi fick den tiden vi behövde för att sätta oss in i Latex och vi slapp onödig stress. Om alla involverade i ett projekt redan är insatta i Latex så tror jag absolut att det går minst lika bra att använda Latex från början till slut.
 
-Att inleda med att skriva dokument i Google docs tycker jag var en bra idé då man samtidigt kunde börja med Latex i ett lägre tempo och på så sätt ha mer tid till att fråga andra när man stöter på problem, ett annat alternativ hade kunnat vara att använda något av webbalternativen för Latex, nackdelen med detta är att alla hade blivit tvungna att skaffa sig ett konto där.
+Dock bör man även tänka på hur många man är i ett projekt då man med största förmodan behöver använda ett revisionshanteringssystem för att lagra dokumenten, och desto fler personer som behöver skriva i samma dokument samtidigt, desto större problem kommer man att få med konflikter. Är fallet att man har en klar uppdelning även om vem som skriver om vad och i vilka filer så ser jag dock inte detta som något problem alls och man bör inte stöta på några problem.
+
+%Kandidatrapporten hade kunnat strukturerats upp mer till en början, om vi hade gjort det så tror jag att vi hade fått mindre komplikationer med mergekonflikter, dock så följer det rätt så naturligt att vi då, hade behövt ha en bättre strukturering på vem som skriver vad, men då flera personer har jobbat på samma delar inom projektet så kommer man i slutändan även att behöva skriva på samma delar och då kvarstår ändå detta problem.
+
+Även om det finns väldigt många fördelar med Latex och dokumenten blir väldigt prydliga så kan jag ändå se användningsområden för Google docs då man t.ex. vill skriva interna dokument som inte behöver vara lika iögonfallande eller formella då den inbyggda kommentarsfunktionen är praktisk och fungerar väldigt bra.
+
+I några av webbalternativen för Latex så finns det även en kommenteringsfunktioner. Dessa alternativ tror verkligen är någonting för framtiden då jag tycker att man får det bästa från flera världar.
+
+%Att inleda med att skriva dokument i Google docs tycker jag var en bra idé då man samtidigt kunde börja med Latex i ett lägre tempo och på så sätt ha mer tid till att fråga andra när man stöter på problem, ett annat alternativ hade kunnat vara att använda något av webbalternativen för Latex, nackdelen med detta är att alla hade blivit tvungna att skaffa sig ett konto där.
 
 \subsection{Slutsatser}
-Även om Latex hjälper till att hålla en standard så bör man ändå bestämma internt i projektgruppen vilka olika metoder man ska använda för att t.ex. infoga referenser då det finns flera sätt att lösa samma saker på.
+Även om Latex hjälper till att hålla en standard så bör man ändå se till att undersöka vilka metoder som är lämpligast att använda för att lösa ens problem, då det i Latex ofta finns många olika sätt att lösa samma saker på. Någonting som vid en första anblick ser ut att vara det bästa sättet att lösa sitt problem på kanske senare visar sig vara rätt otympligt att handskas med.
 
-Det kan vara en nackdel för flera gruppmedlemmar att arbete samtidigt i samma delar, det spelar inte så stor roll om man delar upp dokumenten då delarna ändå kommer att ligga i endast en fil. Men det går dock ändå att lösa genom att kommunicera med de andra som behöver skriva på samma delar.
-
-\subsection{Referenser}
-\vspace{-9mm}
-\renewcommand{\refname}{}
-\begin{thebibliography}{9}
-\footnotesize
-\bibitem{word_ursprung}
-\url{http://ia801406.us.archive.org/21/items/A_History_of_the_Personal_Computer/eBook12.pdf}\\
- Sida 11-12. Hämtad 2015-04-20.
-
-\bibitem{docs_launch}
-\url{http://googlepress.blogspot.se/2006/06/google-announces-limited-test-on-google_06.html}\\
- Hämtad 2015-04-28.
-
-\bibitem{upstartle}
-\url{http://googleblog.blogspot.se/2006/03/writely-so.html}\\
- Hämtad 2015-04-28. 
-
-\bibitem{donald_knuth}
-\url{https://gcc.gnu.org/ml/java/1999-q2/msg00419.html}\\
- Hämtad 2015-04-20.
-
-\bibitem{leslie_lamport}
-\url{http://research.microsoft.com/en-us/um/people/lamport/pubs/pubs.html#latex}.\\
- Hämtad 2015-04-20.
- 
-\bibitem{overleaf}
-\url{https://www.overleaf.com/}\\
- Hämtad 2015-04-28.
-
-\bibitem{authorea}
-\url{https://www.authorea.com/}\\
- Hämtad 2015-04-28.
- 
-\bibitem{latex_standard}
-\url{ftp://ftp.dante.de/tex-archive/info/intro-scientific/scidoc.pdf}\\
-Sida 2. Hämtad 2015-04-28.
-
-\end{thebibliography}
+Det kan vara en nackdel för flera gruppmedlemmar att arbete samtidigt i samma delari ett Latexdokument, detta går till en viss utsträckning att lösa genom att dela upp dokumentet i flera separate filer. Man kommer dock inte helt ifrån det om flera personer behöver redigera exakt samma text, men är detta fallet så får man även problem utifall man använder sig av Google docs.
 

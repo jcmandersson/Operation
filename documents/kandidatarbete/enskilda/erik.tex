@@ -53,6 +53,8 @@ relevant för innehållet i den här rapporten
 är Javascript med Node.js. För att konfigurera Travis CI används filen .travis.yml 
 som placeras i det aktuella
 projektets repository på GitHub.
+Travis CI kör automatiskt de testfall som specificerats av användaren 
+när kod läggs upp på GitHub.
 
 \subsubsection{Javascript}
 Javascript är ett programmeringsspråk som i första hand används på klientsidan på webbsidor.
@@ -67,12 +69,8 @@ JQuery är gratis och baserat på öppen källkod som är tillgänglig under en
 MIT-licens.
 
 \subsubsection{Node.js}
-Node.js är en runtime environment för internetapplikationer. Det kan till exempel 
-användas för att skapa webbservrar.
-Node.js är baserat på öppen källkod som är tillgänglig under en MIT-licens. 
-Det är enkelt att lägga till nya 
-moduler för att anpassa det system man vill
-använda. För att lägga till nya moduler används node package manager (npm).
+För information om Node.js se rubriken \emph{2.1.1 Node.js}
+i det gemensamma avsnittet \emph{2.1 Programspråk och bibliotek}.
 
 \subsubsection{Jasmine}
 Jasmine är ett ramverk för testning av Javascript. 
@@ -104,11 +102,11 @@ Några av de vanligaste är Travis CI, Codeship och Drone.io.
 
 \subsection{Metod}
 Här beskrivs den metod som användes för att 
-besvara frågeställningarna.\\
+besvara frågeställningarna.
 
 Arbetet inleddes med att en teoriundersökning genomfördes
 angående vilka metoder, ramverk och tjänster som skulle kunna
-användas för att genomföra testerna i projektet.\\
+användas för att genomföra testerna i projektet.
 
 De ramverk för
 testning som undersöktes var Jasmine, Qunit och Mocha. Det
@@ -120,30 +118,30 @@ testning som skulle utföras i projektet och tiden för
 arbetet med projektet var begränsad till 300 timmar. Det var
 alltså ingen i projektgruppen som hade tid att lära sig 
 en komplicerad syntax i ett ramverk även om det varit
-mer kraftfullt.\\
+mer kraftfullt.
 
 De tjänster för automatiserade tester som undersöktes var
 Travis CI, Codeship och Drone.io. Även här 
 så gjordes valet beroende på hur enkla tjänsterna var att
 konfigurera och använda. Den tjänst som verkade enklast
-och således valdes var Travis CI.\\
+och således valdes var Travis CI.
 
 Arbetet med Travis CI inleddes med att tjänsten kopplades till 
 projektets repository på GitHub. Kopplingen utfördes
 genom att administratören för repositoryn loggade in på travis-ci.org med 
 sitt GitHubkonto och aktiverade
-en webhook för repositoryn.\\
+en webhook för repositoryn.
 
 Inställningarna för Travis CI konfigurerades med filen .travis.yml i projektets
 repository. Språket valdes till
 javascript med node.js med inställningen: \emph{language: node\textunderscore js}.
 Versionen av node.js valdes till version 0.10
-med inställningen: \emph{node\textunderscore js: "0.10"}.\\
+med inställningen: \emph{node\textunderscore js: "0.10"}.
 
 De nödvändiga node-modulerna installerades med hjälp av node package manager (npm).
 Grunt installerades
 med kommandot: \emph{npm install -g grunt-cli}. Grunt-contrib-jasmine installerades med kommandot: 
-\emph{npm install grunt-contrib-jasmine}.\\
+\emph{npm install grunt-contrib-jasmine}.
 
 Task runnern Grunt konfigurerades med filen Gruntfile.js i projektets repository.
 En task för Jasmine laddedes in med
@@ -191,7 +189,7 @@ kan modifiera.
 Eftersom Travis CI använder npm för att starta 
 testerna så definierades testskriptet för npm med raden
 \emph{''test'': ''grunt jasmine --verbose''} i filen package.json 
-i projektets repository.\\
+i projektets repository.
 
 Testfallen skrevs med Jasmine. Jasmine har en enkel och intuitiv syntax.
 Ett exempel på ett testfall skrivet med Jasmine följer nedan.
@@ -213,7 +211,7 @@ describe('The function splitOnce', function() {
 På den första raden beskrivs vilken del av koden det är som ska testas.
 På nästa rad beskrivs vad det är som ska testas i den utvalda delen av koden.
 Med funktionen expect kontrolleras att koden har utfört testet på det sätt
-som förväntats. Flera expect-funktioner kan användas i samma testfall.\\
+som förväntats. Flera expect-funktioner kan användas i samma testfall.
 
 Ett speciellt testfall skrevs
 för att besvara den andra frågeställningen om hur effektivt det är 
@@ -252,7 +250,7 @@ under en sekund. Antalet gånger som funktionen hann köras skrivs
 sedan ut på skärmen med en console.log. 
 Testfallet har körts flera gånger på olika datum och olika tidpunkter.
 Resultatet av testerna presenteras i \emph{Tabell E.5.1}
-under rubriken \emph{Resultat}.
+under rubriken \emph{E.5 Resultat}.
 För att antalet ska
 få en konkret betydelse visas även funktionen splitOnce() nedan.
 
@@ -276,19 +274,19 @@ som ska dela upp strängen. Funktionen delar endast upp strängen i två delar
 en array med två element.
 De två elementen är de två delarna av den ursprungliga strängen. Om den andra
 parametern (split) inte existerar i den första parametern (str) så returneras
-hela strängen i det första elementet och en tom sträng i det andra elementet.\\
+hela strängen i det första elementet och en tom sträng i det andra elementet.
 
 För att besvara den tredje frågeställningen om vilka typer av tester som är 
 svåra att utföra med en webbaserad tjänst så gicks koden igenom och 
 försök till att skriva testfall genomfördes
 med de olika delarna av koden. Resultatet av dessa tester redovisas under 
-avsnittet \emph{Resultat}.
+avsnittet \emph{E.5 Resultat}.
 
 \subsection{Resultat}
-Här presenteras resultatet av rapporten.\\
+Här presenteras resultatet av rapporten.
 
 Resultatet av testerna som utfördes för att besvara den andra frågeställningen
-visas i \emph{Tabell E.5.1}.\\
+visas i \emph{Tabell E.5.1}.
 
 \noindent\emph{Tabell E.5.1}
 \begin{center}
@@ -313,14 +311,14 @@ visas i \emph{Tabell E.5.1}.\\
   \end{tabular}
 \end{center}
 
-Medelvärdet avrundat till närmsta heltal är: 10556 tester per sekund.\\
+Medelvärdet avrundat till närmsta heltal är: 10556 tester per sekund.
 
-Standardavvikelsen avrundat till närmsta heltal är: 1710.\\
+Standardavvikelsen avrundat till närmsta heltal är: 1710.
 
 Den tid det tar från det att koden läggs upp på GitHub till dess att 
 testkoden börjar köras är i genomsnitt ca en minut. Sedan tar det även ca 30
 sekunder för att alla node-moduler att installeras innan själva
-testfallen börjar köras.\\
+testfallen börjar köras.
 
 Undersökningen om vad om är svårt att testa ledde till följande resultat.
 Det visade sig att vanliga Javascriptfunktioner är lätta
@@ -351,7 +349,7 @@ $(document).ready(function() {
 
 Det är alltså rekomenderat att skriva alla Javascriptfunktioner utanför 
 jQueryfunktionen \emph{\$(document).ready()} eftersom koden då blir 
-lättare att testa.\\
+lättare att testa.
 
 JQueryfunktioner är i allmänhet svårare att testa än vanliga
 Javascriptfunktioner. Anledningen är att jQueryfunktioner
@@ -369,11 +367,15 @@ var inte särskilt förvånande. Att den lilla testfunktionen kunde köras
 ca $10^4$ gånger per sekund verkar rimligt. Det intressanta med resultatet
 var att det kan dröja ca en minut från att koden läggs upp på GitHub
 till dess att testfallen börjar köras och att effektiviteten
-kan variera med ca $\pm 30 \%$ vid olika tidpunkter.\\
+kan variera med ca $\pm 30 \%$ vid olika tidpunkter.
 
 Det är även värt att påpeka att hur koden skrivs och struktureras
 i väldigt hög grad påverkar hur lätt den blir att testa. I alla fall
-med den metod som använts under arbetet med den här rapporten.
+med den metod som använts under arbetet med den här rapporten. Det är 
+därför en god idé att tidigt i ett projekt sätta upp riktlinjer för hur
+koden ska skrivas på ett sätt som gör den lätt att testa. Då kan man
+tjäna in tid som kanske annars hade behövt användas till att 
+skriva om koden senare i projektet.
 
 \subsubsection{Metod}
 Den metod för testning som användes under arbetet med den här rapporten var
@@ -383,12 +385,20 @@ begränsad till 300 timmar. I efterhand visade det sig dock att det hade varit
 möjligt att lägga lite mer tid på att använda en lite
 mer avancerad metod för att kunna testa en större
 del av koden i projektet. Nu användes den överblivna tiden istället till
-att göra fler manuella tester av koden.\\
+att göra fler manuella tester av koden.
+
+Det skulle inte vara några problem att skala metoden till ett större projekt.
+Men i ett större projekt skulle det antagligen finnas någon som arbetar
+uteslutande med testning och då skulle det finnas tid till att använda en
+mer avancerad och mer kraftfull metod. Därför är det en bättre ide att 
+använda den här metoden i ett mindre projekt.
 
 Det är även värt att nämna ett en nackdel med metoden som använts för tester
 under projektet
 är att om ett eventuellt fel upptäcks så är koden redan upplagd på GitHub.
-Det hade varit bättre om koden kan testas innan den lades upp på GitHub.
+Det hade varit bättre om koden kunde testas innan den lades upp på GitHub
+eftersom det då skulle gå att förebygga fel istället för att upptäcka 
+dem i efterhand.
 
 \subsection{Slutsatser}
 Under den här rubriken presenteras svaren på
@@ -400,7 +410,7 @@ att utföra kontinuerliga automatiserade tester av webbapplikationer?}
 Ett sätt att använda en webbaserad tjänst för att utföra kontinuerliga 
 automatiserade tester av en webbapplikation är att använda  
 Travis CI tillsammans med Jasmine på det sätt som beskrivits
-under avsnittet \emph{Metod}. Observera att den webbapplikation som testades
+under avsnittet \emph{E.4 Metod}. Observera att den webbapplikation som testades
 var skriven med Javascript. Node.js användes på serversidan och 
 jQuery användes på klientsidan.
 
@@ -408,7 +418,7 @@ jQuery användes på klientsidan.
 för automatiserade tester?}
 Det enkla testfallet som användes kunde käras ca $10^4$ gånger per sekund och
 det tar ca 60 sekunder från att koden läggs upp på GitHub till det att den
-börjar köras på servern.\\
+börjar köras på servern.
 
 Om man använder ett antal testfall (med liknande komplexitet som
 det som användes i den här rapporten) i storleksordningen $60 \cdot 10^4$ eller
@@ -422,20 +432,20 @@ Kortfattat kan man säga att vanliga Javascriptfunktioner är
 väldigt enkla att testa med de metoder, ramverk och tjänster som
 använts under arbetet med den här rapporten. Men Jqueryfunktioner och
 Javascriptfunktioner i Jqueryfunktioner är svårare att
-testa. För en mer detaljerad beskrivning se rubriken \emph{Resultat}.
+testa. För en mer detaljerad beskrivning se rubriken \emph{E.5 Resultat}.
 
 \subsubsection{Framtida arbete inom området}
 Det finns mycket arbete som skulle kunna utföras inom området som behandlats
-i den här rapporten.\\
+i den här rapporten.
 
 Det vore intressant att undersöka hur stor andel av de totala felen
 som upptäcks med den typ av testning som har beskrivits i den här rapporten.
 Det kräver dock mer tid och resurser än vad som var tillgängligt under
-arbetet den här rapporten.\\
+arbetet den här rapporten.
 
 Det vore även intressant att undersöka vilka nackdelar och fördelar det
 finns med webbaserade testmiljöer jämfört med lokala
-testmiljöer.\\
+testmiljöer.
 
 En annan undersökning som skulla kunna utföras är att jämföra
 flera olika ramverk för testning av Javascript. Till exempel skulle
