@@ -300,12 +300,24 @@ var updateTableRow = function(tableRow, isChecked, isTemplate) {
 
 var updateTextInTableRow = function(tableRow, checkObject) {
   var kartotekArticle = checkObject.kartotekArticle;
-  
-  tableRow.find('.name').eq(0).html('<p>'+checkObject.name+'</p>');
+
+  if (kartotekArticle == null) {
+    tableRow.find('.name').eq(0).html('<p>' + checkObject.name + '</p>'+'<p class=\'errorText\'>Utgått</p>');
+    tableRow.find('.articleNumber').eq(0).html('');
+    tableRow.find('.clinic').eq(0).html('');
+    tableRow.find('.storage').eq(0).html('');
+    tableRow.find('.section').eq(0).html('');
+    tableRow.find('.shelf').eq(0).html('');
+    tableRow.find('.tray').eq(0).html('');
+  } else {
+  tableRow.find('.name').eq(0).html('<p>' + checkObject.name + '</p>');
+  tableRow.find('.articleNumber').eq(0).html(kartotekArticle.articleNumber);
+  tableRow.find('.clinic').eq(0).html(kartotekArticle.clinic);
   tableRow.find('.storage').eq(0).html(kartotekArticle.storage);
   tableRow.find('.section').eq(0).html(kartotekArticle.section);
   tableRow.find('.shelf').eq(0).html(kartotekArticle.shelf);
   tableRow.find('.tray').eq(0).html(kartotekArticle.tray);
+  }
 };
 
 var saveCommentSocket = function (commentObject) {
