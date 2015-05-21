@@ -32,6 +32,8 @@ Article.prototype.modifyInDatabase = function(callback) {
     socket.emit('kartotekUpdate', {
       name: newArticle.name,
       tags: newArticle.tags,
+      articleNumber: newArticle.articleNumber,
+      clinic: newArticle.clinic,
       storage: newArticle.storage,
       section: newArticle.section,
       shelf: newArticle.shelf,

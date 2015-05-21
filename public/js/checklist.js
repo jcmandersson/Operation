@@ -302,6 +302,8 @@ var updateTextInTableRow = function(tableRow, checkObject) {
   var kartotekArticle = checkObject.kartotekArticle;
   
   tableRow.find('.name').eq(0).html('<p>'+checkObject.name+'</p>');
+  tableRow.find('.articleNumber').eq(0).html(kartotekArticle.articleNumber);
+  tableRow.find('.clinic').eq(0).html(kartotekArticle.clinic);
   tableRow.find('.storage').eq(0).html(kartotekArticle.storage);
   tableRow.find('.section').eq(0).html(kartotekArticle.section);
   tableRow.find('.shelf').eq(0).html(kartotekArticle.shelf);
