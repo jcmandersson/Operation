@@ -112,8 +112,8 @@ Ingrid Hallander, ingrid.hallander@regionostergotland.se \\
 
 \section{Inledning}
 Detta avsnitt behandlar varför detta projekt utförs.
-\subsection{Motivering}
 
+\subsection{Motivering}
 Region Östergötland har idag ett system med handböcker som en sjuksköterska går igenom inför varje operation. I dessa handböcker finns bland annat förberedelse-uppgifter och plocklistor, som innehåller engångsmaterial. Handböckerna är idag inte interaktiva på något sätt, istället skrivs plocklistan och förberedelse\-uppgifterna ut och bockas av för hand. Plattformen med handböcker kan heller inte återanvändas på olika avdelningar på grund av licensproblem. 
 
 Utöver detta system så finns ett annat separat system, som heter Kartoteket, för uppgifter om vilka artiklar som finns och var i lagret de ligger. Detta gör att personalen som ska förbereda inför operationer behöver gå in i två olika system. 
@@ -146,29 +146,31 @@ Studenterna som studerar kursen TDDD77 fick i januari 2015 ett uppdrag att utfö
 I detta projekt kommer följande programspråk och bibliotek att användas.
 
 \subsubsection{Node.js}
-Node.js är en plattform för att skapa applikationer till framförallt webbservrar. Det finns en inbyggd pakethanterare vid namn npm som gör det enkelt att inkludera bibliotek i sina projekt. Det är därför väldigt enkelt att använda sig av ett bibliotek istället för att skriva all funktionalitet själv. Node.js är baserat på öppen källkod som är tillgänglig under en MIT-licens.
+Node.js är en plattform för att skapa applikationer till framförallt webbservrar \cite{nodejs}. Det finns en inbyggd pakethanterare vid namn npm som gör det enkelt att inkludera bibliotek i sina projekt. Det är därför väldigt enkelt att använda sig av ett bibliotek istället för att skriva all funktionalitet själv. Node.js är baserat på öppen källkod som är tillgänglig under en MIT-licens.
 
 \subsubsection{KeystoneJS}
-KeystoneJS är ett ''content management system'' som bland annat innehåller ett kraftfullt administrationsverktyg och en databashanterare.
+KeystoneJS är ett ''content management system'' som bland annat innehåller ett kraftfullt administrationsverktyg och en databashanterare \cite{keystonejs}.
 
 \subsubsection{Socket.IO}
-Socket.IO är en modul till Node.js. Socket.IO använder sig av websockets för att kommunicera mellan front-end och back-end. Med hjälp av Socket.IO så kan man skicka data från en klient till alla andra anslutna klienter och visa datan som skickades utan att någon sida behöver laddas om.
+Socket.IO är en modul till Node.js och ett bibliotek för front-end \cite{socketio}. Socket.IO använder sig av websockets för att kommunicera mellan front-end och back-end. Med hjälp av Socket.IO så kan man skicka data från en klient till alla andra anslutna klienter och visa datan som skickades utan att någon sida behöver laddas om.
 
 \subsubsection{MongoDB}
-MongoDB är en dokumentbaserad databas som stödjer många olika plattformar.
+MongoDB är en dokumentbaserad databas som stödjer många olika plattformar \cite{mongodb}.
 
 \subsubsection{Handlebars}
-Handlebars är ett ''template language'' som är byggt på Mustache, vilket är ett annat ''template language''. Handlebars ger möjlighet att lägga in en del logik i HTML-kod. Till exempel kan man göra loopar för att iterera över data och skapa HTML-kod för de olika objekten i en lista.  
+Handlebars är ett ''template language'' som är byggt på Mustache, vilket är ett annat ''template language''. Handlebars ger möjlighet att lägga in en del logik i HTML-kod \cite{handlebars}. Till exempel kan man göra loopar för att iterera över data och skapa HTML-kod för de olika objekten i en lista.  
 
 \subsubsection{Less}
-Less kan användas som vanlig CSS. Men det ger även möjlighet till att använda variabler och funktioner som sedan kompileras till CSS-kod. Till exempel kan en variabel för en färg användas istället för att direkt sätta färgen. Om färgen ska ändra så kan man då bara ändra på variabeln istället för att ändra på varje ställe.
+Less kan användas som vanlig CSS. Men det ger även möjlighet till att använda variabler och funktioner som sedan kompileras till CSS-kod \cite{less}. Till exempel kan en variabel för en färg användas istället för att direkt sätta färgen. Om färgen ska ändra så kan man då bara ändra på variabeln istället för att ändra på varje ställe.
 
 \subsubsection{Bootstrap}
+Bootstrap är det mest populära HTML, CSS och Javascript-ramverket för att utveckla responsiva och mobila webbapplikationer \cite{bootstrap}. 
 
 \subsubsection{JQuery}
+JQuery är ett funktionsrikt Javascriptsbibliotek. Det gör saker som manipulation och traversering av HTML-dokument, animationer och Ajax mycket enkelt \cite{jquery}.
 
 \subsubsection{Wkhtmltopdf}
-Wkhtmltopdf är ett program som tar en hemsida eller en HTML-fil och skapar en pdf av den. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
+Wkhtmltopdf är ett program som tar en hemsida eller en HTML-fil och skapar en pdf av den \cite{wkhtmltopdf}. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
 
 
 \section{Teori}
@@ -368,7 +370,7 @@ Den första frågeställningen
 \begin{quote}
 Hur kan ett system för operationsförberedelser realiseras så arbetet blir lättare och mer effektivt?
 \end{quote}
-har besvarats i tidigare kapitel. Att systemet är både lättare och mer effektivt än det gamla systemet har konfirmerats genom användartester utförda av kunden (se Appendix A).
+har besvarats i tidigare kapitel. Men de främsta funktionaliteterna som finns är att materialets position syns på ett tydligt sätt och att denna informationen automatiskt uppdateras i alla handböcker då den ändras i Kartoteket. Att systemet är både lättare och mer effektivt än det gamla systemet har konfirmerats genom användartester utförda av kunden (se Appendix A).
 
 %Vi har lyckats göra ett system som innehåller handböcker för operationer som kan användas för operationsförberedelser. Handböckerna innehåller bland annat en plocklista av engångsartiklar som behövs till olika operationer. Vid engångsartiklarna finns data om var engångsartikeln kan hämtas. Engångsartiklarna blir också sorterade efter var de finns så att man inte kommer att behöva springa fram och tillbaka mellan olika förråd och hyllor för att hämta artiklarna. Eftersom plocklistan uppdateras i realtid så kan också flera sjuksköterskor hämta artiklar samtidigt och checka av de artiklar som de plockat, vilket gör att det inte kommer att bli några konflikter med att flera sjuksköterskor plockar samma artikel. Detta system effektiviserar arbetet vid operationsförberedelser eftersom sjuksköterskor inte längre kommer behöva gå till en dator och söka på artikeln de ska ha för att få reda på i vilken hylla den finns. Syftet med detta projekt är därav avklarat.
 Svaret på den andra frågeställningen
