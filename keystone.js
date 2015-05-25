@@ -8,19 +8,18 @@ require('dotenv').load();
 var keystone = require('keystone'),
   	handlebars = require('express-handlebars'),
     rest = require('keystone-rest');
+var config = require('./config.js');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
-
-console.log(process.env.NAME);
 
 keystone.init({
 
 	'name': typeof process.env.NAME !== 'undefined' ? process.env.NAME : 'Operation',
 	'brand': typeof process.env.NAME !== 'undefined' ? process.env.NAME : 'Operation',
   
-  port: process.env.PORT || 3000,
+  port: process.env.PORT || config.port || 3000,
 	
 	'less': 'public',
 	'static': 'public',
@@ -40,7 +39,9 @@ keystone.init({
 	'session': true,
 	'auth': true,
 	'user model': 'User',
-	'cookie secret': 'b1MD7rtB%T24J:3=4Hly4JZU^t8;.OTTM6oP"]mIxXr3e1Gt)])Ks!h-`Oq&|*EF'
+	'cookie secret': 'b1MD7rtB%T24J:3=4Hly4JZU^t8;.OTTM6oP"]mIxXr3e1Gt)])Ks!h-`Oq&|*EF',
+  
+  mongo: config.mongodbConnStr || 'mongodb://localhost:27017/operation'
 
 });
 
