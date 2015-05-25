@@ -1,3 +1,4 @@
+// This is an old version of creating a handbook. It's not used.
 function add(data, index, operation, addedProccesstegs) {
   
   var addedProccesstegs = addedProccesstegs;
