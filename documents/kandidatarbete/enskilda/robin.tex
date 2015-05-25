@@ -1,6 +1,6 @@
-\section{Realtidskommunikation för checklistor - Robin Andersson}
+\section{Realtidskommunikation för checklistor - \\Robin Andersson}
 \subsection{Inledning}
-Vårt system ska innehålla två olika typer av checklistor på olika webbsidor. Om flera användare är inne på samma sida samtidigt och en person kryssar i en checkruta så ska den checkrutan bli i kryssad för alla användare som är inne på den webbsidan.
+Vårt system ska innehålla två olika typer av checklistor på olika webbsidor. Om flera användare är inne på samma sida samtidigt och en person kryssar i en kryssruta så ska den bli kryssad för alla användare som är inne på den webbsidan.
 
 Den ena typen av checklista är en plocklista där det finns information om vilka engångsmatrial som behövs för den operationsförberedelse som användaren är inne på samt vart de matrialen kan hämtas någonstans. När en sjuksköterska har plockat en artikel så checkar denne av den artikeln i plocklistan.
 
@@ -13,13 +13,13 @@ Syftet med denna del av projektet är att flera sjuksköterskor samtidigt ska ku
 
 \subsubsection{Frågeställning}
 \begin{itemize}
-\item Går det att anpassa checklistan för en surfplatta medan den samtidigt innehåller information om var artiklar befinner sig samt hur många av varje artikel som behövs?
+\item Går det att anpassa plocklistan för en surfplatta medan den samtidigt innehåller information om var artiklar befinner sig samt hur många av varje artikel som behövs?
 
-\item Kommer Socket.IO vara tillräckligt snabbt för att flera personer ska kunna checka av artiklar samtidigt utan förvirring?
+\item Kommer Socket.IO vara tillräckligt snabbt för att flera personer ska kunna kryssa av artiklar samtidigt utan förvirring?
 \end{itemize}
 
 \subsubsection{Avgränsningar}
-Eftersom denna del av projektet endast innehåller checkande av checklistor så saknas etiska aspekter.
+Eftersom denna del av projektet endast innehåller kryssande av checklistor så saknas etiska aspekter.
 
 \pagebreak
 \subsection{Teori}
@@ -30,15 +30,15 @@ WebSockets består av ett nätverksprotokoll och ett API som gör det möjligt a
 Kanalen som WebSocket använder sig av kommunicerar över nätet med hjälp av en enda socket. WebSockets använder sig av väldigt mycket mindre trafik och har mycket kortare latens än Ajax. WebSockets använder sig av de vanliga HTTP portarna. (det vill säga port 80 och port 443). \cite{websocketreport}
 
 Huvuddelen av denna del av projektet handlar om kommunikation med Socket.IO som huvudsakligen använder sig utav WebSockets för att kommunicera mellan server och klienter.
-
-\pagebreak
  
 \subsection{Metod}
 Det första jag gjorde var att fundera på hur kommunikationen skulle fungera. Jag skissade ner olika förslag på ett papper och kom på det sättet fram till hur det skulle implementeras. Sedan implementerade jag den och fick den att fungera för plocklistan. Därefter så refaktoriserade jag koden för att få den kortare och mer lättläst. När plocklistan sedan var färdigimplementerad så började jag fundera på hur jag skulle kunna återanvända så mycket kod som möjligt från plocklistan till att implementera förberedelselistan. Efter att jag implementerat förberedelselistan så refaktoriserade jag igen för att få koden mer lättläst.
+\pagebreak
 
 \subsection{Resultat}
-Jag kom fram till att när en användare går in på en operationsförberedelse så kommer denne in i ett rum. Varje gång en person sedan checkar en checkbox så skickas ett Socket.IO meddelande till servern som innehåller information om vilken checkruta som ska checkas samt vilket rum checkboxen ska checkas i. Servern skickar sedan ett meddelande till alla i det givna rummet om vilken checkruta som ska checkas och alla klienter som är anslutna till det rummet checkar den givna checkrutan.
-\\Figur \ref{kommunikation} visar detta flöde i ett sekvens liknande box-and-line-diagram.
+Jag kom fram till att när en användare går in på en operationsförberedelse så kommer denne in i ett rum. Varje gång en person sedan kryssar en kryssruta så skickas ett Socket.IO meddelande till servern som innehåller information om vilken kryssruta som ska kryssas samt vilket rum kryssningen ska ske i. Servern skickar sedan ett meddelande till alla i det givna rummet om vilken kryssruta som ska kryssas och alla klienter som är anslutna till det rummet kan då kryssa den rutan.
+
+Figur \ref{kommunikation} visar detta flöde i ett sekvens liknande box-and-line-diagram.
 \begin{figure}
 \includegraphics[scale=0.5]{checklistdiagram}
 \caption{Realtidskommunikation för checklistor}
@@ -46,12 +46,19 @@ Jag kom fram till att när en användare går in på en operationsförberedelse 
 \end{figure}
 
 
-När två klienter går in på en operation och en klient checkar en checkruta för första gången tar det strax under en sekund innan checkrutan checkas för den andra klienten. Därefter när någon klient checkar en checkruta så kan jag inte se någon fördröjning alls från det att en klient checkar en checkruta och en annan klient får den checkrutan checkad.
+När två klienter går in på en operation och en klient kryssar en kryssruta för första gången tar det strax under en sekund innan den blir kryssad för den andra klienten. Därefter när någon klient kryssar en kryssruta så kan jag inte se någon fördröjning alls från det att en klient kryssar en kryssruta och en annan klient får den kryssad.
 
-Kunden har prövat att ha flera personer inne på samma plocklista samtidigt och checka av olika artiklar. Kunden tyckte att det fungerade bra och påpekade inte någon fördröjning. 
+Kunden har prövat att ha flera personer inne på samma plocklista samtidigt och kryssa av olika artiklar. Kunden tyckte att det fungerade bra och påpekade inte någon fördröjning. 
 
-All information som krävs för plocklistorna fick plats med mycket mellanrum och kunden är nöjd med utséendet och är därför inte plottrig.
+All information som krävs för plocklistorna fick plats med mycket mellanrum (Se Figur \ref{plocklistaSurfplatta}) och kunden är nöjd med utséendet och är därför inte plottrig.
 
+\begin{figure}
+\includegraphics[scale=0.35]{PlocklistaSurfplatta}
+\caption{En skärmdump på en plocklista från en surfplatta}
+\label{plocklistaSurfplatta}
+\end{figure}
+
+\pagebreak
 \subsection{Diskussion}
 Detta kapitel innehåller en diskussion kring mitt resultat och min metod.
 \subsubsection{Resultat}
@@ -60,8 +67,9 @@ Eftersom jag endast skickar data om vilken checkruta som ska checkas till de kli
 \subsubsection{Metod}
 Den metod jag använde mig av fungerade bra, men jag tror att jag skulle kunnat komma fram till samma resultat snabbare genom att göra kortare funktioner och vettigare namn redan från början istället för att göra något som fungerar så snabbt som möjligt och sedan refaktorisera. För nu blev det väldigt förvirrande kod från början och jag var tvungen att sitta och tänka på vad koden jag skrivit faktiskt gjorde. Men att skissa olika förslag på ett papper först tror jag var en väldigt bra idé. Det gjorde att jag fick några möjliga lösningar och sedan kunde jag överväga fördelar och nackdelar med de olika lösningarna för att sedan välja den som verkade bäst.
 
-Att jag började med att implementera plocklistan och inte förrän den var klar implementera förberedelselistan tror jag också var en bra idé. Jag kunde då till en början fokusera på en typ av checklista och se till att få den att fungera bra. Sedan när förberedelselistan skulle implementeras så kunde jag återanvända väldigt mycket av den kod som jag skrivit till plocklistan.
 \pagebreak
+Att jag först implementerade plocklistan och väntade med att implementera förberedelselistan tills dess att plocklistan var klar tror jag också var en bra idé. Jag kunde då till en början fokusera på en typ av checklista och se till att få den att fungera bra. Sedan när förberedelselistan skulle implementeras så kunde jag återanvända väldigt mycket av den kod som jag skrivit till plocklistan.
+
 \subsection{Slutsatser}
 All nödvändig information i plocklistorna fick plats med bra marginal, därav anser jag att svaret på min första frågeställning är: Ja!
 
