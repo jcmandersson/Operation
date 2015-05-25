@@ -365,8 +365,6 @@ var newArticleUpdate = function(articleTemplate, commentTemplate, checkArticle, 
   sortTable();
   checkIfDone();
   
-
-  // TODO: refactor this later because ugly
   if ($('#editChecklistButton').text()=='Klar') {
     $('.centered-remove').show();
     $('.amountColumn').show();
