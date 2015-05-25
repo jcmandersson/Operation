@@ -112,11 +112,11 @@ Ingrid Hallander, ingrid.hallander@regionostergotland.se \\
 
 \section{Inledning}
 Detta avsnitt behandlar varför detta projekt utförs.
-\subsection{Motivering}
 
+\subsection{Motivering}
 Region Östergötland har idag ett system med handböcker som en sjuksköterska går igenom inför varje operation. I dessa handböcker finns bland annat förberedelse-uppgifter och plocklistor, som innehåller engångsmaterial. Handböckerna är idag inte interaktiva på något sätt, istället skrivs plocklistan och förberedelse\-uppgifterna ut och bockas av för hand. Plattformen med handböcker kan heller inte återanvändas på olika avdelningar på grund av licensproblem. 
 
-Utöver detta system så finns ett annat separat system, som heter kartoteket, för uppgifter om vilka artiklar som finns och var i lagret de ligger. Detta gör att personalen som ska förbereda inför operationer behöver gå in i två olika system. 
+Utöver detta system så finns ett annat separat system, som heter Kartoteket, för uppgifter om vilka artiklar som finns och var i lagret de ligger. Detta gör att personalen som ska förbereda inför operationer behöver gå in i två olika system. 
 
 \subsection{Syfte}
 Uppgiften som gruppen har fått är att skapa ett nytt system med handböcker som har interaktiva förberedelse- och plocklistor. Listorna ska uppdateras kontinuerligt när de bockas av så flera personer kan jobba på dem samtidigt. Plocklistan ska också innehålla uppgifter om var artiklarna ligger. Tanken är att personalen 
@@ -140,28 +140,38 @@ Kunden ville också att ett lagersaldo skulle integreras i systemet och göra de
 Hur man ska jobba i projektgrupper med olika kunskapsnivåer tas fram genom undersökningar i projektgrupp 7 i kursen TDDD77 på Linköpings universitet. Resultaten av denna undersökning kan kanske därför inte appliceras i situationer som inte kan likställas med situationen i projektgruppen.
 
 \section{Bakgrund}
-Studenterna som studerar kursen TDDD77 fick i januari 2015 ett uppdrag att utföra ett kandidatarbete. Först fick gruppen rangordna flera projektuppdrag efter önskemål, för att sedan få ett av dessa uppdrag tilldelat sig. Vi fick då detta projekt som skickades in av Region Östergötland.
+\label{bakgrund}
+Studenterna som studerar kursen TDDD77 fick i januari 2015 ett uppdrag att utföra ett kandidatarbete. Först fick gruppen rangordna flera projektuppdrag efter önskemål, för att sedan få ett av dessa uppdrag tilldelat sig. Projektgruppen fick då detta projekt som skickades in av Region Östergötland.
 
 \subsection{Programspråk och bibliotek}
 I detta projekt kommer följande programspråk och bibliotek att användas.
 
 \subsubsection{Node.js}
-Node.js är en plattform för att skapa applikationer till framförallt webbservrar. Det finns en inbyggd pakethanterare vid namn npm som gör det enkelt att inkludera bibliotek i sina projekt. Det är därför väldigt enkelt att använda sig av ett bibliotek istället för att skriva all funktionalitet själv. Node.js är baserat på öppen källkod som är tillgänglig under en MIT-licens.
+Node.js är en plattform för att skapa applikationer till framförallt webbservrar \cite{nodejs}. Det finns en inbyggd pakethanterare vid namn npm som gör det enkelt att inkludera bibliotek i sina projekt. Det är därför väldigt enkelt att använda sig av ett bibliotek istället för att skriva all funktionalitet själv. Node.js är baserat på öppen källkod som är tillgänglig under en MIT-licens.
 
 \subsubsection{KeystoneJS}
-KeystoneJS är ett ''content management system'' som bland annat innehåller ett kraftfullt administrationsverktyg och en databashanterare.
+KeystoneJS är ett ''content management system'' som bland annat innehåller ett kraftfullt administrationsverktyg och en databashanterare \cite{keystonejs}.
 
 \subsubsection{Socket.IO}
-Socket.IO är en modul till Node.js. Socket.IO använder sig av websockets för att kommunicera mellan front-end och back-end. Med hjälp av Socket.IO så kan man skicka data från en klient till alla andra anslutna klienter och visa datan som skickades utan att någon sida behöver laddas om.
+Socket.IO är en modul till Node.js och ett bibliotek för front-end \cite{socketio}. Socket.IO använder sig av websockets för att kommunicera mellan front-end och back-end. Med hjälp av Socket.IO så kan man skicka data från en klient till alla andra anslutna klienter och visa datan som skickades utan att någon sida behöver laddas om.
 
 \subsubsection{MongoDB}
-MongoDB är en dokumentbaserad databas som stödjer många olika plattformar.
+MongoDB är en dokumentbaserad databas som stödjer många olika plattformar \cite{mongodb}.
 
 \subsubsection{Handlebars}
-Handlebars är ett ''template language'' som är byggt på Mustache. Handlebars ger bland annat möjlighet till att lägga in mindre logik i HTML-kod.
+Handlebars är ett ''template language'' som är byggt på Mustache, vilket är ett annat ''template language''. Handlebars ger möjlighet att lägga in en del logik i HTML-kod \cite{handlebars}. Till exempel kan man göra loopar för att iterera över data och skapa HTML-kod för de olika objekten i en lista.  
+
+\subsubsection{Less}
+Less kan användas som vanlig CSS. Men det ger även möjlighet till att använda variabler och funktioner som sedan kompileras till CSS-kod \cite{less}. Till exempel kan en variabel för en färg användas istället för att direkt sätta färgen. Om färgen ska ändra så kan man då bara ändra på variabeln istället för att ändra på varje ställe.
+
+\subsubsection{Bootstrap}
+Bootstrap är det mest populära HTML, CSS och Javascript-ramverket för att utveckla responsiva och mobila webbapplikationer \cite{bootstrap}. 
+
+\subsubsection{JQuery}
+JQuery är ett funktionsrikt Javascriptsbibliotek. Det gör saker som manipulation och traversering av HTML-dokument, animationer och Ajax mycket enkelt \cite{jquery}.
 
 \subsubsection{Wkhtmltopdf}
-Wkhtmltopdf är ett program som tar en hemsida eller en HTML-fil och skapar en pdf av den. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
+Wkhtmltopdf är ett program som tar en hemsida eller en HTML-fil och skapar en pdf av den \cite{wkhtmltopdf}. Programmet har många olika parametrar som kan ändras t.ex. mediatyp så pdf-filen kan se ut som en utskrift av hemsidan. För att kunna använda detta programmet med Node.js finns det också en Node.js-modul med samma namn som skickar kommandon till programmet.
 
 
 \section{Teori}
@@ -191,17 +201,17 @@ Detta avsnitt beskriver kravinsamlingen och utveckling i projektet.
 Denna del beskriver hur kravframställningen gått till i detta projekt och hur den bidragit till systemets utveckling. Först beskrivs arbetet med att analysera kundens behov under förstudien. Sedan beskrivs hur kravspecifikationen arbetades fram och hur kraven valdes att representeras. Avslutningsvis beskrivs hur kraven validerades. I den enskilda utredningen ''D-Kravinsamlingsmetoder'' så beskrivs mer ingående vilka metoder och verktyg som använts för att ta fram krav. Fokus ligger där på prototyper och användartester.
 %hur referera till enskild?
 \subsubsection{Förstudie}
-Den största delen utav analysarbetet skedde under förstudien. Här identifierades de olika intressenterna och en kravspecifikation utarbetades. Vår första kontakt med projektet var en projektbeskrivning där kunden formulerade sina mål och visioner av projektet. Några viktiga krav gavs också såsom att prototypdesign skulle genomföras i samarbete med kunden. Ett första möte, av fyra, under förstudien gav sedan mer information och vi började vår kravinsamling. 
+Den största delen utav analysarbetet skedde under förstudien. Här identifierades de olika intressenterna och en kravspecifikation utarbetades. Den första kontakten med projektet var en projektbeskrivning där kunden formulerade sina mål och visioner av projektet. Några viktiga krav gavs också såsom att prototypdesign skulle genomföras i samarbete med kunden. Ett första möte, av fyra, under förstudien gav sedan mer information och projektgruppen började sin kravinsamling. 
 
-Vi kunde konstatera att det fanns två olika intressenter att arbeta med. Dels sjuksköterskorna som är användare av systemet och dels CMIT, Centrum för medicinsk teknik och IT, som ansvarar för sjukhusets IT-miljöer. 
+Det konstaterades att det fanns två olika intressenter att arbeta med. Dels sjuksköterskorna som är användare av systemet och dels CMIT, Centrum för medicinsk teknik och IT, som ansvarar för sjukhusets IT-miljöer. 
 
-För att förstå användarnas behov genomfördes ett studiebesök där vi fick en visning av nuvarande system och hur det används. Detta var nödvändigt för att verkligen förstå vad som behövde göras och vad som kunde förbättras. Från CMIT:s sida genomfördes mer tekniska möten där teknikval diskuterades. Här var det viktigt att ta reda på vilka begränsningar som fanns och vilka val som passade våra och deras erfarenheter.
+För att förstå användarnas behov genomfördes ett studiebesök där projektgruppen fick en visning av nuvarande system och hur det används. Detta var nödvändigt för att verkligen förstå vad som behövde göras och vad som kunde förbättras. Från CMIT:s sida genomfördes mer tekniska möten där teknikval diskuterades. Här var det viktigt att ta reda på vilka begränsningar som fanns och vilka val som passade våra och deras erfarenheter.
 
 \subsubsection{Kravspecifikation i Google Docs}
-Kravspecifikationen skrevs i Google Docs. Detta valdes eftersom kraven utarbetades tillsammans med kund. Ett gemensamt redigerbart dokument gav en möjlighet för oss att arbeta på olika platser under kravframställningen vilket var effektivt. Kommenteringsfunktionen i Google Docs gav oss möjligheten att kommentera krav och föreslå förbättringar. Under interna möten och kundmöten var den gemensamma redigeringen också till nytta då kravformuleringar snabbt kunde genomföras.
+Kravspecifikationen skrevs i Google Docs. Detta valdes eftersom kraven utarbetades tillsammans med kund. Ett gemensamt redigerbart dokument gav en möjlighet att arbeta på olika platser under kravframställningen vilket var effektivt. Kommenteringsfunktionen i Google Docs möjligheten att kommentera krav och föreslå förbättringar. Under interna möten och kundmöten var den gemensamma redigeringen också till nytta då kravformuleringar snabbt kunde genomföras.
 
 \subsubsection{Kravrepresentation}
-Kraven gavs en prioritetsordning för att kunna urskilja de mest väsentliga kraven. Detta kändes nödvändigt då vi var begränsade av en tidsbudget. En prioritering av kraven gav utrymme för vidareutveckling i mån av tid.
+Kraven gavs en prioritetsordning för att kunna urskilja de mest väsentliga kraven. Detta kändes nödvändigt då arbetet begränsades av en tidsbudget. En prioritering av kraven gav utrymme för vidareutveckling i mån av tid.
 \begin{itemize}
 \item Krav med prioritet 1 var att betrakta som grundkrav som skulle genomföras för att projektet skulle ses som godkänt.
 \item Krav med prioritet 2 var att betrakta som önskvärda och som skulle genomföras om grundkraven var uppfyllda.
@@ -213,14 +223,14 @@ Kraven gavs en prioritetsordning för att kunna urskilja de mest väsentliga kra
 Kraven numrerades för att lätt kunna refereras till under projektets gång. De delades också in i olika sektioner efter deras del i systemet. Sektionerna var plocklistor, handböcker, Kartotek, lagersystem. Två extra sektioner användes också för generella krav och för leveranser. Denna uppdelning kändes naturlig för detta projekt. 
 %Man skulle också kunna dela in dem efter blablabla...
 
-Kravspecifikationen skrevs med stöd från standarden IEEE 830 \cite{ieee830}. Enligt standarden ska ett krav vara korrekt, otvetydigt, färdigt, konsekvent, prioriterat, verifierbart, modifierbart och spårbart. Detta eftersträvades men det kan diskuteras om alla krav uppfyller detta. I slutändan var det ändå vår gemensamma förståelse för kravet tillsammans med kunden som accepterades. 
+Kravspecifikationen skrevs med stöd från standarden IEEE 830 \cite{ieee830}. Enligt standarden ska ett krav vara korrekt, otvetydigt, färdigt, konsekvent, prioriterat, verifierbart, modifierbart och spårbart. Detta eftersträvades men det kan diskuteras om alla krav uppfyller detta. I slutändan var det ändå den gemensamma förståelsen för kravet tillsammans med kunden som accepterades. 
 
 Enligt standarden uttrycktes kraven på ska-form. Ett exempel på ett krav från projektet är följande: \textit{''Plocklistor ska innehålla information om artikelns namn, förråd, sektion, hylla och fack''}.
 
 \subsubsection{Kravvalidering}
-Vid varje iterationsslut hölls ett möte med kund där vi demonstrerade och lät kunden testa systemet. Iterationerna gjorde att vi snabbt kunde rätta till eventuella missförstånd. 
+Vid varje iterationsslut hölls ett möte med kund där systemet demonstrerades och kunden fick en chans att testa det. Iterationerna gjorde att projektgruppen snabbt kunde rätta till eventuella missförstånd. 
 
-Vi gick igenom vilka krav som var genomförda och vilka som skulle prioriteras till nästa iteration. Kravspecifikationen var på så sätt dynamisk och uppdaterades under projektets gång. En färgkodning användes för att markera vilka krav som var godkända, vilka som hade påbörjats och vilka som återstod.
+Vilka krav som var genomförda och vilka krav om skulle prioriteras till nästa iteration sågs över. Kravspecifikationen var på så sätt dynamisk och uppdaterades under projektets gång. En färgkodning användes för att markera vilka krav som var godkända, vilka som hade påbörjats och vilka som återstod.
 
 \subsection{Utveckling}
 Projektets utveckling har skett i fyra iterationer där den första var en förstudie och i de avslutande tre iterationerna har utvecklingen av produkten skett. Nedan beskrivs vilka hjälpmedel som har använts för att underlätta arbetet.
@@ -257,7 +267,7 @@ Varje vecka har gruppen haft ett kort SCRUM-möte på 15 minuter. På mötet har
 Ett system med alpha state cards har använts för att gruppen skulle kunna ha koll på hur långt projektet har fortskridit. Korten har även använts till att identifiera aspekter av projektet som kan förbättras och som gruppen behöver arbeta mer med. De aspekter av projektet som kunnat förbättras har använts som mål för kommande iterationer. De olika korten har uppdaterats kontinuerligt under projektets gång.
 
 \subsubsection{Sammarbete i gruppen}
-Under utvecklingsfasen delade vi till en början upp oss i två grupper som fokuserade på front-end och back-end. När vi sedan kom längre fram i projektet så övergick de flesta av oss till att endast arbeta på front-end. Vi har oftast arbetat i samma lokal. 
+Under utvecklingsfasen delades projektgruppen till en början upp i två grupper som fokuserade på front-end och back-end. Allt eftersom projektet fortgick så övergick de flesta av gruppmedlemmarna till att endast arbeta på front-end. Utvecklingen skedde nästan uteslutande i samma lokal.
 
 %Under förstudien så diskuterades det hur utvecklingen skulle ske på bästa på sätt för gruppen. Förslagen som diskuterades var, utveckling i mindre grupper, separat arbete var för sig eller att alla gruppmedlemmar skulle sitta tillsammans och utveckla. Då alla i gruppen inte hade utvecklat någon webbaplikation tidigare så togs beslutet att under förstudien paralellt inleda en intern utbildning inom gruppen i form av så kallade kodstugor, dessa gick ut på att alla skulle sitta tillsammans och lära sig de olika verktygen så som t.ex. Javascript och CSS och att de mindre erfarna skulle ha en möjlighet att få hjälp av de mer erfarna.
 
@@ -272,7 +282,7 @@ Under iteration 3 utförde kunden användartester av systemet vid två tillfäll
 %kanske kan använda nån fancy latex-referens till appendix egentligen.
 
 \subsubsection{Back-end}
-Vi valde att skriva back-end i Javascript dels för att minska inlärningskurvan eftersom det är samma språk som används på front-end och dels för att realtidskommunikation mellan klienterna underlättas. Node.js valdes som plattform på back-end eftersom den har en väldigt enkel pakethanterare. Detta underlättar när flera personer arbetar i ett projekt eftersom alla paket installeras automatiskt.
+Back-end valdes att skrivas i Javascript dels för att minska inlärningskurvan eftersom det är samma språk som används på front-end och dels för att realtidskommunikation mellan klienterna underlättas. Node.js valdes som plattform på back-end eftersom den har en väldigt enkel pakethanterare. Detta underlättar när flera personer arbetar i ett projekt eftersom alla paket installeras automatiskt.
 
 KeystoneJS underlättade utvecklingen väldigt mycket till en början. Några punkter som beskriver vad KeystoneJS hjälper till med följer:
 
@@ -285,7 +295,7 @@ KeystoneJS underlättade utvecklingen väldigt mycket till en början. Några pu
   \end{itemize}
   
 \subsubsection{Front-end}
-Anledningen till att vi använder oss av Bootstrap på front-end är för att Bootstrap har många färdiga CSS-klasser så man behöver inte skriva lika mycket CSS själv.
+Anledningen till att Bootstrap används på front-end är för att Bootstrap har många färdiga CSS-klasser, vilket leder till att gruppmedlemmarna inte behöver skriva lika mycket CSS själva.
 De klasser som finns är lätta att använda för att skapa responsiva hemsidor.
 All kod är dessutom testad för att fungera på olika webbläsare vilket kan vara krångligt att lösa om man skriver all CSS från grunden.
 
@@ -304,18 +314,18 @@ Det krävs mycket arbete för att lägga in alla handböcker, vilket gör att de
 Överssiktssidan är tänkt att den ska visas på en monitor och inte kräva någon interaktion för att se resultat för olika operationsförberedelser. Det är därför viktigt att sidan använder realtidskommunikation och att allting uppdateras automatiskt. 
 
 \subsubsection{Handbok}
-Vi valde att ge handböckerna ett liknande utseende som det gamla systemet för att göra övergången så enkel som möjligt. Det nya systemet har förbättrats genom att man har större förmåga att formatera innehållet efter behov. Man kan nu zooma i bilder, vilket är en förbättring mot föregående system.
+För att göra övergången mellan det nya systemet och det gamla så gavs handböckerna ett utseende som liknar det gamla systemet till stor del. Det nya systemet har förbättrats genom att man har större förmåga att formatera innehållet efter behov. Man kan nu zooma i bilder, vilket är en förbättring mot föregående system.
 Den största förändringen ligger i plocklistan som har en koppling direkt till Kartoteket.
 
-Sökfunktionen ger möjligheten att snabbt hitta en handbok. Vi valde att placera den i sidhuvudet för att man alltid snabbt ska kunna ta sig till en handbok. Den har utformats efter kundens krav med möjlighet att använda alternativa sökord.
+Sökfunktionen ger möjligheten att snabbt hitta en handbok. Den placerades i sidhuvudet för att det alltid ska gå snabbt att ta sig till en handbok. Den har utformats efter kundens krav med möjlighet att använda alternativa sökord.
 Sökfunktionen kompletterades med möjligheten att lista alla handböcker. Detta var också ett krav från kunden. 
 
 Handbokens tillstånd har utformats för att tillfredsställa kraven. Denna utformning kunde dock ha gjorts på andra sätt. I kundens interna utvärdering (se Appendix A) nämns att tillstånden utkast och granskning upplevs som något förvirrande. Under testningen sågs granskningen som överflödig.
 \subsubsection{Redigering}
-I redigeringen av handböcker fokuserade vi på att göra gränssnittet så likt en publicerad handbok som möjligt. Redigeringen var den svåraste delen att göra lättförståelig och användarvänlig. Vi hade flera designideér som skrotades under projektets gång.
+I redigeringen av handböcker fokuserades det på att göra gränssnittet så likt en publicerad handbok som möjligt. Redigeringen var den svåraste delen att göra lättförståelig och användarvänlig. Det fanns flera designideér som skrotades under projektets gång.
 
-Bland annat var vi tvungna att göra en avvägning mellan flexibilitet och användarvänlighet.
-Till exempel så förekommer ofta samma information under flera processteg. Man skulle då kunna tänka sig en lösning där denna information kopplas till flera processteg. Vi valde dock bort denna lösning eftersom vi ansåg att detta skapar för stor komplexitet.
+Bland annat var det tvunget att göras en avvägning mellan flexibilitet och användar\-vänlighet.
+Till exempel så förekommer ofta samma information under flera processteg. Man skulle då kunna tänka sig en lösning där denna information kopplas till flera processteg. Detta valdes dock bort eftersom projektgruppen ansåg att denna lösning skapar för stor komplexitet.
 
 \subsubsection{Plocklista}
 Plocklistan har utformats efter kundens behov. Den har under projektets gång uppdaterats många gånger efter feedback från kund. Efter användartester framkom att andra typer av artiklar, som inte finns i Kartoteket, med fördel också kunde ligga i en plocklista. Ett sätt att lösa detta på är att lägga in dessa artiklar i Kartoteket eller att skapa en ny databas för dessa med en separat plocklista.
@@ -335,7 +345,7 @@ Personerna som hade minst erfarenhet av webbutveckling fick rollerna kvalitetssa
 
 
 \subsubsection{Kodstugor}
-Att vi oftast arbetade på samma ställe gjorde att vi enkelt kunde fråga någon om vi fick problem vilket kunde spara oss många timmar av felsökning. Eftersom det var varierad kunskapsnivå på deltagarna i projektet så vart det också lättare för alla att komma igång och jobba när de snabbt och enkelt kunde fråga om saker som de inte förstod. Det behövdes färre möten eftersom vi alltid visste vem som gjorde vad och vad som behövdes göras.
+Att arbetet oftast skedde på samma ställe gjorde att gruppmedlemmarna enkelt kunde fråga varandra om de fick problem vilket kunde spara dem många timmar av felsökning. Eftersom det var varierad kunskapsnivå på deltagarna i projektet så var det också lättare för alla att komma igång och jobba när de snabbt och enkelt kunde fråga om saker som de inte förstod. Det behövdes färre möten eftersom gruppmedlemmarna alltid visste vem som gjorde vad och vad som behövdes göras.
 
 Att sitta på samma ställe och jobba skulle inte fungera lika bra i större grupper då det skulle bli alldeles för många kommunikationsvägar. 
 
@@ -344,11 +354,16 @@ Här diskuteras vad som fungerade bra och vad som kunde göras bättre med metod
 \subsubsection{Kravinsamling}
 Metoden som användes för kravframställning fokuserade på att samla in så mycket krav som möjligt genom möten, intervjuer och observationer. Att arbeta fram kraven tillsammans med kund kändes nödvändigt för att få en fullständig bild. 
 
-En sak som vi inte prioriterade men som kanske hade kunnat hjälpt arbetet skulle varit att lägga större fokus på olika roller. Slutsystemet har rollerna administratör och icke-administratör. En avvägning gjordes där dessa två enkla roller valdes. Fördelen var att vi kunde lägga fokus på att testa andra delar av systemet med högre prioritet snabbare. Nackdelen var att dessa funktionaliteter inte hann testas och under förstudien ledde till en viss förvirring. Vid användartesterna upplevdes inte detta som att det saknades vilket kan ses som att vi gjorde en bra avvägning. 
+En sak som inte prioriterades men som kanske hade kunnat hjälpa arbetet skulle varit att lägga större fokus på olika roller. Slutsystemet har rollerna administratör och icke-administratör. En avvägning gjordes där dessa två enkla roller valdes. Fördelen var att det kunde läggas fokus på att testa andra delar av systemet med högre prioritet snabbare. Nackdelen var att dessa funktionaliteter inte hann testas och under förstudien ledde till en viss förvirring. Vid användartesterna upplevdes inte detta som att det saknades vilket kan ses som att projektgruppen gjorde en bra avvägning. 
 
-Att använda use-cases eller user-stories diskuterades också under förstudien. Detta bortprioriterades då vi ansåg att de var överflödiga. Denna avvägning ledde till att det var lite svårare att kommunicera kraven. 
+Att använda use-cases eller user-stories diskuterades också under förstudien. Detta bortprioriterades då de ansågs överflödiga. Denna avvägning ledde till att det var lite svårare att kommunicera kraven. 
 
-Studiebesöket under förstudien var bra för att få en inblick i arbetet. Vi hade dock kunnat behöva mer tid för observation. Vid studiebesöket var hela gruppen med och det blev lite stressigt och mycket folk. Det kunde ha varit bättre att ha fler studiebesök uppdelade på färre personer för.
+Studiebesöket under förstudien var bra för att få en inblick i arbetet. Det hade dock behövts mer tid för observation. Vid studiebesöket var hela gruppen med och det blev lite stressigt och mycket folk. Därför kunde det varit bättre att ha fler studiebesök med färre gruppmedlemmar.
+
+\subsection{Ur ett större perspektiv}
+Applikationen som projektgruppen har utvecklat kan leda till stora fördelar för sjukhuset. Patientsäkerheten ökar då flödet för operationsförberedelser lätt kan följas. Den ökar också genom att det blir mindre felplockning av material eftersom materialets position och artikelnummer nu står i handböckerna. Att dessa automatiskt uppdateras i alla handböcker när en artikel ändras eller flyttas leder också till mindre felplockningar. 
+
+Genom att positionen för material syns i handböckerna så går det mycket snabbare och enklare att plocka allt material. Detta leder till att personal känner sig mindre stressade och sjukhuset sparar pengar, vilket i sin tur kan leda till mer resurser inom andra delar av vården.
 
 \newpage
 \section{Slutsatser}
@@ -356,7 +371,7 @@ Den första frågeställningen
 \begin{quote}
 Hur kan ett system för operationsförberedelser realiseras så arbetet blir lättare och mer effektivt?
 \end{quote}
-har besvarats i tidigare kapitel. Att systemet är både lättare och mer effektivt än det gamla systemet har konfirmerats genom användartester utförda av kunden (se Appendix A).
+har besvarats i tidigare kapitel. Men de främsta funktionaliteterna som finns är att materialets position syns på ett tydligt sätt och att denna informationen automatiskt uppdateras i alla handböcker då den ändras i Kartoteket. Att systemet är både lättare och mer effektivt än det gamla systemet har konfirmerats genom användartester utförda av kunden (se Appendix A).
 
 %Vi har lyckats göra ett system som innehåller handböcker för operationer som kan användas för operationsförberedelser. Handböckerna innehåller bland annat en plocklista av engångsartiklar som behövs till olika operationer. Vid engångsartiklarna finns data om var engångsartikeln kan hämtas. Engångsartiklarna blir också sorterade efter var de finns så att man inte kommer att behöva springa fram och tillbaka mellan olika förråd och hyllor för att hämta artiklarna. Eftersom plocklistan uppdateras i realtid så kan också flera sjuksköterskor hämta artiklar samtidigt och checka av de artiklar som de plockat, vilket gör att det inte kommer att bli några konflikter med att flera sjuksköterskor plockar samma artikel. Detta system effektiviserar arbetet vid operationsförberedelser eftersom sjuksköterskor inte längre kommer behöva gå till en dator och söka på artikeln de ska ha för att få reda på i vilken hylla den finns. Syftet med detta projekt är därav avklarat.
 Svaret på den andra frågeställningen
@@ -376,7 +391,7 @@ Följande krav är markerade som gula i kravspecifikationen vilket betyder att d
 \begin{description}
 \item[Krav nr 2] Systemet ska kunna köras på mobil (iphone).
 
-Systemet ska i första hand köras på dator och surfplatta. Vi har alltså lämnat detta för eventuell vidareutveckling då prioriteten är låg.
+Systemet ska i första hand köras på dator och surfplatta. Därför har detta krav lämnats för eventuell vidareutveckling.
 
 \item[Krav nr 7] Systemet ska ha en funktion för att kunna göra backup av databaserna.
 
@@ -422,7 +437,7 @@ Detta fungerar inte i dagsläget. %Fyll på någon med koll om hur det skulle ku
 \end{description}
 
 
-Alla krav som behandlar lagersystemet finns kvar. För att utveckla ett lagersystem bör en ny förstudie genomföras för att ta fram tydligare krav. Ett lagersystem med skanning av artiklar skulle bidra till att plockningen blir mer säker. Det skulle också bidra till effektivare inventering och översikt av lagret. Ett saldo för varje artikel skulle kunna användas som beställningsunderlag. Kraven rörande lagret som samlats in under vår förstudie är följande:
+Alla krav som behandlar lagersystemet finns kvar. För att utveckla ett lagersystem bör en ny förstudie genomföras för att ta fram tydligare krav. Ett lagersystem med skanning av artiklar skulle bidra till att plockningen blir mer säker. Det skulle också bidra till effektivare inventering och översikt av lagret. Ett saldo för varje artikel skulle kunna användas som beställningsunderlag. Kraven rörande lagret som samlats in under förstudien är följande:
 \begin{description}
 \item[Krav nr 46] Ska finnas ett saldo för varje artikel i förrådet.
 \item[Krav nr 47] Ska gå att skanna av artiklar (streckkod) som plockas i en specifik plocklista.
