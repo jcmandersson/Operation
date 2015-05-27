@@ -14,9 +14,17 @@
 \usepackage[parfill]{parskip}
 \pagestyle{fancy}
 
-\lhead{Grupp 7 \hspace{10mm} \textbf{Operationsförberedelser}}
-\rhead{15:024}
-\cfoot{\thepage}
+
+\lhead{\leftmark}
+\rhead{\thepage}
+\cfoot{ }
+
+%För att få dubbelsidigt dokument använd detta istället.
+%\documentclass[twoside]{article}
+%\fancyhead[RO, LE]{\thepage}
+%\fancyhead[RE]{\leftmark}
+%\fancyhead[LO]{\rightmark}
+
 
 \renewcommand{\contentsname}{Innehåll}
 
