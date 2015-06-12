@@ -58,6 +58,7 @@
     2015-05-11 & 0.3 & Tredje utkastet av gemensam och individuella rapporter & Alla \\ \hline
 	2015-05-13 & 1.0 & Fjärde utkastet av gemensam och individuella rapporter & Alla \\ \hline    
 	2015-05-27 & 1.1 & Ändrat dokument efter förslag från opposition och lagt till titelsida och försättsblad & Alla \\ \hline    
+	2015-06-12 & 1.2 & Ändrat titel och lagt till sammanfattning & Albert Karlsson \\ \hline
 
     \end{tabular}
   \end{center}
@@ -99,7 +100,15 @@ Ingrid Hallander, ingrid.hallander@regionostergotland.se \\
 \begin{flushleft}
 \textbf{Handledare} \\ Kristian Sandahl, kristian.sandahl@liu.se \\
 \end{flushleft}
+\newpage
+\section*{Sammanfattning}
+Denna rapporten behandlar hur ett webbaserat system för hantering av handböcker och utrustningslager, för operation- och anestesikliniken vid universitetssjukhuset i Linköping, kan realiseras. Den behandlar också hur man kan arbeta i grupp där kunskapsnivån varierar kraftigt mellan gruppmedlemmar. 
 
+För att skapa systemet så togs en kravspecifikation fram av projektgruppen tillsammans med kunden genom studiebesök och diskussion.  Efter det skapades en arkitekturbeskrivning. Denna låg sedan som grund till utvecklingsarbetet. Resultatet blev ett system där alla plocklistor i handböckerna kopplades ihop med artiklar i artikeldatabasen. På detta sätt uppdateras lagerplats i alla handböcker då de ändras i kartoteket. Flera kan också plocka på samma lista då det uppdateras kontinuerligt mellan olika enheter. Det finns också en översiktsvy som visar hur långt operationsförberedelserna har kommit.  
+
+Back-end på systemet gjordes med hjälp av CMS-plattformen KeystoneJS och front-end med hjälp av Handlebars, jQuery och less. Realtidsuppdateringen gjordes med hjälp av Socket.IO. Resultatet var lyckat och blev mycket uppskattat av kunden.
+
+Under utvecklingstiden så undersöktes det hur ett projekt kan utvecklas effektivt då medlemmar i projektgruppen har olika nivåer av kunskap. Resultatet av denna undersökning var att dela in arbetet i roller och att arbeta nära varandra för att underlätta kommunikation och få snabba svar på frågor.
 \newpage
 \tableofcontents
 \newpage
